@@ -1,0 +1,57 @@
+
+  Bus   (node ref)  Node       V (kV)    Angle    p.u.   Base kV
+
+680 .....  1     2.3604 /_   -5.4   0.98278     4.160
+   -       2     2.4985 /_ -122.4    1.0403     4.160
+   -       3     2.3174 /_  116.0   0.96487     4.160
+
+CIRCUIT ELEMENT CURRENTS
+
+(Currents into element from indicated bus)
+
+Power Delivery Elements
+
+  Bus         Phase    Magnitude, A     Angle
+
+ELEMENT = "Line.671680"
+671           1        0.0005723 /_   85.7
+671           2       0.00059753 /_  -32.9
+671           3       0.00057208 /_ -154.5
+671       Resid      2.8312E-005 /_  179.1
+------------
+680           1      5.1849E-012 /_   74.7
+680           2      6.8552E-012 /_ -174.3
+680           3      2.5724E-012 /_   45.0
+680       Resid      7.1361E-012 /_  -59.3
+
+
+= = = = = = = = = = = = = = = = = = =  = = = = = = = = = = =  = =
+
+Power Conversion Elements
+
+  Bus         Phase    Magnitude, A     Angle
+
+
+CIRCUIT ELEMENT POWER FLOW
+
+(Power Flow into element from indicated Bus)
+
+  Bus       Phase     kW     +j   kvar           kVA           PF
+
+ELEMENT = "Line.671680"     
+680             1 2.1001E-012 +j -1.2057E-011    1.2239E-011     -0.1716
+680             2 1.0569E-011 +j 1.3478E-011    1.7128E-011      0.6170
+680             3 1.9421E-012 +j 5.6361E-012    5.9614E-012      0.3258
+ TERMINAL TOTAL   1.4611E-011 +j 7.0575E-012    1.6226E-011      0.9005
+ELEMENT = "Line.671680"     
+671             1 -2.4983E-005 +j -0.0013506     0.0013509      0.0185
+671             2 1.3868E-005 +j -0.0014929     0.0014929     -0.0093
+671             3 1.1115E-005 +j -0.0013257     0.0013257     -0.0084
+ TERMINAL TOTAL   5.1177E-012 +j -0.0041692     0.0041692      0.0000
+
+= = = = = = = = = = = = = = = = = = =  = = = = = = = = = = =  = =
+
+Power Conversion Elements
+
+  Bus         Phase     kW   +j  kvar         kVA         PF
+

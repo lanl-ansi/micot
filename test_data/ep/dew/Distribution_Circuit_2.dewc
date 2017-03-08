@@ -1,0 +1,3 @@
+model.file=test_data/ep/dew/Distribution_Circuit_2.dew
+connection.string=a a DEW_DSN
+ptlinespc.database=test_data/ep/dew/DewTrn.mdb

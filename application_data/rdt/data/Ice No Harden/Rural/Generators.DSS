@@ -1,0 +1,17 @@
+
+! Generator Definitions
+
+! The following buses just have a voltage target and kvar limits defined.
+! The kW value is defined as zero, but this is illegal in the OpenDSS Generator model
+! So we just put a small value (1 kW) here and use model 3 to regulate the bus.
+
+New Generator.g1814  Bus1=1814  kV= 132 kW=1     Model=3 Vpu=1.01  Maxkvar=40000 Minkvar=-40000 !  kvar=37000 
+New Generator.g822a  Bus1=822  kV= 132 kW=1  Phases=1   Model=3 Vpu=1.01  Maxkvar=40000 Minkvar=-10000 !  kvar=37300 
+New Generator.g858 Bus1=858 kV= 11  kW=1     Model=3 Vpu=1.082 Maxkvar=24000 Minkvar=-6000  !  kvar=16200 
+New Generator.g816 Bus1=816 kV= 11  kW=1     Model=3 Vpu=1.082 Maxkvar=24000 Minkvar=-6000  !  kvar=16200 
+New Generator.g1852 Bus1=1852 kV= 11  kW=1     Model=3 Vpu=1.071 Maxkvar=24000 Minkvar=-6000  !  kvar=10600 
+New Generator.g1822a Bus1=1822 kV= 11  kW=1  Phases=1   Model=3 Vpu=1.071 Maxkvar=24000 Minkvar=-6000  !  kvar=10600 
+New Generator.g2852 Bus1=2852 kV= 11  kW=1     Model=3 Vpu=1.071 Maxkvar=24000 Minkvar=-6000  !  kvar=10600 
+New Generator.g2808 Bus1=2808 kV= 11  kW=1     Model=3 Vpu=1.071 Maxkvar=24000 Minkvar=-6000  !  kvar=10600 
+
+

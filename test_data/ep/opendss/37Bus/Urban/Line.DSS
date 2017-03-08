@@ -1,0 +1,151 @@
+
+
+
+New "Line.l2001" phases=3 bus1=2800.1.2.3 bus2=2802.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2.58
+New "Line.l2002" phases=3 bus1=2802.1.2.3 bus2=2806.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=1.73
+New "Line.l2003" phases=3 bus1=2806.1.2.3 bus2=2808.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=32.22
+New "Line.l2004" phases=1 bus1=2808.2 bus2=2810.2 linecode=303 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=5.804
+New "Line.l2005" phases=3 bus1=2808.1.2.3 bus2=2812.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=37.5
+New "Line.l2006" phases=3 bus1=2812.1.2.3 bus2=2814.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=29.73
+New "Line.l2007" phases=3 bus1=2814r.1.2.3 bus2=2850.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.01
+New "Line.l2024" phases=3 bus1=2850.1.2.3 bus2=2816.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.31
+New "Line.l2008" phases=1 bus1=2816.1 bus2=2818.1 linecode=302 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=1.71
+New "Line.l2009" phases=3 bus1=2816.1.2.3 bus2=2824.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=10.21
+New "Line.l2010" phases=1 bus1=2818.1 bus2=2820.1 linecode=302 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=48.14
+New "Line.l2011" phases=1 bus1=2820.1 bus2=2822.1 linecode=302 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=13.74
+New "Line.l2012" phases=1 bus1=2824.2 bus2=2826.2 linecode=303 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3.03
+New "Line.l2013" phases=3 bus1=2824.1.2.3 bus2=2828.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.84
+New "Line.l2014" phases=3 bus1=2828.1.2.3 bus2=2830.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=20.44
+New "Line.l2015" phases=3 bus1=2830.1.2.3 bus2=2854.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.52
+New "Line.l2026" phases=1 bus1=2854.2 bus2=2856.2 linecode=303 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=23.32
+New "Line.l2027" phases=3 bus1=2854.1.2.3 bus2=2852.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=36.82
+New "Line.l2025" phases=3 bus1=2852r.1.2.3 bus2=2832.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.01
+New "Line.l2016" phases=3 bus1=2832.1.2.3 bus2=2858.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=4.9
+New "Line.l2029" phases=3 bus1=2858.1.2.3 bus2=2834.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=5.83
+New "Line.l2017" phases=3 bus1=2834.1.2.3 bus2=2860.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2.02
+New "Line.l2018" phases=3 bus1=2834.1.2.3 bus2=2842.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.28
+New "Line.l2021" phases=3 bus1=2842.1.2.3 bus2=2844.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=1.35
+New "Line.l2022" phases=3 bus1=2844.1.2.3 bus2=2846.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3.64
+New "Line.l2023" phases=3 bus1=2846.1.2.3 bus2=2848.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.53
+New "Line.l2030" phases=3 bus1=2860.1.2.3 bus2=2836.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2.68
+New "Line.l2020" phases=3 bus1=2836.1.2.3 bus2=2862.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.28
+New "Line.l2031" phases=1 bus1=2862.2 bus2=2838.2 linecode=304 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=4.86
+New "Line.l2019" phases=3 bus1=2836.1.2.3 bus2=2840.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.86
+New "Line.l2028" phases=1 bus1=2858.1 bus2=2864.1 linecode=303 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=1.62
+New "Line.l2032" phases=3 bus1=2888.1.2.3 bus2=2890.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=10.56
+
+
+
+
+
+
+
+
+
+New "Line.l101" phases=3 bus1=1800.1.2.3 bus2=1802.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2.58
+New "Line.l102" phases=3 bus1=1802.1.2.3 bus2=1806.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=1.73
+New "Line.l103" phases=3 bus1=1806.1.2.3 bus2=1808.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=32.22
+New "Line.l104" phases=1 bus1=1808.2 bus2=1810.2 linecode=303 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=5.804
+New "Line.l105" phases=3 bus1=1808.1.2.3 bus2=1812.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=37.5
+New "Line.l106" phases=3 bus1=1812.1.2.3 bus2=1814.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=29.73
+New "Line.l107" phases=3 bus1=1814r.1.2.3 bus2=1850.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.01
+New "Line.l1024" phases=3 bus1=1850.1.2.3 bus2=1816.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.31
+New "Line.l108" phases=1 bus1=1816.1 bus2=1818.1 linecode=302 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=1.71
+New "Line.l109" phases=3 bus1=1816.1.2.3 bus2=1824.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=10.21
+New "Line.l1010" phases=1 bus1=1818.1 bus2=1820.1 linecode=302 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=48.14
+New "Line.l1011" phases=1 bus1=1820.1 bus2=1822.1 linecode=302 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=13.74
+New "Line.l1012" phases=1 bus1=1824.2 bus2=1826.2 linecode=303 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3.03
+New "Line.l1013" phases=3 bus1=1824.1.2.3 bus2=1828.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.84
+New "Line.l1014" phases=3 bus1=1828.1.2.3 bus2=1830.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=20.44
+New "Line.l1015" phases=3 bus1=1830.1.2.3 bus2=1854.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.52
+New "Line.l1026" phases=1 bus1=1854.2 bus2=1856.2 linecode=303 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=23.32
+New "Line.l1027" phases=3 bus1=1854.1.2.3 bus2=1852.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=36.82
+New "Line.l1025" phases=3 bus1=1852r.1.2.3 bus2=1832.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.01
+New "Line.l1016" phases=3 bus1=1832.1.2.3 bus2=1858.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=4.9
+New "Line.l1029" phases=3 bus1=1858.1.2.3 bus2=1834.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=5.83
+New "Line.l1017" phases=3 bus1=1834.1.2.3 bus2=1860.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2.02
+New "Line.l1018" phases=3 bus1=1834.1.2.3 bus2=1842.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.28
+New "Line.l1021" phases=3 bus1=1842.1.2.3 bus2=1844.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=1.35
+New "Line.l1022" phases=3 bus1=1844.1.2.3 bus2=1846.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3.64
+New "Line.l1023" phases=3 bus1=1846.1.2.3 bus2=1848.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.53
+New "Line.l1030" phases=3 bus1=1860.1.2.3 bus2=1836.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2.68
+New "Line.l1020" phases=3 bus1=1836.1.2.3 bus2=1862.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.28
+New "Line.l1031" phases=1 bus1=1862.2 bus2=1838.2 linecode=304 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=4.86
+New "Line.l1019" phases=3 bus1=1836.1.2.3 bus2=1840.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.86
+New "Line.l1028" phases=1 bus1=1858.1 bus2=1864.1 linecode=303 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=1.62
+New "Line.l1032" phases=3 bus1=1888.1.2.3 bus2=1890.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=10.56
+
+
+
+
+
+New "Line.l1" phases=3 bus1=800.1.2.3 bus2=802.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2.58
+New "Line.l2" phases=3 bus1=802.1.2.3 bus2=806.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=1.73
+New "Line.l3" phases=3 bus1=806.1.2.3 bus2=808.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=32.22
+New "Line.l4" phases=1 bus1=808.2 bus2=810.2 linecode=303 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=5.804
+New "Line.l5" phases=3 bus1=808.1.2.3 bus2=812.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=37.5
+New "Line.l6" phases=3 bus1=812.1.2.3 bus2=814.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=29.73
+New "Line.l7" phases=3 bus1=814r.1.2.3 bus2=850.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.01
+New "Line.l24" phases=3 bus1=850.1.2.3 bus2=816.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.31
+New "Line.l8" phases=1 bus1=816.1 bus2=818.1 linecode=302 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=1.71
+New "Line.l9" phases=3 bus1=816.1.2.3 bus2=824.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=10.21
+New "Line.l10" phases=1 bus1=818.1 bus2=820.1 linecode=302 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=48.14
+New "Line.l11" phases=1 bus1=820.1 bus2=822.1 linecode=302 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=13.74
+New "Line.l12" phases=1 bus1=824.2 bus2=826.2 linecode=303 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3.03
+New "Line.l13" phases=3 bus1=824.1.2.3 bus2=828.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.84
+New "Line.l14" phases=3 bus1=828.1.2.3 bus2=830.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=20.44
+New "Line.l15" phases=3 bus1=830.1.2.3 bus2=854.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.52
+New "Line.l26" phases=1 bus1=854.2 bus2=856.2 linecode=303 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=23.32
+New "Line.l27" phases=3 bus1=854.1.2.3 bus2=852.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=36.82
+New "Line.l25" phases=3 bus1=852r.1.2.3 bus2=832.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.01
+New "Line.l16" phases=3 bus1=832.1.2.3 bus2=858.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=4.9
+New "Line.l29" phases=3 bus1=858.1.2.3 bus2=834.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=5.83
+New "Line.l17" phases=3 bus1=834.1.2.3 bus2=860.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2.02
+New "Line.l18" phases=3 bus1=834.1.2.3 bus2=842.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.28
+New "Line.l21" phases=3 bus1=842.1.2.3 bus2=844.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=1.35
+New "Line.l22" phases=3 bus1=844.1.2.3 bus2=846.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3.64
+New "Line.l23" phases=3 bus1=846.1.2.3 bus2=848.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.53
+New "Line.l30" phases=3 bus1=860.1.2.3 bus2=836.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2.68
+New "Line.l20" phases=3 bus1=836.1.2.3 bus2=862.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.28
+New "Line.l31" phases=1 bus1=862.2 bus2=838.2 linecode=304 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=4.86
+New "Line.l19" phases=3 bus1=836.1.2.3 bus2=840.1.2.3 linecode=301 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=0.86
+New "Line.l28" phases=1 bus1=858.1 bus2=864.1 linecode=303 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=1.62
+New "Line.l32" phases=3 bus1=888.1.2.3 bus2=890.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=10.56
+
+! new under ground lines
+New "Line.n1814_822" phases=3 bus1=1814.1.2.3 bus2=822.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=4
+New "Line.n1814_822_1" phases=1 bus1=1814.1 bus2=822.1 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=4
+New "Line.n822_858" phases=3 bus1=822.1.2.3 bus2=858.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2
+New "Line.n858_816" phases=3 bus1=858.1.2.3 bus2=816.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2
+New "Line.n1852_1822" phases=3 bus1=1852.1.2.3 bus2=1822.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2
+New "Line.n1852_1822_1" phases=1 bus1=1852.1 bus2=1822.1 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2
+New "Line.n1852_1822_2" phases=1 bus1=1852.2 bus2=1822.2 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2
+New "Line.n1852_1822_3" phases=1 bus1=1852.3 bus2=1822.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2
+New "Line.n1822_2816" phases=3 bus1=1822.1.2.3 bus2=2816.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3
+New "Line.n1822_2816_1" phases=1 bus1=1822.1 bus2=2816.1 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3
+New "Line.n2852_2816" phases=3 bus1=2852.1.2.3 bus2=2816.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3
+New "Line.n1852_1816" phases=3 bus1=1852.1.2.3 bus2=1816.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3
+New "Line.n1816_2816" phases=3 bus1=1816.1.2.3 bus2=2816.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3
+New "Line.n1816_2816_1" phases=1 bus1=1816.1 bus2=2816.1 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3
+
+
+! new overhead ground lines
+New "Line.oh1814_822" phases=3 bus1=1814.1.2.3 bus2=822.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=4
+New "Line.oh1814_822_1" phases=1 bus1=1814.1 bus2=822.1 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=4
+New "Line.oh822_858" phases=3 bus1=822.1.2.3 bus2=858.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2
+New "Line.oh858_816" phases=3 bus1=858.1.2.3 bus2=816.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2
+New "Line.oh1852_1822" phases=3 bus1=1852.1.2.3 bus2=1822.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2
+New "Line.oh1852_1822_1" phases=1 bus1=1852.1 bus2=1822.1 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2
+New "Line.oh1852_1822_2" phases=1 bus1=1852.2 bus2=1822.2 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2
+New "Line.oh1852_1822_3" phases=1 bus1=1852.3 bus2=1822.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=2
+New "Line.oh1822_2816" phases=3 bus1=1822.1.2.3 bus2=2816.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3
+New "Line.oh1822_2816_1" phases=1 bus1=1822.1 bus2=2816.1 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3
+New "Line.oh2852_2816" phases=3 bus1=2852.1.2.3 bus2=2816.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3
+New "Line.oh1852_1816" phases=3 bus1=1852.1.2.3 bus2=1816.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3
+New "Line.oh1816_2816" phases=3 bus1=1816.1.2.3 bus2=2816.1.2.3 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3
+New "Line.oh1816_2816_1" phases=1 bus1=1816.1 bus2=2816.1 linecode=300 normamps=400 emergamps=600 faultrate=0.1 pctperm=20 repair=0 length=3
+
+
+
+
+

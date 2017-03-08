@@ -1,0 +1,6 @@
+New "RegControl.creg1a" transformer=reg1a winding=2 tapwinding=2 vreg=122 band=2 ptratio=120 CTprim=100 R=2.7 X=1.6
+New "RegControl.creg1b" transformer=reg1b winding=2 tapwinding=2 vreg=122 band=2 ptratio=120 CTprim=100 R=2.7 X=1.6
+New "RegControl.creg1c" transformer=reg1c winding=2 tapwinding=2 vreg=122 band=2 ptratio=120 CTprim=100 R=2.7 X=1.6
+New "RegControl.creg2a" transformer=reg2a winding=2 tapwinding=2 vreg=124 band=2 ptratio=120 CTprim=100 R=2.5 X=1.5
+New "RegControl.creg2b" transformer=reg2b winding=2 tapwinding=2 vreg=124 band=2 ptratio=120 CTprim=100 R=2.5 X=1.5
+New "RegControl.creg2c" transformer=reg2c winding=2 tapwinding=2 vreg=124 band=2 ptratio=120 CTprim=100 R=2.5 X=1.5

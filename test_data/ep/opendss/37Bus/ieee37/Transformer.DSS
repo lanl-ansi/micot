@@ -1,0 +1,4 @@
+New "Transformer.subxf" phases=3 windings=2 Xhl=8 buses=[sourcebus, 799, ] conns=[delta, delta, ] kVs=[230, 4.8, ] kVAs=[2500, 2500, ] taps=[1, 1, ] wdg=1 %R=1 wdg=2 %R=1
+New "Transformer.xfm1" phases=3 windings=2 Xhl=1.81 buses=[709, 775, ] conns=[delta, delta, ] kVs=[4.8, 0.48, ] kVAs=[500, 500, ] taps=[1, 1, ] wdg=1 %R=0.045 wdg=2 %R=0.045
+new transformer.reg1a phases=1 windings=2 buses=(799.1.2 799r.1.2) conns='delta delta' kvs="4.8 4.8" kvas="2000 2000" XHL=1
+new transformer.reg1c like=reg1a buses=(799.3.2 799r.3.2)

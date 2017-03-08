@@ -1,0 +1,381 @@
+{
+    "phase_variation": 0.15, 
+    "scenarios": [
+        {
+            "hardened_disabled_lines": [], 
+            "id": "1", 
+            "disable_line": []
+        }
+    ], 
+    "chance_constraint": 1.0, 
+    "critical_load_met": 0.98, 
+    "line_codes": [
+        {
+            "num_phases": 1, 
+            "line_code": 0, 
+            "xmatrix": [
+                [
+                    0.281345, 
+                    0.0, 
+                    0.0
+                ], 
+                [
+                    0.0, 
+                    0.0, 
+                    0.0
+                ], 
+                [
+                    0.0, 
+                    0.0, 
+                    0.0
+                ]
+            ], 
+            "rmatrix": [
+                [
+                    0.530208, 
+                    0.0, 
+                    0.0
+                ], 
+                [
+                    0.0, 
+                    0.0, 
+                    0.0
+                ], 
+                [
+                    0.0, 
+                    0.0, 
+                    0.0
+                ]
+            ]
+        }, 
+        {
+            "num_phases": 1, 
+            "line_code": 1, 
+            "xmatrix": [
+                [
+                    0.0, 
+                    0.281345, 
+                    0.0
+                ], 
+                [
+                    0.0, 
+                    0.0, 
+                    0.0
+                ], 
+                [
+                    0.0, 
+                    0.0, 
+                    0.0
+                ]
+            ], 
+            "rmatrix": [
+                [
+                    0.0, 
+                    0.530208, 
+                    0.0
+                ], 
+                [
+                    0.0, 
+                    0.0, 
+                    0.0
+                ], 
+                [
+                    0.0, 
+                    0.0, 
+                    0.0
+                ]
+            ]
+        }, 
+        {
+            "num_phases": 1, 
+            "line_code": 2, 
+            "xmatrix": [
+                [
+                    0.0, 
+                    0.281345, 
+                    0.0
+                ], 
+                [
+                    0.0, 
+                    0.0, 
+                    0.0
+                ], 
+                [
+                    0.0, 
+                    0.0, 
+                    0.0
+                ]
+            ], 
+            "rmatrix": [
+                [
+                    0.0, 
+                    0.530208, 
+                    0.0
+                ], 
+                [
+                    0.0, 
+                    0.0, 
+                    0.0
+                ], 
+                [
+                    0.0, 
+                    0.0, 
+                    0.0
+                ]
+            ]
+        }, 
+        {
+            "num_phases": 1, 
+            "line_code": 3, 
+            "xmatrix": [
+                [
+                    0.281345, 
+                    0.0, 
+                    0.0
+                ], 
+                [
+                    0.0, 
+                    0.0, 
+                    0.0
+                ], 
+                [
+                    0.0, 
+                    0.0, 
+                    0.0
+                ]
+            ], 
+            "rmatrix": [
+                [
+                    0.530208, 
+                    0.0, 
+                    0.0
+                ], 
+                [
+                    0.0, 
+                    0.0, 
+                    0.0
+                ], 
+                [
+                    0.0, 
+                    0.0, 
+                    0.0
+                ]
+            ]
+        }
+    ], 
+    "total_load_met": 0.5, 
+    "loads": [
+        {
+            "max_real_phase": [
+                0, 
+                1.5, 
+                0
+            ], 
+            "is_critical": false, 
+            "has_phase": [
+                false, 
+                true, 
+                false
+            ], 
+            "node_id": "tn_2_bus", 
+            "id": "tn_2_lod", 
+            "max_reactive_phase": [
+                0, 
+                0.5, 
+                0
+            ]
+        }, 
+        {
+            "max_real_phase": [
+                4.5, 
+                0, 
+                0
+            ], 
+            "is_critical": false, 
+            "has_phase": [
+                true, 
+                false, 
+                false
+            ], 
+            "node_id": "tm_1_bus", 
+            "id": "tm_1_lod", 
+            "max_reactive_phase": [
+                3.4, 
+                0, 
+                0
+            ]
+        }, 
+        {
+            "max_real_phase": [
+                0, 
+                2.0, 
+                0
+            ], 
+            "is_critical": false, 
+            "has_phase": [
+                false, 
+                true, 
+                false
+            ], 
+            "node_id": "tm_2_bus", 
+            "id": "tm_2_lod", 
+            "max_reactive_phase": [
+                0, 
+                2.5, 
+                0
+            ]
+        }
+    ], 
+    "buses": [
+        {
+            "has_phase": [
+                false, 
+                true, 
+                false
+            ], 
+            "id": "tn_2_bus"
+        }, 
+        {
+            "has_phase": [
+                true, 
+                false, 
+                false
+            ], 
+            "id": "tm_1_bus"
+        }, 
+        {
+            "has_phase": [
+                true, 
+                false, 
+                false
+            ], 
+            "id": "tn_1_bus"
+        }, 
+        {
+            "has_phase": [
+                false, 
+                true, 
+                false
+            ], 
+            "id": "tm_2_bus"
+        }, 
+        {
+            "has_phase": [
+                true, 
+                true, 
+                true
+            ], 
+            "id": "Reg1_bus"
+        }, 
+        {
+            "has_phase": [
+                true, 
+                true, 
+                true
+            ], 
+            "has_generator": true, 
+            "id": "n650_bus"
+        }, 
+        {
+            "has_phase": [
+                true, 
+                true, 
+                true
+            ], 
+            "id": "n630_bus"
+        }
+    ], 
+    "lines": [
+        {
+            "harden_cost": 100000, 
+            "length": 1.0, 
+            "line_code": 0, 
+            "has_phase": [
+                true, 
+                false, 
+                false
+            ], 
+            "num_phases": 1, 
+            "id": "tl_1", 
+            "node2_id": "tm_1_bus", 
+            "node1_id": "tn_1_bus"
+        }, 
+        {
+            "harden_cost": 100000, 
+            "length": 1.0, 
+            "line_code": 1, 
+            "has_phase": [
+                false, 
+                true, 
+                false
+            ], 
+            "num_phases": 1, 
+            "id": "t2", 
+            "node2_id": "tm_2_bus", 
+            "node1_id": "tn_2_bus"
+        }, 
+        {
+            "length": 1.0, 
+            "line_code": 2, 
+            "is_transformer": true, 
+            "has_phase": [
+                false, 
+                true, 
+                false
+            ], 
+            "num_phases": 1, 
+            "id": "T2", 
+            "node2_id": "tn_2_bus", 
+            "node1_id": "n630_bus"
+        }, 
+        {
+            "length": 1.0, 
+            "line_code": 3, 
+            "is_transformer": true, 
+            "has_phase": [
+                true, 
+                false, 
+                false
+            ], 
+            "num_phases": 1, 
+            "id": "T1", 
+            "node2_id": "tn_1_bus", 
+            "node1_id": "n630_bus"
+        },
+        {
+            "length": 1.0, 
+            "line_code": 1, 
+            "has_phase": [
+                true, 
+                true, 
+                false
+            ], 
+            "num_phases": 2, 
+            "id": "Dummy", 
+            "node2_id": "n630_bus", 
+            "node1_id": "n650_bus"
+        }
+        
+    ], 
+    "generators": [
+        {
+            "has_phase": [
+                true, 
+                true, 
+                true
+            ], 
+            "max_real_phase": [
+                1000, 
+                1000, 
+                1000
+            ], 
+            "node_id": "n650_bus", 
+            "id": "n650_gen", 
+            "max_reactive_phase": [
+                1000, 
+                1000, 
+                1000
+            ]
+        }
+    ]
+}

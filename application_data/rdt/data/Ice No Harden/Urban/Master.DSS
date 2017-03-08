@@ -1,0 +1,18 @@
+Clear
+New Circuit.ieee34-1
+
+
+Redirect Vsource.dss
+Redirect LineCode.DSS
+Redirect LoadShape.DSS
+Redirect GrowthShape.DSS
+Redirect TCC_Curve.DSS
+Redirect Spectrum.DSS
+Redirect Line.DSS
+Redirect Load.DSS
+Redirect Transformer.DSS
+Redirect RegControl.DSS
+Redirect Capacitor.DSS
+Redirect Generators.DSS
+MakeBusList
+Buscoords buscoords.dss

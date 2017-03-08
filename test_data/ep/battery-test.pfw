@@ -1,0 +1,132 @@
+PSAD 5.11
+HEADER CASE_IDENTIFICATION, TITLE1:255:T, TITLE2:255:T, TITLE3:255:T, TITLE4:255:T, TITLE5:255:T, VERSION:5:T
+"                                                                                ",
+"                              ",
+"                                        ",
+"",
+"",
+ 0.00
+HEADER PARAMS_R, NAME:20:T, VALUE:8:R
+"PTOL                ", 0.01000
+"QTOL                ", 0.01000
+"VMAXPU              ", 1.10000
+"VMINPU              ", 0.90000
+"FTOL                ", 1.00000
+"VTOL                ", 0.00100
+"BASEMVA             ", 100.000
+"LZTHRES             ", 0.00010
+"INFTOL              ", 1000000
+"MVATOL              ", 0.01000
+HEADER PARAMS_I, NAME:20:T, VALUE:8:I
+"DCTAP               ",       1
+"GCD                 ",       1
+"MAXITER             ",      50
+"SVD                 ",       0
+HEADER PARAMS_B, NAME:20:T, VALUE:1:T
+"FLATSTART           ",F
+"AREACON             ",F
+"VARCON              ",T
+"RMTCON              ",T
+"XFCON               ",T
+"XVCON               ",T
+HEADER T2KPF_PARAMS_R, NAME:20:T, VALUE:8:R
+"QDAMP               ", 0.80000
+"PCTLTOL             ", 10.0000
+"QCTLTOL             ", 10.0000
+"BADXR               ", 0.50000
+"RMTTOL              ", 0.00100
+"RATE_FACTOR         ", 1.00000
+"MAXACHANGE          ", 1.00000
+"MAXVCHANGE          ", 0.50000
+"AMP_FACTOR          ", 1.00000
+"BQB0_FACTOR         ", 1.00000
+"VCHANGEPU           ", 0.05000
+"OLIMIT              ", 1.00000
+HEADER T2KPF_PARAMS_I, NAME:20:T, VALUE:8:I
+"CTRLITER            ",       5
+"PAGESIZE            ",      60
+"SCREENSIZE          ",      24
+"PAGENO              ",       0
+"OL_OPTION           ",       0
+"TAPITER             ",       5
+"GENITER             ",       5
+"RATENUMBER          ",       0
+"RMTITER             ",      50
+HEADER T2KPF_PARAMS_B, NAME:20:T, VALUE:1:T
+"SOLVEDEBUG          ",F
+"AREADEBUG           ",F
+"VARDEBUG            ",F
+"RMTDEBUG            ",F
+"XFDEBUG             ",F
+"XVDEBUG             ",F
+"SMOOTHSTEP          ",F
+"OUTINCLUDE          ",F
+"XFSKIP              ",F
+"PRINTLOSS           ",T
+"PRINTRATE           ",T
+"ECHO                ",T
+"SHOWMVA             ",T
+"PRINTMAG            ",F
+"PRINTTAP            ",F
+"PRINTRX             ",F
+"BYNAME              ",T
+"DATA_ERROR          ",F
+"BX_OPTION           ",F
+"SHOWTITLES          ",F
+"LOCALREMOTES        ",F
+"BYREACTIVEPOWER     ",F
+"BYREALPOWER         ",T
+"BYFLOWS             ",T
+"BYNOORDER           ",F
+"BYRATING            ",F
+"BYPERCENT           ",F
+HEADER MISC_PARAMS_I, NAME:20:T, VALUE:8:I
+"SELECTED_SET        ",       0
+HEADER MISC_PARAMS_B, NAME:20:T, VALUE:1:T
+"SOLVED              ",T
+"BY_DSOLVE           ",T
+"SHORTCUTS           ",F
+"USEDIALOGS          ",F
+"SCHEDULE_REMOTES    ",F
+"OLD_FLATSTART       ",F
+"SWITCHEDSHUNTSSMOOTH",T
+"SS_DEBUG            ",F
+HEADER SET_DEFINITIONS, DEFINITION:255:T
+HEADER BUS, I:8:I, NAME:12:T, AREA:4:I, ZONE:4:I, VM:8:R, VA:8:R, BASKV:8:R, VS:8:R, STATUS:1:I
+1       ,"Abel        ",  11,  11, 1.00000,   0.000,  138.00,  1.0000,1
+2       ,"Adams       ",  11,  12, 1.04000,   0.000,  138.00,  1.0000,1
+3       ,"Adler       ",  11,  11, 1.00500,   0.000,  138.00,  1.0000,1
+HEADER GENERATOR, I:8:I, NAME:12:T, AREA:4:I, ZONE:4:I, TYPE:1:T, PG:10:R, QG:10:R, VS:8:R, QT:8:R, QB:8:R, IREG:8:I, STAT:1:I, PMAX:8:R, PMIN:8:R, VT:8:R, VB:8:R
+1       ,"Abel        ",  11,  12,1,   0.00000,   0.00000,  1.0250, 180.000,     0.0,       1,1, 300.000,     0.0, 1.50000, 0.50000
+3       ,"Adler       ",  11,  12,1,   1.00000,   0.80000,  1.0250, 180.000,     0.0,       1,1, 300.000,  -300.0, 1.50000, 0.50000
+HEADER LOAD, I:8:I, NAME:12:T, AREA:4:I, ZONE:4:I, PL:10:R, QL:10:R
+2       ,"Abel        ",  11,  11,   1.00000,   0.80000
+HEADER SHUNT, I:8:I, NAME:12:T, AREA:4:I, ZONE:4:I, GS:8:R, BS:8:R
+HEADER SWITCHED_SHUNT, I:8:I, MODSW:1:I, VSWHI:8:R, VSWLO:8:R, DV:8:R, REMOTEDV:8:R, SWREM:8:I, BINIT:8:R, SUSECPT:8:R, AREA:4:I, ZONE:4:I, ST:1:I, NST:1:I, N1:4:I, B1:8:R, N2:4:I, B2:8:R, N3:4:I, B3:8:R, N4:4:I, B4:8:R, N5:4:I, B5:8:R, N6:4:I, B6:8:R, N7:4:I, B7:8:R, N8:4:I, B8:8:R, N9:4:I, B9:8:R, N10:4:I, B10:8:R
+HEADER LINE, I:8:I, J:8:I, CKT:2:T, AREA:4:I, ZONE:4:I, R:10:R, X:10:R, B:10:R, RATEA:5:R, RATEB:5:R, RATEC:5:R, ST:1:T, RATE_UNIT:1:T
+       1,       3," 0",  11,  11,   0.00000,   0.20000,   0.00000,  175,  200,  193,1,M, 0
+       1,       2," 0",  11,  11,   0.00000,   0.40000,   0.00000,  175,  200,  193,1,M, 0
+       2,       3," 0",  11,  11,   0.00000,   0.25000,   0.00000,  175,  200,  193,1,M, 0
+HEADER TRANSFORMER, I:8:I, J:8:I, CKT:2:T, AREA:4:I, ZONE:4:I, R:10:R, X:10:R, B:10:R, RATEA:5:R, RATEB:5:R, RATEC:5:R, ST:1:T, RATECHAR:1:T, TYPE:2:T, RATIO:8:R, ANGLE:8:R, MINTAPANG:8:R, MAXTAPANG:8:R, STEP:8:R, VMIN:8:R, VMAX:8:R, ICONT:8:I, SIDE:2:T
+HEADER ZONE, I:4:I, ZONAM:12:T
+  11,"11          "
+  12,"12          "
+  13,"13          "
+  14,"14          "
+  16,"16          "
+  17,"17          "
+  15,"15          "
+HEADER AREA, I:4:I, ISW:8:I, NAME:12:T, PDES:8:R, PTOL:8:R, ARCODE:6:T, ARNAM:30:T
+11  ,1       ,"Adler       ",    0.00, 5.00000,"      ","                              "
+12  ,3      ,"Arne        ",    0.00, 5.00000,"12    ","12                            "
+HEADER TIE_LINE, ENDBUS1:8:I, METEREDAREA:4:I, ENDBUS2:8:I, NONMETEREDAREA:4:I, CKT:2:T
+END OF DATA
+BEGIN HEADER COORDINATE, BUS, LATITUDE, LONGITUDE
+1,-28.8,-168.1
+2,-28.8,-168.2
+3,-28.6,-168.1
+END HEADER COORDINATE, BUS, LATITUDE, LONGITUDE
+BEGIN HEADER BATTERY, ID, NAME, CAPACITY, USED_CAPACITY, COST, MAX, MIN
+3,"Adler       ",100.0,20.0,1.0, 300.0, -300.0
+END HEADER BATTERY, ID, NAME, CAPACITY, USED_CAPACITY, COST, MAX, MIN
+

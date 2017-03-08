@@ -1,0 +1,3 @@
+model.file=test_data/ep/dew/Distribution_Circuit_1.dew
+connection.string=root root DEW_DSN_MYSQL
+ptlinespc.database=test_data/ep/dew/DewTrn.mdb

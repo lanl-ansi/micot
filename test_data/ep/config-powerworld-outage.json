@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "application": {
+    "application_factory": "gov.lanl.micot.infrastructure.ep.application.ac.ACSimulationApplicationFactory"
+  },
+  "models": [
+    {
+      "model_file": "test_data/ep/powerworld/B7OPF.pwb",
+      "model_file_factory": "gov.lanl.micot.infrastructure.ep.io.ElectricPowerModelFileFactory",
+      "modifications": [
+        {
+          "component_type": "gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection",
+          "id": [
+            {
+              "id_key": "POWERWORLD_LEGACY_ID",
+              "id_value": "(6,7, 2)",
+              "id_type": "string"
+            }
+          ],
+          "modification": [
+            {
+              "modification_key": "DESIRED_STATUS",
+              "modification_value": false,
+              "modification_type": "boolean"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "algorithms": [
+    
+  ],
+  "simulators": [
+    {
+      "simulator_factory": "gov.lanl.micot.infrastructure.ep.simulate.powerworld.PowerworldSimulatorFactory"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+package gov.lanl.micot.util.math.solver.scip;
+
+/**
+ * Enum of the different solver status in SCIP
+ * @author 210117
+ *
+ */
+public enum ScipStatus {
+      SCIP_STATUS_UNKNOWN, 
+      SCIP_STATUS_USERINTERRUPT,
+      SCIP_STATUS_NODELIMIT,
+      SCIP_STATUS_TOTALNODELIMIT,
+      SCIP_STATUS_STALLNODELIMIT,
+      SCIP_STATUS_TIMELIMIT,
+      SCIP_STATUS_MEMLIMIT,
+      SCIP_STATUS_GAPLIMIT,
+      SCIP_STATUS_SOLLIMIT,
+      SCIP_STATUS_BESTSOLLIMIT,
+      SCIP_STATUS_OPTIMAL,
+      SCIP_STATUS_INFEASIBLE,
+      SCIP_STATUS_UNBOUNDED,
+      SCIP_STATUS_INFORUNBD  
+}

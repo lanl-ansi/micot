@@ -1,0 +1,24 @@
+New "Transformer.subxf" phases=3 windings=2 Xhl=0.01 buses=[sourcebus, 800, ] conns=[delta, wye, ] kVs=[69, 24.9, ] kVAs=[25000, 25000, ] taps=[1, 1, ] wdg=1 %R=0.0005 wdg=2 %R=0.0005
+New "Transformer.xfm1" phases=3 windings=2 Xhl=4.08 buses=[832, 888, ] conns=[wye, wye, ] kVs=[24.9, 4.16, ] kVAs=[500, 500, ] taps=[1, 1, ] wdg=1 %R=0.95 wdg=2 %R=0.95
+New "Transformer.subxf1" phases=3 windings=2 Xhl=0.01 buses=[sourcebus, 1800, ] conns=[delta, wye, ] kVs=[69, 24.9, ] kVAs=[25000, 25000, ] taps=[1, 1, ] wdg=1 %R=0.0005 wdg=2 %R=0.0005
+New "Transformer.xfm11" phases=3 windings=2 Xhl=4.08 buses=[1832, 1888, ] conns=[wye, wye, ] kVs=[24.9, 4.16, ] kVAs=[500, 500, ] taps=[1, 1, ] wdg=1 %R=0.95 wdg=2 %R=0.95
+New "Transformer.subxf2" phases=3 windings=2 Xhl=0.01 buses=[sourcebus, 2800, ] conns=[delta, wye, ] kVs=[69, 24.9, ] kVAs=[25000, 25000, ] taps=[1, 1, ] wdg=1 %R=0.0005 wdg=2 %R=0.0005
+New "Transformer.xfm12" phases=3 windings=2 Xhl=4.08 buses=[2832, 2888, ] conns=[wye, wye, ] kVs=[24.9, 4.16, ] kVAs=[500, 500, ] taps=[1, 1, ] wdg=1 %R=0.95 wdg=2 %R=0.95
+New "Transformer.reg1a" phases=1 windings=2 buses=[814.1, 814r.1, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg1b" phases=1 windings=2 buses=[814.2, 814r.2, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg1c" phases=1 windings=2 buses=[814.3, 814r.3, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg2a" phases=1 windings=2 buses=[852.1, 852r.1, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg2b" phases=1 windings=2 buses=[852.2, 852r.2, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg2c" phases=1 windings=2 buses=[852.3, 852r.3, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg11a" phases=1 windings=2 buses=[1814.1, 1814r.1, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg11b" phases=1 windings=2 buses=[1814.2, 1814r.2, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg11c" phases=1 windings=2 buses=[1814.3, 1814r.3, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg12a" phases=1 windings=2 buses=[1852.1, 1852r.1, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg12b" phases=1 windings=2 buses=[1852.2, 1852r.2, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg12c" phases=1 windings=2 buses=[1852.3, 1852r.3, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg21a" phases=1 windings=2 buses=[2814.1, 2814r.1, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg21b" phases=1 windings=2 buses=[2814.2, 2814r.2, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg21c" phases=1 windings=2 buses=[2814.3, 2814r.3, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg22a" phases=1 windings=2 buses=[2852.1, 2852r.1, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg22b" phases=1 windings=2 buses=[2852.2, 2852r.2, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1
+New "Transformer.reg22c" phases=1 windings=2 buses=[2852.3, 2852r.3, ] conns=[wye, wye, ] kVs=[14.376, 14.376, ] kVAs=[20000, 20000, ] Xhl=1

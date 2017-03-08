@@ -1,0 +1,16 @@
+language: java
+
+os:
+  - linux
+
+jdk:
+  - oraclejdk8
+  - oraclejdk7
+  - openjdk7
+
+env:
+  - TEST_BONMIN=false TEST_IPOPT=false TEST_SCIP=false TEST_CPLEX=false TEST_DEW=false TEST_OPEN_DSS=false TEST_POWERWORLD=false TEST_LPNORM=false TEST_RDT=false 
+
+script: "mvn cobertura:cobertura"
+  
+ 

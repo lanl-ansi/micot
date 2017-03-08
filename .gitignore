@@ -1,0 +1,12 @@
+/bin/
+/.settings/
+*.class
+*.log
+*.classpath
+/target/surefire-reports/
+/target/test-classes/
+/target/surefire-reports/
+/target/maven-archiver/
+/target/classes/
+/target/generated-sources/
+

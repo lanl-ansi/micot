@@ -1,0 +1,203 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>gov.lanl</groupId>
+  <artifactId>micot</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0</version>
+  <name>micot-utilities</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>1.6</version>
+      <scope>compile</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>colt</groupId>
+      <artifactId>colt</artifactId>
+      <version>1.2.0</version>
+      <scope>compile</scope>
+    </dependency>
+
+
+    <dependency>
+      <groupId>com.hynnet</groupId>
+      <artifactId>jacob</artifactId>
+      <version>1.18</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>nl.cloudfarming.client</groupId>
+      <artifactId>lib-geotools</artifactId>
+      <version>2.7.4</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.healthmarketscience.jackcess</groupId>
+      <artifactId>jackcess</artifactId>
+      <version>2.0.6</version>
+      <scope>compile</scope>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>javax.json</artifactId>
+      <version>1.0.4</version>
+      <scope>compile</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>net.sf.jung</groupId>
+      <artifactId>jung-api</artifactId>
+      <version>2.0.1</version>
+      <scope>compile</scope>
+    </dependency>
+
+   <dependency>
+      <groupId>net.sf.jung</groupId>
+      <artifactId>jung-3d</artifactId>
+      <version>2.0.1</version>
+      <scope>compile</scope>
+    </dependency>
+
+   <dependency>
+      <groupId>net.sf.jung</groupId>
+      <artifactId>jung-algorithms</artifactId>
+      <version>2.0.1</version>
+      <scope>compile</scope>
+    </dependency>
+
+   <dependency>
+      <groupId>net.sf.jung</groupId>
+      <artifactId>jung-jai</artifactId>
+      <version>2.0.1</version>
+      <scope>compile</scope>
+    </dependency>
+
+   <dependency>
+      <groupId>net.sf.jung</groupId>
+      <artifactId>jung-graph-impl</artifactId>
+      <version>2.0.1</version>
+      <scope>compile</scope>
+    </dependency>
+
+   <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna</artifactId>
+      <version>4.1.0</version>
+      <scope>compile</scope>
+    </dependency>
+
+
+  </dependencies>
+  
+  <build>
+	  <finalName>micot-1.0</finalName>
+	  <plugins>
+
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>2.3.2</version>
+			<configuration>
+				<source>1.7</source>
+				<target>1.7</target>
+			</configuration>
+		</plugin>
+		
+		
+		<plugin>
+		  <groupId>org.codehaus.mojo</groupId>
+		  <artifactId>cobertura-maven-plugin</artifactId>
+		  <version>2.7</version>
+		  <configuration>
+		    <formats>
+		      <format>html</format>
+			  <format>xml</format>
+		    </formats>
+		    <check />
+		  </configuration>
+	    </plugin>
+		
+		<!-- Remove this exclude if you wish to compile cplex functionality -->
+		<plugin>
+  		  <groupId>org.apache.maven.plugins</groupId>
+  		  <artifactId>maven-compiler-plugin</artifactId>
+  		  <configuration>
+    	    <excludes>
+      		  <exclude>**/cplex/*.java</exclude>
+    	    </excludes>
+  		  </configuration>
+		</plugin>
+				
+		<!-- Build the runnable jars -->
+
+  <plugin>
+    <groupId>com.jolira</groupId>
+    <artifactId>onejar-maven-plugin</artifactId>
+    <version>1.4.4</version>
+    <executions>
+      <execution>
+        <id>build-first</id>
+          <configuration>
+            <mainClass>gov.lanl.micot.application.lpnorm.exec.RunLPNorm</mainClass>
+            <attachToBuild>true</attachToBuild>
+            <classifier>onejar</classifier>
+            <filename>micot-rdt.jar</filename>
+          </configuration>
+          <goals>
+            <goal>one-jar</goal>
+          </goals>
+        </execution>
+      <execution>
+        <id>build-second</id>
+          <configuration>
+            <mainClass>gov.lanl.micot.infrastructure.ep.exec.RunPowerworld</mainClass>
+            <attachToBuild>true</attachToBuild>
+            <classifier>onejar</classifier>
+            <filename>micot-powerworld.jar</filename>
+          </configuration>
+          <goals>
+            <goal>one-jar</goal>
+          </goals>
+        </execution>
+        
+      <execution>
+        <id>build-third</id>
+          <configuration>
+            <mainClass>gov.lanl.micot.infrastructure.exec.RunApplication</mainClass>
+            <attachToBuild>true</attachToBuild>
+            <classifier>onejar</classifier>
+            <filename>micot-application.jar</filename>
+          </configuration>
+          <goals>
+            <goal>one-jar</goal>
+          </goals>
+        </execution>
+        
+        
+      </executions>
+    </plugin>
+
+		
+		
+		
+	  </plugins>
+	</build>
+  
+  
+  
+</project>
