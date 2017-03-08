@@ -14,4 +14,5 @@ env:
 script: "mvn cobertura:cobertura"
   
 after_success:
-	- bash <(curl -s https://codecov.io/bash) -t b86c38a8-efee-4142-8ef5-5eb609fab105
+	- bash <(curl -s https://codecov.io/bash)
+	
