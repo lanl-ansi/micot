@@ -1,4 +1,9 @@
 
+[![Build Status](https://travis-ci.org/lanl-ansi/micot.svg?branch=master)](https://travis-ci.org/lanl-ansi/micot)
+
+
+
+
 
 # Maven Installation
 
