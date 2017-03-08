@@ -13,4 +13,4 @@ env:
 
 script: "mvn cobertura:cobertura"
   
- 
+after_success:
