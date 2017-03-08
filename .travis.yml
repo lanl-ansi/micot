@@ -12,3 +12,6 @@ env:
   - TEST_BONMIN=false TEST_IPOPT=false TEST_SCIP=false TEST_CPLEX=false TEST_DEW=false TEST_OPEN_DSS=false TEST_POWERWORLD=false TEST_LPNORM=false TEST_RDT=false 
 
 script: "mvn cobertura:cobertura"
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -t b86c38a8-efee-4142-8ef5-5eb609fab105

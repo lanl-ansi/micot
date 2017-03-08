@@ -1,6 +1,8 @@
 
-[![Build Status](https://travis-ci.org/lanl-ansi/micot.svg?branch=master)](https://travis-ci.org/lanl-ansi/micot)
+These badges cover the tests that do not rely on proprietary software
 
+[![Build Status](https://travis-ci.org/lanl-ansi/micot.svg?branch=master)](https://travis-ci.org/lanl-ansi/micot)
+[![codecov](https://codecov.io/gh/lanl-ansi/micot/branch/master/graph/badge.svg)](https://codecov.io/gh/lanl-ansi/micot)
 
 
 
