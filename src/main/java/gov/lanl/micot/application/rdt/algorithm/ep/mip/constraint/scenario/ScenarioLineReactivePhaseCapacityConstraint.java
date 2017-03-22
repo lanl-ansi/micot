@@ -71,7 +71,7 @@ public class ScenarioLineReactivePhaseCapacityConstraint extends ScenarioConstra
         }
         
         Variable variable = directionFactory.getVariable(problem, link, scenario);
-        double capacity = (link.getCapacityRating() / link.getAttribute(ElectricPowerFlowConnection.NUMBER_OF_PHASES_KEY, Number.class).doubleValue()) / mvaBase;
+        double capacity = link.getCapacityRating() / mvaBase; //(link.getCapacityRating() / link.getAttribute(ElectricPowerFlowConnection.NUMBER_OF_PHASES_KEY, Number.class).doubleValue()) / mvaBase;
         
         if (link.getAttribute(ElectricPowerFlowConnection.IS_PHASE_A_KEY, Boolean.class)) {
           LinearConstraint constraint = new LinearConstraintLessEq(getFlowLessThanConstraintName(link, ScenarioReactiveFlowPhaseVariableFactory.PHASE_A, scenario));

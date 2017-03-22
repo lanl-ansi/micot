@@ -95,7 +95,6 @@ public class ScipQuadraticProgram extends QuadraticProgram {
   
 	@Override
 	public Solution solve() throws SolverException {
-
 		Solution solution = null;
 		setupScip();
 

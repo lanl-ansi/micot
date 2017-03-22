@@ -56,7 +56,7 @@ public class MicrogridCapacityBoundConstraint implements ConstraintFactory {
       
         double upperBound = 10e6;
         if (generator.getAttribute(AlgorithmConstants.MAX_MICROGRID_KEY) != null) {
-          upperBound = generator.getAttribute(AlgorithmConstants.MAX_MICROGRID_KEY, Number.class).doubleValue();
+          upperBound = generator.getAttribute(AlgorithmConstants.MAX_MICROGRID_KEY, Number.class).doubleValue() / model.getMVABase();
         }
         Variable discrete = variableFactory.getVariable(problem, generator);
         

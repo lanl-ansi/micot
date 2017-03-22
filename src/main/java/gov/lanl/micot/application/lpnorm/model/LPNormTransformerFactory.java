@@ -119,10 +119,6 @@ public class LPNormTransformerFactory extends TransformerFactory {
 		
 	@Override
 	protected Transformer createEmptyTransformer(Bus bus1, Bus bus2, Object circuit) {
-//	  Transformer transformer = registerTransformer(bus1, bus2, circuit.toString());   
-//	  transformer.setAttribute(MatPowerModelConstants.MATPOWER_MIN_ANGLE_DIFFERENCE_KEY, DEFAULT_MIN_ANGLE);
-	//  transformer.setAttribute(MatPowerModelConstants.MATPOWER_MAX_ANGLE_DIFFERENCE_KEY, DEFAULT_MAX_ANGLE);
-	 // return transformer;
 	  return null;
 	}
 

@@ -8,6 +8,8 @@ import gov.lanl.micot.infrastructure.application.ApplicationOutput;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.Generator;
+import gov.lanl.micot.infrastructure.ep.model.Line;
+import gov.lanl.micot.infrastructure.ep.model.Load;
 import gov.lanl.micot.infrastructure.model.Scenario;
 import gov.lanl.micot.infrastructure.model.ScenarioAttribute;
 import gov.lanl.micot.infrastructure.project.ProjectConfiguration;
@@ -48,7 +50,7 @@ public class LPNormTest  extends TestCase {
     ElectricPowerModel model = output.get(RDDTApplication.MODEL_FLAG, ElectricPowerModel.class);
     double cost = output.get(RDDTApplication.OBJECTIVE_FLAG, Number.class).doubleValue();
     assertEquals(cost, -5000.0);
-        
+    
     Scenario scenario = configuration.getFirstScenario();
     
     for (ElectricPowerFlowConnection connection : model.getFlowConnections()) {
@@ -202,7 +204,6 @@ public class LPNormTest  extends TestCase {
     double cost = output.get(RDDTApplication.OBJECTIVE_FLAG, Number.class).doubleValue();
     assertEquals(cost, -1001.413, 1.0);
 
-    
     for (Generator generator : model.getGenerators()) {
       boolean isConstructed = generator.getAttribute(AlgorithmConstants.IS_CONSTRUCTED_KEY) == null ? false : generator.getAttribute(AlgorithmConstants.IS_CONSTRUCTED_KEY, Boolean.class);
       if (generator.toString().equals("806-gen")) {

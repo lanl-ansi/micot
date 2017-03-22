@@ -64,9 +64,11 @@ public class OpenDSSGeneratorFactory extends GeneratorFactory {
   public Generator createGenerator(ComObject iGenerator, Bus bus, ComObject activeGenerator) {
     String legacyid = iGenerator.getString(OpenDSSIOConstants.GENERATOR_NAME);     
     Point point = bus.getCoordinate();
-    double reactiveMax = iGenerator.getDouble(OpenDSSIOConstants.GENERATOR_KVAR);  // we want Maxkvar, but we cant get it
+    
+    // everything gets coverted to MWs
+    double reactiveMax = iGenerator.getDouble(OpenDSSIOConstants.GENERATOR_KVAR) / 1000.0;  // we want Maxkvar, but we cant get it
     double reactiveMin = 0; // we want minkvar, but the com objects don't have it
-    double realMax = iGenerator.getDouble(OpenDSSIOConstants.GENERATOR_KW); // no seperate field for max
+    double realMax = iGenerator.getDouble(OpenDSSIOConstants.GENERATOR_KW) / 1000.0; // no seperate field for max
     double realMin = 0.0;
     
     Generator generator = registerGenerator(legacyid, bus);    
@@ -101,8 +103,8 @@ public class OpenDSSGeneratorFactory extends GeneratorFactory {
   private void fill(Generator generator, ComObject iGenerator, ComObject activeGenerator) {
     String legacyid = generator.getAttribute(OpenDSSModelConstants.OPENDSS_LEGACY_ID_KEY, String.class); 
     
-    double reactiveGeneration = iGenerator.getDouble(OpenDSSIOConstants.GENERATOR_KVAR);
-    double realGeneration = iGenerator.getDouble(OpenDSSIOConstants.GENERATOR_KW);
+    double reactiveGeneration = iGenerator.getDouble(OpenDSSIOConstants.GENERATOR_KVAR) / 1000.0;
+    double realGeneration = iGenerator.getDouble(OpenDSSIOConstants.GENERATOR_KW) / 1000.0;
     boolean status = activeGenerator.getBoolean(OpenDSSIOConstants.GENERATOR_STATUS);
         
     generator.setDesiredStatus(status);

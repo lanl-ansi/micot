@@ -656,8 +656,8 @@ public class OpenDSSModel extends ElectricPowerModelImpl implements ElectricPowe
       }
     }    
     
-    double reactive = load.getDesiredReactiveLoad().doubleValue();
-    double real = load.getDesiredRealLoad().doubleValue();
+    double reactive = load.getDesiredReactiveLoad().doubleValue() * 1000.0;
+    double real = load.getDesiredRealLoad().doubleValue() * 1000.0;
     boolean status = load.getDesiredStatus();
           
     co.put(OpenDSSIOConstants.LOAD_KVAR, reactive);
@@ -750,8 +750,8 @@ public class OpenDSSModel extends ElectricPowerModelImpl implements ElectricPowe
         generators.getInteger(OpenDSSIOConstants.NEXT_GENERATOR);          
       }    
       
-      double reactive = generator.getDesiredReactiveGeneration().doubleValue();
-      double real = generator.getDesiredRealGeneration().doubleValue();
+      double reactive = generator.getDesiredReactiveGeneration().doubleValue() * 1000.0;
+      double real = generator.getDesiredRealGeneration().doubleValue() * 1000.0;
       boolean status = generator.getDesiredStatus();
       
       co.put(OpenDSSIOConstants.GENERATOR_KVAR, reactive);

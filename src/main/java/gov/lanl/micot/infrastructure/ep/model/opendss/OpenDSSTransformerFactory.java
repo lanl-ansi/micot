@@ -46,7 +46,6 @@ public class OpenDSSTransformerFactory extends TransformerFactory {
   }
 
   
-
   /**
    * Create a transformer with a specific id
    * @param transformer
@@ -69,13 +68,14 @@ public class OpenDSSTransformerFactory extends TransformerFactory {
     Transformer transformer = registerTransformer(legacyid);   
     
     boolean status = activeTransformer.getBoolean(OpenDSSIOConstants.TRANSFORMER_STATUS);
-    double rating = objTransformer.getDouble(OpenDSSIOConstants.TRANSFORMER_CAPACITY);
-    double resistance = objTransformer.getDouble(OpenDSSIOConstants.TRANSFORMER_RESISTANCE);
+    double rating = objTransformer.getDouble(OpenDSSIOConstants.TRANSFORMER_CAPACITY) / 1000.0;    
+    
+    // Resistance = R * (MVA*10^6) / (V_LL * 10^3)^2
+    double ohmsConversion = (100000.0) / (230.0 * 230.0 * 1000.0);    
+    double resistance = objTransformer.getDouble(OpenDSSIOConstants.TRANSFORMER_RESISTANCE) * ohmsConversion;
     double reactance = 0.0; 
-    
-    
+        
     // TODO get extra fields in, and add the missing fields, also like off diagnol resistance terms
-    
     transformer.setCapacityRating(rating);
     transformer.setLongTermEmergencyCapacityRating(rating);    
     transformer.setReactance(reactance); 
@@ -83,7 +83,6 @@ public class OpenDSSTransformerFactory extends TransformerFactory {
     transformer.setShortTermEmergencyCapacityRating(rating);
     transformer.setDesiredStatus(status);
     transformer.setActualStatus(status);
-
     
     ComObject property = activeTransformer.call(OpenDSSIOConstants.PROPERTIES, OpenDSSIOConstants.TRANSFORMER_BUSES);     
     String busNames = property.getString(OpenDSSIOConstants.PROPERTY_VALUE);

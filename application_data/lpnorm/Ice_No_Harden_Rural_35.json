@@ -6067,7 +6067,7 @@
             ],
             "microgrid_cost":0.0,
             "microgrid_fixed_cost":0.0,
-      "max_microgrid": 0.0,
+            "max_microgrid":0.0,
             "is_new":false
         },
         {
@@ -6079,18 +6079,18 @@
                 true
             ],
             "max_real_phase":[
-        3.333333333333333E-4,
-        3.333333333333333E-4,
-        3.333333333333333E-4
+        0.0,
+        0.0,
+        0.0
             ],
             "max_reactive_phase":[
-        1.7991427404602907E-4,
-        1.7991427404602907E-4,
-        1.7991427404602907E-4
+        0.0,
+        0.0,
+        0.0
             ],
             "microgrid_cost":1.5,
             "microgrid_fixed_cost":500.0,
-      "max_microgrid": 0.0,
+            "max_microgrid":5000.0,
             "is_new":true
         },
         {
@@ -6107,13 +6107,13 @@
         0.0
             ],
             "max_reactive_phase":[
-        1.7991427404602907E-4,
+        0.0,
         0.0,
         0.0
             ],
             "microgrid_cost":1.5,
             "microgrid_fixed_cost":500.0,
-      "max_microgrid": 0.0,
+            "max_microgrid":5000.0,
             "is_new":true
         },
         {
@@ -6125,18 +6125,18 @@
                 true
             ],
             "max_real_phase":[
-        3.333333333333333E-4,
-        3.333333333333333E-4,
-        3.333333333333333E-4
+        0.0,
+        0.0,
+        0.0
             ],
             "max_reactive_phase":[
-        1.7991427404602907E-4,
-        1.7991427404602907E-4,
-        1.7991427404602907E-4
+        0.0,
+        0.0,
+        0.0
             ],
             "microgrid_cost":1.5,
             "microgrid_fixed_cost":500.0,
-      "max_microgrid": 0.0,
+            "max_microgrid":5000.0,
             "is_new":true
         },
         {
@@ -6148,18 +6148,18 @@
                 true
             ],
             "max_real_phase":[
-        3.333333333333333E-4,
-        3.333333333333333E-4,
-        3.333333333333333E-4
+        0.0,
+        0.0,
+        0.0
             ],
             "max_reactive_phase":[
-        1.7991427404602907E-4,
-        1.7991427404602907E-4,
-        1.7991427404602907E-4
+        0.0,
+        0.0,
+        0.0
             ],
             "microgrid_cost":1.5,
             "microgrid_fixed_cost":500.0,
-      "max_microgrid": 0.0,
+            "max_microgrid":5000.0,
             "is_new":true
         },
         {
@@ -6171,18 +6171,18 @@
                 true
             ],
             "max_real_phase":[
-        3.333333333333333E-4,
-        3.333333333333333E-4,
-        3.333333333333333E-4
+        0.0,
+        0.0,
+        0.0
             ],
             "max_reactive_phase":[
-        1.7991427404602907E-4,
-        1.7991427404602907E-4,
-        1.7991427404602907E-4
+        0.0,
+        0.0,
+        0.0
             ],
             "microgrid_cost":1.5,
             "microgrid_fixed_cost":500.0,
-      "max_microgrid": 0.0,
+            "max_microgrid":5000.0,
             "is_new":true
         },
         {
@@ -6199,13 +6199,13 @@
         0.0
             ],
             "max_reactive_phase":[
-        1.7991427404602907E-4,
+        0.0,
         0.0,
         0.0
             ],
             "microgrid_cost":1.5,
             "microgrid_fixed_cost":500.0,
-      "max_microgrid": 0.0,
+            "max_microgrid":5000.0,
             "is_new":true
         },
         {
@@ -6217,18 +6217,18 @@
                 true
             ],
             "max_real_phase":[
-        3.333333333333333E-4,
-        3.333333333333333E-4,
-        3.333333333333333E-4
+        0.0,
+        0.0,
+        0.0
             ],
             "max_reactive_phase":[
-        1.7991427404602907E-4,
-        1.7991427404602907E-4,
-        1.7991427404602907E-4
+        0.0,
+        0.0,
+        0.0
             ],
             "microgrid_cost":1.5,
             "microgrid_fixed_cost":500.0,
-      "max_microgrid": 0.0,
+            "max_microgrid":5000.0,
             "is_new":true
         },
         {
@@ -6240,18 +6240,18 @@
                 true
             ],
             "max_real_phase":[
-        3.333333333333333E-4,
-        3.333333333333333E-4,
-        3.333333333333333E-4
+        0.0,
+        0.0,
+        0.0
             ],
             "max_reactive_phase":[
-        1.7991427404602907E-4,
-        1.7991427404602907E-4,
-        1.7991427404602907E-4
+        0.0,
+        0.0,
+        0.0
             ],
             "microgrid_cost":1.5,
             "microgrid_fixed_cost":500.0,
-      "max_microgrid": 0.0,
+            "max_microgrid":5000.0,
             "is_new":true
         }
     ],
@@ -11359,7 +11359,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":2.58,
             "num_phases":3,
             "is_transformer":false,
@@ -11377,7 +11377,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":1.73,
             "num_phases":3,
             "is_transformer":false,
@@ -11395,7 +11395,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":32.22,
             "num_phases":3,
             "is_transformer":false,
@@ -11413,7 +11413,7 @@
                 true,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":5.804,
             "num_phases":1,
             "is_transformer":false,
@@ -11431,7 +11431,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":37.5,
             "num_phases":3,
             "is_transformer":false,
@@ -11449,7 +11449,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":29.73,
             "num_phases":3,
             "is_transformer":false,
@@ -11467,7 +11467,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.01,
             "num_phases":3,
             "is_transformer":false,
@@ -11485,7 +11485,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.31,
             "num_phases":3,
             "is_transformer":false,
@@ -11503,7 +11503,7 @@
                 false,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":1.71,
             "num_phases":1,
             "is_transformer":false,
@@ -11521,7 +11521,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":10.21,
             "num_phases":3,
             "is_transformer":false,
@@ -11539,7 +11539,7 @@
                 false,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":48.14,
             "num_phases":1,
             "is_transformer":false,
@@ -11557,7 +11557,7 @@
                 false,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":13.74,
             "num_phases":1,
             "is_transformer":false,
@@ -11575,7 +11575,7 @@
                 true,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":3.03,
             "num_phases":1,
             "is_transformer":false,
@@ -11593,7 +11593,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.84,
             "num_phases":3,
             "is_transformer":false,
@@ -11611,7 +11611,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":20.44,
             "num_phases":3,
             "is_transformer":false,
@@ -11629,7 +11629,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.52,
             "num_phases":3,
             "is_transformer":false,
@@ -11647,7 +11647,7 @@
                 true,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":23.32,
             "num_phases":1,
             "is_transformer":false,
@@ -11665,7 +11665,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":36.82,
             "num_phases":3,
             "is_transformer":false,
@@ -11683,7 +11683,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.01,
             "num_phases":3,
             "is_transformer":false,
@@ -11701,7 +11701,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":4.9,
             "num_phases":3,
             "is_transformer":false,
@@ -11719,7 +11719,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":5.83,
             "num_phases":3,
             "is_transformer":false,
@@ -11737,7 +11737,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":2.02,
             "num_phases":3,
             "is_transformer":false,
@@ -11755,7 +11755,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.28,
             "num_phases":3,
             "is_transformer":false,
@@ -11773,7 +11773,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":1.35,
             "num_phases":3,
             "is_transformer":false,
@@ -11791,7 +11791,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":3.64,
             "num_phases":3,
             "is_transformer":false,
@@ -11809,7 +11809,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.53,
             "num_phases":3,
             "is_transformer":false,
@@ -11827,7 +11827,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":2.68,
             "num_phases":3,
             "is_transformer":false,
@@ -11845,7 +11845,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.28,
             "num_phases":3,
             "is_transformer":false,
@@ -11863,7 +11863,7 @@
                 true,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":4.86,
             "num_phases":1,
             "is_transformer":false,
@@ -11881,7 +11881,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.86,
             "num_phases":3,
             "is_transformer":false,
@@ -11899,7 +11899,7 @@
                 false,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":1.62,
             "num_phases":1,
             "is_transformer":false,
@@ -11917,7 +11917,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":10.56,
             "num_phases":3,
             "is_transformer":false,
@@ -11935,7 +11935,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":2.58,
             "num_phases":3,
             "is_transformer":false,
@@ -11953,7 +11953,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":1.73,
             "num_phases":3,
             "is_transformer":false,
@@ -11971,7 +11971,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":32.22,
             "num_phases":3,
             "is_transformer":false,
@@ -11989,7 +11989,7 @@
                 true,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":5.804,
             "num_phases":1,
             "is_transformer":false,
@@ -12007,7 +12007,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":37.5,
             "num_phases":3,
             "is_transformer":false,
@@ -12025,7 +12025,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":29.73,
             "num_phases":3,
             "is_transformer":false,
@@ -12043,7 +12043,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.01,
             "num_phases":3,
             "is_transformer":false,
@@ -12061,7 +12061,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.31,
             "num_phases":3,
             "is_transformer":false,
@@ -12079,7 +12079,7 @@
                 false,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":1.71,
             "num_phases":1,
             "is_transformer":false,
@@ -12097,7 +12097,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":10.21,
             "num_phases":3,
             "is_transformer":false,
@@ -12115,7 +12115,7 @@
                 false,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":48.14,
             "num_phases":1,
             "is_transformer":false,
@@ -12133,7 +12133,7 @@
                 false,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":13.74,
             "num_phases":1,
             "is_transformer":false,
@@ -12151,7 +12151,7 @@
                 true,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":3.03,
             "num_phases":1,
             "is_transformer":false,
@@ -12169,7 +12169,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.84,
             "num_phases":3,
             "is_transformer":false,
@@ -12187,7 +12187,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":20.44,
             "num_phases":3,
             "is_transformer":false,
@@ -12205,7 +12205,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.52,
             "num_phases":3,
             "is_transformer":false,
@@ -12223,7 +12223,7 @@
                 true,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":23.32,
             "num_phases":1,
             "is_transformer":false,
@@ -12241,7 +12241,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":36.82,
             "num_phases":3,
             "is_transformer":false,
@@ -12259,7 +12259,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.01,
             "num_phases":3,
             "is_transformer":false,
@@ -12277,7 +12277,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":4.9,
             "num_phases":3,
             "is_transformer":false,
@@ -12295,7 +12295,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":5.83,
             "num_phases":3,
             "is_transformer":false,
@@ -12313,7 +12313,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":2.02,
             "num_phases":3,
             "is_transformer":false,
@@ -12331,7 +12331,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.28,
             "num_phases":3,
             "is_transformer":false,
@@ -12349,7 +12349,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":1.35,
             "num_phases":3,
             "is_transformer":false,
@@ -12367,7 +12367,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":3.64,
             "num_phases":3,
             "is_transformer":false,
@@ -12385,7 +12385,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.53,
             "num_phases":3,
             "is_transformer":false,
@@ -12403,7 +12403,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":2.68,
             "num_phases":3,
             "is_transformer":false,
@@ -12421,7 +12421,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.28,
             "num_phases":3,
             "is_transformer":false,
@@ -12439,7 +12439,7 @@
                 true,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":4.86,
             "num_phases":1,
             "is_transformer":false,
@@ -12457,7 +12457,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.86,
             "num_phases":3,
             "is_transformer":false,
@@ -12475,7 +12475,7 @@
                 false,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":1.62,
             "num_phases":1,
             "is_transformer":false,
@@ -12493,7 +12493,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":10.56,
             "num_phases":3,
             "is_transformer":false,
@@ -12511,7 +12511,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":2.58,
             "num_phases":3,
             "is_transformer":false,
@@ -12529,7 +12529,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":1.73,
             "num_phases":3,
             "is_transformer":false,
@@ -12547,7 +12547,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":32.22,
             "num_phases":3,
             "is_transformer":false,
@@ -12565,7 +12565,7 @@
                 true,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":5.804,
             "num_phases":1,
             "is_transformer":false,
@@ -12583,7 +12583,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":37.5,
             "num_phases":3,
             "is_transformer":false,
@@ -12601,7 +12601,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":29.73,
             "num_phases":3,
             "is_transformer":false,
@@ -12619,7 +12619,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.01,
             "num_phases":3,
             "is_transformer":false,
@@ -12637,7 +12637,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.31,
             "num_phases":3,
             "is_transformer":false,
@@ -12655,7 +12655,7 @@
                 false,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":1.71,
             "num_phases":1,
             "is_transformer":false,
@@ -12673,7 +12673,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":10.21,
             "num_phases":3,
             "is_transformer":false,
@@ -12691,7 +12691,7 @@
                 false,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":48.14,
             "num_phases":1,
             "is_transformer":false,
@@ -12709,7 +12709,7 @@
                 false,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":13.74,
             "num_phases":1,
             "is_transformer":false,
@@ -12727,7 +12727,7 @@
                 true,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":3.03,
             "num_phases":1,
             "is_transformer":false,
@@ -12745,7 +12745,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.84,
             "num_phases":3,
             "is_transformer":false,
@@ -12763,7 +12763,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":20.44,
             "num_phases":3,
             "is_transformer":false,
@@ -12781,7 +12781,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.52,
             "num_phases":3,
             "is_transformer":false,
@@ -12799,7 +12799,7 @@
                 true,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":23.32,
             "num_phases":1,
             "is_transformer":false,
@@ -12817,7 +12817,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":36.82,
             "num_phases":3,
             "is_transformer":false,
@@ -12835,7 +12835,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.01,
             "num_phases":3,
             "is_transformer":false,
@@ -12853,7 +12853,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":4.9,
             "num_phases":3,
             "is_transformer":false,
@@ -12871,7 +12871,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":5.83,
             "num_phases":3,
             "is_transformer":false,
@@ -12889,7 +12889,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":2.02,
             "num_phases":3,
             "is_transformer":false,
@@ -12907,7 +12907,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.28,
             "num_phases":3,
             "is_transformer":false,
@@ -12925,7 +12925,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":1.35,
             "num_phases":3,
             "is_transformer":false,
@@ -12943,7 +12943,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":3.64,
             "num_phases":3,
             "is_transformer":false,
@@ -12961,7 +12961,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.53,
             "num_phases":3,
             "is_transformer":false,
@@ -12979,7 +12979,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":2.68,
             "num_phases":3,
             "is_transformer":false,
@@ -12997,7 +12997,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.28,
             "num_phases":3,
             "is_transformer":false,
@@ -13015,7 +13015,7 @@
                 true,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":4.86,
             "num_phases":1,
             "is_transformer":false,
@@ -13033,7 +13033,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":0.86,
             "num_phases":3,
             "is_transformer":false,
@@ -13051,7 +13051,7 @@
                 false,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":1.62,
             "num_phases":1,
             "is_transformer":false,
@@ -13069,7 +13069,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":10.56,
             "num_phases":3,
             "is_transformer":false,
@@ -13087,7 +13087,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":4.0,
             "num_phases":3,
             "is_transformer":false,
@@ -13106,7 +13106,7 @@
                 false,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":4.0,
             "num_phases":3,
             "is_transformer":false,
@@ -13125,7 +13125,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":2.0,
             "num_phases":3,
             "is_transformer":false,
@@ -13144,7 +13144,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":2.0,
             "num_phases":3,
             "is_transformer":false,
@@ -13163,7 +13163,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":2.0,
             "num_phases":3,
             "is_transformer":false,
@@ -13182,7 +13182,7 @@
                 false,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":2.0,
             "num_phases":3,
             "is_transformer":false,
@@ -13201,7 +13201,7 @@
                 true,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":2.0,
             "num_phases":3,
             "is_transformer":false,
@@ -13220,7 +13220,7 @@
                 false,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":2.0,
             "num_phases":3,
             "is_transformer":false,
@@ -13239,7 +13239,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":3.0,
             "num_phases":3,
             "is_transformer":false,
@@ -13258,7 +13258,7 @@
                 false,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":3.0,
             "num_phases":3,
             "is_transformer":false,
@@ -13277,7 +13277,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":3.0,
             "num_phases":3,
             "is_transformer":false,
@@ -13296,7 +13296,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":3.0,
             "num_phases":3,
             "is_transformer":false,
@@ -13315,7 +13315,7 @@
                 true,
                 true
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":3.0,
             "num_phases":3,
             "is_transformer":false,
@@ -13333,7 +13333,7 @@
                 false,
                 false
             ],
-            "capacity":5760.0,
+            "capacity":5.76,
             "length":3.0,
             "num_phases":3,
             "is_transformer":false,
@@ -13352,7 +13352,7 @@
                 true,
                 true
             ],
-            "capacity":25000.0,
+            "capacity":25.0,
             "length":1.0,
             "num_phases":3,
             "is_transformer":true,
@@ -13370,7 +13370,7 @@
                 true,
                 true
             ],
-            "capacity":500.0,
+            "capacity":0.5,
             "length":1.0,
             "num_phases":3,
             "is_transformer":true,
@@ -13388,7 +13388,7 @@
                 true,
                 true
             ],
-            "capacity":25000.0,
+            "capacity":25.0,
             "length":1.0,
             "num_phases":3,
             "is_transformer":true,
@@ -13406,7 +13406,7 @@
                 true,
                 true
             ],
-            "capacity":500.0,
+            "capacity":0.5,
             "length":1.0,
             "num_phases":3,
             "is_transformer":true,
@@ -13424,7 +13424,7 @@
                 true,
                 true
             ],
-            "capacity":25000.0,
+            "capacity":25.0,
             "length":1.0,
             "num_phases":3,
             "is_transformer":true,
@@ -13442,7 +13442,7 @@
                 true,
                 true
             ],
-            "capacity":500.0,
+            "capacity":0.5,
             "length":1.0,
             "num_phases":3,
             "is_transformer":true,
@@ -13460,7 +13460,7 @@
                 false,
                 false
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13478,7 +13478,7 @@
                 true,
                 false
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13496,7 +13496,7 @@
                 false,
                 true
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13514,7 +13514,7 @@
                 false,
                 false
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13532,7 +13532,7 @@
                 true,
                 false
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13550,7 +13550,7 @@
                 false,
                 true
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13568,7 +13568,7 @@
                 false,
                 false
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13586,7 +13586,7 @@
                 true,
                 false
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13604,7 +13604,7 @@
                 false,
                 true
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13622,7 +13622,7 @@
                 false,
                 false
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13640,7 +13640,7 @@
                 true,
                 false
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13658,7 +13658,7 @@
                 false,
                 true
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13676,7 +13676,7 @@
                 false,
                 false
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13694,7 +13694,7 @@
                 true,
                 false
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13712,7 +13712,7 @@
                 false,
                 true
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13730,7 +13730,7 @@
                 false,
                 false
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13748,7 +13748,7 @@
                 true,
                 false
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,
@@ -13766,7 +13766,7 @@
                 false,
                 true
             ],
-            "capacity":20000.0,
+            "capacity":20.0,
             "length":1.0,
             "num_phases":1,
             "is_transformer":true,

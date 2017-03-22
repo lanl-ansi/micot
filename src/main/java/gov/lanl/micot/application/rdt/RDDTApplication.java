@@ -44,8 +44,19 @@ public class RDDTApplication implements Application {
     this.model = model;
   }
 
+  /**
+   * Sets the algorithm
+   * @param optimizer
+   */
   public void setAlgorithm(Optimizer<ElectricPowerNode, ElectricPowerModel> optimizer) {
     this.algorithm = optimizer;
   }
-  
+
+  /**
+   * Get the electric power model
+   * @return
+   */
+  public ElectricPowerModel getModel() {
+    return model;
+  }
 }

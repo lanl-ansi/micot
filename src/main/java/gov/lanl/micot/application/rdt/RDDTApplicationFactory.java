@@ -3,7 +3,6 @@ package gov.lanl.micot.application.rdt;
 import java.io.IOException;
 import java.util.Collection;
 
-import gov.lanl.micot.infrastructure.application.Application;
 import gov.lanl.micot.infrastructure.application.ApplicationFactory;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
@@ -25,7 +24,7 @@ public class RDDTApplicationFactory implements ApplicationFactory {
 
   @SuppressWarnings("unchecked")
   @Override
-  public Application createApplication(ProjectConfiguration configuration) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
+  public RDDTApplication createApplication(ProjectConfiguration configuration) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
     
     // set up the models for the application
     if (configuration.getModels().size() > 1) {
