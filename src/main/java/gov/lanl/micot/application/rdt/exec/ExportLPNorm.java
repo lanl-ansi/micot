@@ -35,8 +35,8 @@ public class ExportLPNorm {
     String dir = "application_data" + File.separatorChar + "rdt" + File.separatorChar + "config" 
     + File.separatorChar + "123_Network" + File.separatorChar;
     String out = "network123";
-    String directories[] = { "0.95 Damage Rate" };
-    String output_postfix[] = { "_95" };
+    String directories[] = { "0.5 Damage Rate" };
+    String output_postfix[] = { "_50" };
     String master_fn = "config.json";    
  
     

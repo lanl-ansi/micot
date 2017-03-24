@@ -1,5 +1,6 @@
 package gov.lanl.micot.infrastructure.project;
 
+import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.infrastructure.application.Application;
 import gov.lanl.micot.infrastructure.application.ApplicationFactory;
 import gov.lanl.micot.infrastructure.config.AssetModification;
@@ -112,7 +113,7 @@ public class ProjectConfigurationUtility {
             found = true;
             for (String key2 : config.getAttributes().keySet()) {
               AssetModifierImpl impl = new AssetModifierImpl(key2, config.getAttributes().get(key2));
-              scenario.addModification(asset, impl);
+              scenario.addModification(asset, impl);              
             }
           }
         }

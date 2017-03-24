@@ -2,12 +2,7 @@ package gov.lanl.micot.application.rdt;
 
 import gov.lanl.micot.infrastructure.application.Application;
 import gov.lanl.micot.infrastructure.application.ApplicationOutput;
-import gov.lanl.micot.infrastructure.ep.model.Bus;
-import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
-import gov.lanl.micot.infrastructure.ep.model.ElectricPowerNode;
-import gov.lanl.micot.infrastructure.ep.model.Generator;
-import gov.lanl.micot.infrastructure.ep.model.Load;
 import gov.lanl.micot.infrastructure.project.JsonProjectConfigurationReader;
 import gov.lanl.micot.infrastructure.project.ProjectConfiguration;
 import gov.lanl.micot.application.lpnorm.LPNormApplicationFactory;
@@ -18,8 +13,6 @@ import gov.lanl.micot.application.rdt.RDDTApplicationFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import junit.framework.TestCase;
 
@@ -74,7 +67,8 @@ public class Test123Network extends TestCase {
       return;
     }
     
-    String filename = PATH + File.separatorChar + "application_data" + File.separatorChar + "lpnorm" + File.separatorChar + "network123_0.json";
+//    String filename = PATH + File.separatorChar + "application_data" + File.separatorChar + "lpnorm" + File.separatorChar + "network123_0.json";
+    String filename = PATH + File.separatorChar + "application_data" + File.separatorChar + "lpnorm" + File.separatorChar + "network123_35.json";
 
     LPNormJsonProjectConfigurationReader reader = new LPNormJsonProjectConfigurationReader();
     ProjectConfiguration configuration = reader.readConfiguration(filename);    
