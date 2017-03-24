@@ -6,7 +6,7 @@ import gov.lanl.micot.infrastructure.project.JsonProjectConfigurationReader;
 import gov.lanl.micot.infrastructure.project.ProjectConfiguration;
 import gov.lanl.micot.infrastructure.project.ProjectConfigurationUtility;
 import gov.lanl.micot.infrastructure.project.ScenarioConfiguration;
-import gov.lanl.micot.application.rdt.io.RdtLPNormExporter;
+import gov.lanl.micot.application.rdt.io.RDTLPNormExporter;
 
 import java.io.File;
 import java.io.IOException;
@@ -152,7 +152,7 @@ public class ExportLPNorm {
         s.add(c.getScenario());
       }
 
-      RdtLPNormExporter exporter = new RdtLPNormExporter();
+      RDTLPNormExporter exporter = new RDTLPNormExporter();
       exporter.exportJsonPowerModel(model, configuration.getFirstAlgorithm(), s, output);
     }
   }

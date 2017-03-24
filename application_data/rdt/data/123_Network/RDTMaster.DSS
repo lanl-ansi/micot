@@ -1,0 +1,28 @@
+Redirect IEEE123Master.dss
+
+! The vsource is not names standardly in this model and the DCOM API won't let us get to it.  We manually create a generator to model the vsource here
+Redirect Generators.dss
+
+New Line.n1    Phases=3 Bus1=25.1.2.3   Bus2=48.1.2.3   LineCode=12    Length=0.275
+New Line.n2    Phases=3 Bus1=35.1.2.3   Bus2=65.1.2.3   LineCode=12    Length=1.0
+New Line.n3_3    Phases=1 Bus1=64.2   Bus2=108.2   LineCode=12    Length=0.5
+New Line.n4_3    Phases=1 Bus1=75.3   Bus2=85.3   LineCode=12    Length=0.5
+New Line.n5_1    Phases=1 Bus1=71.1   Bus2=450.1   LineCode=12    Length=0.6
+New Line.n6    Phases=3 Bus1=65.1.2.3   Bus2=151.1.2.3   LineCode=12    Length=1.1
+New Line.n7    Phases=3 Bus1=86.1.2.3   Bus2=610.1.2.3   LineCode=12    Length=1.5
+New Line.n8    Phases=3 Bus1=35.1.2.3   Bus2=57.1.2.3   LineCode=12    Length=1.75
+New Line.n9    Phases=3 Bus1=13.1.2.3   Bus2=95.1.2.3   LineCode=12    Length=2.0
+
+
+New Generator.g250  Bus1=250  kV= 4.16 kW=0     Model=3 Vpu=1.0  Maxkvar=0 Minkvar=-0  
+New Generator.g450  Bus1=450  kV= 4.16 kW=0     Model=3 Vpu=1.0  Maxkvar=0 Minkvar=-0  
+New Generator.g95  Bus1=95  kV= 4.16 kW=0     Model=3 Vpu=1.0  Maxkvar=0 Minkvar=-0  
+New Generator.g610  Bus1=610  kV= 4.16 kW=0     Model=3 Vpu=1.0  Maxkvar=0 Minkvar=-0  
+New Generator.g300  Bus1=300  kV= 4.16 kW=0     Model=3 Vpu=1.0  Maxkvar=0 Minkvar=-0  
+New Generator.g48   Bus1=48  kV= 4.16 kW=0     Model=3 Vpu=1.0  Maxkvar=0 Minkvar=-0  
+New Generator.g76   Bus1=76  kV= 4.16 kW=0     Model=3 Vpu=1.0  Maxkvar=0 Minkvar=-0  
+New Generator.g64   Bus1=64  kV= 4.16 kW=0     Model=3 Vpu=1.0  Maxkvar=0 Minkvar=-0  
+
+
+
+Buscoords Buscoords.dat

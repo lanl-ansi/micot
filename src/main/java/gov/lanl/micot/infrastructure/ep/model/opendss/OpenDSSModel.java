@@ -94,7 +94,11 @@ public class OpenDSSModel extends ElectricPowerModelImpl implements ElectricPowe
 		}
 
 		
-    // get the source generator // TODO... this is a hack, but I can't see any other way to identify the source bus
+    // get the source generator 
+		/**
+		 * OpenDSS Dcom does not have functionality to access the "vsource" which is the actual source. If we explict name the source bus
+		 * "sourcebus" this will work.  The alternative is to create a generator in the dss file and add it there.
+		 */		
 		Bus sourceBus = busMap.get("sourcebus");
 		if (sourceBus != null) {
 		  Generator sourceGenerator = getGeneratorFactory().createSourceGenerator(sourceBus);

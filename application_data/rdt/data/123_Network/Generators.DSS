@@ -1,0 +1,12 @@
+
+! Generator Definitions
+
+! The following buses just have a voltage target and kvar limits defined.
+! The kW value is defined as zero, but this is illegal in the OpenDSS Generator model
+! So we just put a small value (1 kW) here and use model 3 to regulate the bus.
+
+
+! Will will manually define a generator at the vsource in bus 150 because the DCOM API won't let us go there.
+New Generator.g150  Bus1=150  kV= 4.16 kW=400000     Model=3 Vpu=1.0  Maxkvar=400000 Minkvar=-400000  
+
+

@@ -74,7 +74,7 @@ public class OpenDSSLineFactory extends LineFactory {
     ArrayList<Double> rmatrix = objLine.getDoubleArray(OpenDSSIOConstants.LINE_RMATRIX);
     ArrayList<Double> xmatrix = objLine.getDoubleArray(OpenDSSIOConstants.LINE_XMATRIX);
     
-    int numberOfPhases = 0;
+    int numberOfPhases = 3;
     String bus1PhaseName = objLine.getString(OpenDSSIOConstants.LINE_FROM_BUS);
     boolean carriesPhaseA = false;
     boolean carriesPhaseB = false;
