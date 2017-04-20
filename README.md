@@ -128,7 +128,40 @@ If you wish to configure MICOT to work with CPLEX to perform optimization of MIL
 
 ### All
 
-1. Add the directory where the micot native libraries reside to the PATH variable of your machine. For linux this is the location of scipLibrary.so. For windows this is the location of scipLibrary.dll. For mac this is the location of libscip.dylib.
+1. [Option 1] Add the directory where the micot native libraries reside to the PATH variable of your machine. For linux this is the location of scipLibrary.so. For windows this is the location of scipLibrary.dll. For mac this is the location of libscip.dylib.
+
+2. [Option 2]
+  * **Linux**
+    1.  Confirm that /usr/local/bin appears in your PATH variable
+    ```
+    echo $PATH
+    ```
+    If it does, place scipLibrary.so in /usr/local/bin/ 
+    ```
+    sudo cp scipLibrary.so /usr/local/bin/
+    ```
+    2. Scip requires the following libraries  libz.so.1, libgmp.so.10, libreadline.so.6, libgfortran.so.3, libgcc_s.so,libc.so.6,ld-linux-x86-64.so.2. These codes are typically installed by default.  If not, use apt-get
+    ```
+    apt-get update
+    apt-get -y upgrade
+    apt-get -y install gcc g++ gfortran libreadline-dev libgmp-dev zlib1g-dev libncurses-dev make cmake wget libreadline6 libreadline6-dev
+    ```
+  * **Mac**
+    1. Place the contents of scip/mac in /usr/local/lib/
+    ```
+    sudo cp scip/mac/* /usr/local/lib/
+    ```
+  *  **Windows**
+    1. Unlike linux and mac, there is no default "local" directory for warehousing binaries. Best practices is to add the scip windows directory the PATH variable
+      * Windows prefers that environment variables be modified through its GUI options
+        1. Select Start, select Control Panel. double click System, and select the Advanced tab.
+        2. Click Environment Variables. 
+        3. In the Edit System Variable (or New System Variable) window, specify the value of the PATH environment variable. Append the scip directory by using the syntax ";scip_directory"
+      * The alternative is modifying the PATH variable at the command line or batch script requries this command
+      ```
+      setx PATH "%PATH%;scip_directory
+      ```
+      * One could bypass the need to update the PATH variable by putting the windows scip libraries in %systemroot\system% (Windows 7), but that is not recommended.
 
 ## [Optional] COIN-OR Installation
 
