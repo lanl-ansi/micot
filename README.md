@@ -115,11 +115,20 @@ If you wish to configure MICOT to work with CPLEX to perform optimization of MIL
   to .classpath, where foo is the location of your cplex.jar file
   * This step might have to be repeated during git updates 
 
-TODO: Figure out instructions on how to do this "right" using Maven and Cplex as a dependency in the pom.xml.
-
 ## [Optional] SCIP Installation
 
-TODO
+1. Obtain a license for [SCIP](http://scip.zib.de/)
+
+### LANL
+1. Download the native libraries using the following command ```git clone https://github.lanlytics.com:rbent/micot-libraries.git```
+
+### Outside LANL
+1. Request the LANL C++ micot-scip bridge source code
+2. Build the micot-scip native libraries using the provided Make file
+
+### All
+
+1. Add the directory where the micot native libraries reside to the PATH variable of your machine. For linux this is the location of scipLibrary.so. For windows this is the location of scipLibrary.dll. For mac this is the location of libscip.dylib.
 
 ## [Optional] COIN-OR Installation
 
@@ -127,7 +136,10 @@ TODO
 
 ## [Optional] OpenDSS Installation
 
-TODO
+OpenDSS is supported by windows platforms only
+
+1. Download and install [OpenDSS](https://sourceforge.net/projects/electricdss/files/). Version 7.6.5 is the currently tested and supported version.
+2. Follow the DCOM installation instructions.
 
 ## [Optional] DEW Installation
 
