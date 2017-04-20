@@ -153,7 +153,11 @@ TODO
 
 ## Run Resilient Design Executable
 
-TODO
+The resilient design executable runs a program that optimally designs electric power distribution systems for resiliency applications. The details of the model are provided in this paper
+
+E. Yamangil, R. Bent, S. Backhaus. Designing Resilient Electrical Distribution Grids. Proceedings of the 29th Conference on Artificial Intelligence (AAAI 2015), January 2015, Austin, Texas. 
+
+Documentation on running the code is found here https://github.com/lanl-ansi/micot/wiki/Resilient-Design-Executable
 
 ## Run Powerworld Executable
 
