@@ -55,7 +55,7 @@ public class PowerworldIOConstants {
   public static final String BUS_PQ           = "PQ";
   public static final String BUS_PV           = "PV";
   public static final String BUS_SLACK_STRING = "slack";
-
+  public static final String BUS_OWNER_NAME   = "pwOwnerName";
   
   // generator data fields
   public static final String GEN_NUM               = "pwGenID";
@@ -153,7 +153,9 @@ public class PowerworldIOConstants {
   public static final String BRANCH_REGULATED_BUS      = "pwXFRegBus";
   public static final String BRANCH_REGULATED_MAX      = "pwXFRegMax";
   public static final String BRANCH_REGULATED_MIN      = "pwXFRegMin";
-
+  public static final String BRANCH_LINE_LIMIT_FROM    = "pwLineLimitFlow";
+  public static final String BRANCH_LINE_LIMIT_TO      = "pwLineLimitFlow:1";
+  public static final String BRANCH_LINE_LIMIT_TYPE    = "pwLineLimitType";
 
   // area fields
   public static final String AREA_NUM         = "pwAreaNum";

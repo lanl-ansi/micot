@@ -7,6 +7,7 @@ import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.Generator;
 import gov.lanl.micot.infrastructure.ep.model.Load;
+import gov.lanl.micot.infrastructure.ep.model.ShuntCapacitor;
 import gov.lanl.micot.util.io.json.JSON;
 import gov.lanl.micot.util.io.json.JSONArrayBuilder;
 import gov.lanl.micot.util.io.json.JSONObjectBuilder;
@@ -39,9 +40,18 @@ public class JSONResultExporter {
     JSONArrayBuilder busesBuilder = json.createArrayBuilder();
     for (Bus bus : model.getBuses()) {
       JSONObjectBuilder busBuilder = json.createObjectBuilder();
+      double baseKV = bus.getSystemVoltageKV();
       busBuilder = busBuilder.add("bus_i", bus.toString());
-      busBuilder = busBuilder.add("vm", bus.getVoltagePU());
-      busBuilder = busBuilder.add("va", bus.getPhaseAngle());      
+      
+      JSONArrayBuilder voltageBuilder = json.createArrayBuilder();
+      voltageBuilder.add(bus.getMinimumVoltagePU() * baseKV);
+      voltageBuilder.add(bus.getVoltagePU().doubleValue() * baseKV);
+      voltageBuilder.add(bus.getMaximumVoltagePU() * baseKV);
+      busBuilder = busBuilder.add("vm", voltageBuilder);            
+      busBuilder = busBuilder.add("va", bus.getPhaseAngle());
+      busBuilder = busBuilder.add("base_kv", baseKV);
+      busBuilder = busBuilder.add("owner", bus.getOwnerName());
+      busBuilder = busBuilder.add("name", bus.getAttribute(Bus.NAME_KEY, String.class));
       busBuilder = busBuilder.add("status", bus.getActualStatus() && bus.getDesiredStatus());
       busesBuilder = busesBuilder.add(busBuilder);
     }
@@ -51,11 +61,15 @@ public class JSONResultExporter {
     JSONArrayBuilder branchesBuilder = json.createArrayBuilder();
     for (ElectricPowerFlowConnection connection : model.getFlowConnections()) {
       JSONObjectBuilder branchBuilder = json.createObjectBuilder();
+      Bus bus1 = model.getFirstNode(connection).getBus();
+      Bus bus2 = model.getSecondNode(connection).getBus();
+      double baseKV = Math.max(bus1.getSystemVoltageKV(), bus2.getSystemVoltageKV());      
       branchBuilder = branchBuilder.add("branch_i", connection.toString());
       branchBuilder = branchBuilder.add("mw_i", connection.getAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE1_KEY, Number.class).doubleValue());
       branchBuilder = branchBuilder.add("mw_j", connection.getAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE2_KEY, Number.class).doubleValue());
       branchBuilder = branchBuilder.add("mvar_i", connection.getAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE1_KEY, Number.class).doubleValue());
       branchBuilder = branchBuilder.add("mvar_j", connection.getAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE2_KEY, Number.class).doubleValue());
+      branchBuilder = branchBuilder.add("base_kv", baseKV);      
       branchBuilder = branchBuilder.add("status", connection.getActualStatus() && connection.getDesiredStatus());
       branchesBuilder = branchesBuilder.add(branchBuilder);
     }
@@ -66,8 +80,16 @@ public class JSONResultExporter {
     for (Generator generator : model.getGenerators()) {
       JSONObjectBuilder generatorBuilder = json.createObjectBuilder();
       generatorBuilder = generatorBuilder.add("gen_i", generator.toString());
-      generatorBuilder = generatorBuilder.add("mw", generator.getActualRealGeneration().doubleValue());
-      generatorBuilder = generatorBuilder.add("mvar", generator.getActualReactiveGeneration().doubleValue());
+      JSONArrayBuilder mwBuilder = json.createArrayBuilder();
+      mwBuilder.add(generator.getRealGenerationMin());
+      mwBuilder.add(generator.getActualRealGeneration().doubleValue());
+      mwBuilder.add(generator.getDesiredRealGenerationMax());
+      generatorBuilder = generatorBuilder.add("mw", mwBuilder);
+      JSONArrayBuilder mvarBuilder = json.createArrayBuilder();
+      mvarBuilder.add(generator.getReactiveMin());
+      mvarBuilder.add(generator.getActualReactiveGeneration().doubleValue());
+      mvarBuilder.add(generator.getDesiredReactiveMax());
+      generatorBuilder = generatorBuilder.add("mvar", mvarBuilder);
       generatorBuilder = generatorBuilder.add("status", generator.getActualStatus() && generator.getDesiredStatus());
       generatorsBuilder = generatorsBuilder.add(generatorBuilder);
     }
@@ -78,13 +100,33 @@ public class JSONResultExporter {
     for (Load load : model.getLoads()) {
       JSONObjectBuilder loadBuilder = json.createObjectBuilder();
       loadBuilder = loadBuilder.add("load_i", load.toString());
-      loadBuilder = loadBuilder.add("mw", load.getActualRealLoad().doubleValue());
-      loadBuilder = loadBuilder.add("mvar", load.getActualReactiveLoad().doubleValue());
+      JSONArrayBuilder mwBuilder = json.createArrayBuilder();
+      mwBuilder.add(0.0);
+      mwBuilder.add(load.getActualRealLoad().doubleValue());
+      mwBuilder.add(load.getDesiredRealLoad().doubleValue());
+      loadBuilder = loadBuilder.add("mw", mwBuilder);
+      JSONArrayBuilder mvarBuilder = json.createArrayBuilder();
+      mvarBuilder.add(0.0);
+      mvarBuilder.add(load.getActualReactiveLoad().doubleValue());
+      mvarBuilder.add(load.getDesiredReactiveLoad().doubleValue());
+      loadBuilder = loadBuilder.add("mvar", mvarBuilder);
       loadBuilder = loadBuilder.add("status", load.getActualStatus() && load.getDesiredStatus());
       loadsBuilder = loadsBuilder.add(loadBuilder);
     }
     mainBuilder = mainBuilder.add("load", loadsBuilder);
 
+    // get the shunt results
+    JSONArrayBuilder shuntsBuilder = json.createArrayBuilder();
+    for (ShuntCapacitor shunt : model.getShuntCapacitors()) {
+      JSONObjectBuilder shuntBuilder = json.createObjectBuilder();
+      shuntBuilder = shuntBuilder.add("shunt_i", shunt.toString());
+      shuntBuilder = shuntBuilder.add("bs", shunt.getRealCompensation() * model.getMVABase());
+      shuntBuilder = shuntBuilder.add("gs", shunt.getReactiveCompensation() * model.getMVABase());
+      shuntBuilder = shuntBuilder.add("status", shunt.getActualStatus() && shunt.getDesiredStatus());
+      shuntsBuilder = shuntsBuilder.add(shuntBuilder);
+    }
+    mainBuilder = mainBuilder.add("shunt", shuntsBuilder);
+    
     // write to a generic output stream
     JSONWriter writer = json.createWriter(ps);
     writer.write(mainBuilder.build());

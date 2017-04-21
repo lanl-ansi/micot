@@ -10,7 +10,6 @@ import gov.lanl.micot.infrastructure.application.ApplicationOutput;
 import gov.lanl.micot.infrastructure.config.AssetModification;
 import gov.lanl.micot.infrastructure.ep.application.ac.ACSimulationApplication;
 import gov.lanl.micot.infrastructure.ep.io.ElectricPowerModelFileFactory;
-import gov.lanl.micot.infrastructure.ep.io.powerworld.PowerworldModelFile;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.project.ApplicationConfiguration;
 import gov.lanl.micot.infrastructure.project.JsonConfigurationUtilities;

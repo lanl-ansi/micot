@@ -23,6 +23,7 @@ public interface Bus extends Cloneable, Component {
   public static final String PHASE_ANGLE_A_KEY      = "PHASE_ANGLE_A";
   public static final String PHASE_ANGLE_B_KEY      = "PHASE_ANGLE_B";
   public static final String PHASE_ANGLE_C_KEY      = "PHASE_ANGLE_C";
+  public static final String OWNER_KEY              = "OWNER";
   
   public static double DEFAULT_MINIMUM_VOLTAGE             = .9;
   public static double DEFAULT_MAXIMUM_VOLTAGE             = 1.1;
@@ -121,6 +122,19 @@ public interface Bus extends Cloneable, Component {
    */
   public Number getPhaseAngle();
 
+  /**
+   * Set the owner name
+   * @param ownerName
+   * @return
+   */
+  public void setOwnerName(String ownerName);
+
+  /**
+   * Gets the owner name
+   * @return
+   */
+  public String getOwnerName();
+  
   /**
    * Clone a bus
    * @return

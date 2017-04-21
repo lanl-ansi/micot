@@ -203,5 +203,4 @@ Under the Windows operating system, running and executing powerworld from MICOT 
   *To run from anywhere, add the directory where the file "jacob-1.18-x64.dll" is located to your PATH environment variable 
 5. From within target directory run the following command ```java -jar micot-powerworld.jar -p <powerworld or raw file> -m (optional) <modification json file> ```  
 
-TODO document schema of json file
-
+See https://github.com/lanl-ansi/micot/wiki/Run-Powerworld-Executible for more details.

@@ -115,6 +115,20 @@ public class BusImpl extends ComponentImpl implements Bus {
   public void setMinimumVoltagePU(double pu) {
     setAttribute(MINIMUM_VOLTAGE_PU_KEY, pu);
   }
+
+  @Override
+  public void setOwnerName(String ownerName) {
+    setAttribute(OWNER_KEY, ownerName);
+  }
+
+  @Override
+  public String getOwnerName() {
+    String owner = getAttribute(OWNER_KEY, String.class);
+    if (owner == null) {
+      return "";
+    }
+    return owner;
+  }
   
   @Override
   public BusImpl clone() {

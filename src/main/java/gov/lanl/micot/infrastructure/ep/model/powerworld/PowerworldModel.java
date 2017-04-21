@@ -161,7 +161,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
             
       for (int i = 0; i < busids.size(); ++i) {
         int busid = busids.get(i);
-        String genid = genids.get(i);
+        String genid = genids.get(i).trim();
         Bus bus = busMap.get(busid);
         
         Generator generator = genFactory.createGenerator(powerWorldModel, bus, new Pair<Integer,String>(busid, genid));
@@ -202,7 +202,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
             
       for (int i = 0; i < busids.size(); ++i) {
         int busid = busids.get(i);
-        String loadid = loadids.get(i);
+        String loadid = loadids.get(i).trim();
         Bus bus = busMap.get(busid);
         
         Load load = loadFactory.createLoad(powerWorldModel, bus, new Pair<Integer,String>(busid, loadid));
@@ -254,7 +254,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
 
       Bus bus = busMap.get(shuntids.get(i));
       
-      if (mw != null || mvar != null) {
+      if ( (mw != null || mvar != null) && Double.parseDouble(mw) != 0.0 && Double.parseDouble(mvar) != 0.0) {
         ShuntCapacitor capacitor = shuntFactory.createShuntCapacitor(powerWorldModel, bus, shuntids.get(i));
         addShuntCapacitor(capacitor,bus);
         areas.put(capacitor, areas.get(bus));
@@ -325,12 +325,11 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
       ArrayList<Integer> fromids = data.get(0).getIntArrayValue();
       ArrayList<Integer> toids = data.get(1).getIntArrayValue();
       ArrayList<String> branchids = data.get(2).getStringArrayValue();
-
             
       for (int i = 0; i < branchids.size(); ++i) {
         int fromid = fromids.get(i);
         int toid = toids.get(i);
-        String id = branchids.get(i);
+        String id = branchids.get(i).trim();
 
         String fields[] = new String[]{PowerworldIOConstants.BRANCH_BUS_FROM_NUM, PowerworldIOConstants.BRANCH_BUS_TO_NUM, PowerworldIOConstants.BRANCH_NUM, PowerworldIOConstants.BRANCH_AREA, PowerworldIOConstants.BRANCH_ZONE, PowerworldIOConstants.BRANCH_TYPE, PowerworldIOConstants.BRANCH_REGULATED_BUS}; 
         String values[] = new String[] {fromid+"", toid+"", id+"", "","","",""};

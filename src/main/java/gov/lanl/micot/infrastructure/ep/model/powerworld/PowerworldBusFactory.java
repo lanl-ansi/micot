@@ -32,8 +32,9 @@ public class PowerworldBusFactory extends BusFactory {
     
     String fields[] = new String[]{PowerworldIOConstants.BUS_NUM, PowerworldIOConstants.BUS_NAME, PowerworldIOConstants.BUS_PU_VOLTAGE, 
         PowerworldIOConstants.BUS_ANGLE, PowerworldIOConstants.BUS_LATITUDE, PowerworldIOConstants.BUS_LONGITUDE, 
-        PowerworldIOConstants.BUS_KV, PowerworldIOConstants.BUS_MAX_VOLTAGE, PowerworldIOConstants.BUS_MIN_VOLTAGE, PowerworldIOConstants.BUS_CAT, PowerworldIOConstants.BUS_STATUS}; 
-    String values[] = new String[] {id+"", "", "", "", "", "", "", "", "", "", ""};
+        PowerworldIOConstants.BUS_KV, PowerworldIOConstants.BUS_MAX_VOLTAGE, PowerworldIOConstants.BUS_MIN_VOLTAGE, 
+        PowerworldIOConstants.BUS_CAT, PowerworldIOConstants.BUS_STATUS, PowerworldIOConstants.BUS_OWNER_NAME}; 
+    String values[] = new String[] {id+"", "", "", "", "", "", "", "", "", "", "", ""};
         
     ComDataObject dataObject = powerworld.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.BUS, fields, values);
     ArrayList<ComDataObject> busData = dataObject.getArrayValue();
@@ -53,6 +54,7 @@ public class PowerworldBusFactory extends BusFactory {
     String minPUString = bData.get(8).getStringValue();
     String busCat = bData.get(9).getStringValue();
     String statusString = bData.get(10).getStringValue();
+    String ownerName = bData.get(11).getStringValue();
     
     double pu = Double.parseDouble(puString.trim());
     double angle = Double.parseDouble(angleString.trim());
@@ -73,6 +75,7 @@ public class PowerworldBusFactory extends BusFactory {
     bus.setMinimumVoltagePU(minPU);
     bus.setPhaseAngle(angle);
     bus.setVoltagePU(pu); 
+    bus.setOwnerName(ownerName);
     
     bus.setAttribute(PowerworldModelConstants.POWERWORLD_BUS_CATEGORY_KEY, busCat);
     

@@ -1,0 +1,21 @@
+{
+      "modifications": [
+        {
+          "component_type": "gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection",
+          "id": [
+            {
+              "id_key": "POWERWORLD_LEGACY_ID",
+              "id_value": "(6,7,2)",
+              "id_type": "string"
+            }
+          ],
+          "modification": [
+            {
+              "modification_key": "DESIRED_STATUS",
+              "modification_value": false,
+              "modification_type": "boolean"
+            }
+          ]
+        }
+      ]
+}
