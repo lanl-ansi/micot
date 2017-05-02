@@ -7,7 +7,14 @@
   <version>1.0</version>
   <name>micot-utilities</name>
   <url>http://maven.apache.org</url>
-  <dependencies>
+    <dependencies> 
+     <dependency>
+      <groupId>hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>1.8.0.7</version>
+      <scope>compile</scope>
+    </dependency> 
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
