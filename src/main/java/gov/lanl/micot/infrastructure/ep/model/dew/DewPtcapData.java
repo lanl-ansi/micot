@@ -118,35 +118,6 @@ public class DewPtcapData {
   }
 
   /**
-   * @return the dnomkva
-   */
-  public double getDnomkva() {
-    return dnomkva;
-  }
-
-  /**
-   * @param dnomkva the dnomkva to set
-   */
-  public void setDnomkva(double dnomkva) {
-    this.dnomkva = dnomkva;
-  }
-  
-
-  /**
-   * @return the snumsteps
-   */
-  public int getSnumsteps() {
-    return this.snumsteps;
-  }
-  
-  /**
-   * @param snumsteps the snumsteps to set
-   */
-  public void setSnumsteps(int snumsteps) {
-    this.snumsteps = snumsteps;
-  }
-  
-  /**
    * @return the snumposrack
    */
   public int getSnumposrack() {
