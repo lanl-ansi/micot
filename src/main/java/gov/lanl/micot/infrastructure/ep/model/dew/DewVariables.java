@@ -33,7 +33,8 @@ public class DewVariables {
   	dataSources.put(DewVariables.DEW_DATABASE_PTROW_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
   	dataSources.put(DewVariables.DEW_DATABASE_PHASE_CONDUCTOR_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(DewVariables.DEW_DATABASE_NEUTRAL_CONDUCTOR_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
-    dataSources.put(DewVariables.DEW_CONNECTION_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
+    dataSources.put(DewVariables.DEW_DATABASE_XFRM_KEY, DewModelTypeEnum.TEXTFILE_TYPE);      
+    dataSources.put(DewVariables.DEW_CONNECTION_KEY, DewModelTypeEnum.TEXTFILE_TYPE);  
     dataSources.put(DewVariables.DEW_SUBSTATION_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(DewVariables.DEW_CONNECTION1_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(DewVariables.DEW_CONNECTION2_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
@@ -133,6 +134,7 @@ public class DewVariables {
     phaseSources.put(DewVariables.DEW_DATABASE_PTROW_KEY, 0);
     phaseSources.put(DewVariables.DEW_DATABASE_NEUTRAL_CONDUCTOR_KEY, 0);
     phaseSources.put(DewVariables.DEW_DATABASE_PHASE_CONDUCTOR_KEY, 0);
+    phaseSources.put(DewVariables.DEW_DATABASE_XFRM_KEY, 0);    
     phaseSources.put(DewVariables.DEW_CONNECTION_KEY, 0);
     phaseSources.put(DewVariables.DEW_SUBSTATION_KEY, 0);
     phaseSources.put(DewVariables.DEW_CONNECTION1_KEY, 0);
@@ -232,7 +234,8 @@ public class DewVariables {
 	  textFileIndicies.put(DewVariables.DEW_COMPONENT_TYPE_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_HEADER, DewVariables.DEW_TYPE_IDX));
 	  textFileIndicies.put(DewVariables.DEW_DATABASE_PTROW_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_HEADER, DewVariables.DEW_DATABASE_PTROW_IDX));	   	  
 	  textFileIndicies.put(DewVariables.DEW_DATABASE_PHASE_CONDUCTOR_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_CHN_HEADER, DewVariables.DEW_DATABASE_PHASE_CONDUCTOR_IDX));     
-    textFileIndicies.put(DewVariables.DEW_DATABASE_NEUTRAL_CONDUCTOR_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_CHN_HEADER, DewVariables.DEW_DATABASE_NEUTRAL_CONDUCTOR_IDX));     
+    textFileIndicies.put(DewVariables.DEW_DATABASE_NEUTRAL_CONDUCTOR_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_CHN_HEADER, DewVariables.DEW_DATABASE_NEUTRAL_CONDUCTOR_IDX));
+    textFileIndicies.put(DewVariables.DEW_DATABASE_XFRM_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_HEADER, DewVariables.DEW_DATABASE_XFRM_IDX));         
 	  textFileIndicies.put(DewVariables.DEW_CONNECTION1_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_HEADER, DewVariables.DEW_CONNECTION1_IDX));
     textFileIndicies.put(DewVariables.DEW_CONNECTION2_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_HEADER, DewVariables.DEW_CONNECTION2_IDX));    
     textFileIndicies.put(DewVariables.DEW_FEEDER_CONNECTION_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_HEADER, DewVariables.DEW_FEEDER_CONNECTION_IDX));
@@ -559,6 +562,8 @@ public class DewVariables {
   public static final String DEW_DATABASE_PTROW_KEY                       = "DEW_DATABASE_PTROW";
   public static final String DEW_DATABASE_PHASE_CONDUCTOR_KEY             = "DEW_DATABASE_PHASE_CONDUCTOR";
   public static final String DEW_DATABASE_NEUTRAL_CONDUCTOR_KEY           = "DEW_DATABASE_NEUTRAL_CONDUCTOR";
+  public static final String DEW_DATABASE_XFRM_KEY                        = "DEW_DATABASE_PARTID";
+  public static final String DEW_DATABASE_CAP_KEY                         = "DEW_DATABASE_PARTID";  
   public static final String DEW_FEEDER_NAME_KEY                          = "DEW_FEEDER_NAME";
   public static final String DEW_FEEDER_SERIAL_KEY                        = "DEW_FEEDER_SERIAL";
   
@@ -612,6 +617,7 @@ public class DewVariables {
   public static final int DEW_DATABASE_PTROW_IDX                          = 6;
   public static final int DEW_DATABASE_PHASE_CONDUCTOR_IDX                = 4;
   public static final int DEW_DATABASE_NEUTRAL_CONDUCTOR_IDX              = 5;
+  public static final int DEW_DATABASE_XFRM_IDX                           = 6;
   public static final int DEW_TARGET_LOAD_KW_A_IDX                        = 1;
   public static final int DEW_TARGET_LOAD_KVAR_A_IDX                      = 2;
   public static final int DEW_TARGET_LOAD_KW_B_IDX                        = 3;

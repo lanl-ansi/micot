@@ -16,6 +16,8 @@ import gov.lanl.micot.infrastructure.ep.model.dew.DewModelImpl;
 import gov.lanl.micot.infrastructure.ep.model.dew.DewPtcabcondData;
 import gov.lanl.micot.infrastructure.ep.model.dew.DewPtlinecondData;
 import gov.lanl.micot.infrastructure.ep.model.dew.DewPtlinespcData;
+import gov.lanl.micot.infrastructure.ep.model.dew.DewPtxfrmData;
+import gov.lanl.micot.infrastructure.ep.model.dew.DewPtcapData;
 import gov.lanl.micot.infrastructure.model.Component;
 import gov.lanl.micot.infrastructure.model.Connection;
 import gov.lanl.micot.infrastructure.model.Model;
@@ -38,6 +40,8 @@ public class DewFile extends FileParser implements ElectricPowerModelFile {
   private static final String CONNECTION_STRING_TAG = "connection.string";
   private static final String PROJECTION_STRING_TAG = "projection";
   private static final String PTLINESPC_DATABASE_TAG = "ptlinespc.database";
+  private static final String PTXFRM_DATABASE_TAG = "ptxfrm.database";
+  private static final String PTCAP_DATABASE_TAG = "ptcap.database";
 
   /**
    * Constructor
@@ -52,8 +56,11 @@ public class DewFile extends FileParser implements ElectricPowerModelFile {
     String modelFile = properties.getProperty(MODEL_FILE_TAG);
     String connectionString = properties.getProperty(CONNECTION_STRING_TAG);
     String projectionString = properties.getProperty(PROJECTION_STRING_TAG);
+    // this string is for the ms access database, should also work for xfrm table
     String ptlinespcString = properties.getProperty(PTLINESPC_DATABASE_TAG);
-
+//    String ptxfrmString = properties.getProperty(PTXFRM_DATABASE_TAG);
+//    String ptcapString = properties.getProperty(PTCAP_DATABASE_TAG);
+    
     ElectricPowerModel state = null;
     try {
       state = parseFile(modelFile.trim(), connectionString, projectionString, ptlinespcString);
@@ -80,6 +87,8 @@ public class DewFile extends FileParser implements ElectricPowerModelFile {
     ps.println(MODEL_FILE_TAG + "=" + dewfilename);
     ps.println(CONNECTION_STRING_TAG + "=" + tempModel.getDew().getConnectionString());
     ps.println(PTLINESPC_DATABASE_TAG + "=" + tempModel.getDew().getPtlinespcDatabase());
+    ps.println(PTXFRM_DATABASE_TAG + "=" + tempModel.getDew().getPtcapDatabase());    
+    ps.println(PTCAP_DATABASE_TAG + "=" + tempModel.getDew().getPtcapDatabase());
 
     ps.close();
 
@@ -96,15 +105,21 @@ public class DewFile extends FileParser implements ElectricPowerModelFile {
     DewPtlinespcDatabase database = new DewPtlinespcDatabase();
     DewPtlinecondDatabase database2 = new DewPtlinecondDatabase();
     DewPtcabcondDatabase database3 = new DewPtcabcondDatabase();
+    DewPtxfrmDatabase database4 = new DewPtxfrmDatabase();
+    DewPtcapDatabase database5 = new DewPtcapDatabase();    
 
     Collection<DewPtlinespcData> lineData = null;
     Collection<DewPtlinecondData> linecondData = null;
     Collection<DewPtcabcondData> cabcondData = null;
+    Collection<DewPtxfrmData> xfrmData = null;
+    Collection<DewPtcapData> capData = null;    
 
     try {
       lineData = database.getData(ptlinespcFile);
       linecondData = database2.getData(ptlinespcFile);
       cabcondData = database3.getData(ptlinespcFile);
+      xfrmData = database4.getData(ptlinespcFile);
+      capData = database5.getData(ptlinespcFile);
     }
     catch (SQLException e) {
       e.printStackTrace();
@@ -113,7 +128,7 @@ public class DewFile extends FileParser implements ElectricPowerModelFile {
     Dew dewEngine = connectionString == null ? new Dew() : new Dew(connectionString);
     dewEngine.connect(filename);
     DewModelFactory factory = DewModelFactory.getInstance();
-    ElectricPowerModel model = factory.createModel(dewEngine, lineData, linecondData, cabcondData);
+    ElectricPowerModel model = factory.createModel(dewEngine, lineData, linecondData, cabcondData, xfrmData, capData);
     dewEngine.setPtlinespcDatabase(ptlinespcFile);
 
     // convert all the coordinates to the standard coordinate system, if we

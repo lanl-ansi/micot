@@ -1147,10 +1147,25 @@ public class Dew {
    * get the ptline datbase
    * @return
    */
-  public String getPtlinespcDatabase() {
-    return _ptlinespcFile;
+  public String getPtcapDatabase() {
+    return _ptcapFile;
   }
   
+  /**
+   * Set the ptline database
+   * @param ptlinespcFile
+   */
+  public void setPtcapDatabase(String ptcapFile) {
+    _ptgapFile = ptcapFile;    
+  }
+
+  /**
+   * get the ptline datbase
+   * @return
+   */
+  public String getPtlinespcDatabase() {
+    return _ptlinespcFile;
+  }  
 
 
   /**

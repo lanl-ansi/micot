@@ -108,6 +108,10 @@ public class DewGeneratorFactory extends GeneratorFactory {
 	    generator.setAttribute(Generator.HAS_PHASE_A_KEY, hasPhaseA);
       generator.setAttribute(Generator.HAS_PHASE_B_KEY, hasPhaseB);
       generator.setAttribute(Generator.HAS_PHASE_C_KEY, hasPhaseC);
+      
+      int subId = Integer.parseInt(dew.getComponentData(DewVariables.DEW_SUBSTATION_KEY, legacyid, name).toString());
+      System.out.println("Substation ID: " + subId);    
+      generator.setAttribute(DewVariables.DEW_SUBSTATION_KEY, subId);  
 	    
       int ptrow = Integer.parseInt(dew.getComponentData(DewVariables.DEW_DATABASE_PTROW_KEY, legacyid, name).toString());
       DewPtlinespcData data = lineData.get(ptrow);
@@ -117,6 +121,7 @@ public class DewGeneratorFactory extends GeneratorFactory {
       generator.setAttribute(ElectricPowerFlowConnection.LINE_DESCRIPTION_KEY, lineDesc);
       generator.setAttribute(ElectricPowerFlowConnection.LINE_TYPE_KEY, lineType);
       generator.setAttribute(ElectricPowerFlowConnection.INSTALLATION_TYPE_KEY, installType);
+      
       
 	    return generator;
 	  }
@@ -186,6 +191,10 @@ public class DewGeneratorFactory extends GeneratorFactory {
     generator.setAttribute(Generator.HAS_PHASE_A_KEY, hasPhaseA);
     generator.setAttribute(Generator.HAS_PHASE_B_KEY, hasPhaseB);
     generator.setAttribute(Generator.HAS_PHASE_C_KEY, hasPhaseC);
+    
+    int subId = Integer.parseInt(dew.getComponentData(DewVariables.DEW_SUBSTATION_KEY, legacyid, name).toString());
+    System.out.println("Substation ID: " + subId);    
+    generator.setAttribute(DewVariables.DEW_SUBSTATION_KEY, subId);       
     
     int ptrow = Integer.parseInt(dew.getComponentData(DewVariables.DEW_DATABASE_PTROW_KEY, legacyid, name).toString());
     DewPtlinespcData data = lineData.get(ptrow);

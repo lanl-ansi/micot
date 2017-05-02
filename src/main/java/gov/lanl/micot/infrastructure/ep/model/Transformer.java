@@ -18,9 +18,11 @@ public interface Transformer extends ElectricPowerFlowConnection {
   public static final String TAP_RATIO_KEY                = "TAP_RATIO";
   public static final String TAP_RATIO_FORWARD_L_KEY                = "TAP_RATIO_FORWARD_L";
   public static final String TAP_RATIO_FORWARD_B_KEY                = "TAP_RATIO_FORWARD_B";
-  public static final String TAP_RATIO_BACKWARD_L_KEY                = "TAP_RATIO_BACKWARD_L";
-  public static final String TAP_RATIO_BACKWARD_B_KEY                = "TAP_RATIO_BACKWARD_B";
+  public static final String TAP_RATIO_BACKWARD_L_KEY               = "TAP_RATIO_BACKWARD_L";
+  public static final String TAP_RATIO_BACKWARD_B_KEY               = "TAP_RATIO_BACKWARD_B";
   public static final String TYPE_KEY                     = "TYPE";
+  public static final String HAS_LOAD_DROP_COMPENSATOR_KEY 			= "HAS_LOAD_DROP_COMPENSATOR";
+  public static final String HAS_UNIDIRECTIONAL_CONTROLLER_KEY 		= "HAS_UNIDIRECTIONAL_CONTROLLER";
   
   /**
    * Adds the line data listener

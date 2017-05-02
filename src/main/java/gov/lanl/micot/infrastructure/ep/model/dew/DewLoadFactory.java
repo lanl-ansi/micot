@@ -162,6 +162,9 @@ public class DewLoadFactory extends LoadFactory {
     load.setAttribute(Load.DESIRED_REACTIVE_LOAD_C_KEY, phaseCMVAR);
     load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY, phaseCMVAR);
     
+    int subId = Integer.parseInt(dew.getComponentData(DewVariables.DEW_SUBSTATION_KEY, legacyid, name).toString());
+    load.setAttribute(DewVariables.DEW_SUBSTATION_KEY, subId);
+    
     int ptrow = Integer.parseInt(dew.getComponentData(DewVariables.DEW_DATABASE_PTROW_KEY, legacyid, name).toString());
     DewPtlinespcData data = lineData.get(ptrow);
     String lineType = data == null ? "" : data.getStnam();
@@ -245,6 +248,9 @@ public class DewLoadFactory extends LoadFactory {
     load.setAttribute(Load.ACTUAL_REAL_LOAD_C_KEY, phaseCMW);
     load.setAttribute(Load.DESIRED_REACTIVE_LOAD_C_KEY, phaseCMVAR);
     load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY, phaseCMVAR);
+    
+    int subId = Integer.parseInt(dew.getComponentData(DewVariables.DEW_SUBSTATION_KEY, legacyid, name).toString());
+    load.setAttribute(DewVariables.DEW_SUBSTATION_KEY, subId);   
     
     int ptrow = Integer.parseInt(dew.getComponentData(DewVariables.DEW_DATABASE_PTROW_KEY, legacyid, name).toString());
     DewPtlinespcData data = lineData.get(ptrow);
