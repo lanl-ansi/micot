@@ -308,7 +308,7 @@ public class LPNormJsonProjectConfigurationReader {
     
   /**
    * Parse the provided string content into a JsonObject.
-   * @return
+   * @return.
    */
   private JSONObject parse(String content) {
     InputStream stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));    

@@ -8,7 +8,6 @@ import gov.lanl.micot.application.lpnorm.io.LPNormJsonProjectConfigurationReader
 import gov.lanl.micot.application.rdt.JsonResultExporter;
 import gov.lanl.micot.util.io.ParameterReader;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -21,7 +20,6 @@ public class RunLPNorm  {
   private static final String CONFIG_FLAG = "-c";
   private static final String EXPORT_FLAG = "-e";
     
-  private static final String DEFAULT_CONFIG_FILE = "lpnorm" + File.separatorChar + "example.json";
   private static final String DEFAULT_EXPORT_FILE = "out.json";
   
   /**
@@ -46,7 +44,6 @@ public class RunLPNorm  {
     ApplicationOutput output = application.execute();
     
     // export the results
-
     JsonResultExporter exporter = new JsonResultExporter();
     exporter.exportResults(output, configuration, exportFile);
     

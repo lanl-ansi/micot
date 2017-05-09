@@ -31,6 +31,9 @@ public class JsonResultExporter {
   private static final String DESIGN_SOLUTION_TAG = "design_solution";
   private static final String DESIGN_COST_TAG = "design_cost";
   private static final String IS_FEASIBLE_TAG = "is_feasible";
+  private static final String CRITICAL_LOAD_MET_TAG = "critical_load_met";
+  private static final String NON_CRITICAL_LOAD_MET_TAG = "non_critical_load_met";
+  private static final String TOTAL_LOAD_TAG = "total_load";
   
   private static final String LINES_TAG = "lines";
   private static final String LINE_ID_TAG = "id";
@@ -81,21 +84,75 @@ public class JsonResultExporter {
     if (model.getAssets().iterator().next().getAttribute("LPNORM_LEGACY_ID") != null) {
       tag = "LPNORM_LEGACY_ID";
     }
-
     
     double objective = output.getDouble(RDDTApplication.OBJECTIVE_FLAG);
     boolean isFeasible = output.getBoolean(RDDTApplication.IS_FEASIBLE_FLAG);
-        
+    
+    double totalLoad       = 0;
+    for (Load load : model.getLoads()) {
+      Number loadA = load.getAttribute(Load.DESIRED_REAL_LOAD_A_KEY, Number.class);
+      Number loadB =  load.getAttribute(Load.DESIRED_REAL_LOAD_B_KEY, Number.class);
+      Number loadC = load.getAttribute(Load.DESIRED_REAL_LOAD_C_KEY, Number.class);
+
+      if (loadA != null) {
+        totalLoad += loadA.doubleValue();
+      }
+      if (loadB != null) {
+        totalLoad += loadB.doubleValue();
+      }
+      if (loadC != null) {
+        totalLoad += loadC.doubleValue();
+      }
+    }
+    
     designSolutionBuilder = designSolutionBuilder.add(DESIGN_COST_TAG, Math.abs(objective));
     designSolutionBuilder = designSolutionBuilder.add(IS_FEASIBLE_TAG, isFeasible);
+    designSolutionBuilder = designSolutionBuilder.add(TOTAL_LOAD_TAG, totalLoad);
+
     designSolutionBuilder = writeLineDesignData(model.getFlowConnections(), model, designSolutionBuilder);
     designSolutionBuilder = writeGeneratorDesignData(model.getGenerators(), model, designSolutionBuilder);    
     builder.add(DESIGN_SOLUTION_TAG, designSolutionBuilder);
     
     for (ScenarioConfiguration scenarioConfiguration : configuration.getScenarioConfigurations()) {
       Scenario scenario = scenarioConfiguration.getScenario();
+      double criticalLoad    = 0;
+      double nonCriticalLoad = 0;
+      
+      for (Load load : model.getLoads()) {
+        Object attribute = load.getAttribute(AlgorithmConstants.IS_CRITICAL_LOAD_KEY);
+        ScenarioAttribute scenarioAttributeA = load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY, ScenarioAttribute.class);
+        ScenarioAttribute scenarioAttributeB = load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY, ScenarioAttribute.class);
+        ScenarioAttribute scenarioAttributeC = load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY, ScenarioAttribute.class);
+        
+        
+        if (attribute != null && (Boolean)attribute) {
+          if (scenarioAttributeA != null && scenarioAttributeA.getValue(scenario) != null) {
+            criticalLoad += scenarioAttributeA.getValue(scenario).doubleValue();
+          }
+          if (scenarioAttributeB != null && scenarioAttributeB.getValue(scenario) != null) {
+            criticalLoad += scenarioAttributeB.getValue(scenario).doubleValue();
+          }
+          if (scenarioAttributeC != null && scenarioAttributeC.getValue(scenario) != null) {
+            criticalLoad += scenarioAttributeC.getValue(scenario).doubleValue();
+          }
+        }
+        else {
+          if (scenarioAttributeA != null && scenarioAttributeA.getValue(scenario) != null) {
+            nonCriticalLoad += scenarioAttributeA.getValue(scenario).doubleValue();
+          }
+          if (scenarioAttributeB != null && scenarioAttributeB.getValue(scenario) != null) {
+            nonCriticalLoad += scenarioAttributeB.getValue(scenario).doubleValue();
+          }
+          if (scenarioAttributeC != null && scenarioAttributeC.getValue(scenario) != null) {
+            nonCriticalLoad += scenarioAttributeC.getValue(scenario).doubleValue();
+          }
+        }
+      }
+    	
       JSONObjectBuilder scenarioBuilder = JSON.getDefaultJSON().createObjectBuilder();
-      scenarioBuilder.add(SCENARIO_ID_TAG, scenario.getIndex());
+      scenarioBuilder = scenarioBuilder.add(SCENARIO_ID_TAG, scenario.getIndex());
+      scenarioBuilder = scenarioBuilder.add(CRITICAL_LOAD_MET_TAG, criticalLoad);
+      scenarioBuilder = scenarioBuilder.add(NON_CRITICAL_LOAD_MET_TAG, nonCriticalLoad);
       scenarioBuilder = writeLineScenarioData(scenario, model.getFlowConnections(), model, scenarioBuilder);      
       scenarioBuilder = writeBusScenarioData(scenario, model.getBuses(), model, scenarioBuilder);      
       scenarioBuilder = writeGeneratorScenarioData(scenario, model.getGenerators(), model, scenarioBuilder);      
