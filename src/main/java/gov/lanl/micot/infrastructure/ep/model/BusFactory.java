@@ -12,7 +12,7 @@ public abstract class BusFactory {
   
   protected static final double DEFAULT_VOLTAGE = 1.0;
   protected static final double DEFAULT_MIN_VOLTAGE = 0.95;
-  protected static final double DEFAULT_MAX_VOLTAGE = 1.0;
+  protected static final double DEFAULT_MAX_VOLTAGE = 1.05;
     
   private AssetRegistry<Bus> registry = null;
 

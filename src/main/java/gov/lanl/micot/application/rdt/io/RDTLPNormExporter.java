@@ -134,13 +134,13 @@ public class RDTLPNormExporter {
       }
       
       for (FlowConnection connection : model.getFlowConnections(model.getNode(bus))) {
-        if (connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_A_KEY,Boolean.class)) {
+        if (connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_A_KEY,Boolean.class)) {
           hasPhaseA = true;
         }
-        if (connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_B_KEY,Boolean.class)) {
+        if (connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_B_KEY,Boolean.class)) {
           hasPhaseB = true;
         }
-        if (connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_C_KEY,Boolean.class)) {
+        if (connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_C_KEY,Boolean.class)) {
           hasPhaseC = true;
         }        
       }
@@ -378,9 +378,9 @@ public class RDTLPNormExporter {
        int numPoles =  connection.getAttribute(ElectricPowerFlowConnection.NUMBER_OF_POLES_KEY) == null ? 2 : connection.getAttribute(ElectricPowerFlowConnection.NUMBER_OF_POLES_KEY, Number.class).intValue();
        
        JSONArrayBuilder phaseBuilder = JSON.getDefaultJSON().createArrayBuilder();
-       phaseBuilder = phaseBuilder.add(connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_A_KEY, Boolean.class));
-       phaseBuilder = phaseBuilder.add(connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_B_KEY, Boolean.class));
-       phaseBuilder = phaseBuilder.add(connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_C_KEY, Boolean.class));
+       phaseBuilder = phaseBuilder.add(connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_A_KEY, Boolean.class));
+       phaseBuilder = phaseBuilder.add(connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_B_KEY, Boolean.class));
+       phaseBuilder = phaseBuilder.add(connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_C_KEY, Boolean.class));
        
        JSONObjectBuilder lineBuilder = JSON.getDefaultJSON().createObjectBuilder();
        lineBuilder = lineBuilder.add(LPNormIOConstants.LINE_ID_TAG, connection.getAttribute(tag).toString());

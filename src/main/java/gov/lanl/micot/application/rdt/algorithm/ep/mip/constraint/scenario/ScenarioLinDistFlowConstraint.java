@@ -110,7 +110,7 @@ public class ScenarioLinDistFlowConstraint extends ScenarioConstraintFactory<Ele
         double x_cc = connection.getAttribute(ElectricPowerFlowConnection.REACTANCE_PHASE_C_KEY,  Double.class);
 
         // add in the PHASE A lindist flow equations
-        if (connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_A_KEY, Boolean.class)) {
+        if (connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_A_KEY, Boolean.class)) {
           LinearConstraintEquals constraint = new LinearConstraintEquals(getConstraintName(connection, ScenarioVoltageVariableFactory.PHASE_A , scenario));
 
           // voltage variables
@@ -127,13 +127,13 @@ public class ScenarioLinDistFlowConstraint extends ScenarioConstraintFactory<Ele
           constraint.addVariable(reactiveA, 2.0 * x_aa);
 
           // phase B impedances
-          if (connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_B_KEY, Boolean.class)) {
+          if (connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_B_KEY, Boolean.class)) {
             constraint.addVariable(realB, 2.0 * r_ab * R_120);
             constraint.addVariable(reactiveB, 2.0 * x_ab * X_120);
           }
        
           // phase C impedances
-          if (connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_C_KEY, Boolean.class)) {  
+          if (connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_C_KEY, Boolean.class)) {  
             constraint.addVariable(realC, 2.0 * r_ac * R_240);
             constraint.addVariable(reactiveC, 2.0 * x_ac * X_240);
           }
@@ -145,7 +145,7 @@ public class ScenarioLinDistFlowConstraint extends ScenarioConstraintFactory<Ele
         
 
         // add in the PHASE B lindist flow equations
-        if (connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_B_KEY, Boolean.class)) {
+        if (connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_B_KEY, Boolean.class)) {
           LinearConstraintEquals constraint = new LinearConstraintEquals(getConstraintName(connection, ScenarioVoltageVariableFactory.PHASE_B , scenario));
 
           // voltage variables
@@ -158,7 +158,7 @@ public class ScenarioLinDistFlowConstraint extends ScenarioConstraintFactory<Ele
           }
 
           // phase A impedances
-          if (connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_A_KEY, Boolean.class)) {
+          if (connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_A_KEY, Boolean.class)) {
             constraint.addVariable(realA, 2.0 * r_ba * R_240);
             constraint.addVariable(reactiveA, 2.0 * x_ba * X_240);
           }
@@ -168,7 +168,7 @@ public class ScenarioLinDistFlowConstraint extends ScenarioConstraintFactory<Ele
           constraint.addVariable(reactiveB, 2.0 * x_bb);
        
           // phase C impedances
-          if (connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_C_KEY, Boolean.class)) {  
+          if (connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_C_KEY, Boolean.class)) {  
             constraint.addVariable(realC, 2.0 * r_bc * R_120);
             constraint.addVariable(reactiveC, 2.0 * x_bc * X_120);
           }
@@ -180,7 +180,7 @@ public class ScenarioLinDistFlowConstraint extends ScenarioConstraintFactory<Ele
 
         
         // add in the PHASE C lindist flow equations
-        if (connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_C_KEY, Boolean.class)) {
+        if (connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_C_KEY, Boolean.class)) {
           LinearConstraintEquals constraint = new LinearConstraintEquals(getConstraintName(connection, ScenarioVoltageVariableFactory.PHASE_C , scenario));
 
           // voltage variables
@@ -193,13 +193,13 @@ public class ScenarioLinDistFlowConstraint extends ScenarioConstraintFactory<Ele
           }
 
           // phase A impedances
-          if (connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_A_KEY, Boolean.class)) {
+          if (connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_A_KEY, Boolean.class)) {
             constraint.addVariable(realA, 2.0 * r_ca * R_120);
             constraint.addVariable(reactiveA, 2.0 * x_ca * X_120);
           }
           
           // phase B impedances
-          if (connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_B_KEY, Boolean.class)) {
+          if (connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_B_KEY, Boolean.class)) {
             constraint.addVariable(realB, 2.0 * r_cb * R_240);
             constraint.addVariable(reactiveB, 2.0 * x_cb * X_240);
           }

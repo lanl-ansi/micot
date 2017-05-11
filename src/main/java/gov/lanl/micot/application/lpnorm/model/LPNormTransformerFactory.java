@@ -95,9 +95,9 @@ public class LPNormTransformerFactory extends TransformerFactory {
     transformer.setActualStatus(status);
     transformer.setAttribute(Transformer.LENGTH_KEY, length);
     transformer.setAttribute(Transformer.NUMBER_OF_PHASES_KEY,numberOfPhases);
-    transformer.setAttribute(Transformer.IS_PHASE_A_KEY,hasPhase.getBoolean(0));
-    transformer.setAttribute(Transformer.IS_PHASE_B_KEY,hasPhase.getBoolean(1));
-    transformer.setAttribute(Transformer.IS_PHASE_C_KEY,hasPhase.getBoolean(2));
+    transformer.setAttribute(Transformer.HAS_PHASE_A_KEY,hasPhase.getBoolean(0));
+    transformer.setAttribute(Transformer.HAS_PHASE_B_KEY,hasPhase.getBoolean(1));
+    transformer.setAttribute(Transformer.HAS_PHASE_C_KEY,hasPhase.getBoolean(2));
 
     if (isNewLine) {    
       transformer.setAttribute(AlgorithmConstants.LINE_CONSTRUCTION_COST_KEY,constructionCost);

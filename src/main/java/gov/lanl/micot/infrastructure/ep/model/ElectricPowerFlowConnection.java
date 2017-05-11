@@ -19,9 +19,9 @@ public interface ElectricPowerFlowConnection extends ElectricPowerConnection, Fl
   public static final String RESISTANCE_KEY                           = "RESISTANCE";
   public static final String REAL_LOSS_KEY                            = "REAL_LOSS";
   public static final String REACTIVE_LOSS_KEY                        = "REACTIVE_LOSS";
-  public static final String IS_PHASE_A_KEY                           = "IS_PHASE_A";
-  public static final String IS_PHASE_B_KEY                           = "IS_PHASE_B";
-  public static final String IS_PHASE_C_KEY                           = "IS_PHASE_C";
+  public static final String HAS_PHASE_A_KEY                           = "HAS_PHASE_A";
+  public static final String HAS_PHASE_B_KEY                           = "HAS_PHASE_B";
+  public static final String HAS_PHASE_C_KEY                           = "HAS_PHASE_C";
   public static final String NUMBER_OF_PHASES_KEY                     = "NUMBER_OF_PHASES";
   public static final String PHASE_ANGLE_DIFFERENCE_LIMIT_KEY         = "PHASE_ANGLE_DIFFERENCE_LIMIT";
 
@@ -51,12 +51,16 @@ public interface ElectricPowerFlowConnection extends ElectricPowerConnection, Fl
   public static final String REACTANCE_PHASE_B_KEY                      = "REACTANCE_PHASE_B";
   public static final String REACTANCE_PHASE_C_KEY                      = "REACTANCE_PHASE_C";
   
-  public static final String REACTANCE_PHASE_AB_KEY							= "REACTANCE_AB";
+  public static final String REACTANCE_PHASE_AB_KEY				= "REACTANCE_AB";
   public static final String REACTANCE_PHASE_BA_KEY             = "REACTANCE_BA";
-  public static final String REACTANCE_PHASE_BC_KEY							= "REACTANCE_BC";
-  public static final String REACTANCE_PHASE_CB_KEY              = "REACTANCE_CB";  
-  public static final String REACTANCE_PHASE_CA_KEY							= "REACTANCE_CA";
+  public static final String REACTANCE_PHASE_BC_KEY				= "REACTANCE_BC";
+  public static final String REACTANCE_PHASE_CB_KEY             = "REACTANCE_CB";  
+  public static final String REACTANCE_PHASE_CA_KEY				= "REACTANCE_CA";
   public static final String REACTANCE_PHASE_AC_KEY             = "REACTANCE_AC";
+  
+  public static final String VOLTAGE_PRIMARY_KEY 				= "VOLTAGE_PRIMARY";
+  public static final String VOLTAGE_SECONDARY_KEY 				= "VOLTAGE_SECONDARY";  
+  public static final String NOMINAL_POWER_RATING_KEY			= "NOMINAL_POWER_RATING";
    
   public static final String NAME_KEY                                   = "NAME";
 

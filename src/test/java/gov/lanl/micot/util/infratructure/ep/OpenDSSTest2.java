@@ -47,9 +47,9 @@ public class OpenDSSTest2 extends TestCase {
     for (Line line : model.getLines()) {
       if (line.getAttribute(OpenDSSModelConstants.OPENDSS_LEGACY_ID_KEY).equals("l31")) {
         assertEquals(line.getAttribute(Line.LENGTH_KEY), 0.4);
-        assertEquals(line.getAttribute(Line.IS_PHASE_A_KEY), true);
-        assertEquals(line.getAttribute(Line.IS_PHASE_B_KEY), true);
-        assertEquals(line.getAttribute(Line.IS_PHASE_C_KEY), true);        
+        assertEquals(line.getAttribute(Line.HAS_PHASE_A_KEY), true);
+        assertEquals(line.getAttribute(Line.HAS_PHASE_B_KEY), true);
+        assertEquals(line.getAttribute(Line.HAS_PHASE_C_KEY), true);        
       }      
     }
     

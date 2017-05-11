@@ -76,10 +76,10 @@ public class RDDTApplicationFactory implements ApplicationFactory {
       }
     }
     for (ElectricPowerFlowConnection edge : model.getConnections(ElectricPowerFlowConnection.class)) {
-      if (edge.getAttribute(ElectricPowerFlowConnection.IS_PHASE_A_KEY) == null && edge.getAttribute(ElectricPowerFlowConnection.IS_PHASE_B_KEY) == null && edge.getAttribute(ElectricPowerFlowConnection.IS_PHASE_C_KEY) == null) {
-        edge.setAttribute(ElectricPowerFlowConnection.IS_PHASE_A_KEY, true);
-        edge.setAttribute(ElectricPowerFlowConnection.IS_PHASE_B_KEY, false);
-        edge.setAttribute(ElectricPowerFlowConnection.IS_PHASE_C_KEY, false);
+      if (edge.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_A_KEY) == null && edge.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_B_KEY) == null && edge.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_C_KEY) == null) {
+        edge.setAttribute(ElectricPowerFlowConnection.HAS_PHASE_A_KEY, true);
+        edge.setAttribute(ElectricPowerFlowConnection.HAS_PHASE_B_KEY, false);
+        edge.setAttribute(ElectricPowerFlowConnection.HAS_PHASE_C_KEY, false);
         edge.setAttribute(ElectricPowerFlowConnection.NUMBER_OF_PHASES_KEY, 1);
       }
     }

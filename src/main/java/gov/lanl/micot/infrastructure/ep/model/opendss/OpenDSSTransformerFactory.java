@@ -113,9 +113,9 @@ public class OpenDSSTransformerFactory extends TransformerFactory {
         ++numberOfPhases;
       }
     }
-    transformer.setAttribute(Transformer.IS_PHASE_A_KEY,carriesPhaseA);
-    transformer.setAttribute(Transformer.IS_PHASE_B_KEY,carriesPhaseB);
-    transformer.setAttribute(Transformer.IS_PHASE_C_KEY,carriesPhaseC);
+    transformer.setAttribute(Transformer.HAS_PHASE_A_KEY,carriesPhaseA);
+    transformer.setAttribute(Transformer.HAS_PHASE_B_KEY,carriesPhaseB);
+    transformer.setAttribute(Transformer.HAS_PHASE_C_KEY,carriesPhaseC);
     transformer.setAttribute(Transformer.NUMBER_OF_PHASES_KEY,numberOfPhases);
     transformer.setAttribute(Transformer.LENGTH_KEY, 1.0);
     
@@ -234,9 +234,9 @@ public class OpenDSSTransformerFactory extends TransformerFactory {
         ++numberOfPhases;
       }
     }
-    transformer.setAttribute(Transformer.IS_PHASE_A_KEY,carriesPhaseA);
-    transformer.setAttribute(Transformer.IS_PHASE_B_KEY,carriesPhaseB);
-    transformer.setAttribute(Transformer.IS_PHASE_C_KEY,carriesPhaseC);
+    transformer.setAttribute(Transformer.HAS_PHASE_A_KEY,carriesPhaseA);
+    transformer.setAttribute(Transformer.HAS_PHASE_B_KEY,carriesPhaseB);
+    transformer.setAttribute(Transformer.HAS_PHASE_C_KEY,carriesPhaseC);
     transformer.setAttribute(Transformer.NUMBER_OF_PHASES_KEY,numberOfPhases);
         
     Vector<Point> points = new Vector<Point>();
