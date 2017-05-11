@@ -3,7 +3,6 @@
 *.class
 *.log
 *.classpath
-/.metadata/
 /target/surefire-reports/
 /target/test-classes/
 /target/surefire-reports/
@@ -11,4 +10,3 @@
 /target/classes/
 /target/generated-sources/
 
-/target/
