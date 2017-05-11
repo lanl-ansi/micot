@@ -130,9 +130,9 @@ public class OpenDSSLineFactory extends LineFactory {
     line.setActualStatus(status);
     line.setAttribute(Line.LENGTH_KEY, length);
     line.setAttribute(Line.NUMBER_OF_PHASES_KEY,numberOfPhases);
-    line.setAttribute(Line.IS_PHASE_A_KEY,carriesPhaseA);
-    line.setAttribute(Line.IS_PHASE_B_KEY,carriesPhaseB);
-    line.setAttribute(Line.IS_PHASE_C_KEY,carriesPhaseC);
+    line.setAttribute(Line.HAS_PHASE_A_KEY,carriesPhaseA);
+    line.setAttribute(Line.HAS_PHASE_B_KEY,carriesPhaseB);
+    line.setAttribute(Line.HAS_PHASE_C_KEY,carriesPhaseC);
            
     Vector<Point> points = new Vector<Point>();
     points.add(fromBus.getCoordinate());
@@ -303,9 +303,9 @@ public class OpenDSSLineFactory extends LineFactory {
     line.setActualStatus(status);
     line.setAttribute(Line.LENGTH_KEY, length);
     line.setAttribute(Line.NUMBER_OF_PHASES_KEY,numberOfPhases);
-    line.setAttribute(Line.IS_PHASE_A_KEY,carriesPhaseA);
-    line.setAttribute(Line.IS_PHASE_B_KEY,carriesPhaseB);
-    line.setAttribute(Line.IS_PHASE_C_KEY,carriesPhaseC);
+    line.setAttribute(Line.HAS_PHASE_A_KEY,carriesPhaseA);
+    line.setAttribute(Line.HAS_PHASE_B_KEY,carriesPhaseB);
+    line.setAttribute(Line.HAS_PHASE_C_KEY,carriesPhaseC);
            
     Vector<Point> points = new Vector<Point>();
     points.add(fromBus.getCoordinate());

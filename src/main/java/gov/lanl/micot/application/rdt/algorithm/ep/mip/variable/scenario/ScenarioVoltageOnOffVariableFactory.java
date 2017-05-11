@@ -49,13 +49,13 @@ public class ScenarioVoltageOnOffVariableFactory extends ScenarioVariableFactory
     for (Scenario scenario : getScenarios()) {
       for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {        
         if (ScenarioVariableFactoryUtility.doCreateLineUseScenarioVariable(edge, scenario)) {
-          if (edge.getAttribute(ElectricPowerFlowConnection.IS_PHASE_A_KEY, Boolean.class)) {
+          if (edge.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_A_KEY, Boolean.class)) {
             variables.add(program.makeContinuousVariable(getVoltageVariableName(edge, PHASE_A, scenario)));        
           }
-          if (edge.getAttribute(ElectricPowerFlowConnection.IS_PHASE_B_KEY, Boolean.class)) {
+          if (edge.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_B_KEY, Boolean.class)) {
             variables.add(program.makeContinuousVariable(getVoltageVariableName(edge, PHASE_B, scenario)));        
           }
-          if (edge.getAttribute(ElectricPowerFlowConnection.IS_PHASE_C_KEY, Boolean.class)) {
+          if (edge.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_C_KEY, Boolean.class)) {
             variables.add(program.makeContinuousVariable(getVoltageVariableName(edge, PHASE_C, scenario)));                  
           }          
         }

@@ -102,9 +102,9 @@ public class MatPowerLineFactory extends LineFactory {
 	  pfwLine.setAttribute(MatPowerModelConstants.MATPOWER_MIN_ANGLE_DIFFERENCE_KEY, minAngleDifference);
 	  pfwLine.setAttribute(MatPowerModelConstants.MATPOWER_MAX_ANGLE_DIFFERENCE_KEY, maxAngleDifference);
 	 
-	  pfwLine.setAttribute(Line.IS_PHASE_A_KEY, true);
-	  pfwLine.setAttribute(Line.IS_PHASE_B_KEY, false);
-	  pfwLine.setAttribute(Line.IS_PHASE_C_KEY, false);
+	  pfwLine.setAttribute(Line.HAS_PHASE_A_KEY, true);
+	  pfwLine.setAttribute(Line.HAS_PHASE_B_KEY, false);
+	  pfwLine.setAttribute(Line.HAS_PHASE_C_KEY, false);
 	  pfwLine.setAttribute(Line.CAPACITY_RATING_A_KEY, normalrating);
 	  pfwLine.setAttribute(Line.CAPACITY_RATING_B_KEY, 0.0);
 	  pfwLine.setAttribute(Line.CAPACITY_RATING_C_KEY, 0.0);

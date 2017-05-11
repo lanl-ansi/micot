@@ -65,7 +65,7 @@ public class ScenarioLinePhaseCapacityConstraint extends ScenarioConstraintFacto
         double capacity = link.getCapacityRating() / mvaBase; 
         capacity = capacity * capacity; // squared capacity
         
-        if (link.getAttribute(ElectricPowerFlowConnection.IS_PHASE_A_KEY, Boolean.class)) {
+        if (link.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_A_KEY, Boolean.class)) {
           QuadraticConstraint constraint = new QuadraticConstraintLessEq(getFlowLessThanConstraintName(link, ScenarioReactiveFlowPhaseVariableFactory.PHASE_A, scenario));
           constraint.addVariables(reactiveFlowFactory.getVariable(problem, link, ScenarioReactiveFlowPhaseVariableFactory.PHASE_A, scenario), reactiveFlowFactory.getVariable(problem, link, ScenarioReactiveFlowPhaseVariableFactory.PHASE_A, scenario), 1.0);
           constraint.addVariables(realFlowFactory.getVariable(problem, link, ScenarioRealFlowPhaseVariableFactory.PHASE_A, scenario), realFlowFactory.getVariable(problem, link, ScenarioRealFlowPhaseVariableFactory.PHASE_A, scenario), 1.0);
@@ -80,7 +80,7 @@ public class ScenarioLinePhaseCapacityConstraint extends ScenarioConstraintFacto
           problem.addQuadraticConstraint(constraint);
         }
 
-        if (link.getAttribute(ElectricPowerFlowConnection.IS_PHASE_B_KEY, Boolean.class)) {
+        if (link.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_B_KEY, Boolean.class)) {
           QuadraticConstraint constraint = new QuadraticConstraintLessEq(getFlowLessThanConstraintName(link, ScenarioReactiveFlowPhaseVariableFactory.PHASE_B, scenario));
           constraint.addVariables(reactiveFlowFactory.getVariable(problem, link, ScenarioReactiveFlowPhaseVariableFactory.PHASE_B, scenario), reactiveFlowFactory.getVariable(problem, link, ScenarioReactiveFlowPhaseVariableFactory.PHASE_B, scenario), 1.0);
           constraint.addVariables(realFlowFactory.getVariable(problem, link, ScenarioRealFlowPhaseVariableFactory.PHASE_B, scenario), realFlowFactory.getVariable(problem, link, ScenarioRealFlowPhaseVariableFactory.PHASE_B, scenario), 1.0);
@@ -95,7 +95,7 @@ public class ScenarioLinePhaseCapacityConstraint extends ScenarioConstraintFacto
           problem.addQuadraticConstraint(constraint);                
         }
 
-        if (link.getAttribute(ElectricPowerFlowConnection.IS_PHASE_C_KEY, Boolean.class)) {
+        if (link.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_C_KEY, Boolean.class)) {
           QuadraticConstraint constraint = new QuadraticConstraintLessEq(getFlowLessThanConstraintName(link, ScenarioReactiveFlowPhaseVariableFactory.PHASE_C, scenario));
           constraint.addVariables(reactiveFlowFactory.getVariable(problem, link, ScenarioReactiveFlowPhaseVariableFactory.PHASE_C, scenario), reactiveFlowFactory.getVariable(problem, link, ScenarioReactiveFlowPhaseVariableFactory.PHASE_C, scenario), 1.0);
           constraint.addVariables(realFlowFactory.getVariable(problem, link, ScenarioRealFlowPhaseVariableFactory.PHASE_C, scenario), realFlowFactory.getVariable(problem, link, ScenarioRealFlowPhaseVariableFactory.PHASE_C, scenario), 1.0);
