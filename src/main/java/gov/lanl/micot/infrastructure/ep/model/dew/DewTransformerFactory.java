@@ -102,9 +102,10 @@ public class DewTransformerFactory extends TransformerFactory {
    * @throws NumberFormatException 
    */
   @SuppressWarnings("unchecked")
-  public Transformer createTransformer(DewLegacyId legacyid, Dew dew, Map<Integer,DewPtlinespcData> lineData) throws NumberFormatException, DewException {
+  public Transformer createTransformer(DewLegacyId legacyid, Dew dew, Map<Integer,DewPtlinespcData> lineData, Map<Integer,DewPtxfrmData> xfrmData) throws NumberFormatException, DewException {
     Object obj = dew.getComponentData(Bus.NAME_KEY, legacyid, null);
     String name = obj == null ? "" : obj.toString();
+//    String typeName = dew.getComponentData(, dewid, name)
     boolean isFailed = Integer.parseInt(dew.getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
     boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
     int dewType = Integer.parseInt(dew.getComponentData(DewVariables.DEW_COMPONENT_TYPE_KEY, legacyid, name).toString());
@@ -125,7 +126,7 @@ public class DewTransformerFactory extends TransformerFactory {
     }
     
     ArrayList<Point> points = (ArrayList<Point>) dew.getComponentData(Transformer.COORDINATE_KEY, legacyid, name);
-
+    
     Object test = dew.getComponentData(ElectricPowerFlowConnection.RESISTANCE_PHASE_A_KEY, legacyid, name);
     double resistanceA = DEFAULT_RESISTANCE_A;
     double resistanceB = DEFAULT_RESISTANCE_B;
@@ -154,13 +155,44 @@ public class DewTransformerFactory extends TransformerFactory {
     double resistance = Math.max(0.00001,resistanceA + resistanceB + resistanceC);
     double reactance = Math.max(0.00001, reactanceA + reactanceB + reactanceC);
       
-    Double tapRatio = null;
+
     Double tapAngle = null;
     Double minTapAngle = null;
     Double maxTapAngle = null;
-    Double stepSize = null;
-    Double controlMin = null;
-    Double controlMax = null;
+//    Double stepSize = null;
+//    Double controlMin = null;
+//    Double controlMax = null;
+    
+//      DewPtxfrmData pdata = xfrmCondData.get(phaseCond);
+//      DewPtxfrmData ndata = xfrmCondData.get(neutralCond);
+//    
+//      String pDesc = pdata == null ? "" : pdata.getStdesc();
+//      String nDesc = ndata == null ? "" : ndata.getStdesc();
+//      
+//      line.setAttribute(ElectricPowerFlowConnection.LINE_PHASE_CONDUCTOR_KEY, pDesc);
+//      line.setAttribute(ElectricPowerFlowConnection.LINE_NEUTRAL_CONDUCTOR_KEY, nDesc);       
+//    
+    // want to pull this field out of the PtXfrm transformer table:
+    // dSecKv    
+    // nominal secondary voltage in kV
+    int xfPartId = Integer.parseInt(dew.getComponentData(DewVariables.DEW_DATABASE_XFRM_KEY, legacyid, name).toString());
+    DewPtxfrmData xfdata = xfrmData.get(xfPartId);
+    String xfTypeName = xfdata.getStnam();
+    Double voltagePrimary = xfdata.getDprikv();
+    Double voltageSecondary = xfdata.getDseckv();
+    Double nomPowerRating = xfdata.getDnomkva();
+    int compExists = xfdata.getQcompexists();
+    
+    Double tapRatio = voltagePrimary/voltageSecondary;
+    
+    int numSteps = xfdata.getSnumsteps();
+    Double stepSize = xfdata.getDstepsizefr();
+    
+    Double controlMax = (1.0 + stepSize*numSteps);
+    Double controlMin = (1.0 - stepSize*numSteps);
+    
+    int uniDir = xfdata.getQunidirection();
+    
     
     TransformerControlModeEnum gControlSide = null;
     TransformerTypeEnum transformerType = TransformerTypeEnum.TRANSMISSION_FIXED_ANGLE_FIXED_TAP_TYPE;
@@ -184,14 +216,18 @@ public class DewTransformerFactory extends TransformerFactory {
     transformer.setAttribute(Transformer.CAPACITY_RATING_C_KEY, ratingC);
     transformer.setDesiredStatus(status);
     transformer.setAttribute(Transformer.TYPE_KEY, transformerType);
-    transformer.setAttribute(Transformer.TAP_RATIO_KEY, tapRatio);
+
     transformer.setAttribute(Transformer.TAP_ANGLE_KEY, tapAngle);
     transformer.setAttribute(Transformer.MIN_TAP_ANGLE_KEY, minTapAngle);
     transformer.setAttribute(Transformer.MAX_TAP_ANGLE_KEY, maxTapAngle);
     transformer.setAttribute(Transformer.STEP_SIZE_KEY, stepSize);
-    transformer.setAttribute(Transformer.CONTROL_MIN_KEY, controlMin);
-    transformer.setAttribute(Transformer.CONTROL_MAX_KEY, controlMax);
+    transformer.setAttribute(Transformer.CONTROL_MIN_KEY, numSteps);    
+    transformer.setAttribute(Transformer.CONTROL_MAX_KEY, numSteps);
+    transformer.setAttribute(Transformer.MIN_TAP_RATIO_KEY, controlMin);
+    transformer.setAttribute(Transformer.MAX_TAP_RATIO_KEY, controlMax);
     transformer.setAttribute(Transformer.CONTROL_SIDE_KEY, gControlSide);   
+    transformer.setAttribute(Transformer.HAS_LOAD_DROP_COMPENSATOR_KEY, compExists);
+    transformer.setAttribute(Transformer.HAS_UNIDIRECTIONAL_CONTROLLER_KEY, uniDir);
     transformer.setActualStatus(transformer.getDesiredStatus());
     transformer.setMWFlow(0.0);
     transformer.setMVarFlow(0.0);
@@ -199,18 +235,26 @@ public class DewTransformerFactory extends TransformerFactory {
     transformer.setAttribute(Transformer.IS_FAILED_KEY, isFailed);
     transformer.setAttribute(DewVariables.DEW_COMPONENT_TYPE_KEY, dewType);
     transformer.setAttribute(Transformer.NUMBER_OF_PHASES_KEY, numPhases);
-    transformer.setAttribute(Transformer.IS_PHASE_A_KEY, hasPhaseA);
-    transformer.setAttribute(Transformer.IS_PHASE_B_KEY, hasPhaseB);
-    transformer.setAttribute(Transformer.IS_PHASE_C_KEY, hasPhaseC);    
+    transformer.setAttribute(Transformer.HAS_PHASE_A_KEY, hasPhaseA);
+    transformer.setAttribute(Transformer.HAS_PHASE_B_KEY, hasPhaseB);
+    transformer.setAttribute(Transformer.HAS_PHASE_C_KEY, hasPhaseC);    
     transformer.setAttribute(ElectricPowerFlowConnection.NAME_KEY, name);
+    
+    transformer.setAttribute(Transformer.VOLTAGE_PRIMARY_KEY, voltagePrimary);    
+    transformer.setAttribute(Transformer.VOLTAGE_SECONDARY_KEY, voltageSecondary);
+    transformer.setAttribute(Transformer.NOMINAL_POWER_RATING_KEY, nomPowerRating);
+
+    
+    int subId = Integer.parseInt(dew.getComponentData(DewVariables.DEW_SUBSTATION_KEY, legacyid, name).toString());
+    transformer.setAttribute(DewVariables.DEW_SUBSTATION_KEY, subId);    
     
     int ptrow = Integer.parseInt(dew.getComponentData(DewVariables.DEW_DATABASE_PTROW_KEY, legacyid, name).toString());
     DewPtlinespcData data = lineData.get(ptrow);
     String lineType = data == null ? "" : data.getStnam();
     LineInstallationTypeEnum installType = data ==null ? LineInstallationTypeEnum.UNDERGROUND_CONDUIT_TYPE : LineInstallationTypeEnum.getEnum(data.getSoverhead());
-    String lineDesc = data == null ? "" : data.getStdesc();
+    String lineDesc = xfdata == null ? "" : xfdata.getStdesc();
     transformer.setAttribute(ElectricPowerFlowConnection.LINE_DESCRIPTION_KEY, lineDesc);
-    transformer.setAttribute(ElectricPowerFlowConnection.LINE_TYPE_KEY, lineType);
+    transformer.setAttribute(ElectricPowerFlowConnection.LINE_TYPE_KEY, xfTypeName);
     transformer.setAttribute(ElectricPowerFlowConnection.INSTALLATION_TYPE_KEY, installType);
 
     

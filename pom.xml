@@ -112,45 +112,45 @@
   </dependencies>
   
   <build>
-	  <finalName>micot-1.0</finalName>
-	  <plugins>
+    <finalName>micot-1.0</finalName>
+    <plugins>
 
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<version>2.3.2</version>
-			<configuration>
-				<source>1.7</source>
-				<target>1.7</target>
-			</configuration>
-		</plugin>
-		
-		
-		<plugin>
-		  <groupId>org.codehaus.mojo</groupId>
-		  <artifactId>cobertura-maven-plugin</artifactId>
-		  <version>2.7</version>
-		  <configuration>
-		    <formats>
-		      <format>html</format>
-			  <format>xml</format>
-		    </formats>
-		    <check />
-		  </configuration>
-	    </plugin>
-		
-		<!-- Remove this exclude if you wish to compile cplex functionality -->
-		<plugin>
-  		  <groupId>org.apache.maven.plugins</groupId>
-  		  <artifactId>maven-compiler-plugin</artifactId>
-  		  <configuration>
-    	    <excludes>
-      		  <exclude>**/cplex/*.java</exclude>
-    	    </excludes>
-  		  </configuration>
-		</plugin>
-				
-		<!-- Build the runnable jars -->
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>2.3.2</version>
+      <configuration>
+        <source>1.7</source>
+        <target>1.7</target>
+      </configuration>
+    </plugin>
+    
+    
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>cobertura-maven-plugin</artifactId>
+      <version>2.7</version>
+      <configuration>
+        <formats>
+          <format>html</format>
+        <format>xml</format>
+        </formats>
+        <check />
+      </configuration>
+      </plugin>
+    
+    <!-- Remove this exclude if you wish to compile cplex functionality -->
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/cplex/*.java</exclude>
+          </excludes>
+        </configuration>
+    </plugin>
+        
+    <!-- Build the runnable jars -->
 
   <plugin>
     <groupId>com.jolira</groupId>
@@ -199,11 +199,11 @@
       </executions>
     </plugin>
 
-		
-		
-		
-	  </plugins>
-	</build>
+    
+    
+    
+    </plugins>
+  </build>
   
   
   

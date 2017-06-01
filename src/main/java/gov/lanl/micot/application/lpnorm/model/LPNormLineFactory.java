@@ -97,9 +97,9 @@ public class LPNormLineFactory extends LineFactory {
     line.setActualStatus(status);
     line.setAttribute(Line.LENGTH_KEY, length);
     line.setAttribute(Line.NUMBER_OF_PHASES_KEY,numberOfPhases);
-    line.setAttribute(Line.IS_PHASE_A_KEY,hasPhase.getBoolean(0));
-    line.setAttribute(Line.IS_PHASE_B_KEY,hasPhase.getBoolean(1));
-    line.setAttribute(Line.IS_PHASE_C_KEY,hasPhase.getBoolean(2));
+    line.setAttribute(Line.HAS_PHASE_A_KEY,hasPhase.getBoolean(0));
+    line.setAttribute(Line.HAS_PHASE_B_KEY,hasPhase.getBoolean(1));
+    line.setAttribute(Line.HAS_PHASE_C_KEY,hasPhase.getBoolean(2));
 
     if (isNewLine) {    
       line.setAttribute(AlgorithmConstants.LINE_CONSTRUCTION_COST_KEY,constructionCost);

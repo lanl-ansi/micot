@@ -11,6 +11,8 @@ public interface ShuntCapacitor extends Component {
   public static final String REACTIVE_COMPENSATION_KEY       = "REACTIVE_COMPENSATION";
   public static final String REAL_COMPENSATION_KEY           = "REAL_COMPENSATION";
   public static final String SHUNT_NAME_KEY                  = "NAME";
+  public static final String CONNECTION_TYPE_KEY			 = "CONNECTION_TYPE";
+  public static final String NUM_POSITIONS_KEY				 = "NUM_POSITIONS";
      
   /**
    * Sets the reactive compensation

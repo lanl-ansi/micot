@@ -106,7 +106,7 @@ public class DewLineFactory extends LineFactory {
     }
     
     ArrayList<Point> points = (ArrayList<Point>) dew.getComponentData(Line.COORDINATE_KEY, legacyid, name);
-    
+        
     Object rA = dew.getComponentData(ElectricPowerFlowConnection.RESISTANCE_PHASE_A_KEY, legacyid, name);
     Object rB = dew.getComponentData(ElectricPowerFlowConnection.RESISTANCE_PHASE_B_KEY, legacyid, name);
     Object rC = dew.getComponentData(ElectricPowerFlowConnection.RESISTANCE_PHASE_C_KEY, legacyid, name);
@@ -186,9 +186,9 @@ public class DewLineFactory extends LineFactory {
     line.setAttribute(Line.IS_FAILED_KEY, isFailed);
     line.setAttribute(DewVariables.DEW_COMPONENT_TYPE_KEY, dewType);
     line.setAttribute(Line.NUMBER_OF_PHASES_KEY, numPhases);
-    line.setAttribute(Line.IS_PHASE_A_KEY, hasPhaseA);
-    line.setAttribute(Line.IS_PHASE_B_KEY, hasPhaseB);
-    line.setAttribute(Line.IS_PHASE_C_KEY, hasPhaseC);    
+    line.setAttribute(Line.HAS_PHASE_A_KEY, hasPhaseA);
+    line.setAttribute(Line.HAS_PHASE_B_KEY, hasPhaseB);
+    line.setAttribute(Line.HAS_PHASE_C_KEY, hasPhaseC);    
     line.setAttribute(ElectricPowerFlowConnection.NAME_KEY, name);
         
     int ptrow = Integer.parseInt(dew.getComponentData(DewVariables.DEW_DATABASE_PTROW_KEY, legacyid, name).toString());
@@ -200,6 +200,10 @@ public class DewLineFactory extends LineFactory {
     line.setAttribute(ElectricPowerFlowConnection.LINE_DESCRIPTION_KEY, lineDesc);
     line.setAttribute(ElectricPowerFlowConnection.LINE_TYPE_KEY, lineType);
     line.setAttribute(ElectricPowerFlowConnection.INSTALLATION_TYPE_KEY, installType);
+    
+    int subId = Integer.parseInt(dew.getComponentData(DewVariables.DEW_SUBSTATION_KEY, legacyid, name).toString());
+    line.setAttribute(DewVariables.DEW_SUBSTATION_KEY, subId);
+
 
     if (linetype == 65) {
       int phaseCond = Integer.parseInt(dew.getComponentData(DewVariables.DEW_DATABASE_PHASE_CONDUCTOR_KEY, legacyid, name).toString());
@@ -241,7 +245,7 @@ public class DewLineFactory extends LineFactory {
    * @param bus2
    * @return
    */
-  public Line createLine(Bus bus1, Bus bus2, DewLegacyId legacyid) {
+  public Line createLine(int subId, Bus bus1, Bus bus2, DewLegacyId legacyid) {
     String name = "pseudoLine-" + bus1 + "-" + bus2;
     boolean isFailed = false;
     boolean status = true;
@@ -281,6 +285,7 @@ public class DewLineFactory extends LineFactory {
     line.setResistance(resistance);
     line.setReactance(reactance);
     
+    
     line.setAttribute(ElectricPowerFlowConnection.RESISTANCE_PHASE_A_KEY, resistanceA);
     line.setAttribute(ElectricPowerFlowConnection.RESISTANCE_PHASE_B_KEY, resistanceB);
     line.setAttribute(ElectricPowerFlowConnection.RESISTANCE_PHASE_C_KEY, resistanceC);
@@ -302,6 +307,9 @@ public class DewLineFactory extends LineFactory {
     line.setAttribute(ElectricPowerFlowConnection.REACTANCE_PHASE_CB_KEY, reactanceBC);
     line.setAttribute(ElectricPowerFlowConnection.REACTANCE_PHASE_AC_KEY, reactanceCA);
     
+//    int subId = Integer.parseInt(dew.getComponentData(DewVariables.DEW_SUBSTATION_KEY, legacyid, "").toString());
+    line.setAttribute(DewVariables.DEW_SUBSTATION_KEY, subId);    
+    
     line.setLineCharging(charging);
     line.setCapacityRating(ratingA + ratingB + ratingC);
     line.setLongTermEmergencyCapacityRating(ratingA + ratingB + ratingC);
@@ -317,9 +325,9 @@ public class DewLineFactory extends LineFactory {
     line.setAttribute(Line.IS_FAILED_KEY, isFailed);
     line.setAttribute(DewVariables.DEW_COMPONENT_TYPE_KEY, dewType);
     line.setAttribute(Line.NUMBER_OF_PHASES_KEY, numPhases);
-    line.setAttribute(Line.IS_PHASE_A_KEY, hasPhaseA);
-    line.setAttribute(Line.IS_PHASE_B_KEY, hasPhaseB);
-    line.setAttribute(Line.IS_PHASE_C_KEY, hasPhaseC);    
+    line.setAttribute(Line.HAS_PHASE_A_KEY, hasPhaseA);
+    line.setAttribute(Line.HAS_PHASE_B_KEY, hasPhaseB);
+    line.setAttribute(Line.HAS_PHASE_C_KEY, hasPhaseC);    
     line.setAttribute(ElectricPowerFlowConnection.NAME_KEY, name);
         
     line.setAttribute(ElectricPowerFlowConnection.LINE_DESCRIPTION_KEY, "");

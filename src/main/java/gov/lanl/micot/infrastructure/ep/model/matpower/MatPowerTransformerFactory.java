@@ -94,9 +94,9 @@ public class MatPowerTransformerFactory extends TransformerFactory {
 	  transformer.setAttribute(MatPowerModelConstants.MATPOWER_MIN_ANGLE_DIFFERENCE_KEY, minAngleDifference);
 	  transformer.setAttribute(MatPowerModelConstants.MATPOWER_MAX_ANGLE_DIFFERENCE_KEY, maxAngleDifference);
 				
-	  transformer.setAttribute(Transformer.IS_PHASE_A_KEY, true);
-	  transformer.setAttribute(Transformer.IS_PHASE_B_KEY, false);
-	  transformer.setAttribute(Transformer.IS_PHASE_C_KEY, false);
+	  transformer.setAttribute(Transformer.HAS_PHASE_A_KEY, true);
+	  transformer.setAttribute(Transformer.HAS_PHASE_B_KEY, false);
+	  transformer.setAttribute(Transformer.HAS_PHASE_C_KEY, false);
 	  transformer.setAttribute(Transformer.CAPACITY_RATING_A_KEY, normalrating);
 	  transformer.setAttribute(Transformer.CAPACITY_RATING_B_KEY, 0.0);
 	  transformer.setAttribute(Transformer.CAPACITY_RATING_C_KEY, 0.0);

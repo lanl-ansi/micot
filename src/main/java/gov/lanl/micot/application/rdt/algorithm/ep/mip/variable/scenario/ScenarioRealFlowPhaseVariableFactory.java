@@ -55,13 +55,13 @@ public class ScenarioRealFlowPhaseVariableFactory extends ScenarioVariableFactor
           continue;
         }
         
-        if (edge.getAttribute(ElectricPowerFlowConnection.IS_PHASE_A_KEY, Boolean.class)) {
+        if (edge.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_A_KEY, Boolean.class)) {
           variables.add(program.makeContinuousVariable(getFlowVariableName(edge, PHASE_A, scenario)));
         }
-        if (edge.getAttribute(ElectricPowerFlowConnection.IS_PHASE_B_KEY, Boolean.class)) {
+        if (edge.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_B_KEY, Boolean.class)) {
           variables.add(program.makeContinuousVariable(getFlowVariableName(edge, PHASE_B, scenario)));
         }
-        if (edge.getAttribute(ElectricPowerFlowConnection.IS_PHASE_C_KEY, Boolean.class)) {
+        if (edge.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_C_KEY, Boolean.class)) {
           variables.add(program.makeContinuousVariable(getFlowVariableName(edge, PHASE_C, scenario)));
         }
       }

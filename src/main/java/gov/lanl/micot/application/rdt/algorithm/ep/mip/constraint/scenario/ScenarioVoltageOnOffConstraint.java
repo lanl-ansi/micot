@@ -78,7 +78,7 @@ public class ScenarioVoltageOnOffConstraint extends ScenarioConstraintFactory<El
         Variable lineUse = useFactory.getVariable(problem, connection, scenario);
         
 
-        if (connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_A_KEY, Boolean.class)) {
+        if (connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_A_KEY, Boolean.class)) {
           Variable variableA = voltageFactory.getVariable(problem, connection, ScenarioVoltageVariableFactory.PHASE_A, scenario);
           
           LinearConstraint leconstraint = new LinearConstraintLessEq(getConstraintNameLE(connection,ScenarioVoltageVariableFactory.PHASE_A, scenario));
@@ -94,7 +94,7 @@ public class ScenarioVoltageOnOffConstraint extends ScenarioConstraintFactory<El
           problem.addLinearConstraint(geconstraint);
         }
         
-        if (connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_B_KEY, Boolean.class)) {
+        if (connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_B_KEY, Boolean.class)) {
           Variable variableB = voltageFactory.getVariable(problem, connection, ScenarioVoltageVariableFactory.PHASE_B, scenario);
           LinearConstraint leconstraint = new LinearConstraintLessEq(getConstraintNameLE(connection,ScenarioVoltageVariableFactory.PHASE_B, scenario));
           leconstraint.addVariable(variableB, 1.0);
@@ -109,7 +109,7 @@ public class ScenarioVoltageOnOffConstraint extends ScenarioConstraintFactory<El
           problem.addLinearConstraint(geconstraint);
         }
                 
-        if (connection.getAttribute(ElectricPowerFlowConnection.IS_PHASE_C_KEY, Boolean.class)) {
+        if (connection.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_C_KEY, Boolean.class)) {
           Variable variableC = voltageFactory.getVariable(problem, connection, ScenarioVoltageVariableFactory.PHASE_C, scenario);
           
           LinearConstraint leconstraint = new LinearConstraintLessEq(getConstraintNameLE(connection,ScenarioVoltageVariableFactory.PHASE_C, scenario));

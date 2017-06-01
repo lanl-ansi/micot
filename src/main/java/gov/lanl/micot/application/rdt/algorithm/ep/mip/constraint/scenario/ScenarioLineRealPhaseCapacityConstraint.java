@@ -76,7 +76,7 @@ public class ScenarioLineRealPhaseCapacityConstraint extends ScenarioConstraintF
         
         double capacity = link.getCapacityRating() / mvaBase; //(link.getCapacityRating() / link.getAttribute(ElectricPowerFlowConnection.NUMBER_OF_PHASES_KEY, Number.class).doubleValue()) / mvaBase;
         
-        if (link.getAttribute(ElectricPowerFlowConnection.IS_PHASE_A_KEY, Boolean.class)) {
+        if (link.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_A_KEY, Boolean.class)) {
           LinearConstraint constraint = new LinearConstraintLessEq(getFlowLessThanConstraintName(link, ScenarioRealFlowPhaseVariableFactory.PHASE_A, scenario));
           constraint.addVariable(flowFactory.getVariable(problem, link, ScenarioRealFlowPhaseVariableFactory.PHASE_A, scenario), 1.0);
           if (hasVariable) {
@@ -100,7 +100,7 @@ public class ScenarioLineRealPhaseCapacityConstraint extends ScenarioConstraintF
           problem.addLinearConstraint(constraint);          
         }
 
-        if (link.getAttribute(ElectricPowerFlowConnection.IS_PHASE_B_KEY, Boolean.class)) {
+        if (link.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_B_KEY, Boolean.class)) {
           LinearConstraint constraint = new LinearConstraintLessEq(getFlowLessThanConstraintName(link, ScenarioRealFlowPhaseVariableFactory.PHASE_B, scenario));
           constraint.addVariable(flowFactory.getVariable(problem, link, ScenarioRealFlowPhaseVariableFactory.PHASE_B, scenario), 1.0);
           if (hasVariable) {
@@ -124,7 +124,7 @@ public class ScenarioLineRealPhaseCapacityConstraint extends ScenarioConstraintF
           problem.addLinearConstraint(constraint);      
         }
 
-        if (link.getAttribute(ElectricPowerFlowConnection.IS_PHASE_C_KEY, Boolean.class)) {
+        if (link.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_C_KEY, Boolean.class)) {
           LinearConstraint constraint = new LinearConstraintLessEq(getFlowLessThanConstraintName(link, ScenarioRealFlowPhaseVariableFactory.PHASE_C, scenario));
           constraint.addVariable(flowFactory.getVariable(problem, link, ScenarioRealFlowPhaseVariableFactory.PHASE_C, scenario), 1.0);
           if (hasVariable) {

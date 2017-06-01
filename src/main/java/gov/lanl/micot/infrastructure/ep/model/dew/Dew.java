@@ -50,6 +50,7 @@ public class Dew {
   private DewEngineJNA _engine = null;
 
   private String _ptlinespcFile = null;
+  private String _ptcapFile = null;
   
   /**
    * This is the exact contents of the .dew file, we will maintain this, and
@@ -563,9 +564,9 @@ public class Dew {
     LineImpl l = new LineImpl(points.toArray(new Point[0]));
     int numPhases = Integer.parseInt(getComponentData(Load.NUM_PHASE_KEY, legacyid, name).toString());
     int phases = Integer.parseInt(getComponentData(DewVariables.DEW_PHASES_KEY, legacyid, name).toString());
-    boolean hasPhaseA = line.getAttribute(Line.IS_PHASE_A_KEY, Boolean.class);
-    boolean hasPhaseB = line.getAttribute(Line.IS_PHASE_B_KEY, Boolean.class);
-    boolean hasPhaseC = line.getAttribute(Line.IS_PHASE_C_KEY, Boolean.class);
+    boolean hasPhaseA = line.getAttribute(Line.HAS_PHASE_A_KEY, Boolean.class);
+    boolean hasPhaseB = line.getAttribute(Line.HAS_PHASE_B_KEY, Boolean.class);
+    boolean hasPhaseC = line.getAttribute(Line.HAS_PHASE_C_KEY, Boolean.class);
     int linePhases = getPhases(hasPhaseA,hasPhaseB,hasPhaseC);
     boolean actualFailed = line.getAttribute(DewVariables.DEW_AGGREGATE_FAILED_KEY, Boolean.class);
     boolean actualStatus = line.getAttribute(DewVariables.DEW_AGGREGATE_STATUS_KEY, Boolean.class);
@@ -657,9 +658,9 @@ public class Dew {
     LineImpl l = new LineImpl(points.toArray(new Point[0]));
     int numPhases = Integer.parseInt(getComponentData(Load.NUM_PHASE_KEY, legacyid, name).toString());
     int phases = Integer.parseInt(getComponentData(DewVariables.DEW_PHASES_KEY, legacyid, name).toString());
-    boolean hasPhaseA = line.getAttribute(Line.IS_PHASE_A_KEY, Boolean.class);
-    boolean hasPhaseB = line.getAttribute(Line.IS_PHASE_B_KEY, Boolean.class);
-    boolean hasPhaseC = line.getAttribute(Line.IS_PHASE_C_KEY, Boolean.class);
+    boolean hasPhaseA = line.getAttribute(Line.HAS_PHASE_A_KEY, Boolean.class);
+    boolean hasPhaseB = line.getAttribute(Line.HAS_PHASE_B_KEY, Boolean.class);
+    boolean hasPhaseC = line.getAttribute(Line.HAS_PHASE_C_KEY, Boolean.class);
     int linePhases = getPhases(hasPhaseA,hasPhaseB,hasPhaseC);
     boolean actualFailed = line.getAttribute(DewVariables.DEW_AGGREGATE_FAILED_KEY, Boolean.class);
     boolean actualStatus = line.getAttribute(DewVariables.DEW_AGGREGATE_STATUS_KEY, Boolean.class);    
@@ -1147,10 +1148,25 @@ public class Dew {
    * get the ptline datbase
    * @return
    */
-  public String getPtlinespcDatabase() {
-    return _ptlinespcFile;
+  public String getPtcapDatabase() {
+    return _ptcapFile;
   }
   
+  /**
+   * Set the ptline database
+   * @param ptlinespcFile
+   */
+  public void setPtcapDatabase(String ptcapFile) {
+    _ptcapFile = ptcapFile;    
+  }
+
+  /**
+   * get the ptline datbase
+   * @return
+   */
+  public String getPtlinespcDatabase() {
+    return _ptlinespcFile;
+  }  
 
 
   /**

@@ -259,7 +259,7 @@ public class DewModelFactory implements ModelFactory<ElectricPowerModel> {
    * @throws DewException
    */
   @SuppressWarnings("unchecked")
-  public DewModelImpl createModel(Dew engine, Collection<DewPtlinespcData> ld,  Collection<DewPtlinecondData> lcd, Collection<DewPtcabcondData> ccd) throws DewException {
+  public DewModelImpl createModel(Dew engine, Collection<DewPtlinespcData> ld,  Collection<DewPtlinecondData> lcd, Collection<DewPtcabcondData> ccd, Collection<DewPtxfrmData> xd, Collection<DewPtcapData> cd) throws DewException {
     DewModelImpl model = new DewModelImpl(engine);
 
     setupComponentData(engine);
@@ -282,7 +282,18 @@ public class DewModelFactory implements ModelFactory<ElectricPowerModel> {
       cabCondData.put(d.getIcab(),d);
     }
     
+    Map<Integer, DewPtxfrmData> xfrmData = new HashMap<Integer, DewPtxfrmData>();
+    for (DewPtxfrmData d : xd) {
+      xfrmData.put(d.getIptrow(),d);
+    }
     
+    Map<Integer, DewPtcapData> capData = new HashMap<Integer, DewPtcapData>();
+    for (DewPtcapData d : cd) {
+      capData.put(d.getIptrow(),d);
+      System.out.println("Adding cap with part id = " + d.getIptrow() + " and name = " + d.getStnam());
+    }
+    
+
     // some book-keeping data structures
     Map<DewLegacyId, Bus> buses = new HashMap<DewLegacyId, Bus>();
 
@@ -340,7 +351,7 @@ public class DewModelFactory implements ModelFactory<ElectricPowerModel> {
   //  System.out.println("Capacitors");
 
     for (DewLegacyId id : capacitors) {
-      ShuntCapacitor capacitor = capacitorFactory.constructCapacitor(id, engine, lineData);
+      ShuntCapacitor capacitor = capacitorFactory.constructCapacitor(id, engine, lineData, capData);
       Bus bus = buses.get(nodeCluster.get(id));
       model.addShuntCapacitor(capacitor, bus);
     }
@@ -401,7 +412,7 @@ public class DewModelFactory implements ModelFactory<ElectricPowerModel> {
           
         }
 
-      Transformer transformer = transformerFactory.createTransformer(id, engine, lineData);
+      Transformer transformer = transformerFactory.createTransformer(id, engine, lineData, xfrmData);
       model.addEdge(transformer, model.getNode(bus1), model.getNode(bus2));
       
       boolean hasSwitch = (protectiveDevices.contains(id) || switches.contains(id)) ? true : false;          
@@ -607,7 +618,7 @@ public class DewModelFactory implements ModelFactory<ElectricPowerModel> {
         Bus bus1 = buses.get(b1);
         Bus bus2 = buses.get(b2);
 
-        Line line = lineFactory.createLine(bus1, bus2, new DewLegacyId(id.getOne(), 0));
+        Line line = lineFactory.createLine(feeder, bus1, bus2, new DewLegacyId(id.getOne(), 0));
         model.addEdge(line, model.getNode(bus1), model.getNode(bus2));
         boolean hasSwitch = (protectiveDevices.contains(id) || switches.contains(id)) ? true : false;          
         line.setAttribute(Transformer.HAS_SWITCH_KEY, hasSwitch);      
