@@ -78,7 +78,7 @@ public class PowerworldModelFile implements ElectricPowerModelFile {
    * @param model
    * @throws IOException
    */
-  public  void savePTI23File(String filename, ElectricPowerModel model) throws IOException {
+  public void savePTI23File(String filename, ElectricPowerModel model) throws IOException {
     PowerworldModel tempModel = PowerworldModelFactory.getInstance().constructModel(model);
     ComObject powerWorldModel = tempModel.getPowerworld();
     try {
@@ -94,6 +94,28 @@ public class PowerworldModelFile implements ElectricPowerModelFile {
     }
   }
 
+  /**
+   * Customized export of data in PTI33 format
+   * @param filename
+   * @param model
+   * @throws IOException
+   */
+  public void savePTI33File(String filename, ElectricPowerModel model) throws IOException {
+    PowerworldModel tempModel = PowerworldModelFactory.getInstance().constructModel(model);
+    ComObject powerWorldModel = tempModel.getPowerworld();
+    try {
+      ComDataObject text = powerWorldModel.callData(PowerworldIOConstants.SAVE_CASE, filename, PowerworldIOConstants.PTI33, true); 
+      ArrayList<ComDataObject> data = text.getArrayValue();
+      if (!data.get(0).getStringValue().equals("")) {
+        System.err.println("Error saving file: " + data.get(0).getStringValue());
+      }      
+    }
+    catch (Throwable e) {
+      e.printStackTrace();
+      throw new IOException(e.getMessage());
+    }
+  }
+  
 
   @Override
   public ElectricPowerModel readModel(String filename) throws IOException {

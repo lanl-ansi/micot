@@ -70,7 +70,9 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     ComDataObject areaObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES, PowerworldIOConstants.AREA, "");
     ComDataObject zoneObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES, PowerworldIOConstants.ZONE, "");
     ComDataObject loadObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.LOAD, "");
+    ComDataObject shuntObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.SHUNT, "");
 
+    
     // get some system level data
     String simFields[] = new String[]{PowerworldIOConstants.MVA_BASE}; 
     String simValues[] = new String[] {""};        
@@ -234,7 +236,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     for (int i = 0; i < shuntids.size(); ++i) {
       String fields[] = new String[]{ PowerworldIOConstants.BUS_NUM, PowerworldIOConstants.SHUNT_MW, PowerworldIOConstants.SHUNT_MVAR,
           PowerworldIOConstants.SHUNT_SS_MW, PowerworldIOConstants.SHUNT_SS_MVAR, PowerworldIOConstants.SHUNT_MAX_MW, PowerworldIOConstants.SHUNT_MAX_MVAR,
-          PowerworldIOConstants.SHUNT_MIN_MW, PowerworldIOConstants.SHUNT_MIN_MVAR };
+          PowerworldIOConstants.SHUNT_MIN_MW, PowerworldIOConstants.SHUNT_MIN_MVAR};
       String values[] = new String[] {shuntids.get(i)+"", "","","","","","","",""};                
       ComDataObject dataObject = powerWorldModel.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.BUS, fields, values);
       ArrayList<ComDataObject> busData = dataObject.getArrayValue();
@@ -251,7 +253,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
       String ssmaxmvar = bData.get(6).getStringValue();
       String ssminmw = bData.get(7).getStringValue();
       String ssminmvar = bData.get(8).getStringValue();
-
+      
       Bus bus = busMap.get(shuntids.get(i));
       
       if ( (mw != null || mvar != null) && Double.parseDouble(mw) != 0.0 && Double.parseDouble(mvar) != 0.0) {
@@ -270,9 +272,8 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
        
     }
     
-    
-    
-/*    ArrayList<ComDataObject> shunts = shuntObject.getArrayValue();
+        
+   /* ArrayList<ComDataObject> shunts = shuntObject.getArrayValue();
     errorString = shunts.get(0).getStringValue();
     if (errorString.equals("")) {
       ArrayList<ComDataObject> data = shunts.get(1).getArrayValue();
@@ -291,9 +292,12 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
         String area = bData.get(1).getStringValue();
         String zone = bData.get(2).getStringValue();
         String mode = bData.get(3).getStringValue();
+
         Bus bus = busMap.get(ids.get(i));
+        System.out.println(bus + " " + mode);
         
-        Asset asset = null;
+        
+        /*Asset asset = null;
         if (mode != null && (mode.equalsIgnoreCase(PowerworldIOConstants.SHUNT_FIXED) || mode.equalsIgnoreCase(PowerworldIOConstants.SHUNT_BUS_SHUNT))) {
           int k = numShunts.get(bus) == null ? 0 : numShunts.get(bus);          
           ShuntCapacitor capacitor = shuntFactory.createShuntCapacitor(powerWorldModel, bus, ids.get(i), k);

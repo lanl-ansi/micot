@@ -14,6 +14,7 @@ public class PowerworldIOConstants {
   protected static final String OPEN_CASE                          = "OpenCase";
   public    static final String CLOSE_CASE                         = "CloseCase";
   public    static final String LIST_OF_DEVICES                    = "ListOfDevices";
+  public    static final String GET_FIELD_LIST                     = "GetFieldList";
   public    static final String LIST_OF_DEVICES_AS_VARIANT_STRINGS = "ListOfDevicesAsVariantStrings";
   public    static final String GET_PARAMETERS_SINGLE_ELEMENT      = "GetParametersSingleElement";
   public    static final String RUN_SCRIPT_COMMAND                 = "RunScriptCommand";
@@ -95,6 +96,7 @@ public class PowerworldIOConstants {
 
   // shunt fields
   public static final String SHUNT_MODE            = "pwSSCMode";
+  public static final String SHUNT_CONTROL_MODEL   = "pwSSCustomControlModelExpressionName";
   public static final String SHUNT_MAX_MVAR        = "pwSSMaxMVR";
   public static final String SHUNT_MIN_MVAR        = "pwSSMinMVR";
   public static final String SHUNT_MAX_MW          = "pwSSMaxMW";
@@ -109,10 +111,10 @@ public class PowerworldIOConstants {
   public static final String SHUNT_BUS_SHUNT       = "bus shunt";
   public static final String SHUNT_CLOSED          = "closed";
   public static final String SHUNT_OPEN            = "open";
-  public static final String SHUNT_SS_MW             = "pwBusSSMW";
-  public static final String SHUNT_SS_MVAR           = "pwBusSS";
-  public static final String SHUNT_MVAR              = "pwBusB";
-  public static final String SHUNT_MW                = "pwBusG";
+  public static final String SHUNT_SS_MW           = "pwBusSSMW";
+  public static final String SHUNT_SS_MVAR         = "pwBusSS";
+  public static final String SHUNT_MVAR            = "pwBusB";
+  public static final String SHUNT_MW              = "pwBusG";
   
   // branch fields
   public static final String BRANCH_TYPE               = "pwBranchDeviceType";
@@ -170,6 +172,7 @@ public class PowerworldIOConstants {
   protected static final String PWB            = "PWB";
   protected static final String MATPOWER       = "MatPower";
   protected static final String PTI23          = "PTI23";
+  protected static final String PTI33          = "PTI33";
 
   // powerworld modes
   public    static final String EDIT_MODE          = "EnterMode(EDIT)";
