@@ -95,6 +95,7 @@ public class PowerworldIOConstants {
   public static final String LOAD_OPEN             = "open";
 
   // shunt fields
+  public static final String SHUNT_ID              = "pwShuntId";
   public static final String SHUNT_MODE            = "pwSSCMode";
   public static final String SHUNT_CONTROL_MODEL   = "pwSSCustomControlModelExpressionName";
   public static final String SHUNT_MAX_MVAR        = "pwSSMaxMVR";
@@ -111,11 +112,9 @@ public class PowerworldIOConstants {
   public static final String SHUNT_BUS_SHUNT       = "bus shunt";
   public static final String SHUNT_CLOSED          = "closed";
   public static final String SHUNT_OPEN            = "open";
-  public static final String SHUNT_SS_MW           = "pwBusSSMW";
-  public static final String SHUNT_SS_MVAR         = "pwBusSS";
-  public static final String SHUNT_MVAR            = "pwBusB";
-  public static final String SHUNT_MW              = "pwBusG";
-  
+  public static final String SHUNT_MVAR            = "pwSSAMVR";
+  public static final String SHUNT_MW              = "pwSSAMW";
+    
   // branch fields
   public static final String BRANCH_TYPE               = "pwBranchDeviceType";
   public static final String BRANCH_AREA               = "pwAreaName";

@@ -6,6 +6,7 @@ import gov.lanl.micot.infrastructure.ep.io.powerworld.PowerworldIOConstants;
 import gov.lanl.micot.infrastructure.ep.model.Bus;
 import gov.lanl.micot.infrastructure.ep.model.ShuntCapacitor;
 import gov.lanl.micot.infrastructure.ep.model.ShuntCapacitorFactory;
+import gov.lanl.micot.util.collection.Pair;
 import gov.lanl.micot.util.io.dcom.ComDataObject;
 import gov.lanl.micot.util.io.dcom.ComObject;
 
@@ -15,16 +16,8 @@ import gov.lanl.micot.util.io.dcom.ComObject;
  */
 public class PowerworldShuntCapacitorFactory extends ShuntCapacitorFactory {
 
-//	private static PowerworldShuntCapacitorFactory INSTANCE = null;
 	private static final String LEGACY_TAG = "POWERWORLD";
 	
-	//public synchronized static PowerworldShuntCapacitorFactory getInstance() {
-		//if (INSTANCE == null) {
-			//INSTANCE = new PowerworldShuntCapacitorFactory();
-		//}
-		//return INSTANCE;
-	//}
-		
 	/**
 	 * Constructor
 	 */
@@ -36,11 +29,11 @@ public class PowerworldShuntCapacitorFactory extends ShuntCapacitorFactory {
    * @param shunt
    * @return
    */
-  public ShuntCapacitor createShuntCapacitor(ComObject powerworld, Bus bus, int busid)  {
-    String fields[] = new String[]{PowerworldIOConstants.BUS_NUM, PowerworldIOConstants.SHUNT_MVAR, PowerworldIOConstants.SHUNT_MW}; 
-    String values[] = new String[] {busid+"", "",""};
+  public ShuntCapacitor createShuntCapacitor(ComObject powerworld, Bus bus, Pair<Integer, String> id)  {
+    String fields[] = new String[]{PowerworldIOConstants.BUS_NUM, PowerworldIOConstants.SHUNT_ID, PowerworldIOConstants.SHUNT_MVAR, PowerworldIOConstants.SHUNT_MW, PowerworldIOConstants.SHUNT_STATUS}; 
+    String values[] = new String[] {id.getOne()+"",id.getTwo(), "","",""};
         
-    ComDataObject dataObject = powerworld.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.BUS, fields, values);
+    ComDataObject dataObject = powerworld.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.SHUNT, fields, values);
     ArrayList<ComDataObject> shuntData = dataObject.getArrayValue();
     String errorString = shuntData.get(0).getStringValue();
     if (!errorString.equals("")) {
@@ -48,13 +41,14 @@ public class PowerworldShuntCapacitorFactory extends ShuntCapacitorFactory {
     }
 
     ArrayList<ComDataObject> lData = shuntData.get(1).getArrayValue();                       
-    String mvarString = lData.get(1).getStringValue();
-    String mwString = lData.get(2).getStringValue();
+    String mvarString = lData.get(2).getStringValue();
+    String mwString = lData.get(3).getStringValue();
+    String statusString = lData.get(4).getStringValue();
         
     double reactive = mvarString == null ? 0 : Double.parseDouble(mvarString);
     double real = mwString == null ? 0 : Double.parseDouble(mwString);                
-    boolean status = true;   
-    ShuntCapacitor shunt = registerCapacitor(busid);    
+    boolean status = Boolean.parseBoolean(statusString);   
+    ShuntCapacitor shunt = registerCapacitor(id);    
         
     shunt.setDesiredStatus(status);
     shunt.setActualStatus(status);
@@ -73,7 +67,7 @@ public class PowerworldShuntCapacitorFactory extends ShuntCapacitorFactory {
   * @param bus
   * @return
   */
-  private ShuntCapacitor registerCapacitor(int legacyId) {
+  private ShuntCapacitor registerCapacitor(Pair<Integer,String> legacyId) {
     ShuntCapacitor capacitor = getLegacy(LEGACY_TAG, legacyId);
 
     if (capacitor == null) {

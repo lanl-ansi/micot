@@ -230,7 +230,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     }
 
     // get all the shunts
-    ArrayList<ComDataObject> shuntdata = buses.get(1).getArrayValue();
+    /*ArrayList<ComDataObject> shuntdata = buses.get(1).getArrayValue();
     ArrayList<Integer> shuntids = shuntdata.get(0).getIntArrayValue();
           
     for (int i = 0; i < shuntids.size(); ++i) {
@@ -270,47 +270,42 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
         zones.put(capacitor, zones.get(bus));
       }
        
-    }
+    }*/
     
         
-   /* ArrayList<ComDataObject> shunts = shuntObject.getArrayValue();
+    ArrayList<ComDataObject> shunts = shuntObject.getArrayValue();
     errorString = shunts.get(0).getStringValue();
     if (errorString.equals("")) {
       ArrayList<ComDataObject> data = shunts.get(1).getArrayValue();
-      ArrayList<Integer> ids = data.get(0).getIntArrayValue();
+      ArrayList<Integer> busids   = data.get(0).getIntArrayValue();
+      ArrayList<String> shuntids = data.get(1).getStringArrayValue();
             
-      for (int i = 0; i < ids.size(); ++i) {
-        String fields[] = new String[]{PowerworldIOConstants.BUS_NUM, PowerworldIOConstants.SHUNT_AREA, PowerworldIOConstants.SHUNT_ZONE, PowerworldIOConstants.SHUNT_MODE}; 
-        String values[] = new String[] {ids.get(i)+"", "","",""};                
-        ComDataObject dataObject = powerWorldModel.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.BUS, fields, values);
+      for (int i = 0; i < busids.size(); ++i) {
+        String fields[] = new String[]{PowerworldIOConstants.BUS_NUM, PowerworldIOConstants.SHUNT_ID, PowerworldIOConstants.SHUNT_AREA, PowerworldIOConstants.SHUNT_ZONE, PowerworldIOConstants.SHUNT_MODE}; 
+        String values[] = new String[] {busids.get(i)+"", shuntids.get(i)+"","","",""};                
+        ComDataObject dataObject = powerWorldModel.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.SHUNT, fields, values);
         ArrayList<ComDataObject> busData = dataObject.getArrayValue();
         String errorString2 = busData.get(0).getStringValue();
         if (!errorString2.equals("")) {
           System.err.println("Error getting powerworld shunt data: " + errorString2);                
         }        
         ArrayList<ComDataObject> bData = busData.get(1).getArrayValue();                       
-        String area = bData.get(1).getStringValue();
-        String zone = bData.get(2).getStringValue();
-        String mode = bData.get(3).getStringValue();
+        String area = bData.get(2).getStringValue();
+        String zone = bData.get(3).getStringValue();
+        String mode = bData.get(4).getStringValue();
 
-        Bus bus = busMap.get(ids.get(i));
-        System.out.println(bus + " " + mode);
-        
-        
-        /*Asset asset = null;
+        Bus bus = busMap.get(busids.get(i));
+                
+        Asset asset = null;
         if (mode != null && (mode.equalsIgnoreCase(PowerworldIOConstants.SHUNT_FIXED) || mode.equalsIgnoreCase(PowerworldIOConstants.SHUNT_BUS_SHUNT))) {
-          int k = numShunts.get(bus) == null ? 0 : numShunts.get(bus);          
-          ShuntCapacitor capacitor = shuntFactory.createShuntCapacitor(powerWorldModel, bus, ids.get(i), k);
+          ShuntCapacitor capacitor = shuntFactory.createShuntCapacitor(powerWorldModel, bus, new Pair<Integer,String>(busids.get(i),shuntids.get(i)));
           addShuntCapacitor(capacitor,bus);
           asset = capacitor;
-          numShunts.put(bus, k+1);
         }
         else {
-          int k = numSwitchedShunts.get(bus) == null ? 0 : numSwitchedShunts.get(bus);          
-          ShuntCapacitorSwitch capacitor = switchedShuntFactory.createShuntCapacitorSwitch(powerWorldModel, bus, ids.get(i), k);
+          ShuntCapacitorSwitch capacitor = switchedShuntFactory.createShuntCapacitorSwitch(powerWorldModel, bus, new Pair<Integer,String>(busids.get(i),shuntids.get(i)));
           addShuntCapacitorSwitch(capacitor,bus);
           asset = capacitor;
-          numSwitchedShunts.put(bus, k+1);          
         }
         areas.put(asset, area);
         zones.put(asset, zone);
@@ -318,7 +313,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     }
     else {
       System.out.println("Error getting powerworld shunt data: " + errorString);      
-    }*/
+    }
 
         
     // get all the lines
@@ -844,7 +839,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
   	enterEditMode();
     String fields[] = getCapacitorFields();  
     String values[] = convertToStringArray(getCapacitorValues(shunt));
-    updateData(fields, values, PowerworldIOConstants.BUS);   
+    updateData(fields, values, PowerworldIOConstants.SHUNT);   
   }
   
   /**
@@ -852,7 +847,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    * @return
    */
   private String[] getCapacitorFields() {
-    return new String[]{PowerworldIOConstants.BUS_NUM, 
+    return new String[]{PowerworldIOConstants.BUS_NUM, PowerworldIOConstants.SHUNT_ID, 
       PowerworldIOConstants.SHUNT_MVAR, 
       PowerworldIOConstants.SHUNT_MW};
   }
@@ -863,13 +858,9 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    * @return
    */
   private Object[] getCapacitorValues(ShuntCapacitor shunt) {
-    int id = getCapacitorId(shunt);
-//    System.out.println(id + " " + shunt.getRealCompensation());
-
-    
+    Pair<Integer,String> id = getCapacitorId(shunt);
     // power world needs everything in their actual power units... models assumes these are in per unit (this is different than other formats
-    return new Object[] {id, shunt.getReactiveCompensation(),shunt.getRealCompensation()};
-    
+    return new Object[] {id.getOne(), id.getTwo(), shunt.getReactiveCompensation(),shunt.getRealCompensation()};    
   }
   
   @Override
@@ -886,8 +877,9 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    */
   private String[] getCapacitorSwitchFields() {
     return new String[]{PowerworldIOConstants.BUS_NUM,
-        PowerworldIOConstants.SHUNT_SS_MW,
-        PowerworldIOConstants.SHUNT_SS_MVAR,
+        PowerworldIOConstants.SHUNT_ID,
+        PowerworldIOConstants.SHUNT_MW,
+        PowerworldIOConstants.SHUNT_MVAR,
         PowerworldIOConstants.SHUNT_MAX_MW,
         PowerworldIOConstants.SHUNT_MIN_MW,
         PowerworldIOConstants.SHUNT_MAX_MVAR,
@@ -901,8 +893,8 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    * @return
    */
   private Object[] getCapacitorSwitchValues(ShuntCapacitorSwitch shunt) {
-    int id = getCapacitorId(shunt);
-    return new Object[] {id, 
+    Pair<Integer,String> id = getCapacitorId(shunt);
+    return new Object[] {id.getLeft(), id.getRight(), 
         shunt.getRealCompensation().doubleValue(), 
         shunt.getReactiveCompensation().doubleValue(),
         shunt.getMaxMW(),
@@ -1054,8 +1046,8 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    * @return
    */
 	@SuppressWarnings("unchecked")
-  private Integer getCapacitorId(ShuntCapacitor capacitor) {
-    return capacitor.getAttribute(PowerworldModelConstants.POWERWORLD_LEGACY_ID_KEY, Integer.class);
+  private Pair<Integer,String> getCapacitorId(ShuntCapacitor capacitor) {
+    return capacitor.getAttribute(PowerworldModelConstants.POWERWORLD_LEGACY_ID_KEY, Pair.class);
   }
 
   /**
@@ -1064,8 +1056,8 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    * @return
    */
 	@SuppressWarnings("unchecked")
-  private Integer getCapacitorId(ShuntCapacitorSwitch capacitor) {
-    return capacitor.getAttribute(PowerworldModelConstants.POWERWORLD_LEGACY_ID_KEY, Integer.class);
+  private Pair<Integer,String> getCapacitorId(ShuntCapacitorSwitch capacitor) {
+    return capacitor.getAttribute(PowerworldModelConstants.POWERWORLD_LEGACY_ID_KEY, Pair.class);
   }
 
   
@@ -1262,13 +1254,14 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    * @return
    */
   private String getCapacitorRemoveFilter(ShuntCapacitor capacitor, String filtername) {
-    int id = getCapacitorId(capacitor);
+    Pair<Integer,String> id = getCapacitorId(capacitor);
     
     String command = PowerworldIOConstants.CREATE_FILTER;
     command += "{";
     command += PowerworldIOConstants.createRemoveHeader(PowerworldIOConstants.SHUNT, filtername);
     command += PowerworldIOConstants.SUBDATA_HEADER;
-    command += PowerworldIOConstants.BUS_NUM + " = " + id;
+    command += PowerworldIOConstants.BUS_NUM + " = " + id.getLeft();
+    command += PowerworldIOConstants.SHUNT_ID + " = " + id.getRight();
     command += PowerworldIOConstants.SUBDATA_FOOTER;
     command += "}";
     return command;    
@@ -1280,13 +1273,14 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    * @return
    */
   private String getCapacitorRemoveFilter(ShuntCapacitorSwitch capacitor, String filtername) {
-    int id = getCapacitorId(capacitor);
+    Pair<Integer,String> id = getCapacitorId(capacitor);
     
     String command = PowerworldIOConstants.CREATE_FILTER;
     command += "{";
     command += PowerworldIOConstants.createRemoveHeader(PowerworldIOConstants.SHUNT, filtername);
     command += PowerworldIOConstants.SUBDATA_HEADER;
-    command += PowerworldIOConstants.BUS_NUM + " = " + id;
+    command += PowerworldIOConstants.BUS_NUM + " = " + id.getLeft();
+    command += PowerworldIOConstants.SHUNT_ID + " = " + id.getRight();
     command += PowerworldIOConstants.SUBDATA_FOOTER;
     command += "}";
     return command;    

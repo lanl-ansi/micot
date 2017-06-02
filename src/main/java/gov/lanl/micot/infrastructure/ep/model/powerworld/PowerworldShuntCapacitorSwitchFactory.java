@@ -6,6 +6,7 @@ import gov.lanl.micot.infrastructure.ep.io.powerworld.PowerworldIOConstants;
 import gov.lanl.micot.infrastructure.ep.model.Bus;
 import gov.lanl.micot.infrastructure.ep.model.ShuntCapacitorSwitch;
 import gov.lanl.micot.infrastructure.ep.model.ShuntCapacitorSwitchFactory;
+import gov.lanl.micot.util.collection.Pair;
 import gov.lanl.micot.util.io.dcom.ComDataObject;
 import gov.lanl.micot.util.io.dcom.ComObject;
 
@@ -37,14 +38,14 @@ public class PowerworldShuntCapacitorSwitchFactory extends ShuntCapacitorSwitchF
    * @param shunt
    * @return
    */
-  public ShuntCapacitorSwitch createShuntCapacitorSwitch(ComObject powerworld, Bus bus, int busId)  {
-    String fields[] = new String[]{PowerworldIOConstants.BUS_NUM, PowerworldIOConstants.SHUNT_SS_MVAR, 
-        PowerworldIOConstants.SHUNT_SS_MW,  
+  public ShuntCapacitorSwitch createShuntCapacitorSwitch(ComObject powerworld, Bus bus, Pair<Integer,String> id)  {
+    String fields[] = new String[]{PowerworldIOConstants.BUS_NUM, PowerworldIOConstants.SHUNT_ID, PowerworldIOConstants.SHUNT_MVAR, 
+        PowerworldIOConstants.SHUNT_MW,  
         PowerworldIOConstants.SHUNT_MAX_MVAR, PowerworldIOConstants.SHUNT_MAX_MW, 
-        PowerworldIOConstants.SHUNT_MIN_MVAR, PowerworldIOConstants.SHUNT_MIN_MW }; 
-    String values[] = new String[] {busId+"", "","","","","",""};
+        PowerworldIOConstants.SHUNT_MIN_MVAR, PowerworldIOConstants.SHUNT_MIN_MW, PowerworldIOConstants.SHUNT_STATUS }; 
+    String values[] = new String[] {id.getOne()+"", id.getTwo(),"","","","","","",""};
         
-    ComDataObject dataObject = powerworld.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.BUS, fields, values);
+    ComDataObject dataObject = powerworld.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.SHUNT, fields, values);
     ArrayList<ComDataObject> shuntData = dataObject.getArrayValue();
     String errorString = shuntData.get(0).getStringValue();
     if (!errorString.equals("")) {
@@ -52,12 +53,13 @@ public class PowerworldShuntCapacitorSwitchFactory extends ShuntCapacitorSwitchF
     }
 
     ArrayList<ComDataObject> lData = shuntData.get(1).getArrayValue();                       
-    String mvarString = lData.get(1).getStringValue();
-    String mwString = lData.get(2).getStringValue();
-    String maxMVarString = lData.get(3).getStringValue();
-    String maxMWString = lData.get(4).getStringValue();
-    String minMVarString = lData.get(5).getStringValue();
-    String minMWString = lData.get(6).getStringValue();    
+    String mvarString = lData.get(2).getStringValue();
+    String mwString = lData.get(3).getStringValue();
+    String maxMVarString = lData.get(4).getStringValue();
+    String maxMWString = lData.get(5).getStringValue();
+    String minMVarString = lData.get(6).getStringValue();
+    String minMWString = lData.get(7).getStringValue();
+    String statusString =lData.get(8).getStringValue();
 
     double maxMVar =  maxMVarString == null ? 0 : Double.parseDouble(maxMVarString);
     double minMVar =  maxMVarString == null ? 0 : Double.parseDouble(minMVarString);
@@ -65,9 +67,11 @@ public class PowerworldShuntCapacitorSwitchFactory extends ShuntCapacitorSwitchF
     double maxMW =  maxMWString == null ? 0 : Double.parseDouble(maxMWString);
     double mw = mwString == null ? 0 : Double.parseDouble(mwString);
     double mvar = mvarString == null ? 0 : Double.parseDouble(mvarString);
+    boolean status = Boolean.parseBoolean(statusString);
     
-    boolean status = bus.getActualStatus();   
-    ShuntCapacitorSwitch shunt = registerCapacitor(busId);    
+    
+//    boolean status = bus.getActualStatus();   
+    ShuntCapacitorSwitch shunt = registerCapacitor(id);    
         
     shunt.setDesiredStatus(status);
     shunt.setActualStatus(status);
@@ -90,7 +94,7 @@ public class PowerworldShuntCapacitorSwitchFactory extends ShuntCapacitorSwitchF
   * @param bus
   * @return
   */
-  private ShuntCapacitorSwitch registerCapacitor(int legacyId) {
+  private ShuntCapacitorSwitch registerCapacitor(Pair<Integer,String> legacyId) {
     ShuntCapacitorSwitch capacitor = getLegacy(LEGACY_TAG, legacyId);
 
     if (capacitor == null) {

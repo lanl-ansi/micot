@@ -72,6 +72,37 @@ public class PowerworldTest extends TestCase {
     assertEquals(model.getGenerators().size(), 5);
     assertEquals(model.getLoads().size(), 6);
   }
+
+  /**
+   * Test that we can read in shunts from powerworld
+   * @throws IOException
+   */
+  public void testShunts() throws IOException {
+    if (System.getenv("TEST_POWERWORLD") != null) {
+      return;
+    }
+    
+    PowerworldModelFile modelFile = new PowerworldModelFile();
+    ElectricPowerModel model = modelFile.readModel("test_data" + File.separatorChar + "ep" + File.separatorChar + "powerworld" + File.separatorChar + "shunt.RAW");
+    assertEquals(model.getShuntCapacitors().size(), 1);
+    assertEquals(model.getShuntCapacitorSwitches().size(), 0);
+  }
+
+  /**
+   * Test that we can read in shunts from powerworld
+   * @throws IOException
+   */
+  public void testSwitchedShunts() throws IOException {
+    if (System.getenv("TEST_POWERWORLD") != null) {
+      return;
+    }
+    
+    PowerworldModelFile modelFile = new PowerworldModelFile();
+    ElectricPowerModel model = modelFile.readModel("test_data" + File.separatorChar + "ep" + File.separatorChar + "powerworld" + File.separatorChar + "switched_shunt.RAW");
+    assertEquals(model.getShuntCapacitors().size(), 0);
+    assertEquals(model.getShuntCapacitorSwitches().size(), 1);
+  }
+  
   
   @Override
   protected void tearDown() throws Exception {

@@ -21,16 +21,8 @@ import gov.lanl.micot.util.math.PolynomialFunctionFactory;
  */
 public class PowerworldGeneratorFactory extends GeneratorFactory {
 
-//  private static PowerworldGeneratorFactory INSTANCE           = null;
   private static final String LEGACY_TAG = "Powerworld";
     
-  //public static PowerworldGeneratorFactory getInstance() {
-    //if (INSTANCE == null) {
-      //INSTANCE = new PowerworldGeneratorFactory();
-    //}
-    //return INSTANCE;
-  //}
-
   /**
    * Singleton constructor
    */

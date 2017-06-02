@@ -138,11 +138,7 @@ public class JSONResultExporter {
       transformerBuilder = transformerBuilder.add("bus_j", bus2.toString());      
       transformersBuilder = transformersBuilder.add(transformerBuilder);
     }
-    mainBuilder = mainBuilder.add("transformer", transformersBuilder);
-
-    
-    
-    
+    mainBuilder = mainBuilder.add("transformer", transformersBuilder);    
     
     // get the fixed shunt results
     JSONArrayBuilder shuntsBuilder = json.createArrayBuilder();
