@@ -21,18 +21,6 @@ public abstract class ElectricPowerFlowConnectionImpl extends ElectricPowerConne
     super();
   }
   
-  /**
-   * Constructor
-   * @param component
-   * @param identifierKeys
-   * @param oredKeys
-   * @param additiveKeys
-   * @param subtractiveKeys
-   */
-//  public ElectricPowerFlowConnectionImpl(ElectricPowerFlowConnection edge) {
-  //  super(edge);
-  //}
-  
   @Override
   public Double getResistance() {
     return getAttribute(RESISTANCE_KEY, Double.class);

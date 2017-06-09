@@ -33,7 +33,7 @@ import gov.lanl.micot.util.graph.GraphFactory;
  * 
  * @author Russell Bent
  */
-public abstract class ElectricPowerModelImpl extends ModelImpl implements ElectricPowerModel, BusChangeListener, IntertieChangeListener, LineChangeListener, TransformerChangeListener, ShuntCapacitorChangeListener, ShuntCapacitorSwitchChangeListener, GeneratorChangeListener, LoadChangeListener, BatteryChangeListener {
+public abstract class ElectricPowerModelImpl extends ModelImpl implements ElectricPowerModel, BusChangeListener, IntertieChangeListener, LineChangeListener, TransformerChangeListener, DCLineChangeListener, ShuntCapacitorChangeListener, ShuntCapacitorSwitchChangeListener, GeneratorChangeListener, LoadChangeListener, BatteryChangeListener {
 
   protected static final long                                                            serialVersionUID   = 0;
 
@@ -41,29 +41,31 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
 
   private Set<ElectricPowerModelListener>                                                modelListeners     = null;
 
-  private Map<Line, Edge>                                                            lines              = null;
+  private Map<Line, Edge>                                                                lines              = null;
 
-  private Map<Transformer, Edge>                                                           transformers       = null;
+  private Map<Transformer, Edge>                                                         transformers       = null;
 
-  private Map<Intertie, Edge>                                                              interties          = null;
-
-  private Map<ShuntCapacitor, ElectricPowerNode>                                     shunts             = null;
-
-  private Map<ShuntCapacitorSwitch, ElectricPowerNode>                               switchedShunts     = null;
-
-  private Map<Bus, ElectricPowerNode>                                                buses              = null;
-
-  private Map<Generator, ElectricPowerNode>                                          generators         = null;
-
-  private Map<Battery, ElectricPowerNode>                                            batteries         = null;
+  private Map<DCLine, Edge>                                                              dcLines       = null;
   
-  private Map<Load, ElectricPowerNode>                                               loads              = null;
+  private Map<Intertie, Edge>                                                            interties          = null;
 
-  private Set<ControlArea>                                                           controlAreas       = null;
+  private Map<ShuntCapacitor, ElectricPowerNode>                                         shunts             = null;
 
-  private Set<Zone>                                                                  zones              = null;
+  private Map<ShuntCapacitorSwitch, ElectricPowerNode>                                   switchedShunts     = null;
+
+  private Map<Bus, ElectricPowerNode>                                                    buses              = null;
+
+  private Map<Generator, ElectricPowerNode>                                              generators         = null;
+
+  private Map<Battery, ElectricPowerNode>                                                batteries         = null;
   
-  private Set<ElectricPowerNode>                                                     nodes              = null;
+  private Map<Load, ElectricPowerNode>                                                   loads              = null;
+
+  private Set<ControlArea>                                                               controlAreas       = null;
+
+  private Set<Zone>                                                                      zones              = null;
+  
+  private Set<ElectricPowerNode>                                                         nodes              = null;
 
   private boolean                                                                        isSolved           = false;
   
@@ -107,6 +109,8 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
   private TransformerFactory transformerFactory = null;
   
   private ZoneFactory zoneFactory = null;
+  
+  private DCLineFactory dcLineFactory = null;
         
   /**
    * Constructor
@@ -135,6 +139,7 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     modelListeners = new HashSet<ElectricPowerModelListener>();
     lines = new TreeMap<Line, Edge>();
     transformers = new LinkedHashMap<Transformer, Edge>();
+    dcLines = new LinkedHashMap<DCLine, Edge>();
     interties = new TreeMap<Intertie, Edge>();
     switchedShunts = new TreeMap<ShuntCapacitorSwitch, ElectricPowerNode>();
     shunts = new TreeMap<ShuntCapacitor, ElectricPowerNode>();
@@ -167,6 +172,9 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     }
     if (connection instanceof Intertie) {
       return interties.get(connection);
+    }
+    if (connection instanceof DCLine) {
+      return dcLines.get(connection);
     }
     return null;
   }
@@ -275,7 +283,7 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
   }
 
   /**
-   * Return all the lines
+   * Return all the transformers
    * 
    * @param to
    * @param fro
@@ -292,6 +300,24 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     return lines;
   }
 
+  /**
+   * Return all the DC lines
+   * 
+   * @param to
+   * @param fro
+   * @return
+   */
+  public Collection<? extends DCLine> getDCLines(ElectricPowerNode to, ElectricPowerNode fro) {
+    Collection<ElectricPowerConnection> temp = getConnections(to, fro);
+    Vector<DCLine> lines = new Vector<DCLine>();
+    for (ElectricPowerConnection link : temp) {
+      if (link instanceof DCLine) {
+        lines.add((DCLine) link);
+      }
+    }
+    return lines;
+  }
+  
   @Override
   public Collection<ElectricPowerNode> getNodes() {
     return graph.getNodes();
@@ -312,6 +338,9 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     }
     else if (link instanceof Intertie) {
       addIntertie((Intertie) link, fromNode, toNode);
+    }
+    else if (link instanceof DCLine) {
+      addDCLine((DCLine) link, fromNode, toNode);
     }
     fireLinkAddedEvent(link);      
   }
@@ -362,8 +391,35 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     addAsset(transformer);
   }
 
+  
   /**
-   * Add a transformer to the model
+   * Add a DC line to the model
+   * 
+   * @param line
+   * @param data
+   * @param node1
+   * @param node2
+   */
+  private void addDCLine(DCLine dcLine, ElectricPowerNode fromNode, ElectricPowerNode toNode) {
+    Edge edge = null;
+    if (getEdges(fromNode, toNode).size() <= 0) {
+      edge = new EdgeImpl(dcLine);
+      graph.addEdge(edge,fromNode,toNode);
+    }
+    else {
+      edge = getEdges(fromNode, toNode).iterator().next();
+      edge.addConnection(dcLine);
+    }
+    dcLines.put(dcLine, edge);    
+    dcLine.addDCLineChangeListener(this);
+    addAsset(dcLine);
+  }
+
+  
+  
+  
+  /**
+   * Add an intertie to the model
    * 
    * @param line
    * @param data
@@ -430,6 +486,9 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     else if (link instanceof Intertie) {
       removeIntertie((Intertie) link);
     }
+    else if (link instanceof DCLine) {
+      removeDCLine((DCLine) link);
+    }
     else {
       throw new RuntimeException("Removal of unsupported link " + link);
     }
@@ -477,6 +536,28 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     removeAsset(transformer);
   }
 
+  @Override
+  public void removeDCLine(DCLine dcLine) {
+    Edge edge = getEdge(dcLine);    
+    if (dcLine.equals(edge.getPrimaryConnection())) {
+      if (edge.getConnections(Connection.class).size() > 1) {
+        throw new ModelChangeException("Attempting to remove the prinary connection before all other connections are removed");
+      }
+    }
+    
+    edge.removeConnection(dcLine);
+    if (edge.getConnections(Connection.class).size() == 0) {
+      if (!graph.removeEdge(edge)) {
+        throw new ModelChangeException("Unable to find link " + dcLine + " to remove");
+      }      
+    }
+    
+    dcLines.remove(dcLine);
+    dcLine.removeDCLineChangeListener(this);
+    removeAsset(dcLine);
+  }
+
+  
   @Override
   public void removeIntertie(Intertie intertie) {    
     Edge edge = getEdge(intertie);    
@@ -637,6 +718,7 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     Vector<ElectricPowerFlowConnection> links = new Vector<ElectricPowerFlowConnection>();
     links.addAll(getLines(node));
     links.addAll(getTransformers(node));
+    links.addAll(getDCLines(node));
     return links;
   }
 
@@ -655,6 +737,22 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     return lines;
   }
 
+  @Override
+  public Collection<? extends DCLine> getDCLines(ElectricPowerNode node) {
+    Vector<DCLine> lines = new Vector<DCLine>();
+    Collection<ElectricPowerNode> neighbors = graph.getNeighbors(node);
+    for (ElectricPowerNode node2 : neighbors) {
+      Collection<ElectricPowerConnection> links = getConnections(node, node2);
+      for (ElectricPowerConnection l : links) {
+        if (l instanceof DCLine) {
+          lines.add((DCLine) l);
+        }
+      }
+    }
+    return lines;
+  }
+
+  
   @Override
   public Collection<? extends ShuntCapacitor> getShuntCapacitors() {
     return shunts.keySet();
@@ -676,10 +774,16 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
   }
 
   @Override
+  public Collection<? extends DCLine> getDCLines() {
+    return dcLines.keySet();
+  }
+  
+  @Override
   public Collection<? extends ElectricPowerFlowConnection> getFlowConnections() {
     Vector<ElectricPowerFlowConnection> links = new Vector<ElectricPowerFlowConnection>();
     links.addAll(getLines());
     links.addAll(getTransformers());
+    links.addAll(getDCLines());
     return links;
   }
 
@@ -1237,6 +1341,11 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     fireTransformerChangeEvent(line, attribute);
   }
 
+  @Override
+  public void dcLineDataChanged(DCLine line, Object attribute) {
+    fireDCLineChangeEvent(line, attribute);
+  }
+  
   /**
    * Tell the listeners about this change event
    * 
@@ -1251,6 +1360,22 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
       listener.transformerDataChange(transformer);
     }
   }
+  
+  /**
+   * Tell the listeners about this change event
+   * 
+   * @param bus
+   * @param kv
+   */
+  private void fireDCLineChangeEvent(DCLine line, Object attribute) {
+    for (ModelListener listener : getModelListeners()) {
+      listener.attributeUpdated(line, getFirstNode(line), getSecondNode(line), attribute, line.getAttribute(attribute));
+    }
+    for (ElectricPowerModelListener listener : modelListeners) {
+      listener.dcLineDataChange(line);
+    }
+  }
+
 
   @Override
   public boolean isSolved() {
@@ -1327,6 +1452,14 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
       newModel.addEdge(newTransformer,node1,node2);
       oldToNewAssets.put(transformer,newTransformer);
     }
+
+    for (DCLine line : getDCLines()) {
+      DCLine newLine = line.clone();
+      ElectricPowerNode node1 = newModel.getNode(oldToNew.get(getFirstNode(line).getBus()));
+      ElectricPowerNode node2 = newModel.getNode(oldToNew.get(getSecondNode(line).getBus()));
+      newModel.addEdge(newLine,node1,node2);
+      oldToNewAssets.put(line,newLine);
+    }
     
     for (Intertie intertie : getInterties()) {
       Intertie newIntertie = intertie.clone();
@@ -1355,11 +1488,6 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
       oldToNewZone.put(zone, newZone);
     }
     
-//    ViolationCalculator calculator = ViolationCalculator.getInstance();
- //   calculator.calculateOverloads(newModel);
-  //  calculator.calculateLoadSheds(newModel);
-   // calculator.calculateVoltageDepressions(newModel);    
-    //calculator.calculateGeneratorOverloads(newModel);
     newModel.setMVABase(getMVABase());
 
     for (Asset asset : assetAreas.keySet()) {
@@ -1396,35 +1524,11 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     newModel.setCapacitorFactory(getShuntCapacitorFactory());
     newModel.setShuntCapacitorSwitchFactory(getShuntCapacitorSwitchFactory());
     newModel.setTransformerFactory(getTransformerFactory());
+    newModel.setDCLineFactory(getDCLineFactory());
     newModel.setZoneFactory(getZoneFactory());
-
-    
     
     return newModel; 
   }
-  
-  /*@Override
-  public boolean isCriticalConnection(Node n1, Node n2) {
-  	AbstractGraph<ElectricPowerNode, Corridor> transmissionGraph = new GraphFactory<ElectricPowerNode, Corridor>().createGraph();
-		Collection<ElectricPowerFlowConnection> edges = (Collection<ElectricPowerFlowConnection>) getFlowConnections(n1,n2);
-  	if (edges == null || edges.size() == 0) {
-  		return false;
-  	}
-    Corridor corridor = new Corridor(n1,n2);  	
-		
-  	for (ElectricPowerNode node : getNodes()) {
-  		transmissionGraph.addNode(node);
-  	}
-  	for (ElectricPowerFlowConnection edge : getFlowConnections()) {
-  		ElectricPowerNode node1 = getFirstNode(edge);
-  		ElectricPowerNode node2 = getSecondNode(edge);
-  		Corridor newCorridor = new Corridor(node1,node2);      
-  		if (transmissionGraph.getEdges(node1,node2) == null || transmissionGraph.getEdges(node1,node2).size() == 0) {
-  			transmissionGraph.addEdge(newCorridor, node1, node2);
-  		}
-  	}  	
-		return transmissionGraph.isCriticalEdge(corridor);
-  }*/
   
   @Override
   public void addArea(ControlArea area) {
@@ -1661,6 +1765,11 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
   public TransformerFactory getTransformerFactory() {
     return transformerFactory;
   }
+
+  @Override
+  public DCLineFactory getDCLineFactory() {
+    return dcLineFactory;
+  }
   
   @Override
   public ZoneFactory getZoneFactory() {
@@ -1747,6 +1856,14 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     this.transformerFactory = transformerFactory;
   }
 
+  /**
+   * Set the dc line factory
+   * @param transformerFactory
+   */
+  protected void setDCLineFactory(DCLineFactory dcLineFactory) {
+    this.dcLineFactory = dcLineFactory;
+  }
+  
   /**
    * Set the zone factory
    * @param zoneFactory

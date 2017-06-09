@@ -84,6 +84,12 @@ public interface ElectricPowerModel extends Model, Cloneable {
 	public void removeTransformer(Transformer transformer);
 
 	/**
+   * Remove a transformer from the model
+   * @param transformer
+   */
+  public void removeDCLine(DCLine line);
+	
+	/**
 	 * Remove an intertie from the model
 	 * @param transformer
 	 */
@@ -191,6 +197,12 @@ public interface ElectricPowerModel extends Model, Cloneable {
 	public TransformerFactory getTransformerFactory();
 	
 	/**
+	 * Get the factory used for making DC lines
+	 * @return
+	 */
+	public DCLineFactory getDCLineFactory();
+	
+	/**
 	 * Get the factory used for making interties
 	 * @return
 	 */
@@ -214,6 +226,11 @@ public interface ElectricPowerModel extends Model, Cloneable {
 	 */
 	public Collection<? extends Transformer> getTransformers(ElectricPowerNode node);
 	
+	/**
+	 * Get all the DC lines associated with a node
+	 */
+	public Collection<? extends DCLine> getDCLines(ElectricPowerNode node);
+
 	/**
 	 * Gets all the lines associated with a node
 	 * @param node
@@ -351,6 +368,12 @@ public interface ElectricPowerModel extends Model, Cloneable {
 	 */
 	public Collection<? extends Transformer> getTransformers();
 
+ /**
+   * Get all the transformers
+   * @return
+   */
+  public Collection<? extends DCLine> getDCLines();
+	
   /**
    * Gets all the buses of a certain voltage within a certain hop count
    * of node

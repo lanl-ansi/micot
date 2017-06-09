@@ -12,6 +12,10 @@ import gov.lanl.micot.infrastructure.ep.io.powerworld.PowerworldModelFile;
 import gov.lanl.micot.infrastructure.ep.model.Battery;
 import gov.lanl.micot.infrastructure.ep.model.Bus;
 import gov.lanl.micot.infrastructure.ep.model.ControlArea;
+import gov.lanl.micot.infrastructure.ep.model.DCLine;
+import gov.lanl.micot.infrastructure.ep.model.DCMultiTerminalLine;
+import gov.lanl.micot.infrastructure.ep.model.DCTwoTerminalLine;
+import gov.lanl.micot.infrastructure.ep.model.DCVoltageSourceLine;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
@@ -66,12 +70,14 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
 		this.powerWorldModel = powerWorldModel;
 		ComDataObject busesObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES, PowerworldIOConstants.BUS, "");
     ComDataObject branchObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.BRANCH, "");
+    ComDataObject twoTerminalObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.DC_TWO_TERMINAL, "");
+    ComDataObject multiTerminalObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.DC_MULTI_TERMINAL, "");
+    ComDataObject voltageSourceObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.DC_VOLTAGE_SOURCE, "");    
     ComDataObject genObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.GENERATOR, "");
     ComDataObject areaObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES, PowerworldIOConstants.AREA, "");
     ComDataObject zoneObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES, PowerworldIOConstants.ZONE, "");
     ComDataObject loadObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.LOAD, "");
     ComDataObject shuntObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.SHUNT, "");
-
     
     // get some system level data
     String simFields[] = new String[]{PowerworldIOConstants.MVA_BASE}; 
@@ -88,6 +94,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
 
     setLineFactory(new PowerworldLineFactory());
     setTransformerFactory(new PowerworldTransformerFactory());
+    setDCLineFactory(new PowerworldDCLineFactory());
     setIntertieFactory(new PowerworldIntertieFactory());
     setBusFactory(new PowerworldBusFactory());
     setLoadFactory(new PowerworldLoadFactory());
@@ -105,6 +112,8 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     PowerworldShuntCapacitorSwitchFactory switchedShuntFactory = getShuntCapacitorSwitchFactory();
     PowerworldLineFactory lineFactory = getLineFactory();
     PowerworldTransformerFactory transformerFactory = getTransformerFactory();
+    PowerworldDCLineFactory dcLineFactory = getDCLineFactory();
+
     PowerworldAreaFactory areaFactory = getControlAreaFactory();
     PowerworldZoneFactory zoneFactory = getZoneFactory();
 
@@ -152,7 +161,130 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     else {
       System.err.println("Error getting powerworld bus data: " + errorString);      
     }
+    
+    // get all the DC voltage source lines
+    ArrayList<ComDataObject> voltageSourceDCLines = voltageSourceObject.getArrayValue();
+    errorString = voltageSourceDCLines.get(0).getStringValue();
+    if (errorString.equals("")) {
+      ArrayList<ComDataObject> data = voltageSourceDCLines.get(1).getArrayValue();
+      
+      ArrayList<String> ids = data.get(0).getStringArrayValue();
+            
+      for (int i = 0; i < ids.size(); ++i) {
+        String id = ids.get(i);
+        
+        String fields[] = new String[]{PowerworldIOConstants.VOLTAGE_SOURCE_NAME, PowerworldIOConstants.VOLTAGE_SOURCE_BUS_FROM_NUM, PowerworldIOConstants.VOLTAGE_SOURCE_BUS_TO_NUM, PowerworldIOConstants.VOLTAGE_SOURCE_AREA, PowerworldIOConstants.VOLTAGE_SOURCE_ZONE}; 
+        String values[] = new String[] {id,"","","",""};
+                
+        ComDataObject dataObject = powerWorldModel.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.DC_VOLTAGE_SOURCE, fields, values);
+        ArrayList<ComDataObject> lineData = dataObject.getArrayValue();
+        String errorString2 = lineData.get(0).getStringValue();
+        if (!errorString2.equals("")) {
+          System.err.println("Error getting powerworld DC voltage source data: " + errorString2);                
+        }
+        ArrayList<ComDataObject> bData = lineData.get(1).getArrayValue();                       
 
+        int fromid = Integer.parseInt(bData.get(1).getStringValue());;
+        int toid = Integer.parseInt(bData.get(2).getStringValue());;
+        
+        Bus fBus = busMap.get(fromid);
+        Bus tBus = busMap.get(toid);
+
+        ElectricPowerFlowConnection connection = dcLineFactory.createVoltageSourceDCLine(powerWorldModel, fBus, tBus, id);              
+        addEdge(connection,getNode(fBus),getNode(tBus));
+        String area = bData.get(3).getStringValue();
+        String zone = bData.get(4).getStringValue();        
+        areas.put(connection, area);
+        zones.put(connection, zone);
+      }      
+    }
+    else {
+      System.out.println("Error getting dc line voltage source data: " + errorString);      
+    }
+
+    
+    // get all the DC multi terminal lines
+    ArrayList<ComDataObject> multiTerminalDCLines = multiTerminalObject.getArrayValue();
+    errorString = multiTerminalDCLines.get(0).getStringValue();
+    if (errorString.equals("")) {
+      ArrayList<ComDataObject> data = multiTerminalDCLines.get(1).getArrayValue();
+      ArrayList<Integer> fromids = data.get(0).getIntArrayValue();
+      ArrayList<Integer> toids = data.get(1).getIntArrayValue();
+      ArrayList<String> multiTerminalids = data.get(2).getStringArrayValue();
+            
+      for (int i = 0; i < multiTerminalids.size(); ++i) {
+        int fromid = fromids.get(i);
+        int toid = toids.get(i);
+        String id = multiTerminalids.get(i).trim();
+
+        String fields[] = new String[]{PowerworldIOConstants.MULTI_TERMINAL_BUS_FROM_NUM, PowerworldIOConstants.MULTI_TERMINAL_BUS_TO_NUM, PowerworldIOConstants.MULTI_TERMINAL_NUM, PowerworldIOConstants.MULTI_TERMINAL_AREA, PowerworldIOConstants.MULTI_TERMINAL_ZONE}; 
+        String values[] = new String[] {fromid+"", toid+"", id+"", "",""};
+        
+        ComDataObject dataObject = powerWorldModel.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.DC_MULTI_TERMINAL, fields, values);
+        ArrayList<ComDataObject> lineData = dataObject.getArrayValue();
+        String errorString2 = lineData.get(0).getStringValue();
+        if (!errorString2.equals("")) {
+          System.err.println("Error getting powerworld DC multi terminal data: " + errorString2);                
+        }
+        ArrayList<ComDataObject> bData = lineData.get(1).getArrayValue();                       
+
+        Bus fBus = busMap.get(fromid);
+        Bus tBus = busMap.get(toid);
+
+        ElectricPowerFlowConnection connection = dcLineFactory.createMultiTerminalDCLine(powerWorldModel, fBus, tBus, new Triple<Integer,Integer,String>(fromid,toid,id));              
+        addEdge(connection,getNode(fBus),getNode(tBus));
+        String area = bData.get(3).getStringValue();
+        String zone = bData.get(4).getStringValue();        
+        areas.put(connection, area);
+        zones.put(connection, zone);
+      }      
+    }
+    else {
+      System.out.println("Error getting powerworld branch data: " + errorString);      
+    }
+
+    
+    
+    // get all the DC two terminal lines
+    ArrayList<ComDataObject> twoTerminalDCLines = twoTerminalObject.getArrayValue();
+    errorString = twoTerminalDCLines.get(0).getStringValue();
+    if (errorString.equals("")) {
+      ArrayList<ComDataObject> data = twoTerminalDCLines.get(1).getArrayValue();
+      ArrayList<Integer> fromids = data.get(0).getIntArrayValue();
+      ArrayList<Integer> toids = data.get(1).getIntArrayValue();
+      ArrayList<String> twoTerminalids = data.get(2).getStringArrayValue();
+            
+      for (int i = 0; i < twoTerminalids.size(); ++i) {
+        int fromid = fromids.get(i);
+        int toid = toids.get(i);
+        String id = twoTerminalids.get(i).trim();
+
+        String fields[] = new String[]{PowerworldIOConstants.TWO_TERMINAL_BUS_FROM_NUM, PowerworldIOConstants.TWO_TERMINAL_BUS_TO_NUM, PowerworldIOConstants.TWO_TERMINAL_NUM, PowerworldIOConstants.TWO_TERMINAL_AREA, PowerworldIOConstants.TWO_TERMINAL_ZONE}; 
+        String values[] = new String[] {fromid+"", toid+"", id+"", "",""};
+        
+        ComDataObject dataObject = powerWorldModel.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.DC_TWO_TERMINAL, fields, values);
+        ArrayList<ComDataObject> lineData = dataObject.getArrayValue();
+        String errorString2 = lineData.get(0).getStringValue();
+        if (!errorString2.equals("")) {
+          System.err.println("Error getting powerworld DC two terminal data: " + errorString2);                
+        }
+        ArrayList<ComDataObject> bData = lineData.get(1).getArrayValue();                       
+
+        Bus fBus = busMap.get(fromid);
+        Bus tBus = busMap.get(toid);
+
+        ElectricPowerFlowConnection connection = dcLineFactory.createTwoTerminalDCLine(powerWorldModel, fBus, tBus, new Triple<Integer,Integer,String>(fromid,toid,id));              
+        addEdge(connection,getNode(fBus),getNode(tBus));
+        String area = bData.get(3).getStringValue();
+        String zone = bData.get(4).getStringValue();        
+        areas.put(connection, area);
+        zones.put(connection, zone);
+      }      
+    }
+    else {
+      System.out.println("Error getting powerworld dc two terminal data: " + errorString);      
+    }
+    
     // get all the generators
     ArrayList<ComDataObject> generators = genObject.getArrayValue();
     errorString = generators.get(0).getStringValue();
@@ -229,50 +361,6 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
       System.out.println("Error getting powerworld load data: " + errorString);      
     }
 
-    // get all the shunts
-    /*ArrayList<ComDataObject> shuntdata = buses.get(1).getArrayValue();
-    ArrayList<Integer> shuntids = shuntdata.get(0).getIntArrayValue();
-          
-    for (int i = 0; i < shuntids.size(); ++i) {
-      String fields[] = new String[]{ PowerworldIOConstants.BUS_NUM, PowerworldIOConstants.SHUNT_MW, PowerworldIOConstants.SHUNT_MVAR,
-          PowerworldIOConstants.SHUNT_SS_MW, PowerworldIOConstants.SHUNT_SS_MVAR, PowerworldIOConstants.SHUNT_MAX_MW, PowerworldIOConstants.SHUNT_MAX_MVAR,
-          PowerworldIOConstants.SHUNT_MIN_MW, PowerworldIOConstants.SHUNT_MIN_MVAR};
-      String values[] = new String[] {shuntids.get(i)+"", "","","","","","","",""};                
-      ComDataObject dataObject = powerWorldModel.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.BUS, fields, values);
-      ArrayList<ComDataObject> busData = dataObject.getArrayValue();
-      String errorString2 = busData.get(0).getStringValue();
-      if (!errorString2.equals("")) {
-        System.err.println("Error getting powerworld shunt data: " + errorString2);                
-      }        
-      ArrayList<ComDataObject> bData = busData.get(1).getArrayValue();                       
-      String mw = bData.get(1).getStringValue();
-      String mvar = bData.get(2).getStringValue();
-      String ssmw = bData.get(3).getStringValue();
-      String ssmvar = bData.get(4).getStringValue();
-      String ssmaxmw = bData.get(5).getStringValue();
-      String ssmaxmvar = bData.get(6).getStringValue();
-      String ssminmw = bData.get(7).getStringValue();
-      String ssminmvar = bData.get(8).getStringValue();
-      
-      Bus bus = busMap.get(shuntids.get(i));
-      
-      if ( (mw != null || mvar != null) && Double.parseDouble(mw) != 0.0 && Double.parseDouble(mvar) != 0.0) {
-        ShuntCapacitor capacitor = shuntFactory.createShuntCapacitor(powerWorldModel, bus, shuntids.get(i));
-        addShuntCapacitor(capacitor,bus);
-        areas.put(capacitor, areas.get(bus));
-        zones.put(capacitor, zones.get(bus));
-      }
-
-      if (ssmw != null || ssmvar != null || ssmaxmw != null || ssmaxmvar != null || ssminmw != null || ssminmvar != null) {
-        ShuntCapacitorSwitch capacitor = switchedShuntFactory.createShuntCapacitorSwitch(powerWorldModel, bus, shuntids.get(i));
-        addShuntCapacitorSwitch(capacitor,bus);
-        areas.put(capacitor, areas.get(bus));
-        zones.put(capacitor, zones.get(bus));
-      }
-       
-    }*/
-    
-        
     ArrayList<ComDataObject> shunts = shuntObject.getArrayValue();
     errorString = shunts.get(0).getStringValue();
     if (errorString.equals("")) {
@@ -315,6 +403,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
       System.out.println("Error getting powerworld shunt data: " + errorString);      
     }
 
+    
         
     // get all the lines
     ArrayList<ComDataObject> branches = branchObject.getArrayValue();
@@ -369,6 +458,17 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     else {
       System.out.println("Error getting powerworld branch data: " + errorString);      
     }
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     // get all the areas
     ArrayList<ComDataObject> as = areaObject.getArrayValue();
@@ -476,6 +576,11 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     return (PowerworldTransformerFactory) super.getTransformerFactory();
 	}
 
+	@Override
+	public PowerworldDCLineFactory getDCLineFactory() {
+	  return (PowerworldDCLineFactory) super.getDCLineFactory();
+	}
+	
 	/**
 	 * Finds a particular link
 	 * @param node1
@@ -496,6 +601,11 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
 	         return line;
 	       }
 	     }
+	    else if (line instanceof DCLine) {
+         if (((DCLine)line).getCircuit().equals(id)) {
+           return line;
+         }
+       }
 	  }
 	  return null;
 	}
@@ -548,20 +658,67 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
 	
 	@Override
 	public void linkAdded(ElectricPowerConnection link) {	
+	  String dataType = null;
+	  String fields[] = null;
+	  Object values[] = null;
+	  
+	  if (link instanceof Line) {
+	    fields = getLineFields();
+	    values = getLineValues((Line)link);
+	    dataType = PowerworldIOConstants.BRANCH;
+	  }
+	  else if (link instanceof Transformer) {
+	    fields = getTransformerFields();
+	    values = getTransformerValues((Transformer)link);
+	    dataType = PowerworldIOConstants.BRANCH;
+	  }
+	  else if (link instanceof DCTwoTerminalLine) {
+	    fields = getDCTwoTerminalFields();
+	    values = getDCTwoTerminalValues((DCTwoTerminalLine)link);
+	    dataType = PowerworldIOConstants.DC_TWO_TERMINAL;
+	  }
+	  else if (link instanceof DCVoltageSourceLine) {
+	    fields = getDCVoltageSourceFields();
+	    values = getDCVoltageSourceValues((DCVoltageSourceLine)link);
+	    dataType = PowerworldIOConstants.DC_VOLTAGE_SOURCE;
+	  }
+	  else if (link instanceof DCMultiTerminalLine) {
+	    fields = getDCMultiTerminalFields();
+	    values = getDCMultiTerminalValues((DCMultiTerminalLine)link);
+	    dataType = PowerworldIOConstants.DC_MULTI_TERMINAL;
+	  }
+	  
   	enterEditMode();
-  	String fields[] = link instanceof Line ? getLineFields() : getTransformerFields();
-  	Object values[] = link instanceof Transformer ? getLineValues((Line)link) : getTransformerValues((Transformer)link);
-  	String command = PowerworldIOConstants.createCreateDataCommand(PowerworldIOConstants.BRANCH, fields, values);
+  	String command = PowerworldIOConstants.createCreateDataCommand(dataType, fields, values);
   	executeScript(command);
 	}
 
 	@Override
 	public void linkRemoved(ElectricPowerConnection link) {
-    enterEditMode();
-    String filtername = "linkremove" + link;
-    String command = getBranchRemoveFilter(link, filtername);
+	  String command = null;
+	  String type = null;
+	  
+	  String filtername = "linkremove" + link;
+	  if (link instanceof Line || link instanceof Transformer) {
+	    command = getBranchRemoveFilter(link, filtername);
+	    type = PowerworldIOConstants.BRANCH;
+	  }
+	  else if (link instanceof DCTwoTerminalLine) {
+      command = getDCTwoTerminalRemoveFilter((DCTwoTerminalLine)link, filtername);
+      type = PowerworldIOConstants.DC_TWO_TERMINAL;	    
+	  }
+    else if (link instanceof DCVoltageSourceLine) {
+      command = getDCVoltageSourceRemoveFilter((DCVoltageSourceLine)link, filtername);
+      type = PowerworldIOConstants.DC_VOLTAGE_SOURCE;     
+    }
+    else if (link instanceof DCMultiTerminalLine) {
+      command = getDCMultiTerminalRemoveFilter((DCMultiTerminalLine)link, filtername);
+      type = PowerworldIOConstants.DC_MULTI_TERMINAL;     
+    }
+	   	  
+    enterEditMode();    
     executeScript(command);
-    command = PowerworldIOConstants.createDeleteCommand(PowerworldIOConstants.BRANCH, filtername);
+    command = PowerworldIOConstants.createDeleteCommand(type, filtername);
     executeScript(command);
 	}
 
@@ -935,6 +1092,70 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
   }
 
   /**
+   * get the fields of dc lines
+   * @return
+   */
+  private String[] getDCTwoTerminalFields() {
+    return new String[] {
+        PowerworldIOConstants.TWO_TERMINAL_BUS_FROM_NUM,
+        PowerworldIOConstants.TWO_TERMINAL_BUS_TO_NUM, 
+        PowerworldIOConstants.TWO_TERMINAL_NUM,
+        PowerworldIOConstants.TWO_TERMINAL_RECTIFIER_REACTIVE_FLOW,
+        PowerworldIOConstants.TWO_TERMINAL_INVERTER_REACTIVE_FLOW,
+        PowerworldIOConstants.TWO_TERMINAL_RECTIFIER_REAL_FLOW,
+        PowerworldIOConstants.TWO_TERMINAL_INVERTER_REAL_FLOW,
+        PowerworldIOConstants.TWO_TERMINAL_RESISTANCE,
+        PowerworldIOConstants.TWO_TERMINAL_STATUS
+    };
+  }
+  
+  /**
+   * get the fields of dc lines
+   * @return
+   */
+  private String[] getDCMultiTerminalFields() {
+    return new String[] {
+        PowerworldIOConstants.MULTI_TERMINAL_BUS_FROM_NUM,
+        PowerworldIOConstants.MULTI_TERMINAL_BUS_TO_NUM, 
+        PowerworldIOConstants.MULTI_TERMINAL_NUM,
+        PowerworldIOConstants.MULTI_TERMINAL_MW,
+        PowerworldIOConstants.MULTI_TERMINAL_MVAR,
+        PowerworldIOConstants.MULTI_TERMINAL_SETPOINT,
+        PowerworldIOConstants.MULTI_TERMINAL_STATUS,
+        PowerworldIOConstants.MULTI_TERMINAL_DC_VOLTAGE,
+    };
+  }
+
+  /**
+   * get the fields of dc lines
+   * @return
+   */
+  private String[] getDCVoltageSourceFields() {
+    return new String[] {
+        PowerworldIOConstants.VOLTAGE_SOURCE_NAME,        
+        PowerworldIOConstants.VOLTAGE_SOURCE_FROM_AC_SET_POINT, 
+        PowerworldIOConstants.VOLTAGE_SOURCE_TO_AC_SET_POINT,
+        PowerworldIOConstants.VOLTAGE_SOURCE_FROM_MW_INPUT,
+        PowerworldIOConstants.VOLTAGE_SOURCE_TO_MW_INPUT,
+        PowerworldIOConstants.VOLTAGE_SOURCE_FROM_DC_SET_POINT,
+        PowerworldIOConstants.VOLTAGE_SOURCE_TO_DC_SET_POINT,
+        PowerworldIOConstants.VOLTAGE_SOURCE_FROM_MAX_MVAR,
+        PowerworldIOConstants.VOLTAGE_SOURCE_TO_MAX_MVAR,
+        PowerworldIOConstants.VOLTAGE_SOURCE_FROM_MIN_MVAR,
+        PowerworldIOConstants.VOLTAGE_SOURCE_TO_MIN_MVAR,
+        PowerworldIOConstants.VOLTAGE_SOURCE_FROM_FLOW_MVAR,
+        PowerworldIOConstants.VOLTAGE_SOURCE_TO_FLOW_MVAR,
+        PowerworldIOConstants.VOLTAGE_SOURCE_FROM_FLOW_MW,
+        PowerworldIOConstants.VOLTAGE_SOURCE_TO_FLOW_MW,
+        PowerworldIOConstants.VOLTAGE_SOURCE_STATUS,
+        PowerworldIOConstants.VOLTAGE_SOURCE_FROM_DC_VOLTAGE,
+        PowerworldIOConstants.VOLTAGE_SOURCE_TO_DC_VOLTAGE
+    };
+  }
+
+  
+  
+  /**
    * Get the values associated with transformers
    * @param transformer
    * @return
@@ -976,8 +1197,108 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
         transformer.getAttribute(Transformer.STEP_SIZE_KEY),         
         type
         };
-
   }
+  
+  /**
+   * Get the values associated with dc lines
+   * @param transformer
+   * @return
+   */
+  private Object[] getDCTwoTerminalValues(DCTwoTerminalLine line) {
+    Triple<Integer,Integer,Integer> id = getConnectionId(line);
+    String status = line.getActualStatus() && line.getDesiredStatus() ? PowerworldIOConstants.TWO_TERMINAL_CLOSED : PowerworldIOConstants.TWO_TERMINAL_OPEN;
+    double rectifierReactiveFlow = line.getAttribute(DCTwoTerminalLine.MVAR_FLOW_SIDE2_KEY, Number.class).doubleValue();
+    double inverterReactiveFlow = line.getAttribute(DCTwoTerminalLine.MVAR_FLOW_SIDE1_KEY, Number.class).doubleValue();
+    double rectifierRealFlow = line.getAttribute(DCTwoTerminalLine.MW_FLOW_SIDE2_KEY, Number.class).doubleValue();
+    double inverterRealFlow = line.getAttribute(DCTwoTerminalLine.MW_FLOW_SIDE1_KEY, Number.class).doubleValue();
+    double resistance = line.getResistance().doubleValue();
+        
+    return new Object[] {
+        id.getOne(), 
+        id.getTwo(), 
+        id.getThree(), 
+        rectifierReactiveFlow,
+        inverterReactiveFlow,
+        rectifierRealFlow,
+        inverterRealFlow,
+        resistance,
+        status
+        };    
+  }
+
+  /**
+   * Get the values associated with dc lines
+   * @param transformer
+   * @return
+   */
+  private Object[] getDCVoltageSourceValues(DCVoltageSourceLine line) {
+    String name = line.getAttribute(DCVoltageSourceLine.NAME_KEY).toString();
+    String status = line.getActualStatus() && line.getDesiredStatus() ? PowerworldIOConstants.VOLTAGE_SOURCE_CLOSED : PowerworldIOConstants.VOLTAGE_SOURCE_OPEN;
+    double fromACSetPoint = line.getAttribute(DCVoltageSourceLine.FROM_AC_SET_POINT_KEY, Number.class).doubleValue();
+    double toACSetPoint = line.getAttribute(DCVoltageSourceLine.TO_AC_SET_POINT_KEY, Number.class).doubleValue();
+    double fromMWInput = line.getAttribute(DCVoltageSourceLine.FROM_MW_INPUT_KEY, Number.class).doubleValue();
+    double toMWInput = line.getAttribute(DCVoltageSourceLine.TO_MW_INPUT_KEY, Number.class).doubleValue();
+    double fromDCSetPoint = line.getAttribute(DCVoltageSourceLine.FROM_DC_SET_POINT_KEY, Number.class).doubleValue();
+    double toDCSetPoint = line.getAttribute(DCVoltageSourceLine.TO_DC_SET_POINT_KEY, Number.class).doubleValue();
+    double fromMaxMVAR = line.getAttribute(DCVoltageSourceLine.FROM_MAX_MVAR_KEY, Number.class).doubleValue();
+    double toMaxMVAR = line.getAttribute(DCVoltageSourceLine.TO_MAX_MVAR_KEY, Number.class).doubleValue();
+    double fromMinMVAR = line.getAttribute(DCVoltageSourceLine.FROM_MIN_MVAR_KEY, Number.class).doubleValue();
+    double toMinMVAR = line.getAttribute(DCVoltageSourceLine.TO_MIN_MVAR_KEY, Number.class).doubleValue();
+    double fromMVAR = line.getAttribute(DCVoltageSourceLine.MVAR_FLOW_SIDE1_KEY, Number.class).doubleValue();
+    double toMVAR = line.getAttribute(DCVoltageSourceLine.MVAR_FLOW_SIDE2_KEY, Number.class).doubleValue();
+    double fromMW = line.getAttribute(DCVoltageSourceLine.MW_FLOW_SIDE1_KEY, Number.class).doubleValue();
+    double toMW = line.getAttribute(DCVoltageSourceLine.MW_FLOW_SIDE2_KEY, Number.class).doubleValue();
+    double fromDCVoltage = line.getAttribute(DCVoltageSourceLine.FROM_DC_VOLTAGE_KEY, Number.class).doubleValue();
+    double toDCVoltage = line.getAttribute(DCVoltageSourceLine.TO_DC_VOLTAGE_KEY, Number.class).doubleValue();
+    return new Object[] {
+        name, 
+        fromACSetPoint,
+        toACSetPoint,
+        fromMWInput,
+        toMWInput,
+        fromDCSetPoint,
+        toDCSetPoint,
+        fromMaxMVAR,
+        toMaxMVAR,
+        fromMinMVAR,
+        toMinMVAR,
+        fromMVAR,
+        toMVAR,
+        fromMW,
+        toMW,
+        status,
+        fromDCVoltage,
+        toDCVoltage
+        };    
+  }
+
+  
+
+  /**
+   * Get the values associated with dc lines
+   * @param transformer
+   * @return
+   */
+  private Object[] getDCMultiTerminalValues(DCMultiTerminalLine line) {
+    Triple<Integer,Integer,Integer> id = getConnectionId(line);
+    String status = line.getActualStatus() && line.getDesiredStatus() ? PowerworldIOConstants.TWO_TERMINAL_CLOSED : PowerworldIOConstants.TWO_TERMINAL_OPEN;
+    double mw = line.getMWFlow().doubleValue();
+    double mvar = line.getMVarFlow().doubleValue();
+    double setpoint = line.getAttribute(DCMultiTerminalLine.SETPOINT_KEY, Number.class).doubleValue();
+    double dcvoltage = line.getAttribute(DCMultiTerminalLine.DC_VOLTAGE_KEY, Number.class).doubleValue();
+        
+    return new Object[] {
+        id.getOne(), 
+        id.getTwo(), 
+        id.getThree(), 
+        mw,
+        mvar,
+        setpoint,
+        status,
+        dcvoltage
+        };    
+  }
+
   
   @Override
   public void transformerDataChange(Transformer transformer) {
@@ -986,6 +1307,33 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     String values[] = convertToStringArray(getTransformerValues(transformer));   	
     updateData(fields, values, PowerworldIOConstants.BRANCH);   
   }
+  
+  @Override
+  public void dcLineDataChange(DCLine line) {
+    enterEditMode();
+    String fields[] = null;
+    String values[] = null;
+    String type     = null;
+    
+    if (line instanceof DCTwoTerminalLine) {
+      fields = getDCTwoTerminalFields();
+      values = convertToStringArray(getDCTwoTerminalValues((DCTwoTerminalLine)line));
+      type = PowerworldIOConstants.DC_TWO_TERMINAL;
+    }
+    else if (line instanceof DCVoltageSourceLine) {
+      fields = getDCVoltageSourceFields();
+      values = convertToStringArray(getDCVoltageSourceValues((DCVoltageSourceLine)line));
+      type = PowerworldIOConstants.DC_VOLTAGE_SOURCE;
+    }
+    else if (line instanceof DCMultiTerminalLine) {
+      fields = getDCMultiTerminalFields();
+      values = convertToStringArray(getDCMultiTerminalValues((DCMultiTerminalLine)line));
+      type = PowerworldIOConstants.DC_MULTI_TERMINAL;      
+    }
+    
+    updateData(fields, values, type);   
+  }
+
 
   @Override
   public synchronized ElectricPowerModel clone() {
@@ -1043,7 +1391,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
   /**
    * Get the ieiss bus of a bus
    * @param bus
-   * @return
+   * @return/
    */
 	@SuppressWarnings("unchecked")
   private Pair<Integer,String> getCapacitorId(ShuntCapacitor capacitor) {
@@ -1301,6 +1649,63 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     command += PowerworldIOConstants.BRANCH_BUS_FROM_NUM + " = " + id.getOne();
     command += PowerworldIOConstants.BRANCH_BUS_TO_NUM + " = " + id.getTwo();
     command += PowerworldIOConstants.BRANCH_NUM + " = " + id.getThree();
+    command += PowerworldIOConstants.SUBDATA_FOOTER;
+    command += "}";
+    return command;    
+  }
+
+  /**
+   * create a filter command for removing a single branch
+   * @param bus
+   * @return
+   */
+  private String getDCTwoTerminalRemoveFilter(DCTwoTerminalLine line, String filtername) {
+    Triple<Integer,Integer, Integer> id = getConnectionId(line);    
+    String command = PowerworldIOConstants.CREATE_FILTER;
+    command += "{";
+    command += PowerworldIOConstants.createRemoveHeader(PowerworldIOConstants.DC_TWO_TERMINAL, filtername);
+    command += PowerworldIOConstants.SUBDATA_HEADER;
+    command += PowerworldIOConstants.TWO_TERMINAL_BUS_FROM_NUM + " = " + id.getOne();
+    command += PowerworldIOConstants.TWO_TERMINAL_BUS_TO_NUM + " = " + id.getTwo();
+    command += PowerworldIOConstants.TWO_TERMINAL_NUM + " = " + id.getThree();
+    command += PowerworldIOConstants.SUBDATA_FOOTER;
+    command += "}";
+    return command;    
+  }
+
+  /**
+   * create a filter command for removing a single branch
+   * @param bus
+   * @return
+   */
+  private String getDCVoltageSourceRemoveFilter(DCVoltageSourceLine line, String filtername) {
+    String id = line.getAttribute(DCVoltageSourceLine.NAME_KEY).toString();    
+    String command = PowerworldIOConstants.CREATE_FILTER;
+    command += "{";
+    command += PowerworldIOConstants.createRemoveHeader(PowerworldIOConstants.DC_VOLTAGE_SOURCE, filtername);
+    command += PowerworldIOConstants.SUBDATA_HEADER;
+    command += PowerworldIOConstants.VOLTAGE_SOURCE_NAME + " = " + id;
+    command += PowerworldIOConstants.SUBDATA_FOOTER;
+    command += "}";
+    return command;    
+  }
+
+  
+
+  /**
+   * create a filter command for removing a single branch
+   * @param bus
+   * @return
+   */
+  private String getDCMultiTerminalRemoveFilter(DCMultiTerminalLine line, String filtername) {
+    Triple<Integer,Integer, Integer> id = getConnectionId(line);    
+    String command = PowerworldIOConstants.CREATE_FILTER;
+    command += "{";
+    command += PowerworldIOConstants.createRemoveHeader(PowerworldIOConstants.DC_MULTI_TERMINAL, filtername);
+    command += PowerworldIOConstants.SUBDATA_HEADER;
+    command += PowerworldIOConstants.MULTI_TERMINAL_BUS_FROM_NUM + " = " + id.getOne();
+    command += PowerworldIOConstants.MULTI_TERMINAL_BUS_TO_NUM + " = " + id.getTwo();
+    command += PowerworldIOConstants.MULTI_TERMINAL_NUM + " = " + id.getThree();
     command += PowerworldIOConstants.SUBDATA_FOOTER;
     command += "}";
     return command;    

@@ -20,16 +20,8 @@ import gov.lanl.micot.util.io.dcom.ComObject;
  */
 public class PowerworldTransformerFactory extends TransformerFactory {
 
-//  private static PowerworldTransformerFactory INSTANCE = null;
   private static final String LEGACY_TAG = "POWERWORLD";
 
-  //public static PowerworldTransformerFactory getInstance() {
-    //if (INSTANCE == null) {
-      //INSTANCE = new PowerworldTransformerFactory();
-    //}
-    //return INSTANCE;
-  //}
-  
   /**
    * Singleton constructor
    */

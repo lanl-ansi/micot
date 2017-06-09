@@ -21,14 +21,17 @@ public class PowerworldIOConstants {
   public    static final String CHANGE_PARAMETERS_SINGLE_ELEMENT   = "ChangeParametersSingleElement";
     
   // object types
-  public    static final String BUS             = "bus";
-  public    static final String GENERATOR       = "gen";
-  public    static final String BRANCH          = "branch";
-  public    static final String AREA            = "area";
-  public    static final String ZONE            = "zone";
-  public    static final String LOAD            = "load";
-  public    static final String SHUNT           = "shunt";
-
+  public    static final String BUS               = "bus";
+  public    static final String GENERATOR         = "gen";
+  public    static final String BRANCH            = "branch";
+  public    static final String AREA              = "area";
+  public    static final String ZONE              = "zone";
+  public    static final String LOAD              = "load";
+  public    static final String SHUNT             = "shunt";
+  public    static final String DC_TWO_TERMINAL   = "dctransmissionline";
+  public    static final String DC_VOLTAGE_SOURCE = "VSCDCLine";
+  public    static final String DC_MULTI_TERMINAL = "MTDCConverter";     
+  
   public    static final String SIM_SOLUTION_OPTIONS = "Sim_Solution_Options";
 
   // simulator fields
@@ -201,6 +204,105 @@ public class PowerworldIOConstants {
   public    static final String DIESEL      = "diesel";
   public    static final String GEOTHERMAL  = "geothermol";
   public    static final String BIOMASS     = "biomass";
+
+  // two terminal fields
+  public static final String TWO_TERMINAL_AREA                    = "pwAreaName";
+  public static final String TWO_TERMINAL_ZONE                    = "pwZoneName";
+  public static final String TWO_TERMINAL_BUS_FROM_NUM            = "pwBusNum";
+  public static final String TWO_TERMINAL_BUS_TO_NUM              = "pwBusNum:1";
+  public static final String TWO_TERMINAL_NUM                     = "pwDCLID";
+  public static final String TWO_TERMINAL_INVERTER_TAP            = "pwDCLITAP";
+  public static final String TWO_TERMINAL_INVERTER_MIN_TAP        = "pwDCLITMN"; 
+  public static final String TWO_TERMINAL_INVERTER_MAX_TAP        = "pwDCLITMX"; 
+  public static final String TWO_TERMINAL_INVERTER_TAP_RATIO      = "pwDCLITR";
+  public static final String TWO_TERMINAL_RECTIFIER_REACTIVE_FLOW = "pwDCLMVR";
+  public static final String TWO_TERMINAL_INVERTER_REACTIVE_FLOW  = "pwDCLMVR:1";
+  public static final String TWO_TERMINAL_RECTIFIER_REAL_FLOW     = "pwDCLMW";
+  public static final String TWO_TERMINAL_INVERTER_REAL_FLOW      = "pwDCLMW:1";
+  public static final String TWO_TERMINAL_CONTROL_MODE            = "pwDCLMode";
+  public static final String TWO_TERMINAL_RECTIFIER_TAP           = "pwDCLRTAP";
+  public static final String TWO_TERMINAL_RECTIFIER_TAP_MIN       = "pwDCLRTMN";
+  public static final String TWO_TERMINAL_RECTIFIER_TAP_MAX       = "pwDCLRTMX";
+  public static final String TWO_TERMINAL_RECTIFIER_TAP_RATIO     = "pwDCLRTTR";
+  public static final String TWO_TERMINAL_DC_VOLTAGE              = "pwDCLSetVolt";
+  public static final String TWO_TERMINAL_NAME                    = "pwDCName";
+  public static final String TWO_TERMINAL_DC_RECTIFIER_VOLTAGE    = "pwMTDCBusVolt";
+  public static final String TWO_TERMINAL_DC_INVERTER_VOLTAGE     = "pwMTDCBusVolt:1";
+  public static final String TWO_TERMINAL_STATUS                  = "pwDerivedStatus";
+  public static final String TWO_TERMINAL_RESISTANCE              = "pwDCLR";
+  public static final String TWO_TERMINAL_CLOSED                  = "closed";
+  public static final String TWO_TERMINAL_OPEN                    = "open";
+  public static final String TWO_TERMINAL_CONTROL_MW              = "mw";
+  public static final String TWO_TERMINAL_CONTROL_AMPS            = "amps";
+  
+
+  // voltage source fields
+  public static final String VOLTAGE_SOURCE_AREA                            = "pwAreaName";
+  public static final String VOLTAGE_SOURCE_ZONE                            = "pwZoneName";
+  public static final String VOLTAGE_SOURCE_BUS_FROM_NUM                    = "pwBusNum";
+  public static final String VOLTAGE_SOURCE_BUS_TO_NUM                      = "pwBusNum:1";
+  public static final String VOLTAGE_SOURCE_FROM_AC_CONTROL_MODE            = "pwACMode";
+  public static final String VOLTAGE_SOURCE_TO_AC_CONTROL_MODE              = "pwACMode:1";
+  public static final String VOLTAGE_SOURCE_FROM_AC_SET_POINT               = "pwACSet";
+  public static final String VOLTAGE_SOURCE_TO_AC_SET_POINT                 = "pwACSet:1";
+  public static final String VOLTAGE_SOURCE_FROM_MW_INPUT                   = "pwDCLMW";
+  public static final String VOLTAGE_SOURCE_TO_MW_INPUT                     = "pwDCLMW:1";
+  public static final String VOLTAGE_SOURCE_RESISTANCE                      = "pwDCLR";
+  public static final String VOLTAGE_SOURCE_FROM_DC_CONTROL_MODE            = "pwDCMode";
+  public static final String VOLTAGE_SOURCE_TO_DC_CONTROL_MODE              = "pwDCMode:1";
+  public static final String VOLTAGE_SOURCE_FROM_DC_SET_POINT               = "pwDCSet";
+  public static final String VOLTAGE_SOURCE_TO_DC_SET_POINT                 = "pwDCSet:1";
+  public static final String VOLTAGE_SOURCE_NAME                            = "pwDCName";
+  public static final String VOLTAGE_SOURCE_FROM_MAX_MVAR                   = "pwGenMVRMax";
+  public static final String VOLTAGE_SOURCE_TO_MAX_MVAR                     = "pwGenMVRMax:1";
+  public static final String VOLTAGE_SOURCE_FROM_MIN_MVAR                   = "pwGenMVRMin";
+  public static final String VOLTAGE_SOURCE_TO_MIN_MVAR                     = "pwGenMVRMin:1";
+  public static final String VOLTAGE_SOURCE_FROM_CURRENT_MAX                = "pwImax";
+  public static final String VOLTAGE_SOURCE_TO_CURRENT_MAX                  = "pwImax:1";
+  public static final String VOLTAGE_SOURCE_FROM_FLOW_MVAR                  = "pwLineMVR";
+  public static final String VOLTAGE_SOURCE_TO_FLOW_MVAR                    = "pwLineMVR:1";
+  public static final String VOLTAGE_SOURCE_FROM_FLOW_MW                    = "pwLineMW";
+  public static final String VOLTAGE_SOURCE_TO_FLOW_MW                      = "pwLineMW:1";
+  public static final String VOLTAGE_SOURCE_STATUS                          = "pwLineStatus";
+  public static final String VOLTAGE_SOURCE_FROM_DC_VOLTAGE                 = "pwMTDCBusVolt";
+  public static final String VOLTAGE_SOURCE_TO_DC_VOLTAGE                   = "pwMTDCBusVolt:1";
+  public static final String VOLTAGE_SOURCE_FROM_MVA_RATING                 = "pwSMax";
+  public static final String VOLTAGE_SOURCE_TO_MVA_RATING                   = "pwSMax:1";  
+  public static final String VOLTAGE_SOURCE_AC_CONTROL_MODE_VOLTAGE         = "voltage";
+  public static final String VOLTAGE_SOURCE_AC_CONTROL_MODE_POWER_FACTOR    = "power factor";
+  public static final String VOLTAGE_SOURCE_DC_CONTROL_MODE_OUT_OF_SERVICE  = "out-of-service";
+  public static final String VOLTAGE_SOURCE_DC_CONTROL_MODE_VOLTAGE         = "voltage";
+  public static final String VOLTAGE_SOURCE_DC_CONTROL_MODE_POWER           = "power";
+  public static final String VOLTAGE_SOURCE_CLOSED                          = "closed";
+  public static final String VOLTAGE_SOURCE_OPEN                            = "open";
+  
+  // multi terminal DC lines
+  public static final String MULTI_TERMINAL_AREA                            = "pwAreaName";
+  public static final String MULTI_TERMINAL_ZONE                            = "pwZoneName";
+  public static final String MULTI_TERMINAL_BUS_FROM_NUM                    = "pwBusNum";
+  public static final String MULTI_TERMINAL_BUS_TO_NUM                      = "pwBusNum:1";
+  public static final String MULTI_TERMINAL_NUM                             = "pwMTDCNum";
+  public static final String MULTI_TERMINAL_BASE_WINDING                    = "pwMTDCConvEBas";
+  public static final String MULTI_TERMINAL_FIRING_ANGLE                    = "pwMTDCConvAngMxMn";
+  public static final String MULTI_TERMINAL_FIRING_ANGLE_MAX                = "pwMTDCConvAngMxMn:1";
+  public static final String MULTI_TERMINAL_FIRING_ANGLE_MIN                = "pwMTDCConvAngMxMn:2";
+  public static final String MULTI_TERMINAL_CURRENT_ANGLE                   = "pwMTDCConvIDC";
+  public static final String MULTI_TERMINAL_MW                              = "pwMTDCConvPQ";
+  public static final String MULTI_TERMINAL_MVAR                            = "pwMTDCConvPQ:1";
+  public static final String MULTI_TERMINAL_SETPOINT                        = "pwMTDCConvSetVL";
+  public static final String MULTI_TERMINAL_STATUS                          = "pwMTDCConvStatus";
+  public static final String MULTI_TERMINAL_TAP                             = "pwMTDCConvTapVals";
+  public static final String MULTI_TERMINAL_TAP_MAX                         = "pwMTDCConvTapVals:1";
+  public static final String MULTI_TERMINAL_TAP_MIN                         = "pwMTDCConvTapVals:2";
+  public static final String MULTI_TERMINAL_TAP_STEP_SIZE                   = "pwMTDCConvTapVals:3";
+  public static final String MULTI_TERMINAL_TYPE                            = "pwMTDCConvType";
+  public static final String MULTI_TERMINAL_TRANSFORMER_TAP                 = "pwMTDCConvXFRat";
+  public static final String MULTI_TERMINAL_CURRENT_RATING                  = "pwMTDCMaxConvCurrent";
+  public static final String MULTI_TERMINAL_DC_VOLTAGE                      = "pwMTDCSchedVolt";  
+  public static final String MULTI_TERMINAL_TYPE_RECT                       = "rect";
+  public static final String MULTI_TERMINAL_TYPE_INV                        = "inv";
+  public static final String MULTI_TERMINAL_CLOSED                          = "closed";
+  public static final String MULTI_TERMINAL_OPEN                            = "open";
   
   /**
    * Generic Macro for creating data

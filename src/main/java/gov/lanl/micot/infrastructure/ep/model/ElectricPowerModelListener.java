@@ -154,6 +154,13 @@ public interface ElectricPowerModelListener {
    * @param newTransformerData
    */
   public void transformerDataChange(Transformer transformer);
+
+  /**
+   * Notification that transformer data has changed
+   * @param transformer
+   * @param newTransformerData
+   */
+  public void dcLineDataChange(DCLine line);
   
   /**
    * Notification that intertie data has changed

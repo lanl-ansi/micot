@@ -10,6 +10,7 @@ import gov.lanl.micot.infrastructure.ep.io.opendss.OpenDSSData;
 import gov.lanl.micot.infrastructure.ep.io.opendss.OpenDSSIOConstants;
 import gov.lanl.micot.infrastructure.ep.model.Battery;
 import gov.lanl.micot.infrastructure.ep.model.Bus;
+import gov.lanl.micot.infrastructure.ep.model.DCLine;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModelImpl;
@@ -72,6 +73,7 @@ public class OpenDSSModel extends ElectricPowerModelImpl implements ElectricPowe
 
     setLineFactory(new OpenDSSLineFactory());
     setTransformerFactory(new OpenDSSTransformerFactory());
+    setDCLineFactory(null);
     setIntertieFactory(new OpenDSSIntertieFactory());
     setBusFactory(new OpenDSSBusFactory());
     setLoadFactory(new OpenDSSLoadFactory());
@@ -939,6 +941,10 @@ public class OpenDSSModel extends ElectricPowerModelImpl implements ElectricPowe
   public void transformerDataChange(Transformer transformer) {
   }
 
+  @Override
+  public void dcLineDataChange(DCLine line) {
+  }
+  
   @Override
   protected ElectricPowerModelImpl constructClone() {
     syncModel();
