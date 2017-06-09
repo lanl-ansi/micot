@@ -72,7 +72,7 @@ public class PowerworldDCLineFactory extends DCLineFactory {
    * @param legacyId
    * @return
    */
-  private DCVoltageSourceLine registerVoltageSourceLine(String legacyId) {
+  private DCVoltageSourceLine registerVoltageSourceLine(Triple<Integer,Integer,String> legacyId) {
     DCLine line = getLegacy(LEGACY_TAG, legacyId);
     if (line == null) {
       line = createNewVoltageSourceLine();
@@ -288,8 +288,10 @@ public class PowerworldDCLineFactory extends DCLineFactory {
    * @param line
    * @return
    */
-  public DCVoltageSourceLine createVoltageSourceDCLine(ComObject powerworld, Bus fromBus, Bus toBus, String legacyid)  {    
-    DCVoltageSourceLine line = registerVoltageSourceLine(legacyid);   
+  public DCVoltageSourceLine createVoltageSourceDCLine(ComObject powerworld, Bus fromBus, Bus toBus, String id)  {
+    Triple<Integer,Integer,String> legacyId = new Triple<Integer,Integer,String>(Integer.parseInt(fromBus.toString()),Integer.parseInt(toBus.toString()),id);
+    
+    DCVoltageSourceLine line = registerVoltageSourceLine(legacyId);   
     
     String fields[] = new String[]{ PowerworldIOConstants.VOLTAGE_SOURCE_NAME,  
         PowerworldIOConstants.VOLTAGE_SOURCE_FROM_AC_CONTROL_MODE, PowerworldIOConstants.VOLTAGE_SOURCE_TO_AC_CONTROL_MODE,
@@ -307,7 +309,7 @@ public class PowerworldDCLineFactory extends DCLineFactory {
         PowerworldIOConstants.VOLTAGE_SOURCE_TO_DC_VOLTAGE, PowerworldIOConstants.VOLTAGE_SOURCE_FROM_MVA_RATING,
         PowerworldIOConstants.VOLTAGE_SOURCE_TO_MVA_RATING };
         
-    String values[] = new String[] {legacyid, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+    String values[] = new String[] {id, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
         
     ComDataObject dataObject = powerworld.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.DC_VOLTAGE_SOURCE, fields, values);
     ArrayList<ComDataObject> branchData = dataObject.getArrayValue();
@@ -398,7 +400,7 @@ public class PowerworldDCLineFactory extends DCLineFactory {
     line.setAttribute(DCVoltageSourceLine.TO_DC_VOLTAGE_KEY, toDCVoltage);
     line.setAttribute(DCVoltageSourceLine.FROM_MVA_RATING_KEY, fromMVARating);
     line.setAttribute(DCVoltageSourceLine.TO_MVA_RATING_KEY, toMVARating);
-    line.setAttribute(DCVoltageSourceLine.NAME_KEY, legacyid);
+    line.setAttribute(DCVoltageSourceLine.NAME_KEY, id);
 
     Vector<Point> points = new Vector<Point>();
     points.add(fromBus.getCoordinate());

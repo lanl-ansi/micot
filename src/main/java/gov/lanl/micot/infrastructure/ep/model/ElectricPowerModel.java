@@ -232,6 +232,21 @@ public interface ElectricPowerModel extends Model, Cloneable {
 	public Collection<? extends DCLine> getDCLines(ElectricPowerNode node);
 
 	/**
+   * Get all the DC Two Terminal lines
+   */
+  public Collection<? extends DCTwoTerminalLine> getDCTwoTerminalLines();
+
+  /**
+   * Get all the DC Multi Terminal lines
+   */
+  public Collection<? extends DCMultiTerminalLine> getDCMultiTerminalLines();
+
+  /**
+   * Get all the DC Voltage source lines
+   */
+  public Collection<? extends DCVoltageSourceLine> getDCVoltageSourceLines();
+  
+	/**
 	 * Gets all the lines associated with a node
 	 * @param node
 	 */

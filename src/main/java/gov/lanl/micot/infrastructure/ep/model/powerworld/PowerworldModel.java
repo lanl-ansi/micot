@@ -1272,8 +1272,6 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
         };    
   }
 
-  
-
   /**
    * Get the values associated with dc lines
    * @param transformer
@@ -1298,7 +1296,6 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
         dcvoltage
         };    
   }
-
   
   @Override
   public void transformerDataChange(Transformer transformer) {

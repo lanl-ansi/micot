@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import gov.lanl.micot.infrastructure.ep.io.powerworld.PowerworldIOConstants;
 import gov.lanl.micot.infrastructure.ep.io.powerworld.PowerworldModelFile;
 import gov.lanl.micot.infrastructure.ep.model.Bus;
+import gov.lanl.micot.infrastructure.ep.model.DCTwoTerminalLine;
+import gov.lanl.micot.infrastructure.ep.model.DCVoltageSourceLine;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerNode;
@@ -137,7 +139,11 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
         PowerworldIOConstants.BRANCH_TO_REAL_FLOW, 
         PowerworldIOConstants.BRANCH_STATUS};
     
-    for (ElectricPowerFlowConnection line : model.getFlowConnections()) {
+    ArrayList<ElectricPowerFlowConnection> branches = new ArrayList<ElectricPowerFlowConnection>();
+    branches.addAll(model.getTransformers());
+    branches.addAll(model.getLines());
+    
+    for (ElectricPowerFlowConnection line : branches) {
     	Triple<Integer,Integer,Integer> legacyid = powerWorldModel.getConnectionId(line);
       String values[] = new String[] {legacyid.getOne()+"", legacyid.getTwo()+"", legacyid.getThree()+"", "", "", "", "", "", "", ""};
           
@@ -174,6 +180,8 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       line.setAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE2_KEY, reactiveTo);
       line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE1_KEY, realFrom);
       line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE2_KEY, realTo);
+      line.setActualStatus(status.equals(PowerworldIOConstants.BRANCH_CLOSED));
+      line.setDesiredStatus(status.equals(PowerworldIOConstants.BRANCH_CLOSED));
     }
 
     // get the bus data
@@ -235,6 +243,112 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       generator.setActualReactiveGeneration(mvar);
       generator.setDesiredReactiveGeneration(mvar);
     }
+    
+
+    // get the flows on Voltage Source lines
+    fields = new String[]{
+        PowerworldIOConstants.VOLTAGE_SOURCE_NAME, 
+        PowerworldIOConstants.VOLTAGE_SOURCE_FROM_FLOW_MW, 
+        PowerworldIOConstants.VOLTAGE_SOURCE_TO_FLOW_MW, 
+        PowerworldIOConstants.VOLTAGE_SOURCE_FROM_FLOW_MVAR, 
+        PowerworldIOConstants.VOLTAGE_SOURCE_TO_FLOW_MVAR, 
+        PowerworldIOConstants.VOLTAGE_SOURCE_STATUS};
+    
+    for (DCVoltageSourceLine line : model.getDCVoltageSourceLines()) {
+      String name = line.getAttribute(DCVoltageSourceLine.NAME_KEY, String.class);
+      String values[] = new String[] {
+          name, 
+          "", "", "", "", ""};
+          
+      ComDataObject dataObject = powerworld.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.DC_VOLTAGE_SOURCE, fields, values);
+      ArrayList<ComDataObject> branchData = dataObject.getArrayValue();
+      errorString = branchData.get(0).getStringValue();
+      if (!errorString.equals("")) {
+        System.err.println("Error getting powerworld two terminal solution data: " + errorString);                
+      }
+      
+      ArrayList<ComDataObject> bData = branchData.get(1).getArrayValue();                       
+      String fromRealStr = bData.get(1).getStringValue();
+      String toRealStr = bData.get(2).getStringValue();
+      String fromReactiveStr = bData.get(3).getStringValue();
+      String toReactiveStr = bData.get(4).getStringValue();    
+      String status = bData.get(5).getStringValue();
+      
+      double reactiveFrom = Double.parseDouble(fromReactiveStr);
+      double reactiveTo = Double.parseDouble(toReactiveStr);
+      double realFrom = Double.parseDouble(fromRealStr);
+      double realTo = Double.parseDouble(toRealStr);
+      double mwFlow = Math.max(realFrom, realTo);
+      double mVarFlow = Math.max(reactiveFrom, reactiveTo);
+      
+      line.setMWFlow(mwFlow);
+      line.setMVarFlow(mVarFlow);
+      line.setAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE1_KEY, reactiveFrom);
+      line.setAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE2_KEY, reactiveTo);
+      line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE1_KEY, realFrom);
+      line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE2_KEY, realTo);
+      line.setActualStatus(status.equals(PowerworldIOConstants.VOLTAGE_SOURCE_CLOSED));
+      line.setDesiredStatus(status.equals(PowerworldIOConstants.VOLTAGE_SOURCE_CLOSED));
+    }
+
+    
+    
+    
+    
+    // get the flows on Two Terminal lines
+    fields = new String[]{
+        PowerworldIOConstants.TWO_TERMINAL_BUS_FROM_NUM, 
+        PowerworldIOConstants.TWO_TERMINAL_BUS_TO_NUM, 
+        PowerworldIOConstants.TWO_TERMINAL_NUM, 
+        PowerworldIOConstants.TWO_TERMINAL_INVERTER_REAL_FLOW, 
+        PowerworldIOConstants.TWO_TERMINAL_INVERTER_REACTIVE_FLOW, 
+        PowerworldIOConstants.TWO_TERMINAL_RECTIFIER_REAL_FLOW, 
+        PowerworldIOConstants.TWO_TERMINAL_RECTIFIER_REACTIVE_FLOW, 
+        PowerworldIOConstants.TWO_TERMINAL_STATUS};
+    
+    for (DCTwoTerminalLine line : model.getDCTwoTerminalLines()) {
+      Triple<Integer,Integer,Integer> legacyid = powerWorldModel.getConnectionId(line);
+      String values[] = new String[] {
+          legacyid.getOne()+"", 
+          legacyid.getTwo()+"", legacyid.getThree()+"", 
+          "", "", "", "", ""};
+          
+      ComDataObject dataObject = powerworld.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.DC_TWO_TERMINAL, fields, values);
+      ArrayList<ComDataObject> branchData = dataObject.getArrayValue();
+      errorString = branchData.get(0).getStringValue();
+      if (!errorString.equals("")) {
+        System.err.println("Error getting powerworld two terminal solution data: " + errorString);                
+      }
+      
+      ArrayList<ComDataObject> bData = branchData.get(1).getArrayValue();                       
+      String inverterRealStr = bData.get(3).getStringValue();
+      String inverterReactiveStr = bData.get(4).getStringValue();
+      String rectifierRealStr = bData.get(5).getStringValue();
+      String rectifierReactiveStr = bData.get(6).getStringValue();    
+      String status = bData.get(7).getStringValue();
+      
+      double reactiveFrom = Double.parseDouble(inverterReactiveStr);
+      double reactiveTo = Double.parseDouble(rectifierReactiveStr);
+      double realFrom = Double.parseDouble(inverterRealStr);
+      double realTo = Double.parseDouble(rectifierRealStr);
+      double mwFlow = Math.max(realFrom, realTo);
+      double mVarFlow = Math.max(reactiveFrom, reactiveTo);
+      
+      line.setMWFlow(mwFlow);
+      line.setMVarFlow(mVarFlow);
+      line.setAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE1_KEY, reactiveFrom);
+      line.setAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE2_KEY, reactiveTo);
+      line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE1_KEY, realFrom);
+      line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE2_KEY, realTo);
+      line.setActualStatus(status.equals(PowerworldIOConstants.TWO_TERMINAL_CLOSED));
+      line.setDesiredStatus(status.equals(PowerworldIOConstants.TWO_TERMINAL_CLOSED));
+    }
+
+    
+    
+    
+    
+    
     
     return s;
   }

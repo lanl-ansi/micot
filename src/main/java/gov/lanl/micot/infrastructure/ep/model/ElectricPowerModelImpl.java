@@ -316,7 +316,7 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
       }
     }
     return lines;
-  }
+  }  
   
   @Override
   public Collection<ElectricPowerNode> getNodes() {
@@ -776,6 +776,39 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
   @Override
   public Collection<? extends DCLine> getDCLines() {
     return dcLines.keySet();
+  }
+  
+  @Override
+  public Collection<? extends DCTwoTerminalLine> getDCTwoTerminalLines() {
+    ArrayList<DCTwoTerminalLine> lines = new ArrayList<DCTwoTerminalLine>();
+    for (DCLine line : dcLines.keySet()) {
+      if (line instanceof DCTwoTerminalLine) {
+        lines.add((DCTwoTerminalLine)line);
+      }
+    }
+    return lines;
+  }
+
+  @Override
+  public Collection<? extends DCMultiTerminalLine> getDCMultiTerminalLines() {
+    ArrayList<DCMultiTerminalLine> lines = new ArrayList<DCMultiTerminalLine>();
+    for (DCLine line : dcLines.keySet()) {
+      if (line instanceof DCMultiTerminalLine) {
+        lines.add((DCMultiTerminalLine)line);
+      }
+    }
+    return lines;
+  }
+  
+  @Override
+  public Collection<? extends DCVoltageSourceLine> getDCVoltageSourceLines() {
+    ArrayList<DCVoltageSourceLine> lines = new ArrayList<DCVoltageSourceLine>();
+    for (DCLine line : dcLines.keySet()) {
+      if (line instanceof DCVoltageSourceLine) {
+        lines.add((DCVoltageSourceLine)line);
+      }
+    }
+    return lines;
   }
   
   @Override

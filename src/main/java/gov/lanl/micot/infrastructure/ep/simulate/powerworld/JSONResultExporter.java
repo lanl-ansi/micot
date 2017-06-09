@@ -3,6 +3,10 @@ package gov.lanl.micot.infrastructure.ep.simulate.powerworld;
 import java.io.OutputStream;
 
 import gov.lanl.micot.infrastructure.ep.model.Bus;
+import gov.lanl.micot.infrastructure.ep.model.DCLine;
+import gov.lanl.micot.infrastructure.ep.model.DCMultiTerminalLine;
+import gov.lanl.micot.infrastructure.ep.model.DCTwoTerminalLine;
+import gov.lanl.micot.infrastructure.ep.model.DCVoltageSourceLine;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.Generator;
@@ -168,6 +172,69 @@ public class JSONResultExporter {
       switchedShuntsBuilder = switchedShuntsBuilder.add(shuntBuilder);
     }
     mainBuilder = mainBuilder.add("switched_shunt", switchedShuntsBuilder);
+
+    // get the dc line (voltage source) results
+    JSONArrayBuilder voltageSourcesBuilder = json.createArrayBuilder();
+    for (DCVoltageSourceLine connection : model.getDCVoltageSourceLines()) {
+      JSONObjectBuilder voltageSourceBuilder = json.createObjectBuilder();
+      Bus bus1 = model.getFirstNode(connection).getBus();
+      Bus bus2 = model.getSecondNode(connection).getBus();      
+      voltageSourceBuilder = voltageSourceBuilder.add("vsc_dc_line_i", connection.toString());
+      voltageSourceBuilder = voltageSourceBuilder.add("mw_i", connection.getAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE1_KEY, Number.class).doubleValue());
+      voltageSourceBuilder = voltageSourceBuilder.add("mw_j", connection.getAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE2_KEY, Number.class).doubleValue());
+      voltageSourceBuilder = voltageSourceBuilder.add("mvar_i", connection.getAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE1_KEY, Number.class).doubleValue());
+      voltageSourceBuilder = voltageSourceBuilder.add("mvar_j", connection.getAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE2_KEY, Number.class).doubleValue());
+      voltageSourceBuilder = voltageSourceBuilder.add("name", connection.getAttribute(DCVoltageSourceLine.NAME_KEY, String.class));
+      voltageSourceBuilder = voltageSourceBuilder.add("status", connection.getActualStatus() && connection.getDesiredStatus());
+      voltageSourceBuilder = voltageSourceBuilder.add("bus_i", bus1.toString());
+      voltageSourceBuilder = voltageSourceBuilder.add("bus_j", bus2.toString());      
+      voltageSourcesBuilder = voltageSourcesBuilder.add(voltageSourceBuilder);
+    }
+    mainBuilder = mainBuilder.add("vsc_dc_line", voltageSourcesBuilder);
+
+    
+    
+    // get the dc line (multi terminal) results
+    JSONArrayBuilder multiTerminalsBuilder = json.createArrayBuilder();
+    for (DCMultiTerminalLine connection : model.getDCMultiTerminalLines()) {
+      JSONObjectBuilder multiTerminalBuilder = json.createObjectBuilder();
+      Bus bus1 = model.getFirstNode(connection).getBus();
+      Bus bus2 = model.getSecondNode(connection).getBus();      
+      multiTerminalBuilder = multiTerminalBuilder.add("mt_dc_line_i", connection.toString());
+      multiTerminalBuilder = multiTerminalBuilder.add("mw", connection.getMWFlow());
+      multiTerminalBuilder = multiTerminalBuilder.add("mvar", connection.getMVarFlow());
+      multiTerminalBuilder = multiTerminalBuilder.add("name", connection.getAttribute(DCMultiTerminalLine.NAME_KEY, String.class));
+      multiTerminalBuilder = multiTerminalBuilder.add("status", connection.getActualStatus() && connection.getDesiredStatus());
+      multiTerminalBuilder = multiTerminalBuilder.add("bus_i", bus1.toString());
+      multiTerminalBuilder = multiTerminalBuilder.add("bus_j", bus2.toString());      
+      multiTerminalsBuilder = multiTerminalsBuilder.add(multiTerminalBuilder);
+    }
+    mainBuilder = mainBuilder.add("mt_dc_line", multiTerminalsBuilder);
+    
+    // get the dc line (two terminal) results
+    JSONArrayBuilder twoTerminalsBuilder = json.createArrayBuilder();
+    for (DCTwoTerminalLine connection : model.getDCTwoTerminalLines()) {
+      JSONObjectBuilder twoTerminalBuilder = json.createObjectBuilder();
+      Bus bus1 = model.getFirstNode(connection).getBus();
+      Bus bus2 = model.getSecondNode(connection).getBus();      
+      twoTerminalBuilder = twoTerminalBuilder.add("tt_dc_line_i", connection.toString());
+      twoTerminalBuilder = twoTerminalBuilder.add("mw_i", connection.getAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE1_KEY, Number.class).doubleValue());
+      twoTerminalBuilder = twoTerminalBuilder.add("mw_j", connection.getAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE2_KEY, Number.class).doubleValue());
+      twoTerminalBuilder = twoTerminalBuilder.add("mvar_i", connection.getAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE1_KEY, Number.class).doubleValue());
+      twoTerminalBuilder = twoTerminalBuilder.add("mvar_j", connection.getAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE2_KEY, Number.class).doubleValue());
+      twoTerminalBuilder = twoTerminalBuilder.add("name", connection.getAttribute(DCTwoTerminalLine.NAME_KEY, String.class));
+      twoTerminalBuilder = twoTerminalBuilder.add("status", connection.getActualStatus() && connection.getDesiredStatus());
+      twoTerminalBuilder = twoTerminalBuilder.add("bus_i", bus1.toString());
+      twoTerminalBuilder = twoTerminalBuilder.add("bus_j", bus2.toString());      
+      twoTerminalsBuilder = twoTerminalsBuilder.add(twoTerminalBuilder);
+    }
+    mainBuilder = mainBuilder.add("tt_dc_line", twoTerminalsBuilder);
+
+
+
+    
+    
+    
     
     // write to a generic output stream
     JSONWriter writer = json.createWriter(ps);
