@@ -78,7 +78,8 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     ComDataObject zoneObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES, PowerworldIOConstants.ZONE, "");
     ComDataObject loadObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.LOAD, "");
     ComDataObject shuntObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.SHUNT, "");
-    
+    ComDataObject dcBusesObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES, PowerworldIOConstants.DC_BUS, "");
+        
     // get some system level data
     String simFields[] = new String[]{PowerworldIOConstants.MVA_BASE}; 
     String simValues[] = new String[] {""};        
@@ -161,6 +162,40 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     else {
       System.err.println("Error getting powerworld bus data: " + errorString);      
     }
+    
+    // get all the dc buses
+    ArrayList<ComDataObject> dcBuses = dcBusesObject.getArrayValue();
+    errorString = dcBuses.get(0).getStringValue();
+    if (errorString.equals("")) {
+      ArrayList<ComDataObject> data = dcBuses.get(1).getArrayValue();
+      ArrayList<Integer> ids = data.get(0).getIntArrayValue();
+      ArrayList<Integer> ids2 = data.get(1).getIntArrayValue();
+            
+      for (int i = 0; i < ids.size(); ++i) {
+        Bus bus = busFactory.createDCBus(powerWorldModel, ids.get(i), ids2.get(i));
+        addBus(bus);
+        busMap.put(ids.get(i), bus);
+
+        String fields[] = new String[]{PowerworldIOConstants.DC_BUS_NUM, PowerworldIOConstants.DC_RECORD_NUM, PowerworldIOConstants.DC_BUS_AREA, PowerworldIOConstants.DC_BUS_ZONE}; 
+        String values[] = new String[] {ids.get(i)+"", ids2.get(i)+"","",""};        
+        ComDataObject dataObject = powerWorldModel.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.DC_BUS, fields, values);
+        ArrayList<ComDataObject> busData = dataObject.getArrayValue();
+        String errorString2 = busData.get(0).getStringValue();
+        if (!errorString2.equals("")) {
+          System.err.println("Error getting powerworld dc bus data: " + errorString2);                
+        }        
+        ArrayList<ComDataObject> bData = busData.get(1).getArrayValue();                       
+        String area = bData.get(1).getStringValue();
+        String zone = bData.get(2).getStringValue();
+        areas.put(bus, area);
+        zones.put(bus, zone);        
+      }      
+    }
+    else {
+      System.err.println("Error getting powerworld dc bus data: " + errorString);      
+    }
+    
+    
     
     // get all the DC voltage source lines
     ArrayList<ComDataObject> voltageSourceDCLines = voltageSourceObject.getArrayValue();
@@ -622,10 +657,20 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
 	@Override
 	public void busRemoved(Bus bus) {
     enterEditMode();
-    String filtername = "busremove" + bus;
-    String command = getBusRemoveFilter(bus, filtername);
-    executeScript(command);
-    command = PowerworldIOConstants.createDeleteCommand(PowerworldIOConstants.BUS, filtername);
+    String command = null;
+    
+    if (bus.getAttribute(PowerworldModelConstants.POWERWORLD_BUS_CATEGORY_KEY, String.class).equals(PowerworldModelConstants.POWER_WORLD_DC_BUS_CAT)) {
+      String filtername = "busremove" + bus;
+      command = getDCBusRemoveFilter(bus, filtername);
+      executeScript(command);
+      command = PowerworldIOConstants.createDeleteCommand(PowerworldIOConstants.DC_BUS, filtername);
+    }
+    else {
+      String filtername = "busremove" + bus;
+      command = getBusRemoveFilter(bus, filtername);
+      executeScript(command);
+      command = PowerworldIOConstants.createDeleteCommand(PowerworldIOConstants.BUS, filtername);
+    }
     executeScript(command);
 	}
 
@@ -797,10 +842,22 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
 	
   @Override
   public void busDataChange(Bus bus) {
-  	enterEditMode();  	
-    String fields[] = getBusFields(); 
-    String values[] = convertToStringArray(getBusValues(bus));
-    updateData(fields, values, PowerworldIOConstants.BUS);   
+  	enterEditMode();
+  	String fields[] = null;
+  	String values[] = null;
+  	String type = null;
+  	
+  	if (bus.getAttribute(PowerworldModelConstants.POWERWORLD_BUS_CATEGORY_KEY,String.class).equals(PowerworldModelConstants.POWER_WORLD_DC_BUS_CAT)) {
+      fields = getDCBusFields(); 
+      values = convertToStringArray(getDCBusValues(bus));
+  	  type = PowerworldIOConstants.DC_BUS;
+  	}
+  	else {
+    fields = getBusFields(); 
+    values = convertToStringArray(getBusValues(bus));
+    type = PowerworldIOConstants.BUS;
+  	}
+    updateData(fields, values, type);   
     
     // one of the bus fields get stored in generator data (remote voltage), so need to do that update too...
     for (Generator generator : getNode(bus).getComponents(Generator.class)) {
@@ -819,6 +876,28 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     		PowerworldIOConstants.BUS_KV, PowerworldIOConstants.BUS_MAX_VOLTAGE, 
     		PowerworldIOConstants.BUS_MIN_VOLTAGE, PowerworldIOConstants.BUS_STATUS, PowerworldIOConstants.BUS_CAT};
   }
+
+  /**
+   * Get the dc bus fields
+   * @return
+   */
+  private String[] getDCBusFields() {
+    return new String[]{
+        PowerworldIOConstants.DC_BUS_NUM,
+        PowerworldIOConstants.DC_RECORD_NUM
+    };
+  }
+  
+  /**
+   * Get the dc bus values
+   * @param bus
+   * @return
+   */
+  @SuppressWarnings("unchecked")
+  private Object[] getDCBusValues(Bus bus) {
+    Pair<Integer,Integer> id = (Pair<Integer, Integer>) getBusId(bus);    
+  	return new Object[] {id.getOne(), id.getTwo()};
+  }
   
   /**
    * Get the bus values
@@ -828,10 +907,11 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
   private Object[] getBusValues(Bus bus) {
     String status = bus.getActualStatus() && bus.getDesiredStatus() ? PowerworldIOConstants.BUS_CONNECTED : PowerworldIOConstants.BUS_DISCONNECTED;
     String cat = bus.getActualStatus() && bus.getDesiredStatus() ? bus.getAttribute(PowerworldModelConstants.POWERWORLD_BUS_CATEGORY_KEY).toString() : PowerworldIOConstants.BUS_DEAD;    
-  	return new Object[] {getBusId(bus), bus.getVoltagePU(), bus.getPhaseAngle(), 
-    		bus.getCoordinate().getX(), bus.getCoordinate().getY(), bus.getSystemVoltageKV(), 
-    		bus.getMaximumVoltagePU(), bus.getMinimumVoltagePU(), status, cat};
+    return new Object[] {getBusId(bus), bus.getVoltagePU(), bus.getPhaseAngle(), 
+        bus.getCoordinate().getX(), bus.getCoordinate().getY(), bus.getSystemVoltageKV(), 
+        bus.getMaximumVoltagePU(), bus.getMinimumVoltagePU(), status, cat};
   }
+
   
   /**
    * convert all the objects into strings
@@ -1377,12 +1457,12 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
   }
   
   /**
-   * Get the ieiss bus of a bus
+   * Get the id of a bus
    * @param bus
    * @return
    */
-  public Integer getBusId(Bus bus) {
-    return bus.getAttribute(PowerworldModelConstants.POWERWORLD_LEGACY_ID_KEY, Integer.class);
+  public Object getBusId(Bus bus) {
+    return bus.getAttribute(PowerworldModelConstants.POWERWORLD_LEGACY_ID_KEY);
   }
 
   /**
@@ -1553,6 +1633,26 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     command += "}";
     return command;    
   }
+  
+  /**
+   * create a filter command for removing a single bus
+   * @param bus
+   * @return
+   */
+  @SuppressWarnings("unchecked")
+  private String getDCBusRemoveFilter(Bus bus, String filtername) {
+    Pair<Integer,Integer> id = (Pair<Integer,Integer>)getBusId(bus);   
+    String command = PowerworldIOConstants.CREATE_FILTER;
+    command += "{";
+    command += PowerworldIOConstants.createRemoveHeader(PowerworldIOConstants.DC_BUS, filtername);
+    command += PowerworldIOConstants.SUBDATA_HEADER;
+    command += PowerworldIOConstants.DC_BUS_NUM + " = " + id.getOne();
+    command += PowerworldIOConstants.DC_BUS_NUM + " = " + id.getTwo();
+    command += PowerworldIOConstants.SUBDATA_FOOTER;
+    command += "}";
+    return command;    
+  }
+
   
   /**
    * create a filter command for removing a single generator

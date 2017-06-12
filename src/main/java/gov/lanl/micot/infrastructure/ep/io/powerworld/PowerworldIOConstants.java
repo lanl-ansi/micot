@@ -30,7 +30,8 @@ public class PowerworldIOConstants {
   public    static final String SHUNT             = "shunt";
   public    static final String DC_TWO_TERMINAL   = "dctransmissionline";
   public    static final String DC_VOLTAGE_SOURCE = "VSCDCLine";
-  public    static final String DC_MULTI_TERMINAL = "MTDCConverter";     
+  public    static final String DC_MULTI_TERMINAL = "MTDCConverter";
+  public    static final String DC_BUS            = "MTDCBus";
   
   public    static final String SIM_SOLUTION_OPTIONS = "Sim_Solution_Options";
 
@@ -60,6 +61,14 @@ public class PowerworldIOConstants {
   public static final String BUS_PV           = "PV";
   public static final String BUS_SLACK_STRING = "slack";
   public static final String BUS_OWNER_NAME   = "pwOwnerName";
+
+  // DC bus fields
+  public static final String DC_BUS_NUM          = "pwBusNum";
+  public static final String DC_RECORD_NUM       = "pwMTDCNum";
+  public static final String DC_BUS_NAME         = "pwBusName";
+  public static final String DC_BUS_AREA         = "pwAreaNum";
+  public static final String DC_BUS_ZONE         = "pwZoneNum";
+  public static final String DC_BUS_VOLTAGE_KV   = "pwMTDCBusVolt";
   
   // generator data fields
   public static final String GEN_NUM               = "pwGenID";

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import gov.lanl.micot.infrastructure.ep.io.powerworld.PowerworldIOConstants;
 import gov.lanl.micot.infrastructure.ep.model.Bus;
 import gov.lanl.micot.infrastructure.ep.model.BusFactory;
+import gov.lanl.micot.util.collection.Pair;
 import gov.lanl.micot.util.geometry.PointImpl;
 import gov.lanl.micot.util.io.dcom.ComDataObject;
 import gov.lanl.micot.util.io.dcom.ComObject;
@@ -16,8 +17,8 @@ import gov.lanl.micot.util.io.dcom.ComObject;
 public class PowerworldBusFactory extends BusFactory {
 
   private static final String LEGACY_TAG = "Powerworld";
-		
-	/**
+	  
+ /**
 	 * Singleton constructor
 	 */
 	protected PowerworldBusFactory() {		
@@ -82,6 +83,47 @@ public class PowerworldBusFactory extends BusFactory {
     return bus;    
   }
   
+  /**
+   * Creates a dc bus and data from a bus
+   * @param line
+   * @return
+   */
+  public Bus createDCBus(ComObject powerworld, int id, int id2)  {
+    
+    String fields[] = new String[]{PowerworldIOConstants.DC_BUS_NUM, PowerworldIOConstants.DC_RECORD_NUM, PowerworldIOConstants.DC_BUS_NAME, PowerworldIOConstants.DC_BUS_VOLTAGE_KV}; 
+    String values[] = new String[] {id+"", id2+"", "", ""};
+        
+    ComDataObject dataObject = powerworld.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.DC_BUS, fields, values);
+    ArrayList<ComDataObject> busData = dataObject.getArrayValue();
+    String errorString = busData.get(0).getStringValue();
+    if (!errorString.equals("")) {
+      System.err.println("Error getting powerworld bus data: " + errorString);                
+    }
+    
+    ArrayList<ComDataObject> bData = busData.get(1).getArrayValue();                       
+    String name = bData.get(1).getStringValue();
+    String kvString = bData.get(2).getStringValue();
+    
+    double x = 0.0;
+    double y = 0.0;
+    boolean status = true;
+    double kv = Double.parseDouble(kvString.trim());
+    
+    Bus bus = registerDCBus(new Pair<Integer, Integer>(id, id2));   
+    bus.setCoordinate(new PointImpl(x,y));
+    bus.setAttribute(Bus.NAME_KEY, name);
+    bus.setDesiredStatus(status);
+    bus.setVoltagePU(kv);
+    bus.setActualStatus(status); 
+    
+    bus.setAttribute(PowerworldModelConstants.POWERWORLD_BUS_CATEGORY_KEY, PowerworldModelConstants.POWER_WORLD_DC_BUS_CAT);
+    
+    return bus;    
+  }
+
+  
+  
+  
   @Override
   protected Bus createEmptyBus() {
     int id = findUnusedId();
@@ -106,6 +148,24 @@ public class PowerworldBusFactory extends BusFactory {
    return bus;
  }
 
+  /**
+  * Register the bus
+  * @param legacyId
+  * @param bus
+  * @return
+  */
+  private Bus registerDCBus(Pair<Integer, Integer> legacyId) {
+    Bus bus = getLegacy(LEGACY_TAG, legacyId);
+    if (bus == null) {
+      bus = createNewBus();
+      bus.setAttribute(PowerworldModelConstants.POWERWORLD_LEGACY_ID_KEY,legacyId);
+      bus.addOutputKey(PowerworldModelConstants.POWERWORLD_LEGACY_ID_KEY);      
+      registerLegacy(LEGACY_TAG, legacyId, bus);
+    }
+   return bus;
+ }
+
+  
   /**
    * Find an unused id number
    * @return

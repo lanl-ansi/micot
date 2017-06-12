@@ -13,6 +13,7 @@ import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerNode;
 import gov.lanl.micot.infrastructure.ep.model.Generator;
 import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldModel;
+import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldModelConstants;
 import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldModelFactory;
 import gov.lanl.micot.infrastructure.ep.simulate.ElectricPowerSimulatorImpl;
 import gov.lanl.micot.infrastructure.model.Component;
@@ -188,11 +189,28 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
     fields = new String[]{PowerworldIOConstants.BUS_NUM, 
     		PowerworldIOConstants.BUS_PU_VOLTAGE, 
     		PowerworldIOConstants.BUS_ANGLE}; 
+
     for (Bus bus : model.getBuses()) {
-    	Integer id = powerWorldModel.getBusId(bus);
-      String values[] = new String[] {id+"", "", ""};
+    	Object id = powerWorldModel.getBusId(bus);
+    	String values[] = null;
+    	String type = null;
+    	
+    	if (bus.getAttribute(PowerworldModelConstants.POWERWORLD_BUS_CATEGORY_KEY,String.class).equals(PowerworldModelConstants.POWER_WORLD_DC_BUS_CAT)) {
+        type = PowerworldIOConstants.DC_BUS;
+        values = new String[] {((Pair)id).getOne()+"", ((Pair)id).getTwo()+"", ""};
+        fields = new String[]{PowerworldIOConstants.DC_BUS_NUM, 
+            PowerworldIOConstants.DC_RECORD_NUM, 
+            PowerworldIOConstants.DC_BUS_VOLTAGE_KV};         
+    	}
+    	else {
+        fields = new String[]{PowerworldIOConstants.BUS_NUM, 
+            PowerworldIOConstants.BUS_PU_VOLTAGE, 
+            PowerworldIOConstants.BUS_ANGLE};     	  
+    	  values = new String[] {id+"", "", ""};
+    	  type = PowerworldIOConstants.BUS;
+    	}
       
-      ComDataObject dataObject = powerworld.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.BUS, fields, values);
+      ComDataObject dataObject = powerworld.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, type, fields, values);
       ArrayList<ComDataObject> busData = dataObject.getArrayValue();
       errorString = busData.get(0).getStringValue();
       if (!errorString.equals("")) {
@@ -200,13 +218,20 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       }
       
       ArrayList<ComDataObject> bData = busData.get(1).getArrayValue();                       
-      String puString = bData.get(1).getStringValue();
-      String angleString = bData.get(2).getStringValue();
-      
-      double pu = Double.parseDouble(puString.trim());
-      double angle = Double.parseDouble(angleString.trim());     
-      bus.setPhaseAngle(angle);
-      bus.setVoltagePU(pu);    
+
+      if (bus.getAttribute(PowerworldModelConstants.POWERWORLD_BUS_CATEGORY_KEY,String.class).equals(PowerworldModelConstants.POWER_WORLD_DC_BUS_CAT)) {
+        String kvString = bData.get(2).getStringValue();              
+        double kv = Double.parseDouble(kvString.trim());        
+        bus.setVoltagePU(kv);
+      }
+      else {
+        String puString = bData.get(1).getStringValue();
+        String angleString = bData.get(2).getStringValue();      
+        double pu = Double.parseDouble(puString.trim());
+        double angle = Double.parseDouble(angleString.trim());     
+        bus.setPhaseAngle(angle);
+        bus.setVoltagePU(pu);    
+      }
     }
     
     // get the generator data

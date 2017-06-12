@@ -15,6 +15,7 @@ import gov.lanl.micot.infrastructure.ep.model.Load;
 import gov.lanl.micot.infrastructure.ep.model.ShuntCapacitor;
 import gov.lanl.micot.infrastructure.ep.model.ShuntCapacitorSwitch;
 import gov.lanl.micot.infrastructure.ep.model.Transformer;
+import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldModelConstants;
 import gov.lanl.micot.util.io.json.JSON;
 import gov.lanl.micot.util.io.json.JSONArrayBuilder;
 import gov.lanl.micot.util.io.json.JSONObjectBuilder;
@@ -47,15 +48,22 @@ public class JSONResultExporter {
     JSONArrayBuilder busesBuilder = json.createArrayBuilder();
     for (Bus bus : model.getBuses()) {
       JSONObjectBuilder busBuilder = json.createObjectBuilder();
-      double baseKV = bus.getSystemVoltageKV();
       busBuilder = busBuilder.add("bus_i", bus.toString());
       
-      busBuilder = busBuilder.add("vm", bus.getVoltagePU().doubleValue() * baseKV);            
-      busBuilder = busBuilder.add("vm_min", bus.getMinimumVoltagePU() * baseKV);            
-      busBuilder = busBuilder.add("vm_max", bus.getMaximumVoltagePU() * baseKV);                  
-      busBuilder = busBuilder.add("va", bus.getPhaseAngle());
-      busBuilder = busBuilder.add("base_kv", baseKV);
-      busBuilder = busBuilder.add("owner", bus.getOwnerName());
+      if (!bus.getAttribute(PowerworldModelConstants.POWERWORLD_BUS_CATEGORY_KEY).equals(PowerworldModelConstants.POWER_WORLD_DC_BUS_CAT)) {
+        double baseKV = bus.getSystemVoltageKV();
+        busBuilder = busBuilder.add("vm_min", bus.getMinimumVoltagePU() * baseKV);            
+        busBuilder = busBuilder.add("vm_max", bus.getMaximumVoltagePU() * baseKV);                  
+        busBuilder = busBuilder.add("va", bus.getPhaseAngle());
+        busBuilder = busBuilder.add("owner", bus.getOwnerName());
+        busBuilder = busBuilder.add("is_ac", true);            
+        busBuilder = busBuilder.add("base_kv", baseKV);
+        busBuilder = busBuilder.add("vm", bus.getVoltagePU().doubleValue() * baseKV);            
+      }
+      else {
+        busBuilder = busBuilder.add("is_ac", false);            
+        busBuilder = busBuilder.add("vm", bus.getVoltagePU().doubleValue());            
+      }
       busBuilder = busBuilder.add("name", bus.getAttribute(Bus.NAME_KEY, String.class));
       busBuilder = busBuilder.add("status", bus.getActualStatus() && bus.getDesiredStatus());
       busesBuilder = busesBuilder.add(busBuilder);
@@ -191,8 +199,6 @@ public class JSONResultExporter {
       voltageSourcesBuilder = voltageSourcesBuilder.add(voltageSourceBuilder);
     }
     mainBuilder = mainBuilder.add("vsc_dc_line", voltageSourcesBuilder);
-
-    
     
     // get the dc line (multi terminal) results
     JSONArrayBuilder multiTerminalsBuilder = json.createArrayBuilder();
@@ -203,7 +209,6 @@ public class JSONResultExporter {
       multiTerminalBuilder = multiTerminalBuilder.add("mt_dc_line_i", connection.toString());
       multiTerminalBuilder = multiTerminalBuilder.add("mw", connection.getMWFlow());
       multiTerminalBuilder = multiTerminalBuilder.add("mvar", connection.getMVarFlow());
-      multiTerminalBuilder = multiTerminalBuilder.add("name", connection.getAttribute(DCMultiTerminalLine.NAME_KEY, String.class));
       multiTerminalBuilder = multiTerminalBuilder.add("status", connection.getActualStatus() && connection.getDesiredStatus());
       multiTerminalBuilder = multiTerminalBuilder.add("bus_i", bus1.toString());
       multiTerminalBuilder = multiTerminalBuilder.add("bus_j", bus2.toString());      

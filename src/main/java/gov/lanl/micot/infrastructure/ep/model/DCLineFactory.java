@@ -20,7 +20,7 @@ public abstract class DCLineFactory {
 	 * @param bus
 	 * @return
 	 */
-	public DCLine createNewTwoTerminalLine() {
+	protected DCLine createNewTwoTerminalLine() {
 		AssetIdManager modifier = AssetIdManager.getDefaultAssetIdManager();
 		long assetId = modifier.getNextId();
 		DCLine line = new DCTwoTerminalLine(assetId);
@@ -33,7 +33,20 @@ public abstract class DCLineFactory {
    * @param bus
    * @return
    */
-  public DCLine createNewVoltageSourceLine() {
+  protected DCLine createNewMultiTerminalLine() {
+    AssetIdManager modifier = AssetIdManager.getDefaultAssetIdManager();
+    long assetId = modifier.getNextId();
+    DCLine line = new DCMultiTerminalLine(assetId);
+    registry.register(assetId, line);
+    return registry.getCopy(assetId);
+  }
+	
+	 /**
+   * Creates a new line between buses
+   * @param bus
+   * @return
+   */
+  protected DCLine createNewVoltageSourceLine() {
     AssetIdManager modifier = AssetIdManager.getDefaultAssetIdManager();
     long assetId = modifier.getNextId();
     DCLine line = new DCVoltageSourceLine(assetId);

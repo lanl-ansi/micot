@@ -58,7 +58,7 @@ public class PowerworldDCLineFactory extends DCLineFactory {
   private DCMultiTerminalLine registerMultiTerminalLine(Triple<Integer,Integer,String> legacyId) {
     DCLine line = getLegacy(LEGACY_TAG, legacyId);
     if (line == null) {
-      line = createNewTwoTerminalLine();
+      line = createNewMultiTerminalLine();
       line.setAttribute(PowerworldModelConstants.POWERWORLD_LEGACY_ID_KEY,legacyId);
       line.addOutputKey(PowerworldModelConstants.POWERWORLD_LEGACY_ID_KEY);
       registerLegacy(LEGACY_TAG, legacyId, line);
@@ -205,7 +205,7 @@ public class PowerworldDCLineFactory extends DCLineFactory {
         PowerworldIOConstants.MULTI_TERMINAL_TAP_MAX, PowerworldIOConstants.MULTI_TERMINAL_TAP_MIN,
         PowerworldIOConstants.MULTI_TERMINAL_TAP_STEP_SIZE, PowerworldIOConstants. MULTI_TERMINAL_TYPE,
         PowerworldIOConstants.MULTI_TERMINAL_TRANSFORMER_TAP, PowerworldIOConstants.MULTI_TERMINAL_CURRENT_RATING,
-        PowerworldIOConstants.MULTI_TERMINAL_DC_VOLTAGE };
+        PowerworldIOConstants.MULTI_TERMINAL_DC_VOLTAGE};
                 
     String values[] = new String[] {legacyid.getOne()+"", legacyid.getTwo()+"", legacyid.getThree()+"", "","","","","","","","","","","","","","","","",""};
         
