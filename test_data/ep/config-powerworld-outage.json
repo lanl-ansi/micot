@@ -5,7 +5,7 @@
   },
   "models": [
     {
-      "model_file": "test_data/ep/powerworld/B7OPF.pwb",
+      "model_file": "test_data/ep/powerworld/B7OPF.RAW",
       "model_file_factory": "gov.lanl.micot.infrastructure.ep.io.ElectricPowerModelFileFactory",
       "modifications": [
         {
@@ -13,7 +13,7 @@
           "id": [
             {
               "id_key": "POWERWORLD_LEGACY_ID",
-              "id_value": "(6,7, 2)",
+              "id_value": "(6,7,2 )",
               "id_type": "string"
             }
           ],

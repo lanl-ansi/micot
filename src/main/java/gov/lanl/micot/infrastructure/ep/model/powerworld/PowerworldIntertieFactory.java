@@ -7,15 +7,6 @@ import gov.lanl.micot.infrastructure.ep.model.IntertieFactory;
  * @author Russell Bent
  */
 public class PowerworldIntertieFactory extends IntertieFactory {
-
-///	private static PowerworldIntertieFactory INSTANCE = null;
-	
-	//public synchronized static PowerworldIntertieFactory getInstance() {
-		//if (INSTANCE == null) {
-			//INSTANCE = new PowerworldIntertieFactory();
-	//	}
-		//return INSTANCE;
-	//}
 	
 	/**
 	 * Singleton constructor

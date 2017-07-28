@@ -16,15 +16,7 @@ import gov.lanl.micot.util.io.dcom.ComObject;
  */
 public class PowerworldLoadFactory extends LoadFactory {
 
-//	private static PowerworldLoadFactory INSTANCE = null;
 	private static final String LEGACY_TAG = "Powerworld";
-	
-	//public synchronized static PowerworldLoadFactory getInstance() {
-		//if (INSTANCE == null) {
-			//INSTANCE = new PowerworldLoadFactory();
-	//	}
-	//	return INSTANCE;
-	//}
 	
 	/**
 	 * Singleton constructor

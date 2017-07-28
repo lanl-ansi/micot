@@ -250,7 +250,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
       for (int i = 0; i < multiTerminalids.size(); ++i) {
         int fromid = fromids.get(i);
         int toid = toids.get(i);
-        String id = multiTerminalids.get(i).trim();
+        String id = multiTerminalids.get(i);
 
         String fields[] = new String[]{PowerworldIOConstants.MULTI_TERMINAL_BUS_FROM_NUM, PowerworldIOConstants.MULTI_TERMINAL_BUS_TO_NUM, PowerworldIOConstants.MULTI_TERMINAL_NUM, PowerworldIOConstants.MULTI_TERMINAL_AREA, PowerworldIOConstants.MULTI_TERMINAL_ZONE}; 
         String values[] = new String[] {fromid+"", toid+"", id+"", "",""};
@@ -292,7 +292,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
       for (int i = 0; i < twoTerminalids.size(); ++i) {
         int fromid = fromids.get(i);
         int toid = toids.get(i);
-        String id = twoTerminalids.get(i).trim();
+        String id = twoTerminalids.get(i);
 
         String fields[] = new String[]{PowerworldIOConstants.TWO_TERMINAL_BUS_FROM_NUM, PowerworldIOConstants.TWO_TERMINAL_BUS_TO_NUM, PowerworldIOConstants.TWO_TERMINAL_NUM, PowerworldIOConstants.TWO_TERMINAL_AREA, PowerworldIOConstants.TWO_TERMINAL_ZONE}; 
         String values[] = new String[] {fromid+"", toid+"", id+"", "",""};
@@ -330,7 +330,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
             
       for (int i = 0; i < busids.size(); ++i) {
         int busid = busids.get(i);
-        String genid = genids.get(i).trim();
+        String genid = genids.get(i);
         Bus bus = busMap.get(busid);
         
         Generator generator = genFactory.createGenerator(powerWorldModel, bus, new Pair<Integer,String>(busid, genid));
@@ -371,7 +371,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
             
       for (int i = 0; i < busids.size(); ++i) {
         int busid = busids.get(i);
-        String loadid = loadids.get(i).trim();
+        String loadid = loadids.get(i);
         Bus bus = busMap.get(busid);
         
         Load load = loadFactory.createLoad(powerWorldModel, bus, new Pair<Integer,String>(busid, loadid));
@@ -452,8 +452,8 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
       for (int i = 0; i < branchids.size(); ++i) {
         int fromid = fromids.get(i);
         int toid = toids.get(i);
-        String id = branchids.get(i).trim();
-
+        String id = branchids.get(i);
+        
         String fields[] = new String[]{PowerworldIOConstants.BRANCH_BUS_FROM_NUM, PowerworldIOConstants.BRANCH_BUS_TO_NUM, PowerworldIOConstants.BRANCH_NUM, PowerworldIOConstants.BRANCH_AREA, PowerworldIOConstants.BRANCH_ZONE, PowerworldIOConstants.BRANCH_TYPE, PowerworldIOConstants.BRANCH_REGULATED_BUS}; 
         String values[] = new String[] {fromid+"", toid+"", id+"", "","","",""};
         ComDataObject dataObject = powerWorldModel.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.BRANCH, fields, values);

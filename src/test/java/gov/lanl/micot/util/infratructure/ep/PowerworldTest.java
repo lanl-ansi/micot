@@ -3,6 +3,7 @@ package gov.lanl.micot.util.infratructure.ep;
 import gov.lanl.micot.infrastructure.application.Application;
 import gov.lanl.micot.infrastructure.application.ApplicationOutput;
 import gov.lanl.micot.infrastructure.ep.application.ac.ACSimulationApplication;
+import gov.lanl.micot.infrastructure.ep.io.ElectricPowerModelFileFactory;
 import gov.lanl.micot.infrastructure.ep.io.powerworld.PowerworldModelFile;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
@@ -45,7 +46,7 @@ public class PowerworldTest extends TestCase {
     assertEquals(model.getLoads().size(), 6);
 
     for (ElectricPowerFlowConnection connection : model.getFlowConnections()) {
-    	if (connection.toString().equals("(6,7, 2)")) {
+    	if (connection.toString().equals("(6,7,2 )")) {
     		assertEquals(connection.getMWFlow(), 0.0);
     	}
     	else {
@@ -112,6 +113,7 @@ public class PowerworldTest extends TestCase {
   @Override
   protected void setUp() throws Exception {
     super.setUp();          
+    ElectricPowerModelFileFactory.registerExtension("raw",Class.forName("gov.lanl.micot.infrastructure.ep.io.powerworld.PowerworldModelFile"));
   } 
   
   
