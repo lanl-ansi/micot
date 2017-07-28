@@ -67,10 +67,8 @@ public class PowerworldShuntCapacitorSwitchFactory extends ShuntCapacitorSwitchF
     double maxMW =  maxMWString == null ? 0 : Double.parseDouble(maxMWString);
     double mw = mwString == null ? 0 : Double.parseDouble(mwString);
     double mvar = mvarString == null ? 0 : Double.parseDouble(mvarString);
-    boolean status = Boolean.parseBoolean(statusString);
-    
-    
-//    boolean status = bus.getActualStatus();   
+    boolean status = statusString.toLowerCase().equals(PowerworldIOConstants.SHUNT_CLOSED);   
+        
     ShuntCapacitorSwitch shunt = registerCapacitor(id);    
         
     shunt.setDesiredStatus(status);

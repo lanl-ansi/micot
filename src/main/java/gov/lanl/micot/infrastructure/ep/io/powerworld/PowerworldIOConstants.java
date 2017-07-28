@@ -124,8 +124,8 @@ public class PowerworldIOConstants {
   public static final String SHUNT_BUS_SHUNT       = "bus shunt";
   public static final String SHUNT_CLOSED          = "closed";
   public static final String SHUNT_OPEN            = "open";
-  public static final String SHUNT_MVAR            = "pwSSAMVR";
-  public static final String SHUNT_MW              = "pwSSAMW";
+  public static final String SHUNT_MVAR            = "pwSSNMVR";
+  public static final String SHUNT_MW              = "pwSSNMW";
     
   // branch fields
   public static final String BRANCH_TYPE               = "pwBranchDeviceType";

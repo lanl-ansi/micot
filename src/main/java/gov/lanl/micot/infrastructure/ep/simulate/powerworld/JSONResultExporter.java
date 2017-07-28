@@ -162,8 +162,8 @@ public class JSONResultExporter {
       Bus bus = model.getNode(shunt).getBus();      
       JSONObjectBuilder shuntBuilder = json.createObjectBuilder();
       shuntBuilder = shuntBuilder.add("shunt_i", shunt.toString());
-      shuntBuilder = shuntBuilder.add("bs", shunt.getRealCompensation());
-      shuntBuilder = shuntBuilder.add("gs", shunt.getReactiveCompensation());
+      shuntBuilder = shuntBuilder.add("bs", shunt.getReactiveCompensation());
+      shuntBuilder = shuntBuilder.add("gs", shunt.getRealCompensation());
       shuntBuilder = shuntBuilder.add("status", shunt.getActualStatus() && shunt.getDesiredStatus());
       shuntBuilder = shuntBuilder.add("bus", bus.toString());            
       shuntsBuilder = shuntsBuilder.add(shuntBuilder);
@@ -177,8 +177,8 @@ public class JSONResultExporter {
       JSONObjectBuilder shuntBuilder = json.createObjectBuilder();
       Bus bus = model.getNode(shunt).getBus();      
       shuntBuilder = shuntBuilder.add("shunt_i", shunt.toString());
-      shuntBuilder = shuntBuilder.add("bs", shunt.getRealCompensation().doubleValue());
-      shuntBuilder = shuntBuilder.add("gs", shunt.getReactiveCompensation().doubleValue());
+      shuntBuilder = shuntBuilder.add("bs", shunt.getReactiveCompensation().doubleValue());
+      shuntBuilder = shuntBuilder.add("gs", shunt.getRealCompensation().doubleValue());
       shuntBuilder = shuntBuilder.add("status", shunt.getActualStatus() && shunt.getDesiredStatus());
       shuntBuilder = shuntBuilder.add("bus", bus.toString());            
       switchedShuntsBuilder = switchedShuntsBuilder.add(shuntBuilder);

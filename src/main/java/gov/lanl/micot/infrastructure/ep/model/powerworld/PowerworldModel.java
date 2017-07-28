@@ -219,8 +219,8 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
         }
         ArrayList<ComDataObject> bData = lineData.get(1).getArrayValue();                       
 
-        int fromid = Integer.parseInt(bData.get(1).getStringValue());;
-        int toid = Integer.parseInt(bData.get(2).getStringValue());;
+        int fromid = Integer.parseInt(bData.get(1).getStringValue().trim());
+        int toid = Integer.parseInt(bData.get(2).getStringValue().trim());
         
         Bus fBus = busMap.get(fromid);
         Bus tBus = busMap.get(toid);
@@ -420,7 +420,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
         Bus bus = busMap.get(busids.get(i));
                 
         Asset asset = null;
-        if (mode != null && (mode.equalsIgnoreCase(PowerworldIOConstants.SHUNT_FIXED) || mode.equalsIgnoreCase(PowerworldIOConstants.SHUNT_BUS_SHUNT))) {
+        if (mode != null && mode.equalsIgnoreCase(PowerworldIOConstants.SHUNT_BUS_SHUNT)) {
           ShuntCapacitor capacitor = shuntFactory.createShuntCapacitor(powerWorldModel, bus, new Pair<Integer,String>(busids.get(i),shuntids.get(i)));
           addShuntCapacitor(capacitor,bus);
           asset = capacitor;

@@ -104,6 +104,20 @@ public class PowerworldTest extends TestCase {
     assertEquals(model.getShuntCapacitorSwitches().size(), 1);
   }
   
+  /**
+   * Test that we can handle the frankenstein model
+   * @throws IOException
+   */
+  public void testFrankenstein() throws IOException {
+    if (System.getenv("TEST_POWERWORLD") != null) {
+      return;
+    }
+    
+    PowerworldModelFile modelFile = new PowerworldModelFile();
+    ElectricPowerModel model = modelFile.readModel("test_data" + File.separatorChar + "ep" + File.separatorChar + "powerworld" + File.separatorChar + "frankenstein.raw");
+  }
+
+  
   
   @Override
   protected void tearDown() throws Exception {

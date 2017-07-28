@@ -44,10 +44,10 @@ public class PowerworldShuntCapacitorFactory extends ShuntCapacitorFactory {
     String mvarString = lData.get(2).getStringValue();
     String mwString = lData.get(3).getStringValue();
     String statusString = lData.get(4).getStringValue();
-        
+    
     double reactive = mvarString == null ? 0 : Double.parseDouble(mvarString);
     double real = mwString == null ? 0 : Double.parseDouble(mwString);                
-    boolean status = Boolean.parseBoolean(statusString);   
+    boolean status = statusString.toLowerCase().equals(PowerworldIOConstants.SHUNT_CLOSED);   
     ShuntCapacitor shunt = registerCapacitor(id);    
         
     shunt.setDesiredStatus(status);
@@ -55,8 +55,6 @@ public class PowerworldShuntCapacitorFactory extends ShuntCapacitorFactory {
     shunt.setReactiveCompensation(reactive);    
     shunt.setRealCompensation(real);
     shunt.setCoordinate(bus.getCoordinate());
-    
-  //  System.out.println(bus + " " + real + " " + reactive);
     
     return shunt;    
   }
