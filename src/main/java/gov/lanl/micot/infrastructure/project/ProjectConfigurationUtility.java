@@ -80,7 +80,7 @@ public class ProjectConfigurationUtility {
       }
 
       if (!found) {
-        System.err.println("Could not find asset " + config.getKeys());
+        System.err.println("Could not find asset " + config.getKeys() + " to modify attribute " + config.getAttributes().keySet());
       }
     }
     
@@ -119,7 +119,7 @@ public class ProjectConfigurationUtility {
         }
 
         if (!found) {
-          System.err.println("Could not find asset " + config.getKeys());
+          System.err.println("Could not find asset " + config.getKeys()  + " to modify attribute " + config.getAttributes().keySet());
         }
       }
     }

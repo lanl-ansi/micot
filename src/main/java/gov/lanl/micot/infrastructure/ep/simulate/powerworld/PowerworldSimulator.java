@@ -180,8 +180,8 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       line.setAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE2_KEY, reactiveTo);
       line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE1_KEY, realFrom);
       line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE2_KEY, realTo);
-      line.setActualStatus(status.equals(PowerworldIOConstants.BRANCH_CLOSED));
-      line.setDesiredStatus(status.equals(PowerworldIOConstants.BRANCH_CLOSED));
+      line.setActualStatus(status.toLowerCase().equals(PowerworldIOConstants.BRANCH_CLOSED));
+      line.setDesiredStatus(status.toLowerCase().equals(PowerworldIOConstants.BRANCH_CLOSED));
     }
 
     // get the bus data
@@ -311,8 +311,8 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       line.setAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE2_KEY, reactiveTo);
       line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE1_KEY, realFrom);
       line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE2_KEY, realTo);
-      line.setActualStatus(status.equals(PowerworldIOConstants.VOLTAGE_SOURCE_CLOSED));
-      line.setDesiredStatus(status.equals(PowerworldIOConstants.VOLTAGE_SOURCE_CLOSED));
+      line.setActualStatus(status.toLowerCase().equals(PowerworldIOConstants.VOLTAGE_SOURCE_CLOSED));
+      line.setDesiredStatus(status.toLowerCase().equals(PowerworldIOConstants.VOLTAGE_SOURCE_CLOSED));
     }
 
     
@@ -364,8 +364,8 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       line.setAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE2_KEY, reactiveTo);
       line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE1_KEY, realFrom);
       line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE2_KEY, realTo);
-      line.setActualStatus(status.equals(PowerworldIOConstants.TWO_TERMINAL_CLOSED));
-      line.setDesiredStatus(status.equals(PowerworldIOConstants.TWO_TERMINAL_CLOSED));
+      line.setActualStatus(status.toLowerCase().equals(PowerworldIOConstants.TWO_TERMINAL_CLOSED));
+      line.setDesiredStatus(status.toLowerCase().equals(PowerworldIOConstants.TWO_TERMINAL_CLOSED));
     }
 
     return s;
