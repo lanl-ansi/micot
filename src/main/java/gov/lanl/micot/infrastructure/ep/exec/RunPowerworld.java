@@ -57,8 +57,19 @@ public class RunPowerworld {
     String powerModelFile = ParameterReader.getRequiredStringParameter(args,  POWER_MODEL_FLAG, "power model file");
 
     ProjectConfiguration configuration = buildConfiguration(powerModelFile, modificationsFile);
-        
-    Application application = ProjectConfigurationUtility.createApplication(configuration);
+    
+    Application application = null;
+    try {
+      application = ProjectConfigurationUtility.createApplication(configuration);
+    }
+    catch (IOException e) {
+      String message = "Failure in reading " + powerModelFile;
+      if (modificationsFile != null) {
+        message += " or " + modificationsFile;
+      }      
+      System.err.println(message);
+      return;
+    }
     ApplicationOutput output = application.execute();
 
     ElectricPowerModel model = output.get(ACSimulationApplication.MODEL_FLAG, ElectricPowerModel.class);    

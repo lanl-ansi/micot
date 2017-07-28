@@ -131,6 +131,7 @@ public class PowerworldModelFile implements ElectricPowerModelFile {
     ArrayList<ComDataObject> data = text.getArrayValue();
     if (!data.get(0).getStringValue().equals("")) {
       System.err.println("Error reading file: " + data.get(0).getStringValue());
+      throw new IOException();
     }      
       
     PowerworldModel powerWorldModel = new PowerworldModel(model);
