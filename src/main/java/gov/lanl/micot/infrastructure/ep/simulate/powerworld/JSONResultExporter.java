@@ -3,7 +3,6 @@ package gov.lanl.micot.infrastructure.ep.simulate.powerworld;
 import java.io.OutputStream;
 
 import gov.lanl.micot.infrastructure.ep.model.Bus;
-import gov.lanl.micot.infrastructure.ep.model.DCLine;
 import gov.lanl.micot.infrastructure.ep.model.DCMultiTerminalLine;
 import gov.lanl.micot.infrastructure.ep.model.DCTwoTerminalLine;
 import gov.lanl.micot.infrastructure.ep.model.DCVoltageSourceLine;
@@ -16,6 +15,7 @@ import gov.lanl.micot.infrastructure.ep.model.ShuntCapacitor;
 import gov.lanl.micot.infrastructure.ep.model.ShuntCapacitorSwitch;
 import gov.lanl.micot.infrastructure.ep.model.Transformer;
 import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldModelConstants;
+import gov.lanl.micot.infrastructure.simulate.Simulator.SimulatorSolveState;
 import gov.lanl.micot.util.io.json.JSON;
 import gov.lanl.micot.util.io.json.JSONArrayBuilder;
 import gov.lanl.micot.util.io.json.JSONObjectBuilder;
@@ -38,11 +38,15 @@ public class JSONResultExporter {
    * Export the results into a JSON format
    * @param ps
    */
-  public void exportJSON(OutputStream ps, ElectricPowerModel model) {
+  public void exportJSON(OutputStream ps, ElectricPowerModel model, double totalTime, double simulationTime, SimulatorSolveState state) {
     
     // write the results to a json output stream
     JSON json = JSON.getDefaultJSON();
     JSONObjectBuilder mainBuilder = json.createObjectBuilder();
+    
+    mainBuilder = mainBuilder.add("total_time", totalTime);
+    mainBuilder = mainBuilder.add("simulation_time", simulationTime);
+    mainBuilder = mainBuilder.add("simulation_status", state);
 
     // get the bus results
     JSONArrayBuilder busesBuilder = json.createArrayBuilder();
@@ -235,17 +239,9 @@ public class JSONResultExporter {
     }
     mainBuilder = mainBuilder.add("tt_dc_line", twoTerminalsBuilder);
 
-
-
-    
-    
-    
-    
     // write to a generic output stream
     JSONWriter writer = json.createWriter(ps);
-    writer.write(mainBuilder.build());
-
-    
+    writer.write(mainBuilder.build());    
   }
 
 }

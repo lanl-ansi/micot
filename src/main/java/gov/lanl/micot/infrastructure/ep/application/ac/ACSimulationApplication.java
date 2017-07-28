@@ -17,7 +17,7 @@ public class ACSimulationApplication implements Application {
   
   public static final String MODEL_FLAG = "Model";
   public static final String SIMULATOR_STATE_FLAG = "SimulatorState";
-	public static final String CPU_TIME_FLAG = "CPU_TIME";
+	public static final String CPU_TIME_FLAG = "CPUTime";
    
   private ElectricPowerModel model = null;
   private ElectricPowerSimulator simulator = null;

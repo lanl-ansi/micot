@@ -19,11 +19,13 @@ import gov.lanl.micot.infrastructure.project.ModelConfiguration;
 import gov.lanl.micot.infrastructure.project.ProjectConfiguration;
 import gov.lanl.micot.infrastructure.project.ProjectConfigurationUtility;
 import gov.lanl.micot.infrastructure.project.SimulatorConfiguration;
+import gov.lanl.micot.infrastructure.simulate.Simulator.SimulatorSolveState;
 import gov.lanl.micot.util.io.ParameterReader;
 import gov.lanl.micot.util.io.json.JSON;
 import gov.lanl.micot.util.io.json.JSONArray;
 import gov.lanl.micot.util.io.json.JSONObject;
 import gov.lanl.micot.util.io.json.JSONReader;
+import gov.lanl.micot.util.time.Timer;
 
 /**
  * This executible runs powerworld and prints some output of the results
@@ -44,7 +46,10 @@ public class RunPowerworld {
    * @throws IOException
    */
   public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
-
+    Timer timer = new Timer();
+    timer.startTimer();
+    
+    
     // associates raw files with Powerworld
     ElectricPowerModelFileFactory.registerExtension("raw",Class.forName("gov.lanl.micot.infrastructure.ep.io.powerworld.PowerworldModelFile"));
     
@@ -57,9 +62,12 @@ public class RunPowerworld {
     ApplicationOutput output = application.execute();
 
     ElectricPowerModel model = output.get(ACSimulationApplication.MODEL_FLAG, ElectricPowerModel.class);    
+    double simulationTime = output.getDouble(ACSimulationApplication.CPU_TIME_FLAG);
+    SimulatorSolveState state = output.get(ACSimulationApplication.SIMULATOR_STATE_FLAG, SimulatorSolveState.class);
+    double totalTime = timer.getCPUMinutesDec();
     
     JSONResultExporter exporter = new JSONResultExporter();
-    exporter.exportJSON(System.out, model);
+    exporter.exportJSON(System.out, model, totalTime, simulationTime, state);
   }
   
   /**

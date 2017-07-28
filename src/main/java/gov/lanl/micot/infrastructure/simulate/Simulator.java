@@ -8,9 +8,6 @@ import gov.lanl.micot.infrastructure.model.Model;
  */
 public interface Simulator<M extends Model> {
 
-//	public static String SHADOW_PRICE_KEY       = "SHADOW_PRICE";
-//	public static String SHADOW_PRICE_RANGE_KEY = "SHADOW_PRICE_RANGE";
-		
 	/**
 	 * Enumeration of possible simulator solve states
 	 * @author Russell Bent

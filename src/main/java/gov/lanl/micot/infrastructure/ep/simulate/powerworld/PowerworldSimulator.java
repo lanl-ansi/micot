@@ -78,8 +78,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
         e.printStackTrace();
       }
     }
-  	
-  	
+  	  	
   	// go into run mode
   	String scriptcommand = PowerworldIOConstants.RUN_MODE;
   	ComDataObject object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
@@ -369,12 +368,6 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       line.setDesiredStatus(status.equals(PowerworldIOConstants.TWO_TERMINAL_CLOSED));
     }
 
-    
-    
-    
-    
-    
-    
     return s;
   }
 

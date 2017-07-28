@@ -437,8 +437,6 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     else {
       System.out.println("Error getting powerworld shunt data: " + errorString);      
     }
-
-    
         
     // get all the lines
     ArrayList<ComDataObject> branches = branchObject.getArrayValue();
