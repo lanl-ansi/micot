@@ -548,7 +548,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    * @param areaObject
    * @param areaMap
    */
-  private void initThreeWindingTransformers(ComDataObject threeWindingObject, Map<Integer, Bus> busMap, Map<Transformer, ThreeWindingTransformer> transformerMap) {
+  private void initThreeWindingTransformers(Map<Integer, Bus> busMap, Map<Transformer, ThreeWindingTransformer> transformerMap) {
     PowerworldThreeWindingTransformerFactory transformerFactory = getThreeWindingTransformerFactory();
     
     String fields[] = PowerworldThreeWindingTransformerFactory.DATA_FIELDS; 
@@ -556,16 +556,25 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     ArrayList<ComDataObject> windingData = dataObject.getArrayValue();
     String errorString = windingData.get(0).getStringValue();
     if (!errorString.equals("")) {
-      System.err.println("Error getting powerworld three winding data: " + errorString); 
-      System.exit(-1);
+      if (!errorString.contains("GetParametersMultipleElement: No data returned for type3WXFormer and filter")) {      
+        System.err.println("Error getting powerworld three winding data: " + errorString); 
+      }
+      return;
     }
     
-    for (int i = 1; i < windingData.size(); ++i) {
-      ArrayList<ComDataObject> data = windingData.get(i).getArrayValue();  
-      int primary = Integer.parseInt(data.get(0).toString().trim());
-      int secondary = Integer.parseInt(data.get(1).toString().trim());
-      int tertiary = Integer.parseInt(data.get(2).toString().trim());
-      int star = Integer.parseInt(data.get(3).toString().trim());
+    ArrayList<ComDataObject> transformerData = windingData.get(1).getArrayValue();
+    int numTransformers = transformerData.get(0).getArrayValue().size();
+        
+    ArrayList<ComDataObject> primaries = transformerData.get(0).getArrayValue();
+    ArrayList<ComDataObject> secondaries = transformerData.get(1).getArrayValue();
+    ArrayList<ComDataObject> tertaries = transformerData.get(2).getArrayValue();
+    ArrayList<ComDataObject> stars = transformerData.get(3).getArrayValue();
+    
+    for (int i = 0; i < numTransformers; ++i) {
+      int primary = Integer.parseInt(primaries.get(i).getStringValue());
+      int secondary = Integer.parseInt(secondaries.get(i).getStringValue());
+      int tertiary = Integer.parseInt(tertaries.get(i).getStringValue());
+      int star = Integer.parseInt(stars.get(i).getStringValue());
       
       Bus primaryBus = busMap.get(primary);
       Bus secondaryBus = busMap.get(secondary);
@@ -577,7 +586,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
       ElectricPowerNode tertiaryNode = getNode(tertiaryBus);
       ElectricPowerNode starNode = getNode(starBus);
       
-      ThreeWindingTransformer transformer = transformerFactory.createTransformer(data);
+      ThreeWindingTransformer transformer = transformerFactory.createTransformer(transformerData, i);
       
       Set<Transformer> transformers = new HashSet<Transformer>();
       transformers.addAll(getTransformers(primaryNode, starNode));
@@ -712,7 +721,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     initZones(zoneObject, zoneMap);    
     
     // get all the three windings
-    initThreeWindingTransformers(threeWindingObject, busMap, transformerMap);    
+    initThreeWindingTransformers(busMap, transformerMap);    
     
     // set the MVA base
     setMVABase(mvaBase);

@@ -29,14 +29,18 @@ public class PowerworldThreeWindingTransformerFactory extends ThreeWindingTransf
 	 * @param line
 	 * @return
 	 */
-	protected ThreeWindingTransformer createTransformer(ArrayList<ComDataObject> data) {
-	  // this is something of a hack
-    int primary = Integer.parseInt(data.get(0).toString().trim());
-    int secondary = Integer.parseInt(data.get(1).toString().trim());
-    int tertiary = Integer.parseInt(data.get(2).toString().trim());
-    int star = Integer.parseInt(data.get(3).toString().trim());
-    String temp = data.get(4).toString();
-    String legacyid = temp.substring(1,temp.length());
+	protected ThreeWindingTransformer createTransformer(ArrayList<ComDataObject> transformerData, int record) {
+    ArrayList<ComDataObject> primaries = transformerData.get(0).getArrayValue();
+    ArrayList<ComDataObject> secondaries = transformerData.get(1).getArrayValue();
+    ArrayList<ComDataObject> tertaries = transformerData.get(2).getArrayValue();
+    ArrayList<ComDataObject> stars = transformerData.get(3).getArrayValue();
+    ArrayList<ComDataObject> ids = transformerData.get(4).getArrayValue();
+	  
+    int primary = Integer.parseInt(primaries.get(record).getStringValue());
+    int secondary = Integer.parseInt(secondaries.get(record).getStringValue());
+    int tertiary = Integer.parseInt(tertaries.get(record).getStringValue());
+    int star = Integer.parseInt(stars.get(record).getStringValue());
+    String legacyid = ids.get(record).getStringValue();
         
     // check to see if the area already exists
     ThreeWindingTransformer transformer = registerTransformer(primary, secondary, tertiary, star, legacyid);      	
