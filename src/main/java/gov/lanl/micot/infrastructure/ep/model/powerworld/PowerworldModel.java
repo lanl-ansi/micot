@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import gov.lanl.micot.infrastructure.ep.io.powerworld.PowerworldIOConstants;
 import gov.lanl.micot.infrastructure.ep.io.powerworld.PowerworldModelFile;
@@ -29,6 +31,7 @@ import gov.lanl.micot.infrastructure.ep.model.Line;
 import gov.lanl.micot.infrastructure.ep.model.Load;
 import gov.lanl.micot.infrastructure.ep.model.ShuntCapacitor;
 import gov.lanl.micot.infrastructure.ep.model.ShuntCapacitorSwitch;
+import gov.lanl.micot.infrastructure.ep.model.ThreeWindingTransformer;
 import gov.lanl.micot.infrastructure.ep.model.Transformer;
 import gov.lanl.micot.infrastructure.ep.model.TransformerTypeEnum;
 import gov.lanl.micot.infrastructure.ep.model.Zone;
@@ -63,72 +66,17 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
 	}
 	
 	/**
-	 * Fill in all the attributes of the implementation
-	 * @param opendss model
+	 * Initialize all the buses
+	 * @param busesObject
+	 * @param busMap
+	 * @param areas
+	 * @param zones
+	 * @param slacks
 	 */
-	private void init(ComObject powerWorldModel) {
-		this.powerWorldModel = powerWorldModel;
-		ComDataObject busesObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES, PowerworldIOConstants.BUS, "");
-    ComDataObject branchObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.BRANCH, "");
-    ComDataObject twoTerminalObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.DC_TWO_TERMINAL, "");
-    ComDataObject multiTerminalObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.DC_MULTI_TERMINAL, "");
-    ComDataObject voltageSourceObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.DC_VOLTAGE_SOURCE, "");    
-    ComDataObject genObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.GENERATOR, "");
-    ComDataObject areaObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES, PowerworldIOConstants.AREA, "");
-    ComDataObject zoneObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES, PowerworldIOConstants.ZONE, "");
-    ComDataObject loadObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.LOAD, "");
-    ComDataObject shuntObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.SHUNT, "");
-    ComDataObject dcBusesObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES, PowerworldIOConstants.DC_BUS, "");
-        
-    // get some system level data
-    String simFields[] = new String[]{PowerworldIOConstants.MVA_BASE}; 
-    String simValues[] = new String[] {""};        
-    ComDataObject simObject = powerWorldModel.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.SIM_SOLUTION_OPTIONS, simFields, simValues);
-    ArrayList<ComDataObject> simData = simObject.getArrayValue();
-    String simErrorString = simData.get(0).getStringValue();
-    if (!simErrorString.equals("")) {
-      System.err.println("Error getting powerworld simulator parameter data: " + simErrorString);                
-    }        
-    ArrayList<ComDataObject> sData = simData.get(1).getArrayValue();                       
-    String mvaBaseStr = sData.get(0).getStringValue();
-    double mvaBase = Double.parseDouble(mvaBaseStr);
-
-    setLineFactory(new PowerworldLineFactory());
-    setTransformerFactory(new PowerworldTransformerFactory());
-    setDCLineFactory(new PowerworldDCLineFactory());
-    setIntertieFactory(new PowerworldIntertieFactory());
-    setBusFactory(new PowerworldBusFactory());
-    setLoadFactory(new PowerworldLoadFactory());
-    setGeneratorFactory(new PowerworldGeneratorFactory());
-    setCapacitorFactory(new PowerworldShuntCapacitorFactory());
-    setShuntCapacitorSwitchFactory(new PowerworldShuntCapacitorSwitchFactory());
-    setBatteryFactory(new PowerworldBatteryFactory());
-    setControlAreaFactory(new PowerworldAreaFactory());
-    setZoneFactory(new PowerworldZoneFactory());
-    
+	private void initBuses(ComDataObject busesObject, Map<Integer,Bus> busMap, Map<Asset, String> areas, Map<Asset, String> zones, Map<Bus, String> slacks) {
     PowerworldBusFactory busFactory = getBusFactory();
-    PowerworldGeneratorFactory genFactory = getGeneratorFactory();
-    PowerworldLoadFactory loadFactory = getLoadFactory();
-    PowerworldShuntCapacitorFactory shuntFactory = getShuntCapacitorFactory();
-    PowerworldShuntCapacitorSwitchFactory switchedShuntFactory = getShuntCapacitorSwitchFactory();
-    PowerworldLineFactory lineFactory = getLineFactory();
-    PowerworldTransformerFactory transformerFactory = getTransformerFactory();
-    PowerworldDCLineFactory dcLineFactory = getDCLineFactory();
-
-    PowerworldAreaFactory areaFactory = getControlAreaFactory();
-    PowerworldZoneFactory zoneFactory = getZoneFactory();
-
-    Map<Integer,Bus> busMap = new HashMap<Integer,Bus>();   
-    Map<Asset, String> areas = new HashMap<Asset,String>();   
-    Map<Bus, String> slacks = new HashMap<Bus,String>();   
-    Map<Asset, String> zones = new HashMap<Asset,String>();
-    Map<Asset, Bus> regulated = new HashMap<Asset,Bus>();
-        
-    Map<Integer, ControlArea> areaMap = new HashMap<Integer,ControlArea>();
-    Map<Integer, Zone> zoneMap = new HashMap<Integer,Zone>();
-
-    // get all the buses
-    ArrayList<ComDataObject> buses = busesObject.getArrayValue();
+	  
+	  ArrayList<ComDataObject> buses = busesObject.getArrayValue();
     String errorString = buses.get(0).getStringValue();
     if (errorString.equals("")) {
       ArrayList<ComDataObject> data = buses.get(1).getArrayValue();
@@ -162,10 +110,20 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     else {
       System.err.println("Error getting powerworld bus data: " + errorString);      
     }
-    
-    // get all the dc buses
-    ArrayList<ComDataObject> dcBuses = dcBusesObject.getArrayValue();
-    errorString = dcBuses.get(0).getStringValue();
+	}
+	
+	/**
+	 * Initialize all the dc buses
+	 * @param dcBusesObject
+	 * @param busMap
+	 * @param areas
+	 * @param zones
+	 */
+	private void initDCBuses(ComDataObject dcBusesObject, Map<Integer,Bus> busMap, Map<Asset, String> areas, Map<Asset, String> zones) {
+	  PowerworldBusFactory busFactory = getBusFactory();
+	  
+	  ArrayList<ComDataObject> dcBuses = dcBusesObject.getArrayValue();
+    String errorString = dcBuses.get(0).getStringValue();
     if (errorString.equals("")) {
       ArrayList<ComDataObject> data = dcBuses.get(1).getArrayValue();
       ArrayList<Integer> ids = data.get(0).getIntArrayValue();
@@ -194,12 +152,20 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     else {
       System.err.println("Error getting powerworld dc bus data: " + errorString);      
     }
-    
-    
-    
-    // get all the DC voltage source lines
-    ArrayList<ComDataObject> voltageSourceDCLines = voltageSourceObject.getArrayValue();
-    errorString = voltageSourceDCLines.get(0).getStringValue();
+	}
+	
+	/**
+	 * Initialize the voltage source dc lines
+	 * @param voltageSourceObject
+	 * @param busMap
+	 * @param areas
+	 * @param zones
+	 */
+	private void initVoltageSourceDCLines(ComDataObject voltageSourceObject, Map<Integer,Bus> busMap, Map<Asset, String> areas, Map<Asset, String> zones) {
+	  PowerworldDCLineFactory dcLineFactory = getDCLineFactory();
+	  
+	  ArrayList<ComDataObject> voltageSourceDCLines = voltageSourceObject.getArrayValue();
+    String errorString = voltageSourceDCLines.get(0).getStringValue();
     if (errorString.equals("")) {
       ArrayList<ComDataObject> data = voltageSourceDCLines.get(1).getArrayValue();
       
@@ -236,11 +202,20 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     else {
       System.out.println("Error getting dc line voltage source data: " + errorString);      
     }
+	}
+	
+	/**
+	 * Get the multi terminal DC lines
+	 * @param multiTerminalObject
+	 * @param busMap
+	 * @param areas
+	 * @param zones
+	 */
+	private void initVoltageMultiTerminalDCLines(ComDataObject multiTerminalObject, Map<Integer,Bus> busMap, Map<Asset, String> areas, Map<Asset, String> zones) {
+	  PowerworldDCLineFactory dcLineFactory = getDCLineFactory();
 
-    
-    // get all the DC multi terminal lines
     ArrayList<ComDataObject> multiTerminalDCLines = multiTerminalObject.getArrayValue();
-    errorString = multiTerminalDCLines.get(0).getStringValue();
+    String errorString = multiTerminalDCLines.get(0).getStringValue();
     if (errorString.equals("")) {
       ArrayList<ComDataObject> data = multiTerminalDCLines.get(1).getArrayValue();
       ArrayList<Integer> fromids = data.get(0).getIntArrayValue();
@@ -277,12 +252,19 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     else {
       System.out.println("Error getting powerworld branch data: " + errorString);      
     }
-
-    
-    
-    // get all the DC two terminal lines
+	}
+	
+	/**
+	 * Initialize the two terminal DC lines
+	 * @param twoTerminalObject
+	 * @param busMap
+	 * @param areas
+	 * @param zones
+	 */
+	private void initVoltageTwoTerminalDCLines(ComDataObject twoTerminalObject, Map<Integer,Bus> busMap, Map<Asset, String> areas, Map<Asset, String> zones) {
+    PowerworldDCLineFactory dcLineFactory = getDCLineFactory();
     ArrayList<ComDataObject> twoTerminalDCLines = twoTerminalObject.getArrayValue();
-    errorString = twoTerminalDCLines.get(0).getStringValue();
+    String errorString = twoTerminalDCLines.get(0).getStringValue();
     if (errorString.equals("")) {
       ArrayList<ComDataObject> data = twoTerminalDCLines.get(1).getArrayValue();
       ArrayList<Integer> fromids = data.get(0).getIntArrayValue();
@@ -319,51 +301,70 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     else {
       System.out.println("Error getting powerworld dc two terminal data: " + errorString);      
     }
-    
-    // get all the generators
+	}
+	
+	/**
+	 * Initalize the generators
+	 * @param genObject
+	 * @param busMap
+	 * @param areas
+	 * @param zones
+	 * @param regulated
+	 */
+  private void initGenerators(ComDataObject genObject, Map<Integer, Bus> busMap, Map<Asset, String> areas, Map<Asset, String> zones, Map<Asset, Bus> regulated) {
+    PowerworldGeneratorFactory genFactory = getGeneratorFactory();
+
     ArrayList<ComDataObject> generators = genObject.getArrayValue();
-    errorString = generators.get(0).getStringValue();
+    String errorString = generators.get(0).getStringValue();
     if (errorString.equals("")) {
       ArrayList<ComDataObject> data = generators.get(1).getArrayValue();
       ArrayList<Integer> busids = data.get(0).getIntArrayValue();
       ArrayList<String> genids = data.get(1).getStringArrayValue();
-            
+
       for (int i = 0; i < busids.size(); ++i) {
         int busid = busids.get(i);
         String genid = genids.get(i);
         Bus bus = busMap.get(busid);
-        
-        Generator generator = genFactory.createGenerator(powerWorldModel, bus, new Pair<Integer,String>(busid, genid));
-        addGenerator(generator,bus);
 
-        String fields[] = new String[]{PowerworldIOConstants.BUS_NUM, PowerworldIOConstants.GEN_NUM, PowerworldIOConstants.GEN_AREA, PowerworldIOConstants.GEN_ZONE, PowerworldIOConstants.GEN_MVA_BASE, PowerworldIOConstants.REMOTE_BUS}; 
-        String values[] = new String[] {busid+"", genid+"", "","","",""};        
+        Generator generator = genFactory.createGenerator(powerWorldModel, bus, new Pair<Integer, String>(busid, genid));
+        addGenerator(generator, bus);
+
+        String fields[] = new String[] { PowerworldIOConstants.BUS_NUM, PowerworldIOConstants.GEN_NUM, PowerworldIOConstants.GEN_AREA, PowerworldIOConstants.GEN_ZONE, PowerworldIOConstants.GEN_MVA_BASE, PowerworldIOConstants.REMOTE_BUS };
+        String values[] = new String[] { busid + "", genid + "", "", "", "", "" };
         ComDataObject dataObject = powerWorldModel.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.GENERATOR, fields, values);
         ArrayList<ComDataObject> genData = dataObject.getArrayValue();
         String errorString2 = genData.get(0).getStringValue();
         if (!errorString2.equals("")) {
-          System.err.println("Error getting powerworld generator data: " + errorString2);                
-        }        
-        ArrayList<ComDataObject> bData = genData.get(1).getArrayValue();                       
+          System.err.println("Error getting powerworld generator data: " + errorString2);
+        }
+        ArrayList<ComDataObject> bData = genData.get(1).getArrayValue();
         String area = bData.get(2).getStringValue();
         String zone = bData.get(3).getStringValue();
         String remote = bData.get(5).getStringValue();
-        
+
         int remoteId = Integer.parseInt(remote.trim());
-        
+
         regulated.put(bus, busMap.get(remoteId));
         areas.put(generator, area);
-        zones.put(generator, zone);        
-      }      
+        zones.put(generator, zone);
+      }
     }
     else {
-      System.out.println("Error getting powerworld generator data: " + errorString);      
+      System.out.println("Error getting powerworld generator data: " + errorString);
     }
+  }
 
-
-    // get all the loads
+  /**
+   * Initialize the loads
+   * @param loadObject
+   * @param busMap
+   * @param areas
+   * @param zones
+   */
+  private void initLoads(ComDataObject loadObject, Map<Integer, Bus> busMap, Map<Asset, String> areas, Map<Asset, String> zones) {
+    PowerworldLoadFactory loadFactory = getLoadFactory();
     ArrayList<ComDataObject> loads = loadObject.getArrayValue();
-    errorString = loads.get(0).getStringValue();
+    String errorString = loads.get(0).getStringValue();
     if (errorString.equals("")) {
       ArrayList<ComDataObject> data = loads.get(1).getArrayValue();
       ArrayList<Integer> busids = data.get(0).getIntArrayValue();
@@ -395,9 +396,21 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     else {
       System.out.println("Error getting powerworld load data: " + errorString);      
     }
+  }
+
+  /**
+   * Initialize the shunts
+   * @param shuntObject
+   * @param busMap
+   * @param areas
+   * @param zones
+   */
+  private void initShunts(ComDataObject shuntObject, Map<Integer, Bus> busMap, Map<Asset, String> areas, Map<Asset, String> zones) {
+    PowerworldShuntCapacitorFactory shuntFactory = getShuntCapacitorFactory();
+    PowerworldShuntCapacitorSwitchFactory switchedShuntFactory = getShuntCapacitorSwitchFactory();
 
     ArrayList<ComDataObject> shunts = shuntObject.getArrayValue();
-    errorString = shunts.get(0).getStringValue();
+    String errorString = shunts.get(0).getStringValue();
     if (errorString.equals("")) {
       ArrayList<ComDataObject> data = shunts.get(1).getArrayValue();
       ArrayList<Integer> busids   = data.get(0).getIntArrayValue();
@@ -437,10 +450,22 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     else {
       System.out.println("Error getting powerworld shunt data: " + errorString);      
     }
-        
-    // get all the lines
+  }
+  
+  /**
+   * Initialize the branches from the object data
+   * @param branchObject
+   * @param busMap
+   * @param areas
+   * @param zones
+   * @param regulated
+   */
+  private void initBranches(ComDataObject branchObject, Map<Integer, Bus> busMap, Map<Asset, String> areas, Map<Asset, String> zones, Map<Asset, Bus> regulated) {
+    PowerworldLineFactory lineFactory = getLineFactory();
+    PowerworldTransformerFactory transformerFactory = getTransformerFactory();
+    
     ArrayList<ComDataObject> branches = branchObject.getArrayValue();
-    errorString = branches.get(0).getStringValue();
+    String errorString = branches.get(0).getStringValue();
     if (errorString.equals("")) {
       ArrayList<ComDataObject> data = branches.get(1).getArrayValue();
       ArrayList<Integer> fromids = data.get(0).getIntArrayValue();
@@ -491,21 +516,18 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     else {
       System.out.println("Error getting powerworld branch data: " + errorString);      
     }
+  }
+  
+  /**
+   * Initialize the areas
+   * @param areaObject
+   * @param areaMap
+   */
+  private void initAreas(ComDataObject areaObject, Map<Integer, ControlArea> areaMap) {
+    PowerworldAreaFactory areaFactory = getControlAreaFactory();
 
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // get all the areas
     ArrayList<ComDataObject> as = areaObject.getArrayValue();
-    errorString = as.get(0).getStringValue();
+    String errorString = as.get(0).getStringValue();
     if (errorString.equals("")) {
       ArrayList<ComDataObject> data = as.get(1).getArrayValue();
       ArrayList<Integer> ids = data.get(0).getIntArrayValue();
@@ -518,12 +540,74 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     }
     else {
       System.out.println("Error getting powerworld area data: " + errorString);      
-    }
-
+    }    
+  }
     
-    // get all the zones
+  /**
+   * Initialize the areas
+   * @param areaObject
+   * @param areaMap
+   */
+  private void initThreeWindingTransformers(ComDataObject threeWindingObject, Map<Integer, Bus> busMap, Map<Transformer, ThreeWindingTransformer> transformerMap) {
+    PowerworldThreeWindingTransformerFactory transformerFactory = getThreeWindingTransformerFactory();
+    
+    String fields[] = PowerworldThreeWindingTransformerFactory.DATA_FIELDS; 
+    ComDataObject dataObject = powerWorldModel.callData(PowerworldIOConstants.GET_PARAMETERS_MULTIPLE_ELEMENT, PowerworldIOConstants.THREE_WINDING, fields, " ");    
+    ArrayList<ComDataObject> windingData = dataObject.getArrayValue();
+    String errorString = windingData.get(0).getStringValue();
+    if (!errorString.equals("")) {
+      System.err.println("Error getting powerworld three winding data: " + errorString); 
+      System.exit(-1);
+    }
+    
+    for (int i = 1; i < windingData.size(); ++i) {
+      ArrayList<ComDataObject> data = windingData.get(i).getArrayValue();  
+      int primary = Integer.parseInt(data.get(0).toString().trim());
+      int secondary = Integer.parseInt(data.get(1).toString().trim());
+      int tertiary = Integer.parseInt(data.get(2).toString().trim());
+      int star = Integer.parseInt(data.get(3).toString().trim());
+      
+      Bus primaryBus = busMap.get(primary);
+      Bus secondaryBus = busMap.get(secondary);
+      Bus tertiaryBus = busMap.get(tertiary);
+      Bus starBus = busMap.get(star);
+      
+      ElectricPowerNode primaryNode = getNode(primaryBus);
+      ElectricPowerNode secondaryNode = getNode(secondaryBus);
+      ElectricPowerNode tertiaryNode = getNode(tertiaryBus);
+      ElectricPowerNode starNode = getNode(starBus);
+      
+      ThreeWindingTransformer transformer = transformerFactory.createTransformer(data);
+      
+      Set<Transformer> transformers = new HashSet<Transformer>();
+      transformers.addAll(getTransformers(primaryNode, starNode));
+      transformers.addAll(getTransformers(secondaryNode, starNode));
+      transformers.addAll(getTransformers(tertiaryNode, starNode));
+
+      for (Transformer tr : transformers) {
+        transformerMap.put(tr, transformer);
+      }
+      
+      Collection<ElectricPowerNode> nodes = new ArrayList<ElectricPowerNode>();
+      nodes.add(primaryNode);
+      nodes.add(secondaryNode);
+      nodes.add(tertiaryNode);
+      nodes.add(starNode);
+      
+      addThreeWindingTransformer(transformer, nodes);      
+    }
+  }
+    
+  /**
+   * Initialize the zones
+   * @param zoneObject
+   * @param zoneMap
+   */
+  private void initZones(ComDataObject zoneObject, Map<Integer, Zone> zoneMap) {
+    PowerworldZoneFactory zoneFactory = getZoneFactory();
+
     ArrayList<ComDataObject> zs = zoneObject.getArrayValue();
-    errorString = zs.get(0).getStringValue();
+    String errorString = zs.get(0).getStringValue();
     if (errorString.equals("")) {
       ArrayList<ComDataObject> data = zs.get(1).getArrayValue();
       ArrayList<Integer> ids = data.get(0).getIntArrayValue();
@@ -537,7 +621,100 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     else {
       System.out.println("Error getting powerworld zone data: " + errorString);      
     }
+  }
+  
+	/**
+	 * Fill in all the attributes of the implementation
+	 * @param opendss model
+	 */
+	private void init(ComObject powerWorldModel) {
+		this.powerWorldModel = powerWorldModel;
+		ComDataObject busesObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES, PowerworldIOConstants.BUS, "");
+    ComDataObject branchObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.BRANCH, "");
+    ComDataObject twoTerminalObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.DC_TWO_TERMINAL, "");
+    ComDataObject multiTerminalObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.DC_MULTI_TERMINAL, "");
+    ComDataObject voltageSourceObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.DC_VOLTAGE_SOURCE, "");    
+    ComDataObject genObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.GENERATOR, "");
+    ComDataObject areaObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES, PowerworldIOConstants.AREA, "");
+    ComDataObject zoneObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES, PowerworldIOConstants.ZONE, "");
+    ComDataObject loadObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.LOAD, "");
+    ComDataObject shuntObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.SHUNT, "");
+    ComDataObject threeWindingObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES_AS_VARIANT_STRINGS, PowerworldIOConstants.THREE_WINDING, "");    
+    ComDataObject dcBusesObject = powerWorldModel.callData(PowerworldIOConstants.LIST_OF_DEVICES, PowerworldIOConstants.DC_BUS, "");
+        
+    // get some system level data
+    String simFields[] = new String[]{PowerworldIOConstants.MVA_BASE}; 
+    String simValues[] = new String[] {""};        
+    ComDataObject simObject = powerWorldModel.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.SIM_SOLUTION_OPTIONS, simFields, simValues);
+    ArrayList<ComDataObject> simData = simObject.getArrayValue();
+    String simErrorString = simData.get(0).getStringValue();
+    if (!simErrorString.equals("")) {
+      System.err.println("Error getting powerworld simulator parameter data: " + simErrorString);                
+    }        
+    ArrayList<ComDataObject> sData = simData.get(1).getArrayValue();                       
+    String mvaBaseStr = sData.get(0).getStringValue();
+    double mvaBase = Double.parseDouble(mvaBaseStr);
+
+    setLineFactory(new PowerworldLineFactory());
+    setTransformerFactory(new PowerworldTransformerFactory());
+    setDCLineFactory(new PowerworldDCLineFactory());
+    setIntertieFactory(new PowerworldIntertieFactory());
+    setBusFactory(new PowerworldBusFactory());
+    setLoadFactory(new PowerworldLoadFactory());
+    setGeneratorFactory(new PowerworldGeneratorFactory());
+    setCapacitorFactory(new PowerworldShuntCapacitorFactory());
+    setShuntCapacitorSwitchFactory(new PowerworldShuntCapacitorSwitchFactory());
+    setBatteryFactory(new PowerworldBatteryFactory());
+    setControlAreaFactory(new PowerworldAreaFactory());
+    setZoneFactory(new PowerworldZoneFactory());
+    setThreeWindingTransformerFactory(new PowerworldThreeWindingTransformerFactory());
     
+    Map<Integer,Bus> busMap = new HashMap<Integer,Bus>();   
+    Map<Asset, String> areas = new HashMap<Asset,String>();   
+    Map<Bus, String> slacks = new HashMap<Bus,String>();   
+    Map<Asset, String> zones = new HashMap<Asset,String>();
+    Map<Asset, Bus> regulated = new HashMap<Asset,Bus>();        
+    Map<Integer, ControlArea> areaMap = new HashMap<Integer,ControlArea>();
+    Map<Integer, Zone> zoneMap = new HashMap<Integer,Zone>();
+    Map<Transformer, ThreeWindingTransformer> transformerMap = new HashMap<Transformer, ThreeWindingTransformer>();
+
+    // get all the buses
+    initBuses(busesObject, busMap, areas, zones, slacks);
+
+    // get all the dc buses
+    initDCBuses(dcBusesObject, busMap, areas, zones);
+
+    // get all the DC voltage source lines
+    initVoltageSourceDCLines(voltageSourceObject, busMap, areas, zones);
+    
+    // get all the DC multi terminal lines
+    initVoltageMultiTerminalDCLines(multiTerminalObject, busMap, areas, zones);
+    
+    // get all the DC two terminal lines
+    initVoltageTwoTerminalDCLines(twoTerminalObject, busMap, areas, zones);
+    
+    // get all the generators
+    initGenerators(genObject, busMap, areas, zones, regulated);
+
+    // get all the loads
+    initLoads(loadObject, busMap, areas, zones);
+
+    // get all the shunts
+    initShunts(shuntObject, busMap, areas, zones);
+
+    // get all the lines
+    initBranches(branchObject, busMap, areas, zones, regulated);
+
+    // get all the areas
+    initAreas(areaObject, areaMap);
+
+    // get all the zones
+    initZones(zoneObject, zoneMap);    
+    
+    // get all the three windings
+    initThreeWindingTransformers(threeWindingObject, busMap, transformerMap);    
+    
+    // set the MVA base
     setMVABase(mvaBase);
     
     for (Asset asset : areas.keySet()) {
@@ -551,7 +728,11 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     
     for (Asset asset : regulated.keySet()) {
       setControlBus(asset, regulated.get(asset));
-    }    
+    }
+    
+    for (Transformer transformer : transformerMap.keySet()) {
+      setThreeWindingTransformer(transformer, transformerMap.get(transformer));
+    }
 	}
 
 	@Override
@@ -563,7 +744,12 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
   public PowerworldAreaFactory getControlAreaFactory() {
     return (PowerworldAreaFactory) super.getControlAreaFactory();
   }	
-	
+
+	@Override
+	public PowerworldThreeWindingTransformerFactory getThreeWindingTransformerFactory() {
+	  return (PowerworldThreeWindingTransformerFactory) super.getThreeWindingTransformerFactory();
+	} 
+
 	@Override
 	public PowerworldBusFactory getBusFactory() {
 		return (PowerworldBusFactory) super.getBusFactory();

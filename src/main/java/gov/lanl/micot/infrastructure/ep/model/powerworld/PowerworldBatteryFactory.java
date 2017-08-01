@@ -10,16 +10,8 @@ import gov.lanl.micot.infrastructure.ep.model.BatteryFactory;
  */
 public class PowerworldBatteryFactory extends BatteryFactory {
 
-//  private static PowerworldBatteryFactory INSTANCE           = null;
   private static final String LEGACY_TAG = "Powerworld";
   
-  //public synchronized static PowerworldBatteryFactory getInstance() {
-    //if (INSTANCE == null) {
-      //INSTANCE = new PowerworldBatteryFactory();
-    //}
-    //return INSTANCE;
- // }
-
   /**
    * Singleton constructor
    */

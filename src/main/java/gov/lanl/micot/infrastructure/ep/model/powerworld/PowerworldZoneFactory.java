@@ -14,16 +14,8 @@ import java.util.ArrayList;
  */
 public class PowerworldZoneFactory extends ZoneFactory {
 
-//	private static PowerworldZoneFactory instance      = null;
 	private static final String LEGACY_TAG = "POWERWORLD";
-		
-	//public static PowerworldZoneFactory getInstance() {
-		//if (instance == null) {
-			//instance = new PowerworldZoneFactory();
-		//}
-		//return instance;
-	//}
-	
+			
 	/**
 	 * Constructor
 	 */

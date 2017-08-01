@@ -16,16 +16,7 @@ import gov.lanl.micot.util.io.dcom.ComObject;
  */
 public class PowerworldShuntCapacitorSwitchFactory extends ShuntCapacitorSwitchFactory {
 
-//	private static PowerworldShuntCapacitorSwitchFactory INSTANCE = null;
 	private static final String LEGACY_TAG = "POWERWORLD";
-
-	
-	//public synchronized static PowerworldShuntCapacitorSwitchFactory getInstance() {
-		//if (INSTANCE == null) {
-			//INSTANCE = new PowerworldShuntCapacitorSwitchFactory();
-		//}
-		//return INSTANCE;
-	//}
 	
 	/**
 	 * Singleton constructor
@@ -81,8 +72,6 @@ public class PowerworldShuntCapacitorSwitchFactory extends ShuntCapacitorSwitchF
     shunt.setRealCompensation(mw);
     shunt.setReactiveCompensation(mvar);
 
-    //System.out.println(bus + " " + mw + " " + mvar + " " + maxMW + " " + minMW + " " + maxMVar + " " + minMVar);
-    
     return shunt;    
   }
   

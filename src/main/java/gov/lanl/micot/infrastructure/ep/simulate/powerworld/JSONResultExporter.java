@@ -1,6 +1,8 @@
 package gov.lanl.micot.infrastructure.ep.simulate.powerworld;
 
 import java.io.OutputStream;
+import java.util.Collection;
+import java.util.Iterator;
 
 import gov.lanl.micot.infrastructure.ep.model.Bus;
 import gov.lanl.micot.infrastructure.ep.model.DCMultiTerminalLine;
@@ -8,11 +10,13 @@ import gov.lanl.micot.infrastructure.ep.model.DCTwoTerminalLine;
 import gov.lanl.micot.infrastructure.ep.model.DCVoltageSourceLine;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
+import gov.lanl.micot.infrastructure.ep.model.ElectricPowerNode;
 import gov.lanl.micot.infrastructure.ep.model.Generator;
 import gov.lanl.micot.infrastructure.ep.model.Line;
 import gov.lanl.micot.infrastructure.ep.model.Load;
 import gov.lanl.micot.infrastructure.ep.model.ShuntCapacitor;
 import gov.lanl.micot.infrastructure.ep.model.ShuntCapacitorSwitch;
+import gov.lanl.micot.infrastructure.ep.model.ThreeWindingTransformer;
 import gov.lanl.micot.infrastructure.ep.model.Transformer;
 import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldModelConstants;
 import gov.lanl.micot.infrastructure.simulate.Simulator.SimulatorSolveState;
@@ -131,7 +135,6 @@ public class JSONResultExporter {
       loadsBuilder = loadsBuilder.add(loadBuilder);
     }
     mainBuilder = mainBuilder.add("load", loadsBuilder);
-
     
     // get the transformer results
     JSONArrayBuilder transformersBuilder = json.createArrayBuilder();
@@ -151,10 +154,37 @@ public class JSONResultExporter {
       transformerBuilder = transformerBuilder.add("status", connection.getActualStatus() && connection.getDesiredStatus());
       transformerBuilder = transformerBuilder.add("rating", connection.getCapacityRating().equals(Double.POSITIVE_INFINITY) ? "infinity" : connection.getCapacityRating());
       transformerBuilder = transformerBuilder.add("bus_i", bus1.toString());
-      transformerBuilder = transformerBuilder.add("bus_j", bus2.toString());      
+      transformerBuilder = transformerBuilder.add("bus_j", bus2.toString()); 
+      
+      ThreeWindingTransformer threeWindingTransformer = model.getThreeWindingTransformer(connection);
+      if (threeWindingTransformer != null) {
+        transformerBuilder = transformerBuilder.add("3_winding_i", threeWindingTransformer.toString());         
+      }
+      
       transformersBuilder = transformersBuilder.add(transformerBuilder);
     }
     mainBuilder = mainBuilder.add("transformer", transformersBuilder);    
+
+    // get the 3 winding transformer results
+    JSONArrayBuilder threeWindingBuilder = json.createArrayBuilder();
+    for (ThreeWindingTransformer connection : model.getThreeWindingTransformers()) {
+      JSONObjectBuilder transformerBuilder = json.createObjectBuilder();
+      Collection<ElectricPowerNode> nodes = model.getNodes(connection);
+      Iterator<ElectricPowerNode> it = nodes.iterator();
+      
+      Bus primary = it.next().getBus();
+      Bus secondary = it.next().getBus();
+      Bus tertiary = it.next().getBus();
+      Bus star = it.next().getBus();
+
+      transformerBuilder = transformerBuilder.add("3_winding_i", connection.toString());
+      transformerBuilder = transformerBuilder.add("bus_primary", primary.toString());
+      transformerBuilder = transformerBuilder.add("bus_secondary", secondary.toString()); 
+      transformerBuilder = transformerBuilder.add("bus_tertiary", tertiary.toString()); 
+      transformerBuilder = transformerBuilder.add("bus_star", star.toString());       
+      transformersBuilder = transformersBuilder.add(transformerBuilder);
+    }
+    mainBuilder = mainBuilder.add("3_winding_transformer", transformersBuilder);    
     
     // get the fixed shunt results
     JSONArrayBuilder shuntsBuilder = json.createArrayBuilder();
@@ -169,8 +199,7 @@ public class JSONResultExporter {
       shuntsBuilder = shuntsBuilder.add(shuntBuilder);
     }
     mainBuilder = mainBuilder.add("fixed_shunt", shuntsBuilder);
-        
-    
+            
     // get the switched shunt results
     JSONArrayBuilder switchedShuntsBuilder = json.createArrayBuilder();
     for (ShuntCapacitorSwitch shunt : model.getShuntCapacitorSwitches()) {

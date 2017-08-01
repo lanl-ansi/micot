@@ -83,9 +83,10 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
   
   private Map<ControlArea, Bus>                                                          areaSlackBuses     = null;
   
-  /**
-   * This is a map that says which asset controls a bus
-   */
+  private Map<ThreeWindingTransformer, Collection<ElectricPowerNode>>                    threeWindingTransformers    = null;
+
+  private Map<Transformer,ThreeWindingTransformer>                                       transformerSets = null;
+  
   private Map<Asset, Bus>                                                                controlBuses       = null;
   
   private BatteryFactory batteryFactory = null;
@@ -111,6 +112,8 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
   private ZoneFactory zoneFactory = null;
   
   private DCLineFactory dcLineFactory = null;
+  
+  private ThreeWindingTransformerFactory threeWindingTransformerFactory = null;
         
   /**
    * Constructor
@@ -148,6 +151,7 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     batteries = new TreeMap<Battery, ElectricPowerNode>();
     loads = new TreeMap<Load, ElectricPowerNode>();
     controlAreas = new TreeSet<ControlArea>();
+    threeWindingTransformers = new TreeMap<ThreeWindingTransformer, Collection<ElectricPowerNode>>();
     zones = new TreeSet<Zone>();
     nodes = new TreeSet<ElectricPowerNode>();
     isSolved = true;
@@ -160,6 +164,7 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     nonMeteredAreas = new LinkedHashMap<Intertie, ControlArea>();
     areaSlackBuses = new LinkedHashMap<ControlArea, Bus>();
     controlBuses = new LinkedHashMap<Asset, Bus>();
+    transformerSets = new LinkedHashMap<Transformer, ThreeWindingTransformer>();
   }
 
   @Override
@@ -1009,6 +1014,16 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
   public Collection<? extends ControlArea> getControlAreas() {
     return controlAreas;
   }
+
+  @Override
+  public Collection<? extends ThreeWindingTransformer> getThreeWindingTransformers() {
+    return threeWindingTransformers.keySet();
+  }
+  
+  @Override
+  public Collection<ElectricPowerNode> getNodes(ThreeWindingTransformer transformer) {
+    return threeWindingTransformers.get(transformer);
+  }
   
   @Override
   public Collection<? extends Zone> getZones() {
@@ -1435,6 +1450,7 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     Map<Bus,Bus> oldToNew = new HashMap<Bus,Bus>();
     Map<Intertie,Intertie> oldToNewIntertie = new HashMap<Intertie,Intertie>();
     Map<ControlArea,ControlArea> oldToNewArea = new HashMap<ControlArea,ControlArea>();
+    Map<ThreeWindingTransformer,ThreeWindingTransformer> oldToNewTransformer = new HashMap<ThreeWindingTransformer,ThreeWindingTransformer>();    
     Map<Zone,Zone> oldToNewZone = new HashMap<Zone,Zone>();
     Map<Asset,Asset> oldToNewAssets = new HashMap<Asset,Asset>();
     
@@ -1515,6 +1531,19 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
       oldToNewArea.put(area, newArea);
     }
     
+    for (ThreeWindingTransformer transformer : getThreeWindingTransformers()) {
+      ThreeWindingTransformer newTransformer = transformer.clone();
+      ArrayList<ElectricPowerNode> nodes = new ArrayList<ElectricPowerNode>();
+   
+      Collection<ElectricPowerNode> oldNodes = getNodes(transformer);
+      for (ElectricPowerNode node : oldNodes) {
+        nodes.add(newModel.getNode(oldToNew.get(node.getBus())));
+      }
+      
+      newModel.addThreeWindingTransformer(newTransformer,nodes);
+      oldToNewTransformer.put(transformer, newTransformer);
+    }
+    
     for (Zone zone : getZones()) {
       Zone newZone = zone.clone();
       newModel.addZone(newZone);
@@ -1527,6 +1556,10 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
       newModel.setControlArea(oldToNewAssets.get(asset), oldToNewArea.get(assetAreas.get(asset)));
     }
     
+    for (Transformer transformer : transformerSets.keySet()) {
+      newModel.setThreeWindingTransformer((Transformer)oldToNewAssets.get(transformer), oldToNewTransformer.get(transformerSets.get(transformer)));
+    }
+   
     for (Asset asset : assetZones.keySet()) {
       newModel.setZone(oldToNewAssets.get(asset), oldToNewZone.get(assetZones.get(asset)));
     }
@@ -1550,6 +1583,7 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     newModel.setBatteryFactory(getBatteryFactory());
     newModel.setBusFactory(getBusFactory());
     newModel.setControlAreaFactory(getControlAreaFactory());
+    newModel.setThreeWindingTransformerFactory(getThreeWindingTransformerFactory());    
     newModel.setGeneratorFactory(getGeneratorFactory());
     newModel.setIntertieFactory(getIntertieFactory());
     newModel.setLineFactory(getLineFactory());
@@ -1567,6 +1601,12 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
   public void addArea(ControlArea area) {
     controlAreas.add(area);
     addAsset(area);
+  }
+  
+  @Override
+  public void addThreeWindingTransformer(ThreeWindingTransformer transformer, Collection<ElectricPowerNode> nodes) {
+    threeWindingTransformers.put(transformer,nodes);
+    addAsset(transformer);
   }
 
   @Override
@@ -1600,6 +1640,11 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
   public ControlArea getControlArea(Asset asset) {
     return assetAreas.get(asset);
   }
+
+  @Override
+  public ThreeWindingTransformer getThreeWindingTransformer(Transformer transformer) {
+    return transformerSets.get(transformer);
+  }
   
   @Override 
   public Zone getZone(Asset asset) {
@@ -1624,6 +1669,11 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
   @Override
   public void setControlArea(Asset asset, ControlArea area) {
     assetAreas.put(asset, area);
+  }
+  
+  @Override
+  public void setThreeWindingTransformer(Transformer transformer, ThreeWindingTransformer three) {
+    transformerSets.put(transformer, three);
   }
   
   @Override 
@@ -1710,7 +1760,15 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
   protected Map<Asset,ControlArea> getAssetAreas() {
     return assetAreas;
   }
-  
+ 
+  /**
+   * Get the three winding transformer stes
+   * @return
+   */
+  protected Map<Transformer,ThreeWindingTransformer> getTransformerWindingSets() {
+    return transformerSets;
+  }
+   
   /**
    * Get the asset zones
    * @return
@@ -1809,6 +1867,11 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     return zoneFactory;
   }
   
+  @Override
+  public ThreeWindingTransformerFactory getThreeWindingTransformerFactory() {
+    return threeWindingTransformerFactory;
+  }
+  
   /**
    * Set the battery factory
    * @param batteryFactory
@@ -1831,6 +1894,14 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
    */
   protected void setControlAreaFactory(ControlAreaFactory areaFactory) {
     this.areaFactory = areaFactory;
+  }
+
+  /**
+   * Set the three winding transformer factory
+   * @param areaFactory
+   */
+  protected void setThreeWindingTransformerFactory(ThreeWindingTransformerFactory threeWindingTransformerFactory) {
+    this.threeWindingTransformerFactory = threeWindingTransformerFactory;
   }
   
   /**

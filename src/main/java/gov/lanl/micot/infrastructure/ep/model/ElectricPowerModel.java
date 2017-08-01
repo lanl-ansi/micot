@@ -438,13 +438,18 @@ public interface ElectricPowerModel extends Model, Cloneable {
   @Override
   public ElectricPowerNode getSecondNode(Edge edge);
 
-  
 	/**
 	 * Get a set of control areas
 	 * @return
 	 */
 	public Collection<? extends ControlArea> getControlAreas();
 
+	/**
+   * Get a set of three winding transformers
+   * @return
+   */
+  public Collection<? extends ThreeWindingTransformer> getThreeWindingTransformers();
+	
 	 /**
    * Get a set of xones
    * @return
@@ -456,7 +461,20 @@ public interface ElectricPowerModel extends Model, Cloneable {
 	 * @param area
 	 */
   public void addArea(ControlArea area);
+  
+  /**
+   * Add a three winding transformer
+   * @param transformer
+   */
+  public void addThreeWindingTransformer(ThreeWindingTransformer transformer, Collection<ElectricPowerNode> nodes);
 
+  /**
+   * Get the nodes of a three winding transformer
+   * @param transformer
+   * @return
+   */
+  public Collection<ElectricPowerNode> getNodes(ThreeWindingTransformer transformer);
+  
   /**
    * Add a zone
    * @param area
@@ -495,6 +513,13 @@ public interface ElectricPowerModel extends Model, Cloneable {
    * @return
    */
   public ControlArea getControlArea(Asset asset);
+
+  /**
+   * Get the three winding transformer of a two winding transformer
+   * @param transformer
+   * @return
+   */
+  public ThreeWindingTransformer getThreeWindingTransformer(Transformer transformer);
   
   /**
    * Get the zone associated with an asset
@@ -530,6 +555,13 @@ public interface ElectricPowerModel extends Model, Cloneable {
    * @param area
    */
   public void setControlArea(Asset asset, ControlArea area);
+  
+  /**
+   * Set the three winding transformer
+   * @param transformer
+   * @param three
+   */
+  public void setThreeWindingTransformer(Transformer transformer, ThreeWindingTransformer three);
   
   /**
    * Set the zone of the asset
@@ -583,6 +615,12 @@ public interface ElectricPowerModel extends Model, Cloneable {
    * @return
    */
   public ZoneFactory getZoneFactory();
+  
+  /**
+   * Get the three winding transformer
+   * @return
+   */
+  public ThreeWindingTransformerFactory getThreeWindingTransformerFactory();
 }
 
 

@@ -17,6 +17,7 @@ public class PowerworldIOConstants {
   public    static final String GET_FIELD_LIST                     = "GetFieldList";
   public    static final String LIST_OF_DEVICES_AS_VARIANT_STRINGS = "ListOfDevicesAsVariantStrings";
   public    static final String GET_PARAMETERS_SINGLE_ELEMENT      = "GetParametersSingleElement";
+  public    static final String GET_PARAMETERS_MULTIPLE_ELEMENT    = "GetParametersMultipleElement";
   public    static final String RUN_SCRIPT_COMMAND                 = "RunScriptCommand";
   public    static final String CHANGE_PARAMETERS_SINGLE_ELEMENT   = "ChangeParametersSingleElement";
     
@@ -32,6 +33,7 @@ public class PowerworldIOConstants {
   public    static final String DC_VOLTAGE_SOURCE = "VSCDCLine";
   public    static final String DC_MULTI_TERMINAL = "MTDCConverter";
   public    static final String DC_BUS            = "MTDCBus";
+  public    static final String THREE_WINDING     = "3WXFormer";
   
   public    static final String SIM_SOLUTION_OPTIONS = "Sim_Solution_Options";
 
@@ -126,6 +128,13 @@ public class PowerworldIOConstants {
   public static final String SHUNT_OPEN            = "open";
   public static final String SHUNT_MVAR            = "pwSSNMVR";
   public static final String SHUNT_MW              = "pwSSNMW";
+  
+  // three winding fields
+  public static final String THREE_WINDING_PRIMARY_BUS_NUM           = "pwBusNum3W";
+  public static final String THREE_WINDING_SECONDARY_BUS_NUM         = "pwBusNum3W:1";
+  public static final String THREE_WINDING_TERTIARY_BUS_NUM          = "pwBusNum3W:2";
+  public static final String THREE_WINDING_STAR_BUS_NUM              = "pwBusNum3W:3";
+  public static final String THREE_WINDING_CIRCUIT_NUM               = "pwLineCircuit";
     
   // branch fields
   public static final String BRANCH_TYPE               = "pwBranchDeviceType";

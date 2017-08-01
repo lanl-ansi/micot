@@ -24,14 +24,6 @@ public class ControlAreaImpl extends ComponentImpl implements ControlArea {
     setAttribute(ControlArea.ASSET_ID_KEY, assetId);
   }
   
-  /**
-   * Constructor
-   * @param bus
-   */
-//  public ControlAreaImpl(ControlArea area) {
-  //  super(area);
-  //}
-  
   @Override
   public void setAttribute(Object key, Object object) {
     super.setAttribute(key,object);
@@ -39,7 +31,6 @@ public class ControlAreaImpl extends ComponentImpl implements ControlArea {
   
   @Override
   public ControlAreaImpl clone() {
-//    ControlAreaImpl newArea = new ControlAreaImpl((ControlArea)getBaseData());
     ControlAreaImpl newArea = new ControlAreaImpl(getAttribute(ASSET_ID_KEY,Long.class));
 
     try {
