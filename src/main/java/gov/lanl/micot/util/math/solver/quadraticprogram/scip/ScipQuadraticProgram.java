@@ -137,7 +137,7 @@ public class ScipQuadraticProgram extends QuadraticProgram {
    * @throws IloException 
    */
   private void updateProfile() {
-    System.err.println("TODO: Extract statistics from SCIP");
+//    System.err.println("TODO: Extract statistics from SCIP");
     MathematicalProgramProfile profile = getProfile();
     profile.setCPUTime(-100000);
     profile.setObjectiveValue(scip.getObjValue());

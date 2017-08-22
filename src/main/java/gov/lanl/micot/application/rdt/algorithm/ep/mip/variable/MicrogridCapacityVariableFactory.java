@@ -71,17 +71,11 @@ public class MicrogridCapacityVariableFactory implements VariableFactory {
         } 
       }     
     }
-    
     return variables;
   }
 
   @Override
   public Variable getVariable(MathematicalProgram program, Object asset) throws NoVariableException {
-   // if (asset instanceof Generator) {
-     // if (program.getVariable(getGeneratorVariableName((Generator) asset, PHASE_A)) != null) {
-       // return program.getVariable(getGeneratorVariableName((Generator) asset, PHASE_A));
-     // }
-   // }
     throw new NoVariableException(asset.toString());
   }
   

@@ -59,7 +59,7 @@ public class LPNormIOConstants {
   public static final String LINE_SWITCH_COST_TAG = "switch_cost";
   public static final String LINE_IS_NEW_TAG = "is_new";
   public static final String LINE_CAN_HARDEN_TAG = "can_harden";
-
+  public static final String LINE_CAN_ADD_SWITCH = "can_add_switch";
   public static final String LINE_HAS_SWITCH_TAG = "has_switch";
   
   public static final String CRITICAL_LOAD_MET_TAG = "critical_load_met";

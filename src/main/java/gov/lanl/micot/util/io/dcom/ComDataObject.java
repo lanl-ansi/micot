@@ -50,4 +50,10 @@ public interface ComDataObject {
    */
   public boolean getBooleanValue();
   
+  /**
+   * Return whether or not the entry is null
+   * @return
+   */
+  public boolean isNull();
+  
 }

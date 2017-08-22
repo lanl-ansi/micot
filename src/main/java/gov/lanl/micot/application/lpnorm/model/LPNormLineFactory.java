@@ -63,8 +63,28 @@ public class LPNormLineFactory extends LineFactory {
     boolean isNewLine = object.containsKey(LPNormIOConstants.LINE_IS_NEW_TAG) ? object.getBoolean(LPNormIOConstants.LINE_IS_NEW_TAG) : false;
     boolean hasSwitch = object.containsKey(LPNormIOConstants.LINE_HAS_SWITCH_TAG) ? object.getBoolean(LPNormIOConstants.LINE_HAS_SWITCH_TAG) : false;
     boolean canHarden = object.containsKey(LPNormIOConstants.LINE_CAN_HARDEN_TAG) ? object.getBoolean(LPNormIOConstants.LINE_CAN_HARDEN_TAG) : !isNewLine;
-        
-//    length = length / 529000013.001;
+    boolean canAddSwitch = object.containsKey(LPNormIOConstants.LINE_CAN_ADD_SWITCH) ? object.getBoolean(LPNormIOConstants.LINE_CAN_ADD_SWITCH) : switchCost != null;
+    
+    if (canHarden == false && isNewLine == false) {
+      System.err.println("Warning: Line " + legacyid + " cannot be hardened.  This could result in an infeasible reslient design");
+    }
+    
+    if (canAddSwitch && switchCost == null) {
+      switchCost = 0.0;
+    }
+    
+    if (canHarden && isNewLine) {
+      System.err.println("Line " + legacyid + " can be hardened and can be built. This is not supported. Disregarding the hardening option.");
+      canHarden = false;
+      hardenCost = null;
+    }
+    
+    //if (isNewLine) {
+      //canHarden = false;
+      //canAddSwitch = true;
+      //switchCost = 15.0;
+      //hardenCost = null;
+    //}
     
   	// check to see if the area already exists
 		Line line = registerLine(legacyid);
@@ -111,7 +131,7 @@ public class LPNormLineFactory extends LineFactory {
     line.setAttribute(AlgorithmConstants.IS_NEW_LINE_KEY,isNewLine);
     line.setAttribute(AlgorithmConstants.HAS_SWITCH_KEY,hasSwitch);
     line.setAttribute(AlgorithmConstants.CAN_HARDEN_KEY, canHarden);
-
+    line.setAttribute(AlgorithmConstants.CAN_ADD_SWITCH_KEY, canAddSwitch);
 
     Vector<Point> points = new Vector<Point>();
     points.add(fromBus.getCoordinate());

@@ -43,12 +43,10 @@ public class LineHardenVariableFactory implements VariableFactory {
     ArrayList<Variable> variables = new ArrayList<Variable>();
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       boolean canHarden = edge.getAttribute(AlgorithmConstants.CAN_HARDEN_KEY) != null && edge.getAttribute(AlgorithmConstants.CAN_HARDEN_KEY, Boolean.class);
-
-//      boolean hasCost = edge.getAttribute(AlgorithmConstants.LINE_HARDEN_COST_KEY) == null ? false : true;
       if (canHarden) {
         variables.add(program.makeDiscreteVariable(getFlowVariableName(edge)));
       }
-    }
+    }    
     return variables;
   }
 

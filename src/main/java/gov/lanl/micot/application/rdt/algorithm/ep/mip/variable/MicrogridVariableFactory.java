@@ -49,7 +49,6 @@ public class MicrogridVariableFactory implements VariableFactory {
         variables.add(program.makeDiscreteVariable(getGeneratorVariableName(producer)));
       }     
     }
-    
     return variables;
   }
 

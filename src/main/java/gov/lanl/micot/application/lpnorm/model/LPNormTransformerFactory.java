@@ -64,6 +64,19 @@ public class LPNormTransformerFactory extends TransformerFactory {
     boolean isNewLine = object.containsKey(LPNormIOConstants.LINE_IS_NEW_TAG) ? object.getBoolean(LPNormIOConstants.LINE_IS_NEW_TAG) : false;
     boolean canHarden = object.containsKey(LPNormIOConstants.LINE_CAN_HARDEN_TAG) ? object.getBoolean(LPNormIOConstants.LINE_CAN_HARDEN_TAG) : !isNewLine;
     boolean hasSwitch = object.containsKey(LPNormIOConstants.LINE_HAS_SWITCH_TAG) ? object.getBoolean(LPNormIOConstants.LINE_HAS_SWITCH_TAG) : false;
+    boolean canAddSwitch = object.containsKey(LPNormIOConstants.LINE_CAN_ADD_SWITCH) ? object.getBoolean(LPNormIOConstants.LINE_CAN_ADD_SWITCH) : switchCost != null;
+
+    if (canAddSwitch == true || switchCost != null) {
+      System.err.println("Warning: LPNORM cannot current handle switches at transformers. Disregarding this information for transformer " + legacyid + ".");
+      canAddSwitch = false;
+      switchCost = null;
+    }
+
+    if (canHarden && isNewLine) {
+      System.err.println("Line " + legacyid + " can be hardened and can be built. This is not supported. Disregarding the hardening option.");
+      canHarden = false;
+      hardenCost = null;
+    }
     
     // check to see if the area already exists
     Transformer transformer = registerTransformer(legacyid);
@@ -109,7 +122,9 @@ public class LPNormTransformerFactory extends TransformerFactory {
     transformer.setAttribute(AlgorithmConstants.IS_NEW_LINE_KEY,isNewLine);
     transformer.setAttribute(AlgorithmConstants.HAS_SWITCH_KEY,hasSwitch);
     transformer.setAttribute(AlgorithmConstants.CAN_HARDEN_KEY, canHarden);
+    transformer.setAttribute(AlgorithmConstants.CAN_ADD_SWITCH_KEY, canAddSwitch);
 
+    
     Vector<Point> points = new Vector<Point>();
     points.add(fromBus.getCoordinate());
     points.add(toBus.getCoordinate());

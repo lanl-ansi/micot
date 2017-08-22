@@ -3,6 +3,7 @@ package gov.lanl.micot.application.rdt.algorithm.ep.mip.variable.scenario;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.model.Asset;
 import gov.lanl.micot.infrastructure.model.Scenario;
+import gov.lanl.micot.application.lpnorm.io.LPNormIOConstants;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 
 /**
@@ -94,8 +95,11 @@ public class ScenarioVariableFactoryUtility {
    */
   public static boolean doCreateSwitchScenarioVariable(ElectricPowerFlowConnection edge, Scenario scenario) {
     boolean hasSwitch = edge.getAttribute(AlgorithmConstants.HAS_SWITCH_KEY) != null && edge.getAttribute(AlgorithmConstants.HAS_SWITCH_KEY, Boolean.class);
-    boolean canBuild  = edge.getAttribute(AlgorithmConstants.LINE_SWITCH_COST_KEY) != null;
-    
+    boolean isDisabled = !edge.getActualStatus();
+    boolean hasCost = edge.getAttribute(AlgorithmConstants.LINE_SWITCH_COST_KEY) == null ? false : true;
+    boolean buildSwitch = edge.getAttribute(LPNormIOConstants.LINE_CAN_ADD_SWITCH) == null ? false : edge.getAttribute(LPNormIOConstants.LINE_CAN_ADD_SWITCH, Boolean.class);
+    boolean canBuild  = (isDisabled || (!hasCost && !buildSwitch)) ? false : true; 
+
     boolean hasLineExistsVariable = doCreateLineExistScenarioVariable(edge, scenario);
     Integer lineConstant = getLineExistScenarioConstant(edge, scenario);
     

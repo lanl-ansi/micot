@@ -25,13 +25,13 @@ public class SBDResilienceAlgorithm extends ScenarioBasedDecompositionOptimizerI
     super();
     setScenarios(scenarios);
     
-    System.err.println("Are the chance constraints set correctly?  Does SBD check for that in a reasonable way?");
-    System.err.println("Make sure the empty scenario is included in the model");
+    //System.err.println("Are the chance constraints set correctly?  Does SBD check for that in a reasonable way?");
+    //System.err.println("Make sure the empty scenario is included in the model");
   }
 
   @Override
   protected boolean notConverged(HashMap<Scenario, Solution> innerSolutions) {
-    System.err.println("Not converged needs to be dependent on whether or not we have chance constraints. Then we have a counting argument here between how many were satisfied in the original along with this one");
+   // System.err.println("Not converged needs to be dependent on whether or not we have chance constraints. Then we have a counting argument here between how many were satisfied in the original along with this one");
     
     for (Scenario scenario : innerSolutions.keySet()) {
       Solution solution = innerSolutions.get(scenario);

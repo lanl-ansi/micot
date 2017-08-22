@@ -3,6 +3,7 @@ package gov.lanl.micot.application.rdt.algorithm.ep.mip.variable;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.optimize.VariableFactory;
+import gov.lanl.micot.application.lpnorm.io.LPNormIOConstants;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.util.math.solver.Variable;
 import gov.lanl.micot.util.math.solver.exception.InvalidVariableException;
@@ -44,8 +45,9 @@ public class LineSwitchVariableFactory implements VariableFactory {
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       boolean isDisabled = !edge.getActualStatus();
       boolean hasCost = edge.getAttribute(AlgorithmConstants.LINE_SWITCH_COST_KEY) == null ? false : true;
-
-      if (isDisabled || !hasCost) {
+      boolean buildSwitch = edge.getAttribute(LPNormIOConstants.LINE_CAN_ADD_SWITCH) == null ? false : edge.getAttribute(LPNormIOConstants.LINE_CAN_ADD_SWITCH, Boolean.class);
+      boolean canBuild  = (isDisabled || (!hasCost && !buildSwitch)) ? false : true;             
+      if (isDisabled || !canBuild) {
         continue;
       }
       variables.add(program.makeDiscreteVariable(getFlowVariableName(edge)));

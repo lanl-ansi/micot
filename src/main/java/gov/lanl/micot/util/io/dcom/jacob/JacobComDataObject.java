@@ -93,4 +93,9 @@ public class JacobComDataObject implements ComDataObject {
   public String toString() {
     return variant.toString();
   }
+
+  @Override
+  public boolean isNull() {
+    return variant.getvt() == Variant.VariantNull;
+  }
 }

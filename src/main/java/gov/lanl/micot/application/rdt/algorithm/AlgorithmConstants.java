@@ -25,6 +25,7 @@ public class AlgorithmConstants {
   public static final String IS_NEW_LINE_KEY                       = "IS_NEW_LINE";
   public static final String HAS_SWITCH_KEY                        = "HAS_SWITCH";
   public static final String CAN_HARDEN_KEY                        = "CAN_HARDEN";
+  public static final String CAN_ADD_SWITCH_KEY                    = "CAN_ADD_SWITCH";
     
   public static final String IS_CRITICAL_LOAD_KEY                  = "IS_CRITICAL_LOAD";
   public static final String MAX_MICROGRID_KEY                     = "MAX_MICROGRID";
