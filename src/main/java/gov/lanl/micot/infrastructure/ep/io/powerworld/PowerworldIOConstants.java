@@ -11,7 +11,7 @@ public class PowerworldIOConstants {
   
   // General commands
   protected static final String POWERWORLD                         = "pwrworld.SimulatorAuto";
-  protected static final String OPEN_CASE                          = "OpenCase";
+  public static final String OPEN_CASE                          = "OpenCase";
   public    static final String CLOSE_CASE                         = "CloseCase";
   public    static final String LIST_OF_DEVICES                    = "ListOfDevices";
   public    static final String GET_FIELD_LIST                     = "GetFieldList";
@@ -188,8 +188,8 @@ public class PowerworldIOConstants {
   public static final String ZONE_NAME        = "pwZoneName";
   
   // save commands
-  protected static final String SAVE_CASE      = "SaveCase";
-  protected static final String PWB            = "PWB";
+  public static final String SAVE_CASE      = "SaveCase";
+  public static final String PWB            = "PWB";
   protected static final String MATPOWER       = "MatPower";
   protected static final String PTI23          = "PTI23";
   protected static final String PTI33          = "PTI33";

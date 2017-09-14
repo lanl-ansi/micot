@@ -1,5 +1,6 @@
 package gov.lanl.micot.infrastructure.ep.simulate.powerworld;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -33,9 +34,10 @@ import gov.lanl.micot.util.io.dcom.ComObjectUtilities;
 public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
 
   private boolean debug = false;
-  private String preOutputModelFile = "preTemp.pwb";
+  private String preOutputModelFile  = "preTemp.pwb";
   private String postOutputModelFile = "postTemp.pwb";
-  
+  private String tempModelFile       = "temp.pwb"; 
+    
   /**
    * Constructor
    * 
@@ -67,8 +69,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
   	PowerworldModelFactory factory = PowerworldModelFactory.getInstance();
   	PowerworldModel powerWorldModel = factory.constructPowerworldModel(model);
   	ComObject powerworld = powerWorldModel.getPowerworld();
-
-  	
+	
   	if (debug) {
       PowerworldModelFile mf = new PowerworldModelFile();
       try {
@@ -89,41 +90,62 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
     }
 
   	// run the power flow solve
-  	scriptcommand = PowerworldIOConstants.POWER_FLOW_COMMAND_RECT_NEWTON;
-  	object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
-  	o = object.getArrayValue();
-    errorString = o.get(0).getStringValue();
     SimulatorSolveState s = SimulatorSolveState.CONVERGED_SOLUTION;
-    if (!errorString.equals("")) {
+//  	scriptcommand = PowerworldIOConstants.POWER_FLOW_COMMAND_RECT_NEWTON;
+  //	object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
+  //	o = object.getArrayValue();
+   // errorString = o.get(0).getStringValue();
+    boolean ok = simulateACNormal(powerworld);
+
+    if (!ok) {
       System.err.println("Trying robust solver");
+      s = SimulatorSolveState.ERROR_SOLUTION;
+      ok = simulateACRobust(powerworld, powerWorldModel);
+
 
       // drop into robust solving if first solve fails, and do a flat restart
-      scriptcommand = PowerworldIOConstants.RESET_TO_FLAT_START;
-      object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
-      o = object.getArrayValue();
-      errorString = o.get(0).getStringValue();
-      if (!errorString.equals("")) {
-        System.err.println("Error running flat start: " + errorString);
-      }
+//      scriptcommand = PowerworldIOConstants.RESET_TO_FLAT_START;
+  //    object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
+    //  o = object.getArrayValue();
+     // errorString = o.get(0).getStringValue();
+      //if (!errorString.equals("")) {
+      //  System.err.println("Error running flat start: " + errorString);
+      //}
             
-      scriptcommand = PowerworldIOConstants.POWER_FLOW_COMMAND_RECT_NEWTON;
-      object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
-      o = object.getArrayValue();
-      errorString = o.get(0).getStringValue();
-      if (!errorString.equals("")) {
-        System.err.println("Error running power flow solver: " + errorString);
-        s = SimulatorSolveState.ERROR_SOLUTION;
+      //scriptcommand = PowerworldIOConstants.POWER_FLOW_COMMAND_RECT_NEWTON;
+      //object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
+      //o = object.getArrayValue();
+      //errorString = o.get(0).getStringValue();
+      //if (!errorString.equals("")) {
+        //System.err.println("Robust PowerFlow Simulation Failed: " + errorString);
+        //s = SimulatorSolveState.ERROR_SOLUTION;
         
-        if (debug) {
-          PowerworldModelFile mf = new PowerworldModelFile();
-          try {
-            mf.saveFile(postOutputModelFile, powerWorldModel);
-          }
-          catch (IOException e) {
-            e.printStackTrace();
-          }
-        }
-      }
+        //if (debug) {
+          //PowerworldModelFile mf = new PowerworldModelFile();
+          //try {
+          //  mf.saveFile(postOutputModelFile, powerWorldModel);
+         // }
+          //catch (IOException e) {
+           // e.printStackTrace();
+         // }
+       // }
+     // }
+    }
+    else {
+      s = SimulatorSolveState.CONVERGED_SOLUTION;
+    }
+    
+    if (!ok) {
+      System.err.println("Trying file I/O");
+      s = SimulatorSolveState.ERROR_SOLUTION;
+      ok = simulateACFileIO(powerworld,powerWorldModel);
+    }
+    else {
+      s = SimulatorSolveState.CONVERGED_SOLUTION;      
+    }
+    
+    if (ok) {
+      s = SimulatorSolveState.CONVERGED_SOLUTION;
     }
 
     // get the flows and losses
@@ -423,5 +445,106 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
     }
 	  
   }
+  
+  /**
+   * The normal way of running the AC simulator of Powerworld
+   * @return
+   */
+  private boolean simulateACNormal(ComObject powerworld) {
+    String scriptcommand = PowerworldIOConstants.POWER_FLOW_COMMAND_RECT_NEWTON;
+    ComDataObject object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
+    ArrayList<ComDataObject> o = object.getArrayValue();
+    String errorString = o.get(0).getStringValue();
+    
+    if (!errorString.equals("")) {
+      System.err.println("PowerFlow Simulation Failed: " + errorString);
+    }
+    return errorString.equals("");    
+  }
+
+  /**
+   * Robust way of running the AC simulator of Powerworld
+   * @param powerworld
+   * @return
+   */
+  private boolean simulateACRobust(ComObject powerworld, PowerworldModel powerWorldModel) {
+    powerworld.callData(PowerworldIOConstants.SAVE_CASE, tempModelFile, PowerworldIOConstants.PWB, true); 
+    File file = new File(tempModelFile);
+    file.delete();
+
+    
+    // drop into robust solving if first solve fails, and do a flat restart
+    String scriptcommand = PowerworldIOConstants.RESET_TO_FLAT_START;
+    ComDataObject object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
+    ArrayList<ComDataObject> o = object.getArrayValue();
+    String errorString = o.get(0).getStringValue();
+    if (!errorString.equals("")) {
+      System.err.println("Error running flat start: " + errorString);
+    }
+          
+    scriptcommand = PowerworldIOConstants.POWER_FLOW_COMMAND_RECT_NEWTON;
+    object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
+    o = object.getArrayValue();
+    errorString = o.get(0).getStringValue();
+    if (!errorString.equals("")) {
+      System.err.println("Robust PowerFlow Simulation Failed: " + errorString);
+      
+      if (debug) {
+        PowerworldModelFile mf = new PowerworldModelFile();
+        try {
+          mf.saveFile(postOutputModelFile, powerWorldModel);
+        }
+        catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Sometimes a save and reload of a model is enough to make everything happy...
+   * @param powerworld
+   * @return
+   */
+  private boolean simulateACFileIO(ComObject powerworld, PowerworldModel powerWorldModel) {
+    ComDataObject object = powerworld.callData(PowerworldIOConstants.SAVE_CASE, tempModelFile, PowerworldIOConstants.PWB, true); 
+    ArrayList<ComDataObject> o = object.getArrayValue();
+    String errorString = o.get(0).getStringValue();
+    if (!errorString.equals("")) {
+      System.err.println("Error Saving Case: " + errorString);
+    }
+
+    object = powerworld.callData(PowerworldIOConstants.CLOSE_CASE);    
+    o = object.getArrayValue();
+    errorString = o.get(0).getStringValue();
+    if (!errorString.equals("")) {
+      System.err.println("Error Closing Case: " + errorString);
+    }
+
+    object = powerworld.callData(PowerworldIOConstants.OPEN_CASE, tempModelFile);    
+    o = object.getArrayValue();
+    errorString = o.get(0).getStringValue();
+    if (!errorString.equals("")) {
+      System.err.println("Error Opening Case: " + errorString);
+    }
+
+    File file = new File(tempModelFile);
+    file.delete();
+
+    String scriptcommand = PowerworldIOConstants.RUN_MODE;
+    powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
+    scriptcommand = PowerworldIOConstants.POWER_FLOW_COMMAND_RECT_NEWTON;
+    object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
+    o = object.getArrayValue();
+    errorString = o.get(0).getStringValue();
+    if (!errorString.equals("")) {
+      System.err.println("File I/O PowerFlow Simulation Failed: " + errorString);
+    }
+      
+    return errorString.equals("");    
+  }
+
   
 }
