@@ -131,6 +131,7 @@ public class ResilienceExpansionFlags extends MIPInfrastructureExpansionAlgorith
 		put(AlgorithmConstants.IS_DISCRETE_GENERATION_KEY, AlgorithmConstants.DEFAULT_IS_DISCRETE_GENERATION);
     put(AlgorithmConstants.IS_CHANCE_CONSTRAINT_KEY, AlgorithmConstants.DEFAULT_IS_CHANCE_CONSTRAINT);
     put(AlgorithmConstants.USE_CYCLE_ENUMERATION_CONSTRAINT_KEY, AlgorithmConstants.DEFAULT_USE_CYCLE_ENUMERATION_CONSTRAINT);
+    put(AlgorithmConstants.POWER_FLOW_MODEL_KEY, AlgorithmConstants.DEFAULT_POWER_FLOW_MODEL);
 	}
 
 	@Override
@@ -163,6 +164,10 @@ public class ResilienceExpansionFlags extends MIPInfrastructureExpansionAlgorith
     if (get(AlgorithmConstants.USE_CYCLE_ENUMERATION_CONSTRAINT_KEY) == null) {
       put(AlgorithmConstants.USE_CYCLE_ENUMERATION_CONSTRAINT_KEY, AlgorithmConstants.DEFAULT_USE_CYCLE_ENUMERATION_CONSTRAINT);
     }
+    if (get(AlgorithmConstants.POWER_FLOW_MODEL_KEY) == null) {
+      put(AlgorithmConstants.POWER_FLOW_MODEL_KEY, AlgorithmConstants.DEFAULT_POWER_FLOW_MODEL);
+    }
+
 	}
 
 	/**
@@ -226,7 +231,23 @@ public class ResilienceExpansionFlags extends MIPInfrastructureExpansionAlgorith
       defaults.add(ScenarioVirtualFlowVariableFactory.class);
     }
   }
-	
+
+  /**
+   * Determines what volatage variables to add to the model
+   * @param defaults
+   */
+  private void getVoltageVariables(ArrayList<Class<? extends VariableFactory>> defaults) {
+    if (get(AlgorithmConstants.POWER_FLOW_MODEL_KEY) == null) {
+      put(AlgorithmConstants.POWER_FLOW_MODEL_KEY, AlgorithmConstants.DEFAULT_POWER_FLOW_MODEL);
+    }
+    
+    String powerflow = getString(AlgorithmConstants.POWER_FLOW_MODEL_KEY);
+    
+    if (powerflow.equals(AlgorithmConstants.LINDIST_FLOW_POWER_FLOW_MODEL)) {
+      defaults.add(ScenarioVoltageVariableFactory.class);
+      defaults.add(ScenarioVoltageOnOffVariableFactory.class);    
+    }
+  }
 	
 	@Override
   @SuppressWarnings("rawtypes")
@@ -234,15 +255,10 @@ public class ResilienceExpansionFlags extends MIPInfrastructureExpansionAlgorith
     ArrayList<Class<? extends VariableFactory>> defaults = new ArrayList<Class<? extends VariableFactory>>();
     defaults.add(LineConstructionVariableFactory.class);
     defaults.add(LineSwitchVariableFactory.class);
-    defaults.add(LineHardenVariableFactory.class);
-    
+    defaults.add(LineHardenVariableFactory.class);    
     defaults.add(ScenarioLineUseVariableFactory.class);
-    defaults.add(ScenarioSwitchVariableFactory.class);
-
-    
-    defaults.add(ScenarioLineExistVariableFactory.class);
-
-    
+    defaults.add(ScenarioSwitchVariableFactory.class);    
+    defaults.add(ScenarioLineExistVariableFactory.class);    
     defaults.add(ScenarioGeneratorRealPhaseVariableFactory.class);
     defaults.add(ScenarioGeneratorReactivePhaseVariableFactory.class);
     defaults.add(ScenarioRealLoadPhaseVariableFactory.class);
@@ -250,13 +266,11 @@ public class ResilienceExpansionFlags extends MIPInfrastructureExpansionAlgorith
     defaults.add(ScenarioLoadServeVariableFactory.class);
     defaults.add(ScenarioRealFlowPhaseVariableFactory.class);
     defaults.add(ScenarioReactiveFlowPhaseVariableFactory.class);
-    defaults.add(ScenarioVoltageVariableFactory.class);
-    defaults.add(ScenarioVoltageOnOffVariableFactory.class);
-    
-    
+        
     getMicrogridVariables(defaults);
     getChanceConstraintVariables(defaults);
     getCycleConstraintVariables(defaults);
+    getVoltageVariables(defaults);
     
     return defaults;
   }
@@ -306,6 +320,18 @@ public class ResilienceExpansionFlags extends MIPInfrastructureExpansionAlgorith
       defaults.add(ScenarioVirtualFlowConstraint.class);
     }    
   }
+
+  /**
+   * Get the constraints associated with voltage
+   * @param defaults
+   */
+  private void getVoltageConstraints(ArrayList<Class<? extends ConstraintFactory>> defaults) {
+    String powerflow = getString(AlgorithmConstants.POWER_FLOW_MODEL_KEY);    
+    if (powerflow.equals(AlgorithmConstants.LINDIST_FLOW_POWER_FLOW_MODEL)) {
+      defaults.add(ScenarioVoltageOnOffConstraint.class);    
+      defaults.add(ScenarioLinDistFlowConstraint.class);    
+    }
+  }
   
   @Override
   @SuppressWarnings("rawtypes")
@@ -338,13 +364,11 @@ public class ResilienceExpansionFlags extends MIPInfrastructureExpansionAlgorith
     defaults.add(ScenarioReactivePhaseBalanceConstraint.class);
 
     defaults.add(ScenarioMicrogridCapacityConstraint.class);    
-    defaults.add(ScenarioVoltageOnOffConstraint.class);    
-    defaults.add(ScenarioLinDistFlowConstraint.class);    
-    
-    
+        
     getMicrogridConstraints(defaults);   
     getCycleConstraints(defaults);
-    
+    getVoltageConstraints(defaults);
+        
     return defaults;
   }
   

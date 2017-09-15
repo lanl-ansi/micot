@@ -63,9 +63,10 @@ public class LPNormIOConstants {
   public static final String LINE_HAS_SWITCH_TAG = "has_switch";
   
   public static final String CRITICAL_LOAD_MET_TAG = "critical_load_met";
-  public static final String TOTAL_LOAD_MET_TAG = "total_load_met";
+  public static final String TOTAL_LOAD_MET_TAG    = "total_load_met";
   public static final String CHANCE_CONSTRAINT_TAG = "chance_constraint";
-  public static final String PHASE_VARIATION_TAG = "phase_variation";
+  public static final String PHASE_VARIATION_TAG   = "phase_variation";
+  public static final String POWER_FLOW_TAG        = "power_flow";
   
   public static final String SCENARIOS_TAG = "scenarios";
   public static final String SCENARIO_ID_TAG = "id";

@@ -46,16 +46,20 @@ public class AlgorithmConstants {
   public static final String CHANCE_CONSTRAINT_EPSILON_KEY         = "ChanceConstraintEpsilon";
   public static final String IS_DISCRETE_GENERATION_KEY            = "IsDiscreteGeneration";
   public static final String IS_CHANCE_CONSTRAINT_KEY              = "IsChanceConstraint";
-  public static final String USE_CYCLE_ENUMERATION_CONSTRAINT_KEY  = "UseCycleEnumerationConstraint";
+  public static final String USE_CYCLE_ENUMERATION_CONSTRAINT_KEY  = "UseCycleEnumerationConstraint";  
+  public static final String POWER_FLOW_MODEL_KEY                  = "PowerFlowModel";
 
-  public static final double DEFAULT_LOAD_MET = .5;
-  public static final double DEFAULT_CRITICAL_LOAD_MET = .98;
-  public static final double DEFAULT_CHANCE_CONSTRAINT_EPSILON = 0.0;
+  public static final String TRANSPORTATION_POWER_FLOW_MODEL       ="network_flow";
+  public static final String LINDIST_FLOW_POWER_FLOW_MODEL         ="lindist_flow";
+  
+  public static final double  DEFAULT_LOAD_MET = .5;
+  public static final double  DEFAULT_CRITICAL_LOAD_MET = .98;
+  public static final double  DEFAULT_CHANCE_CONSTRAINT_EPSILON = 0.0;
   public static final boolean DEFAULT_IS_DISCRETE_GENERATION = false;
   public static final boolean DEFAULT_IS_CHANCE_CONSTRAINT = false;
   public static final boolean DEFAULT_USE_CYCLE_ENUMERATION_CONSTRAINT = true;
-  
-  
+  public static final String  DEFAULT_POWER_FLOW_MODEL = LINDIST_FLOW_POWER_FLOW_MODEL;
+    
   /**
    * No constructor
    */
