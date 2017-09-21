@@ -65,25 +65,15 @@ public class LPNormLineFactory extends LineFactory {
     boolean canHarden = object.containsKey(LPNormIOConstants.LINE_CAN_HARDEN_TAG) ? object.getBoolean(LPNormIOConstants.LINE_CAN_HARDEN_TAG) : !isNewLine;
     boolean canAddSwitch = object.containsKey(LPNormIOConstants.LINE_CAN_ADD_SWITCH) ? object.getBoolean(LPNormIOConstants.LINE_CAN_ADD_SWITCH) : switchCost != null;
     
-    if (canHarden == false && isNewLine == false) {
-      System.err.println("Warning: Line " + legacyid + " cannot be hardened.  This could result in an infeasible reslient design");
-    }
-    
     if (canAddSwitch && switchCost == null) {
       switchCost = 0.0;
     }
     
-    if (canHarden && isNewLine) {
-      System.err.println("Line " + legacyid + " can be hardened and can be built. This is not supported. Disregarding the hardening option.");
-      canHarden = false;
-      hardenCost = null;
-    }
-    
-    //if (isNewLine) {
-      //canHarden = false;
-      //canAddSwitch = true;
-      //switchCost = 15.0;
-      //hardenCost = null;
+    // checked eleswhere, but leaving code around for awhile
+//    if (canHarden && isNewLine) {
+  //    System.out.println("Warning: Line " + legacyid + " can be hardened and can be built. This is not supported. Disregarding the hardening option.");
+    //  canHarden = false;
+     // hardenCost = null;
     //}
     
   	// check to see if the area already exists

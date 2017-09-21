@@ -31,7 +31,7 @@ import java.util.TreeSet;
  */
 public class ScenarioNoCycleConstraint extends ScenarioConstraintFactory<ElectricPowerNode, ElectricPowerModel> {
 
-  private Set<ElectricPowerNode> seenNodes = new HashSet<ElectricPowerNode>();
+//  private Set<ElectricPowerNode> seenNodes = new HashSet<ElectricPowerNode>();
 
   private Map<ElectricPowerNode, Boolean> visited = null;
   private Map<ElectricPowerNode, Integer> depth = null;
@@ -59,7 +59,7 @@ public class ScenarioNoCycleConstraint extends ScenarioConstraintFactory<Electri
    * @param cycles
    * @throws NoVariableException
    */
-  protected void getCyclesAdHoc(ElectricPowerModel model) throws NoVariableException {      
+  /*protected void getCyclesAdHoc(ElectricPowerModel model) throws NoVariableException {      
     cycles = new ArrayList<Stack<ElectricPowerNode>>();
     seenNodes = new HashSet<ElectricPowerNode>();
     for (ElectricPowerNode node : model.getNodes()) {
@@ -70,7 +70,7 @@ public class ScenarioNoCycleConstraint extends ScenarioConstraintFactory<Electri
     
     // clear out scratch memory
     seenNodes = new HashSet<ElectricPowerNode>();
-  }
+  }*/
   
   /**
    * The recursive routine used by adhoc cycles
@@ -80,7 +80,7 @@ public class ScenarioNoCycleConstraint extends ScenarioConstraintFactory<Electri
    * @param model
    * @throws NoVariableException
    */
-  private void recurse(ElectricPowerNode node, Stack<ElectricPowerNode> path, ElectricPowerModel model) throws NoVariableException {
+  /*private void recurse(ElectricPowerNode node, Stack<ElectricPowerNode> path, ElectricPowerModel model) throws NoVariableException {
     
     ElectricPowerNode lastNode = path.size() == 0 ? null : path.peek();
     path.push(node);
@@ -109,7 +109,7 @@ public class ScenarioNoCycleConstraint extends ScenarioConstraintFactory<Electri
       }
     }
     path.pop();
-  }
+  }*/
 
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException, InvalidConstraintException {
@@ -140,13 +140,7 @@ public class ScenarioNoCycleConstraint extends ScenarioConstraintFactory<Electri
         }
         problem.addLinearConstraint(constraint);
       }
-    }
-
-//    System.out.println("Number of cycles: " + cycles.size());
-  //  for (Stack<ElectricPowerNode> cycle : cycles) {
-    //  System.out.println(cycle);
-    //}
-    
+    }    
   }
 
   /**
@@ -179,7 +173,7 @@ public class ScenarioNoCycleConstraint extends ScenarioConstraintFactory<Electri
    * @param model The electric power model
    * @return
    */
-  protected void getCyclesPaton(ElectricPowerModel model) {
+  /*protected void getCyclesPaton(ElectricPowerModel model) {
     Map<ElectricPowerNode, Set<ElectricPowerNode>> seenNodes = new HashMap<ElectricPowerNode, Set<ElectricPowerNode>>();
     Map<ElectricPowerNode, ElectricPowerNode> parentNodes = new HashMap<ElectricPowerNode, ElectricPowerNode>();
     Stack<ElectricPowerNode> stack = new Stack<ElectricPowerNode>();
@@ -236,7 +230,7 @@ public class ScenarioNoCycleConstraint extends ScenarioConstraintFactory<Electri
       cycle.push(cycle.get(0));
     }
     
-  }
+  }*/
 
   /**
    * The following code performs a biconnected component decomposition of an undirected graph 

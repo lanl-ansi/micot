@@ -25,7 +25,7 @@ public class ScenarioVariableFactoryUtility {
    * @param scenario
    * @return
    */
-  private static boolean isDamaged(ElectricPowerFlowConnection edge, Scenario scenario) {
+  public static boolean isDamaged(ElectricPowerFlowConnection edge, Scenario scenario) {
     boolean isDamaged = false;        
     Boolean b = scenario.getModification(edge, Asset.IS_FAILED_KEY, Boolean.class);
     if (b != null) {
@@ -40,7 +40,7 @@ public class ScenarioVariableFactoryUtility {
    * @param scenario
    * @return
    */
-  private static boolean isHardenedDamaged(ElectricPowerFlowConnection edge, Scenario scenario) {
+  public static boolean isHardenedDamaged(ElectricPowerFlowConnection edge, Scenario scenario) {
     boolean isHardenedDamaged = false;        
     Boolean b = scenario.getModification(edge, AlgorithmConstants.HARDENED_DISABLED_KEY, Boolean.class);
     if (b != null) {
@@ -61,18 +61,8 @@ public class ScenarioVariableFactoryUtility {
     boolean isHardenedDamaged = isHardenedDamaged(edge, scenario) ;//false;        
     boolean isDamaged = isDamaged(edge, scenario); //false;        
     
-//    Boolean b = scenario.getModification(edge, Asset.IS_FAILED_KEY, Boolean.class);
-  //  if (b != null) {
-    //  isDamaged = b;
-    //}
-    
- //   b = scenario.getModification(edge, AlgorithmConstants.HARDENED_DISABLED_KEY, Boolean.class);
-  //  if (b != null) {
-    //  isHardenedDamaged = b;      
-    //}
-    
+    // error checking. Can't be undamaged and hardened damaged
     if (!isDamaged && isHardenedDamaged) {
-      System.err.println("Line " + edge + " is not damaged in a normal state but is damaged in a hardened state. This is not supported.  We are assuming that the line is damaged in a normal state");
       isDamaged = true;
     }
     

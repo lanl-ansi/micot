@@ -160,17 +160,7 @@ public interface Model extends Cloneable {
    */
   // TODO -- get rid of
   public void setIsSolved(boolean solved);
-             
-  /**
-   * Determine if a connection between n1 and n2 is critical (i.e. breaks
-   * the graph into disconnected components)
-   * @param n1
-   * @param n2
-   * @return
-   */
-  // TODO -- get rid of
- // public boolean isCriticalConnection(Node n1, Node n2);
-  
+               
   /**
    * Get all assets that are of type cls
    * @param <E>

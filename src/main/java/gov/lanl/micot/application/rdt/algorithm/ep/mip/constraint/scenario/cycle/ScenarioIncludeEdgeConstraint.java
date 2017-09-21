@@ -57,7 +57,6 @@ public class ScenarioIncludeEdgeConstraint extends ScenarioConstraintFactory<Ele
       
         constraint.addVariable(cvariable, -1.0);
         problem.addLinearConstraint(constraint);
-//        System.err.println(constraint);
       }
     }
 

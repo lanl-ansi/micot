@@ -37,6 +37,10 @@ public class RDDTApplicationFactory implements ApplicationFactory {
     
     ProjectConfigurationUtility.modifyModel(model, configuration, modelConfiguration);
     loadMissingData(model, configuration.getScenarioConfigurations());
+        
+    // check for bad data in the Electric Power Model
+    RDTDataValidator validator = new RDTDataValidator();
+    validator.checkData(model, configuration.getScenarioConfigurations());
     
     // set up the resilient design algorithm
     if (configuration.getAlgorithmConfigurations().size() > 1) {
