@@ -1046,9 +1046,9 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
   	  type = PowerworldIOConstants.DC_BUS;
   	}
   	else {
-    fields = getBusFields(); 
-    values = convertToStringArray(getBusValues(bus));
-    type = PowerworldIOConstants.BUS;
+  	  fields = getBusFields(); 
+  	  values = convertToStringArray(getBusValues(bus));
+  	  type = PowerworldIOConstants.BUS;
   	}
     updateData(fields, values, type);   
     
@@ -1158,7 +1158,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     String status = generator.getActualStatus() && generator.getDesiredStatus() ? PowerworldIOConstants.GEN_CLOSED : PowerworldIOConstants.GEN_OPEN;
     
     Bus bus = getNode(generator).getBus();
-    double remoteVoltage = bus.getRemoteVoltagePU();
+    double remoteVoltage = bus.getVoltagePU().doubleValue(); 
     
     return new Object[] {id.getLeft(), id.getRight(), 
       ft, costConstant, linearConstant, quadConstant, cubeConstant, generator.getAttribute(Generator.MVA_BASE_KEY), 

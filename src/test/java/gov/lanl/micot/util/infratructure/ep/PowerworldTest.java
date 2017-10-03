@@ -5,6 +5,7 @@ import gov.lanl.micot.infrastructure.application.ApplicationOutput;
 import gov.lanl.micot.infrastructure.ep.application.ac.ACSimulationApplication;
 import gov.lanl.micot.infrastructure.ep.io.ElectricPowerModelFileFactory;
 import gov.lanl.micot.infrastructure.ep.io.powerworld.PowerworldModelFile;
+import gov.lanl.micot.infrastructure.ep.model.Bus;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.project.JsonProjectConfigurationReader;
@@ -117,6 +118,36 @@ public class PowerworldTest extends TestCase {
     ElectricPowerModel model = modelFile.readModel("test_data" + File.separatorChar + "ep" + File.separatorChar + "powerworld" + File.separatorChar + "frankenstein.raw");
   }
 
+  /**
+   * Tests a voltage change
+   * @throws IOException 
+   * @throws ClassNotFoundException 
+   * @throws IllegalAccessException 
+   * @throws InstantiationException 
+   */
+  public void testVoltage() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    if (System.getenv("TEST_POWERWORLD") != null) {
+      return;
+    }
+    
+    String masterFile = System.getProperty("user.dir") + File.separatorChar + "test_data" + File.separatorChar + "ep" + File.separatorChar + "config-powerworld-voltage.json";    
+    JsonProjectConfigurationReader reader = new JsonProjectConfigurationReader();
+    ProjectConfiguration configuration = reader.readConfiguration(masterFile);
+    Application application = ProjectConfigurationUtility.createApplication(configuration);
+    ApplicationOutput output = application.execute();
+
+    ElectricPowerModel model = output.get(ACSimulationApplication.MODEL_FLAG, ElectricPowerModel.class);    
+
+    for (Bus bus : model.getBuses()) {
+      if (bus.toString().equals("1")) {
+        assertEquals(bus.getVoltagePU().doubleValue(), 0.95, 1e-4);
+      }
+    }
+    
+  }
+
+  
+  
   
   
   @Override
@@ -129,6 +160,8 @@ public class PowerworldTest extends TestCase {
     super.setUp();          
     ElectricPowerModelFileFactory.registerExtension("raw",Class.forName("gov.lanl.micot.infrastructure.ep.io.powerworld.PowerworldModelFile"));
   } 
+  
+
   
   
 }
