@@ -11,7 +11,7 @@ public class PowerworldIOConstants {
   
   // General commands
   protected static final String POWERWORLD                         = "pwrworld.SimulatorAuto";
-  public static final String OPEN_CASE                          = "OpenCase";
+  public static final String OPEN_CASE                             = "OpenCase";
   public    static final String CLOSE_CASE                         = "CloseCase";
   public    static final String LIST_OF_DEVICES                    = "ListOfDevices";
   public    static final String GET_FIELD_LIST                     = "GetFieldList";
@@ -49,7 +49,8 @@ public class PowerworldIOConstants {
   public static final String BUS_ANGLE        = "pwBusAngle";
   public static final String BUS_LATITUDE     = "pwLatitude";
   public static final String BUS_LONGITUDE    = "pwLongitude";
-  public static final String BUS_KV           = "pwBusKVVolt";
+  public static final String BUS_KV_VOLTAGE   = "pwBusKVVolt";
+  public static final String BUS_KV_NOMINAL_VOLTAGE   = "pwBusNomVolt";  
   public static final String BUS_MAX_VOLTAGE  = "pwBusVoltLimHigh";
   public static final String BUS_MIN_VOLTAGE  = "pwBusVoltLimLow";
   public static final String BUS_SLACK        = "pwBusSlack";

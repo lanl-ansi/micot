@@ -22,7 +22,7 @@ public class PowerworldBusFactory extends BusFactory {
       PowerworldIOConstants.BUS_NUM, PowerworldIOConstants.BUS_NAME, 
       PowerworldIOConstants.BUS_PU_VOLTAGE, PowerworldIOConstants.BUS_ANGLE, 
       PowerworldIOConstants.BUS_LATITUDE, PowerworldIOConstants.BUS_LONGITUDE, 
-      PowerworldIOConstants.BUS_KV, PowerworldIOConstants.BUS_MAX_VOLTAGE, 
+      PowerworldIOConstants.BUS_KV_NOMINAL_VOLTAGE, PowerworldIOConstants.BUS_MAX_VOLTAGE, 
       PowerworldIOConstants.BUS_MIN_VOLTAGE, PowerworldIOConstants.BUS_CAT, 
       PowerworldIOConstants.BUS_STATUS, PowerworldIOConstants.BUS_OWNER_NAME,
       PowerworldIOConstants.BUS_AREA, PowerworldIOConstants.BUS_ZONE, 
@@ -35,51 +35,6 @@ public class PowerworldBusFactory extends BusFactory {
 	protected PowerworldBusFactory() {		
 	}
 	
-  /**
-   * Creates a bus and data from a bus
-   * @param line
-   * @return
-   */
-  /*public Bus createBus(ArrayList<ComDataObject> busData, int record)  {        
-    ArrayList<ComDataObject> ids        = busData.get(0).getArrayValue();
-    ArrayList<ComDataObject> names      = busData.get(1).getArrayValue();
-    ArrayList<ComDataObject> pus        = busData.get(2).getArrayValue();
-    ArrayList<ComDataObject> angles     = busData.get(3).getArrayValue();
-    ArrayList<ComDataObject> latitudes  = busData.get(4).getArrayValue();
-    ArrayList<ComDataObject> longitudes = busData.get(5).getArrayValue();
-    ArrayList<ComDataObject> kvs        = busData.get(6).getArrayValue();
-    ArrayList<ComDataObject> maxPUs     = busData.get(7).getArrayValue();
-    ArrayList<ComDataObject> minPUs     = busData.get(8).getArrayValue();
-    ArrayList<ComDataObject> busCats    = busData.get(9).getArrayValue();
-    ArrayList<ComDataObject> statuses   = busData.get(10).getArrayValue();
-    ArrayList<ComDataObject> owners     = busData.get(11).getArrayValue();
-    
-    int id       = Integer.parseInt(ids.get(record).getStringValue());
-    double pu    = Double.parseDouble(pus.get(record).getStringValue().trim());
-    double angle = Double.parseDouble(angles.get(record).getStringValue().trim());
-    double x = longitudes.get(record).isNull() ? 0.0 : Double.parseDouble(longitudes.get(record).getStringValue().trim());
-    double y = latitudes.get(record).isNull() ? 0.0 : Double.parseDouble(latitudes.get(record).getStringValue().trim());
-    boolean status = statuses.get(record).getStringValue().equalsIgnoreCase(PowerworldIOConstants.BUS_CONNECTED) && !busCats.get(record).getStringValue().equalsIgnoreCase(PowerworldIOConstants.BUS_DEAD);
-    double kvbase = Double.parseDouble(kvs.get(record).getStringValue().trim());
-    double maxPU = Double.parseDouble(maxPUs.get(record).getStringValue().trim());
-    double minPU = Double.parseDouble(minPUs.get(record).getStringValue().trim());
-    
-    Bus bus = registerBus(id);   
-    bus.setCoordinate(new PointImpl(x,y));
-    bus.setAttribute(Bus.NAME_KEY, names.get(record).getStringValue());
-    bus.setDesiredStatus(status);
-    bus.setSystemVoltageKV(kvbase);
-    bus.setActualStatus(status); 
-    bus.setMaximumVoltagePU(maxPU);
-    bus.setMinimumVoltagePU(minPU);
-    bus.setPhaseAngle(angle);
-    bus.setVoltagePU(pu); 
-    bus.setOwnerName(owners.get(record).getStringValue());
-    
-    bus.setAttribute(PowerworldModelConstants.POWERWORLD_BUS_CATEGORY_KEY, busCats.get(record).getStringValue());
-    
-    return bus;    
-  }*/
 
   public Bus createBus(ComObject powerworld, int id)  {  
     String values[] = new String[] {id+"", "", "", "", "", "", "", "", "", "", "", "","","",""};

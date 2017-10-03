@@ -74,55 +74,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
 	 * @param slacks
 	 */
 	private void initBuses(ComDataObject busesObject, Map<Integer,Bus> busMap, Map<Asset, String> areas, Map<Asset, String> zones, Map<Bus, String> slacks) {
-	//private void initBuses(Map<Integer,Bus> busMap, Map<Asset, String> areas, Map<Asset, String> zones, Map<Bus, String> slacks) {
-
     PowerworldBusFactory busFactory = getBusFactory();
-
-   /* ComDataObject dataObject = powerWorldModel.callData(PowerworldIOConstants.GET_PARAMETERS_MULTIPLE_ELEMENT, PowerworldIOConstants.BUS, PowerworldBusFactory.DATA_FIELDS, " ");    
-    ArrayList<ComDataObject> data = dataObject.getArrayValue();
-    String errorString = data.get(0).getStringValue();
-    if (!errorString.equals("")) {
-      System.err.println("Error getting powerworld bus data: " + errorString); 
-      return;
-    }
-    
-    ArrayList<ComDataObject> busData = data.get(1).getArrayValue();
-    int numBuses = busData.get(0).getArrayValue().size();    
-    
-    ArrayList<ComDataObject> ids       = busData.get(0).getArrayValue();
-    ArrayList<ComDataObject> areaData  = busData.get(12).getArrayValue();
-    ArrayList<ComDataObject> zoneData  = busData.get(13).getArrayValue();
-    ArrayList<ComDataObject> slackData = busData.get(14).getArrayValue();
-    
-    for (int i = 0; i < numBuses; ++i) {
-     // System.out.println(i);
-      
-      int id       = Integer.parseInt(ids.get(i).getStringValue());
-      String area  = areaData.get(i).getStringValue();
-      String zone  = zoneData.get(i).getStringValue();
-      String slack = slackData.get(i).getStringValue();        
-      
-      Bus bus = busFactory.createBus(busData, i);
-      addBus(bus);
-      busMap.put(id, bus);
-      areas.put(bus, area);
-      zones.put(bus, zone);
-      
-      if (slack.equalsIgnoreCase(PowerworldIOConstants.BUS_YES)) {
-        slacks.put(bus, area);
-      }
-    }*/
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 	  ArrayList<ComDataObject> buses = busesObject.getArrayValue();
     String errorString = buses.get(0).getStringValue();
@@ -1114,7 +1066,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
   	return new String[]{PowerworldIOConstants.BUS_NUM,
     		PowerworldIOConstants.BUS_PU_VOLTAGE, PowerworldIOConstants.BUS_ANGLE, 
     		PowerworldIOConstants.BUS_LATITUDE, PowerworldIOConstants.BUS_LONGITUDE, 
-    		PowerworldIOConstants.BUS_KV, PowerworldIOConstants.BUS_MAX_VOLTAGE, 
+    		PowerworldIOConstants.BUS_KV_NOMINAL_VOLTAGE, PowerworldIOConstants.BUS_MAX_VOLTAGE, 
     		PowerworldIOConstants.BUS_MIN_VOLTAGE, PowerworldIOConstants.BUS_STATUS, PowerworldIOConstants.BUS_CAT};
   }
 
