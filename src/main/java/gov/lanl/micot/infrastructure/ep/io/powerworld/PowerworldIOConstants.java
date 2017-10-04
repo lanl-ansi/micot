@@ -34,6 +34,7 @@ public class PowerworldIOConstants {
   public    static final String DC_MULTI_TERMINAL = "MTDCConverter";
   public    static final String DC_BUS            = "MTDCBus";
   public    static final String THREE_WINDING     = "3WXFormer";
+  public    static final String SIMULATOR_OPTIONS = "Sim_Solution_Options";
   
   public    static final String SIM_SOLUTION_OPTIONS = "Sim_Solution_Options";
 
@@ -322,6 +323,21 @@ public class PowerworldIOConstants {
   public static final String MULTI_TERMINAL_TYPE_INV                        = "inv";
   public static final String MULTI_TERMINAL_CLOSED                          = "closed";
   public static final String MULTI_TERMINAL_OPEN                            = "open";
+  
+  // simulator options
+  public static final String SIMULATION_OPTION_CHECK_SHUNTS                 = "pwChkShunts";
+  public static final String SIMULATION_OPTION_PHASE_SHIFTERS               = "pwChkPhaseShifters";
+  public static final String SIMULATION_OPTION_CHECK_SVC                    = "pwChkShunts:1";
+  public static final String SIMULATION_OPTION_CHECK_TAPS                   = "pwChkTaps";
+  public static final String SIMULATION_OPTION_CHECK_AREA                   = "pwChkAreaInt";
+  public static final String SIMULATION_OPTION_CHECK_VARS                   = "pwChkVars";
+  public static final String SIMULATION_OPTION_CHECK_MVAR_LIMITS            = "pwDisableGenMVRCheck";
+  public static final String SIMULATION_OPTION_CHECK_MW_LIMITS              = "pwEnforceGenMWLimits";
+    
+  public static final String SIMULATION_OPTION_YES                          = "yes";
+  public static final String SIMULATION_OPTION_NO                           = "no";
+
+
   
   /**
    * Generic Macro for creating data

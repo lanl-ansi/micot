@@ -12,6 +12,7 @@ import gov.lanl.micot.infrastructure.ep.application.ac.ACSimulationApplication;
 import gov.lanl.micot.infrastructure.ep.io.ElectricPowerModelFileFactory;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.simulate.powerworld.JSONResultExporter;
+import gov.lanl.micot.infrastructure.ep.simulate.powerworld.PowerworldSimulatorFlags;
 import gov.lanl.micot.infrastructure.project.ApplicationConfiguration;
 import gov.lanl.micot.infrastructure.project.JsonConfigurationUtilities;
 import gov.lanl.micot.infrastructure.project.JsonProjectConfigurationReader;
@@ -48,8 +49,7 @@ public class RunPowerworld {
   public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
     Timer timer = new Timer();
     timer.startTimer();
-    
-    
+        
     // associates raw files with Powerworld
     ElectricPowerModelFileFactory.registerExtension("raw",Class.forName("gov.lanl.micot.infrastructure.ep.io.powerworld.PowerworldModelFile"));
     
@@ -94,7 +94,16 @@ public class RunPowerworld {
     // simulator configuration
     SimulatorConfiguration simulatorConfiguration = new SimulatorConfiguration();
     simulatorConfiguration.setSimulatorFactoryClass(gov.lanl.micot.infrastructure.ep.simulate.powerworld.PowerworldSimulatorFactory.class.getCanonicalName());
+    simulatorConfiguration.addSimulatorFlag(PowerworldSimulatorFlags.CHECK_PHASE_SHIFTERS_FLAG, false);
+    simulatorConfiguration.addSimulatorFlag(PowerworldSimulatorFlags.CHECK_SHUNTS_FLAG, false);
+    simulatorConfiguration.addSimulatorFlag(PowerworldSimulatorFlags.CHECK_SVC_FLAG, false);
+    simulatorConfiguration.addSimulatorFlag(PowerworldSimulatorFlags.CHECK_TAPS_FLAG, false);
+    simulatorConfiguration.addSimulatorFlag(PowerworldSimulatorFlags.CHECK_AREA_FLAG, false);
+    simulatorConfiguration.addSimulatorFlag(PowerworldSimulatorFlags.CHECK_MVAR_LIMITS_FLAG, false);
+    simulatorConfiguration.addSimulatorFlag(PowerworldSimulatorFlags.CHECK_MW_LIMITS_FLAG, false);
+    
     configuration.addSimulatorConfiguration(simulatorConfiguration);
+    
     
     // application configuration
     ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration();

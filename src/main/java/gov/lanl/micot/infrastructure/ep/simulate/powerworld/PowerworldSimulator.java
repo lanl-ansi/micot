@@ -33,11 +33,19 @@ import gov.lanl.micot.util.io.dcom.ComObjectUtilities;
  */
 public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
 
-  private boolean debug = false;
+  private boolean debug = true;
   private String preOutputModelFile  = "preTemp.pwb";
   private String postOutputModelFile = "postTemp.pwb";
   private String tempModelFile       = "temp.pwb"; 
-    
+  
+  private boolean checkPhaseShifters = false; 
+  private boolean checkShunts = false;
+  private boolean checkSVC = false; 
+  private boolean checkTaps = false; 
+  private boolean checkArea = false; 
+  private boolean checkMVarLimits = false; 
+  private boolean checkMWLimits = false;   
+  
   /**
    * Constructor
    * 
@@ -69,8 +77,31 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
   	PowerworldModelFactory factory = PowerworldModelFactory.getInstance();
   	PowerworldModel powerWorldModel = factory.constructPowerworldModel(model);
   	ComObject powerworld = powerWorldModel.getPowerworld();
-	
-  	if (debug) {
+	  	 
+  	// turn off simulator control logic
+  	String[] fields = new String[] { PowerworldIOConstants.SIMULATION_OPTION_CHECK_SHUNTS, 
+  	                                 PowerworldIOConstants.SIMULATION_OPTION_PHASE_SHIFTERS,
+  	                                 PowerworldIOConstants.SIMULATION_OPTION_CHECK_SVC,
+                                     PowerworldIOConstants.SIMULATION_OPTION_CHECK_TAPS,
+                                     PowerworldIOConstants.SIMULATION_OPTION_CHECK_AREA,
+                                     PowerworldIOConstants.SIMULATION_OPTION_CHECK_MVAR_LIMITS,
+                                     PowerworldIOConstants.SIMULATION_OPTION_CHECK_MW_LIMITS
+  	                               };
+  	
+  	String[] values = new String[] {    checkShunts == false ? PowerworldIOConstants.SIMULATION_OPTION_NO : PowerworldIOConstants.SIMULATION_OPTION_YES,
+  	                                    checkPhaseShifters == false ? PowerworldIOConstants.SIMULATION_OPTION_NO : PowerworldIOConstants.SIMULATION_OPTION_YES, 
+  	                                    checkSVC == false ? PowerworldIOConstants.SIMULATION_OPTION_NO : PowerworldIOConstants.SIMULATION_OPTION_YES, 
+  	                                    checkTaps == false ? PowerworldIOConstants.SIMULATION_OPTION_NO : PowerworldIOConstants.SIMULATION_OPTION_YES, 
+  	                                    checkArea == false ? PowerworldIOConstants.SIMULATION_OPTION_NO : PowerworldIOConstants.SIMULATION_OPTION_YES, 
+  	                                    checkMVarLimits == true ? PowerworldIOConstants.SIMULATION_OPTION_NO : PowerworldIOConstants.SIMULATION_OPTION_YES, 
+  	                                    checkMWLimits == false ? PowerworldIOConstants.SIMULATION_OPTION_NO : PowerworldIOConstants.SIMULATION_OPTION_YES, 
+  	                               };
+
+  	
+  	String command = PowerworldIOConstants.createCreateDataCommand(PowerworldIOConstants.SIM_SOLUTION_OPTIONS, fields, values);
+  	powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, command);
+  
+    if (debug) {
       PowerworldModelFile mf = new PowerworldModelFile();
       try {
         mf.saveFile(preOutputModelFile, powerWorldModel);
@@ -79,7 +110,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
         e.printStackTrace();
       }
     }
-  	  	
+  	
   	// go into run mode
   	String scriptcommand = PowerworldIOConstants.RUN_MODE;
   	ComDataObject object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
@@ -91,45 +122,12 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
 
   	// run the power flow solve
     SimulatorSolveState s = SimulatorSolveState.CONVERGED_SOLUTION;
-//  	scriptcommand = PowerworldIOConstants.POWER_FLOW_COMMAND_RECT_NEWTON;
-  //	object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
-  //	o = object.getArrayValue();
-   // errorString = o.get(0).getStringValue();
     boolean ok = simulateACNormal(powerworld);
 
     if (!ok) {
       System.err.println("Trying robust solver");
       s = SimulatorSolveState.ERROR_SOLUTION;
       ok = simulateACRobust(powerworld, powerWorldModel);
-
-
-      // drop into robust solving if first solve fails, and do a flat restart
-//      scriptcommand = PowerworldIOConstants.RESET_TO_FLAT_START;
-  //    object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
-    //  o = object.getArrayValue();
-     // errorString = o.get(0).getStringValue();
-      //if (!errorString.equals("")) {
-      //  System.err.println("Error running flat start: " + errorString);
-      //}
-            
-      //scriptcommand = PowerworldIOConstants.POWER_FLOW_COMMAND_RECT_NEWTON;
-      //object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
-      //o = object.getArrayValue();
-      //errorString = o.get(0).getStringValue();
-      //if (!errorString.equals("")) {
-        //System.err.println("Robust PowerFlow Simulation Failed: " + errorString);
-        //s = SimulatorSolveState.ERROR_SOLUTION;
-        
-        //if (debug) {
-          //PowerworldModelFile mf = new PowerworldModelFile();
-          //try {
-          //  mf.saveFile(postOutputModelFile, powerWorldModel);
-         // }
-          //catch (IOException e) {
-           // e.printStackTrace();
-         // }
-       // }
-     // }
     }
     else {
       s = SimulatorSolveState.CONVERGED_SOLUTION;
@@ -149,7 +147,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
     }
 
     // get the flows and losses
-    String fields[] = new String[]{
+    fields = new String[]{
     		PowerworldIOConstants.BRANCH_BUS_FROM_NUM, 
     		PowerworldIOConstants.BRANCH_BUS_TO_NUM, 
     		PowerworldIOConstants.BRANCH_NUM, 
@@ -167,7 +165,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
     
     for (ElectricPowerFlowConnection line : branches) {
     	Triple<Integer,Integer,Integer> legacyid = powerWorldModel.getConnectionId(line);
-      String values[] = new String[] {legacyid.getOne()+"", legacyid.getTwo()+"", legacyid.getThree()+"", "", "", "", "", "", "", ""};
+      values = new String[] {legacyid.getOne()+"", legacyid.getTwo()+"", legacyid.getThree()+"", "", "", "", "", "", "", ""};
           
       ComDataObject dataObject = powerworld.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.BRANCH, fields, values);
       ArrayList<ComDataObject> branchData = dataObject.getArrayValue();
@@ -213,7 +211,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
 
     for (Bus bus : model.getBuses()) {
     	Object id = powerWorldModel.getBusId(bus);
-    	String values[] = null;
+    	values = null;
     	String type = null;
     	
     	if (bus.getAttribute(PowerworldModelConstants.POWERWORLD_BUS_CATEGORY_KEY,String.class).equals(PowerworldModelConstants.POWER_WORLD_DC_BUS_CAT)) {
@@ -265,7 +263,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
     for (Generator generator : model.getGenerators()) {
       Bus bus = model.getNode(generator).getBus();
     	Pair<Integer,Integer> id = powerWorldModel.getGeneratorId(generator);
-      String values[] = new String[] {id.getLeft()+"", id.getRight()+"", "", "", ""};
+      values = new String[] {id.getLeft()+"", id.getRight()+"", "", "", ""};
       
       ComDataObject dataObject = powerworld.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.GENERATOR, fields, values);
       ArrayList<ComDataObject> genData = dataObject.getArrayValue();
@@ -302,9 +300,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
     
     for (DCVoltageSourceLine line : model.getDCVoltageSourceLines()) {
       String name = line.getAttribute(DCVoltageSourceLine.NAME_KEY, String.class);
-      String values[] = new String[] {
-          name, 
-          "", "", "", "", ""};
+      values = new String[] { name, "", "", "", "", "" };
           
       ComDataObject dataObject = powerworld.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.DC_VOLTAGE_SOURCE, fields, values);
       ArrayList<ComDataObject> branchData = dataObject.getArrayValue();
@@ -354,7 +350,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
     
     for (DCTwoTerminalLine line : model.getDCTwoTerminalLines()) {
       Triple<Integer,Integer,Integer> legacyid = powerWorldModel.getConnectionId(line);
-      String values[] = new String[] {
+      values = new String[] {
           legacyid.getOne()+"", 
           legacyid.getTwo()+"", legacyid.getThree()+"", 
           "", "", "", "", ""};
@@ -546,5 +542,63 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
     return errorString.equals("");    
   }
 
+  /**
+   * Set the check phase shifter parameter
+   * @param checkPhaseShifters
+   */
+  public void setCheckPhaseShifters(boolean checkPhaseShifters) {
+    this.checkPhaseShifters = checkPhaseShifters;
+  }
+
+  /**
+   * Set the check shunts parameter
+   * @param checkShunts
+   */
+  public void setCheckShunts(boolean checkShunts) {
+    this.checkShunts = checkShunts;
+  }
+
+  /**
+   * Set the check SVC parameter
+   * @param checkSVC
+   */
+  public void setCheckSVC(boolean checkSVC) {
+    this.checkSVC = checkSVC;
+  }
+
+  /**
+   * Set the check taps parameter
+   * @param checkTaps
+   */
+  public void setCheckTaps(boolean checkTaps) {
+    this.checkTaps = checkTaps;
+  }
+
+  /**
+   * Set the check area parameter
+   * @param checkArea
+   */
+  public void setCheckArea(boolean checkArea) {
+    this.checkArea = checkArea;
+  }
+
+  /**
+   * Set the check mvar limits parameter
+   * @param checkMVarLimits
+   */
+  public void setCheckMVarLimits(boolean checkMVarLimits) {
+    this.checkMVarLimits = checkMVarLimits;
+  }
+
+  /**
+   * Set the check mw limits parameter
+   * @param checkMWLimits
+   */
+  public void setCheckMWLimits(boolean checkMWLimits) {
+    this.checkMWLimits = checkMWLimits;
+  }
+
+  
+  
   
 }

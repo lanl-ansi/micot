@@ -27,8 +27,15 @@ public class PowerworldSimulatorFactory implements SimulatorFactory<ElectricPowe
 	
 	@Override
 	public PowerworldSimulator createSimulator(SimulatorFlags flags) throws IOException {
-	  PowerworldSimulatorFlags ieissFlags = new PowerworldSimulatorFlags(flags);
+	  PowerworldSimulatorFlags powerworldFlags = new PowerworldSimulatorFlags(flags);
 	  PowerworldSimulator simulator = new PowerworldSimulator();
+	  simulator.setCheckArea(powerworldFlags.getBoolean(PowerworldSimulatorFlags.CHECK_AREA_FLAG));
+    simulator.setCheckMVarLimits(powerworldFlags.getBoolean(PowerworldSimulatorFlags.CHECK_MVAR_LIMITS_FLAG));
+    simulator.setCheckMWLimits(powerworldFlags.getBoolean(PowerworldSimulatorFlags.CHECK_MW_LIMITS_FLAG));
+    simulator.setCheckPhaseShifters(powerworldFlags.getBoolean(PowerworldSimulatorFlags.CHECK_PHASE_SHIFTERS_FLAG));
+    simulator.setCheckShunts(powerworldFlags.getBoolean(PowerworldSimulatorFlags.CHECK_SHUNTS_FLAG));
+    simulator.setCheckSVC(powerworldFlags.getBoolean(PowerworldSimulatorFlags.CHECK_SVC_FLAG));
+    simulator.setCheckTaps(powerworldFlags.getBoolean(PowerworldSimulatorFlags.CHECK_TAPS_FLAG));
 		return simulator;
 	}
 	
