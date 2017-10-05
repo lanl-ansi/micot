@@ -16,6 +16,7 @@ import gov.lanl.micot.infrastructure.ep.model.Generator;
 import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldModel;
 import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldModelConstants;
 import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldModelFactory;
+import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldThreeWindingTransformerFactory;
 import gov.lanl.micot.infrastructure.ep.simulate.ElectricPowerSimulatorImpl;
 import gov.lanl.micot.infrastructure.model.Component;
 import gov.lanl.micot.infrastructure.model.FlowConnection;
@@ -110,9 +111,14 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
         e.printStackTrace();
       }
     }
-  	
+  	    
+    // the setting of data creates a feedback loop with powerworld where the same
+    // data is updated. This slows things down and also resets some simulation results
+    // to base case
+    powerWorldModel.removeModelListener(powerWorldModel);    
+    
   	// go into run mode
-  	String scriptcommand = PowerworldIOConstants.RUN_MODE;
+  	String scriptcommand = PowerworldIOConstants.POWERFLOW_MODE;
   	ComDataObject object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
   	ArrayList<ComDataObject> o = object.getArrayValue();
     String errorString = o.get(0).getStringValue();
@@ -130,7 +136,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       ok = simulateACRobust(powerworld, powerWorldModel);
     }
     else {
-      s = SimulatorSolveState.CONVERGED_SOLUTION;
+      s = SimulatorSolveState.CONVERGED_SOLUTION;      
     }
     
     if (!ok) {
@@ -145,7 +151,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
     if (ok) {
       s = SimulatorSolveState.CONVERGED_SOLUTION;
     }
-
+    
     // get the flows and losses
     fields = new String[]{
     		PowerworldIOConstants.BRANCH_BUS_FROM_NUM, 
@@ -257,7 +263,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
     fields = new String[]{PowerworldIOConstants.BUS_NUM, 
     		PowerworldIOConstants.GEN_NUM, 
     		PowerworldIOConstants.GEN_MVAR, 
-    		PowerworldIOConstants.GEN_MW, 
+    		PowerworldIOConstants.GEN_MW,
     		PowerworldIOConstants.GEN_VOLTAGE}; 
     
     for (Generator generator : model.getGenerators()) {
@@ -280,14 +286,11 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       double voltage = Double.parseDouble(voltageString.trim());
       double mvar = Double.parseDouble(mvarString.trim());
       double mw = Double.parseDouble(mwString.trim());
-      bus.setRemoteVoltagePU(voltage);
-//      generator.setDesiredVoltage(voltage);
       generator.setActualRealGeneration(mw);
       generator.setDesiredRealGeneration(mw);
       generator.setActualReactiveGeneration(mvar);
       generator.setDesiredReactiveGeneration(mvar);
     }
-    
 
     // get the flows on Voltage Source lines
     fields = new String[]{
@@ -332,10 +335,6 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       line.setActualStatus(status.toLowerCase().equals(PowerworldIOConstants.VOLTAGE_SOURCE_CLOSED));
       line.setDesiredStatus(status.toLowerCase().equals(PowerworldIOConstants.VOLTAGE_SOURCE_CLOSED));
     }
-
-    
-    
-    
     
     // get the flows on Two Terminal lines
     fields = new String[]{
@@ -386,6 +385,10 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       line.setDesiredStatus(status.toLowerCase().equals(PowerworldIOConstants.TWO_TERMINAL_CLOSED));
     }
 
+    // the setting of data creates a feedback loop with powerworld where the same
+    // data is updated. This slows things down and also resets some simulation results
+    // to base case
+    powerWorldModel.addModelListener(powerWorldModel);        
     return s;
   }
 
@@ -529,7 +532,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
     File file = new File(tempModelFile);
     file.delete();
 
-    String scriptcommand = PowerworldIOConstants.RUN_MODE;
+    String scriptcommand = PowerworldIOConstants.POWERFLOW_MODE;
     powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);
     scriptcommand = PowerworldIOConstants.POWER_FLOW_COMMAND_RECT_NEWTON;
     object = powerworld.callData(PowerworldIOConstants.RUN_SCRIPT_COMMAND, scriptcommand);

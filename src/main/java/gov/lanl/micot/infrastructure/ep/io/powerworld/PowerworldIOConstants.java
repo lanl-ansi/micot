@@ -198,6 +198,7 @@ public class PowerworldIOConstants {
 
   // powerworld modes
   public    static final String EDIT_MODE          = "EnterMode(EDIT)";
+  public    static final String POWERFLOW_MODE     = "Entermode(PowerFlow)";
   public    static final String RUN_MODE           = "EnterMode(RUN)";
   public    static final String CREATE_DATA        = "CreateData";
   public    static final String CREATE_FILTER      = "DATA (FILTER, [ObjectType,FilterName,FilterLogic,FilterPre,Enabled])";
