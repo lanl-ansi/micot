@@ -97,6 +97,11 @@ public class ScenarioLineRealPhaseCapacityConstraint extends ScenarioConstraintF
           else {
             constraint.setRightHandSide(-capacity * constant);            
           }
+          
+//          if (link.toString().equals("A_node701-702")) {
+  ///          System.out.println(constraint);
+     //     }
+          
           problem.addLinearConstraint(constraint);          
         }
 

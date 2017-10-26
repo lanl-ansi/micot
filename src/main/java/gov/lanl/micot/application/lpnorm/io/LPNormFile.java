@@ -100,11 +100,18 @@ public class LPNormFile implements ElectricPowerModelFile {
     }
     
     // create the loads
+    double defaultLineCapacity = 0.0;
     for (int i = 0; i < loadArray.size(); ++i) {
       JSONObject load = loadArray.getObject(i);
       String busid = load.getString(LPNormIOConstants.LOAD_BUS_ID_TAG);
       Load l = loadFactory.createLoad(load, buses.get(busid));
       model.addLoad(l, buses.get(busid));      
+      defaultLineCapacity += l.getAttribute(Load.DESIRED_REACTIVE_LOAD_A_KEY, Number.class).doubleValue()
+                          + l.getAttribute(Load.DESIRED_REACTIVE_LOAD_B_KEY, Number.class).doubleValue()
+                          + l.getAttribute(Load.DESIRED_REACTIVE_LOAD_C_KEY, Number.class).doubleValue()
+                          + l.getAttribute(Load.DESIRED_REAL_LOAD_A_KEY, Number.class).doubleValue()
+                          + l.getAttribute(Load.DESIRED_REAL_LOAD_B_KEY, Number.class).doubleValue()
+                          + l.getAttribute(Load.DESIRED_REAL_LOAD_C_KEY, Number.class).doubleValue();
     }
       
     HashMap<Integer, JSONObject> lineCodes = new HashMap<Integer,JSONObject>();
@@ -123,11 +130,11 @@ public class LPNormFile implements ElectricPowerModelFile {
       JSONObject lineCode = lineCodes.get(codeId);
       
       if (!isTransformer) {
-        Line l  = lineFactory.createLine(line, lineCode, buses.get(id1), buses.get(id2));
+        Line l  = lineFactory.createLine(line, lineCode, buses.get(id1), buses.get(id2), defaultLineCapacity);
         model.addEdge(l, model.getNode(buses.get(id1)), model.getNode(buses.get(id2)));    
       }        
       else {
-        Transformer l  = transformerFactory.createTransformer(line, lineCode, buses.get(id1), buses.get(id2));
+        Transformer l  = transformerFactory.createTransformer(line, lineCode, buses.get(id1), buses.get(id2), defaultLineCapacity);
         model.addEdge(l, model.getNode(buses.get(id1)), model.getNode(buses.get(id2)));
       }
     }        

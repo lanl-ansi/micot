@@ -85,7 +85,7 @@ public class ScenarioRealPhaseBalanceConstraint extends ScenarioConstraintFactor
           }
         }
         if (constraint.getNumberOfVariables() > 0) {
-          problem.addLinearConstraint(constraint);
+          problem.addLinearConstraint(constraint);          
         }
 
         // Phase B

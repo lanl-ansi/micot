@@ -291,6 +291,20 @@ public class JsonResultExporter {
        boolean in_use = connection.getAttribute(AlgorithmConstants.IS_USED_KEY, ScenarioAttribute.class).getValue(scenario).intValue() == 1 ? true : false;
          
        lineBuilder = lineBuilder.add(IN_USE_TAG, in_use);
+       
+       JSONArrayBuilder realBuilder = JSON.getDefaultJSON().createArrayBuilder();
+       realBuilder.add(MWA);
+       realBuilder.add(MWB);
+       realBuilder.add(MWC);
+       
+       JSONArrayBuilder reactiveBuilder = JSON.getDefaultJSON().createArrayBuilder();
+       reactiveBuilder.add(MVARA);
+       reactiveBuilder.add(MVARB);
+       reactiveBuilder.add(MVARC);
+       
+       lineBuilder = lineBuilder.add(REAL_LOAD_TAG, realBuilder);
+       lineBuilder = lineBuilder.add(REACTIVE_LOAD_TAG, reactiveBuilder);
+       
        arrayBuilder = arrayBuilder.add(lineBuilder);
      }
      return builder.add(LINES_TAG,arrayBuilder);

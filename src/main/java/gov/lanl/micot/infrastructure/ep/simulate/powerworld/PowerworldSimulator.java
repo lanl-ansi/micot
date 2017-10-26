@@ -16,7 +16,6 @@ import gov.lanl.micot.infrastructure.ep.model.Generator;
 import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldModel;
 import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldModelConstants;
 import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldModelFactory;
-import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldThreeWindingTransformerFactory;
 import gov.lanl.micot.infrastructure.ep.simulate.ElectricPowerSimulatorImpl;
 import gov.lanl.micot.infrastructure.model.Component;
 import gov.lanl.micot.infrastructure.model.FlowConnection;
@@ -34,7 +33,7 @@ import gov.lanl.micot.util.io.dcom.ComObjectUtilities;
  */
 public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
 
-  private boolean debug = true;
+  private boolean debug = false;
   private String preOutputModelFile  = "preTemp.pwb";
   private String postOutputModelFile = "postTemp.pwb";
   private String tempModelFile       = "temp.pwb"; 
@@ -385,9 +384,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       line.setDesiredStatus(status.toLowerCase().equals(PowerworldIOConstants.TWO_TERMINAL_CLOSED));
     }
 
-    // the setting of data creates a feedback loop with powerworld where the same
-    // data is updated. This slows things down and also resets some simulation results
-    // to base case
+    // reactivate the listener for going back to powerworld
     powerWorldModel.addModelListener(powerWorldModel);        
     return s;
   }

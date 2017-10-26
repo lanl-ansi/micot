@@ -9,8 +9,10 @@ import java.util.Stack;
 import gov.lanl.micot.application.lpnorm.io.LPNormIOConstants;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.application.rdt.algorithm.ep.mip.variable.scenario.ScenarioVariableFactoryUtility;
+import gov.lanl.micot.infrastructure.ep.model.Bus;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
+import gov.lanl.micot.infrastructure.ep.model.Generator;
 import gov.lanl.micot.infrastructure.ep.model.Load;
 import gov.lanl.micot.infrastructure.model.FlowConnection;
 import gov.lanl.micot.infrastructure.model.Node;
@@ -46,8 +48,10 @@ public class RDTDataValidator {
     checkLoadData(model);
     checkCycles(model);
     checkIslands(model);
+    checkLoadBalance(model);
     
     System.out.println("Data Validation Checks on RDT completed.");
+    
   }
 
   /**
@@ -108,7 +112,7 @@ public class RDTDataValidator {
       System.out.println("Data Validation Checks on Load completed... fail");
       System.out.println("\tThere is no load in the system. RDT will not build or operate anything");
     }
-    
+        
     return totalLoad > 0.0;
   }
 
@@ -269,5 +273,83 @@ public class RDTDataValidator {
     }    
     return islands.size() == 1;
   }
+
+  /**
+   * Checks to see if there are any loads
+   * @param model
+   * @return
+   */
+  private boolean checkLoadBalance(ElectricPowerModel model) {       
+    double totalRealLoadA = 0.0;
+    double totalRealLoadB = 0.0;
+    double totalRealLoadC = 0.0;
+       
+    double totalReactiveLoadA = 0.0;
+    double totalReactiveLoadB = 0.0;
+    double totalReactiveLoadC = 0.0;
+
+    for (Load load : model.getLoads()) {
+      totalReactiveLoadA += load.getAttribute(Load.DESIRED_REACTIVE_LOAD_A_KEY, Double.class);
+      totalReactiveLoadB += load.getAttribute(Load.DESIRED_REACTIVE_LOAD_B_KEY, Double.class);
+      totalReactiveLoadC += load.getAttribute(Load.DESIRED_REACTIVE_LOAD_C_KEY, Double.class);
+
+      totalRealLoadA += load.getAttribute(Load.DESIRED_REAL_LOAD_A_KEY, Double.class);
+      totalRealLoadB += load.getAttribute(Load.DESIRED_REAL_LOAD_B_KEY, Double.class);
+      totalRealLoadC += load.getAttribute(Load.DESIRED_REAL_LOAD_C_KEY, Double.class);
+    }
+    
+    double totalRealCapacityA = 0.0;
+    double totalRealCapacityB = 0.0;
+    double totalRealCapacityC = 0.0;
+    
+    double totalReactiveCapacityA = 0.0;
+    double totalReactiveCapacityB = 0.0;
+    double totalReactiveCapacityC = 0.0;
+    
+    
+    for (Generator generator : model.getGenerators()) {
+      double maxMicrogrid = generator.getAttribute(AlgorithmConstants.MAX_MICROGRID_KEY) == null ? 0.0 : generator.getAttribute(AlgorithmConstants.MAX_MICROGRID_KEY, Number.class).doubleValue();  
+      
+      totalRealCapacityA += generator.getDesiredRealGenerationMax() + maxMicrogrid;
+      totalRealCapacityB += generator.getDesiredRealGenerationMax() + maxMicrogrid;
+      totalRealCapacityC += generator.getDesiredRealGenerationMax() + maxMicrogrid;
+
+      totalReactiveCapacityA += generator.getDesiredReactiveMax() + maxMicrogrid;
+      totalReactiveCapacityB += generator.getDesiredReactiveMax() + maxMicrogrid;
+      totalReactiveCapacityC += generator.getDesiredReactiveMax() + maxMicrogrid;      
+    }
+    
+    if (totalRealCapacityA >= totalRealLoadA && totalRealCapacityB >= totalRealLoadB && totalRealCapacityC >= totalRealLoadC 
+        && totalReactiveCapacityA >= totalReactiveLoadA && totalReactiveCapacityB >= totalReactiveLoadB 
+        && totalReactiveCapacityC >= totalReactiveLoadC) {
+      System.out.println("Data Validation Checks on available generation completed... success");      
+      return true;
+    }
+    
+    System.out.println("Data Validation Checks on available generation completed... fail");
+    if (totalRealCapacityA < totalRealLoadA) {
+      System.out.println("\tAvailable existing and buildable real power capacity on phase A is smaller than phase A real power: " + totalRealCapacityA + " " + totalRealLoadA);      
+    }
+    if (totalRealCapacityB < totalRealLoadB) {
+      System.out.println("\tAvailable existing and buildable real power capacity on phase B is smaller than phase B real power: " + totalRealCapacityB + " " + totalRealLoadB);      
+    }
+    if (totalRealCapacityC < totalRealLoadC) {
+      System.out.println("\tAvailable existing and buildable real power capacity on phase C is smaller than phase C real power: " + totalRealCapacityC + " " + totalRealLoadC);      
+    }
+
+
+    if (totalReactiveCapacityA < totalReactiveLoadA) {
+      System.out.println("\tAvailable existing and buildable reactive power capacity on phase A is smaller than phase A reactive power: " + totalReactiveCapacityA + " " + totalReactiveLoadA);      
+    }
+    if (totalReactiveCapacityB < totalReactiveLoadB) {
+      System.out.println("\tAvailable existing and buildable reactive power capacity on phase B is smaller than phase B reactive power: " + totalReactiveCapacityB + " " + totalReactiveLoadB);      
+    }
+    if (totalReactiveCapacityC < totalReactiveLoadC) {
+      System.out.println("\tAvailable existing and buildable reactive power capacity on phase C is smaller than phase C reactive power: " + totalReactiveCapacityC + " " + totalReactiveLoadC);      
+    }
+    
+    return false;
+  }
+
   
 }

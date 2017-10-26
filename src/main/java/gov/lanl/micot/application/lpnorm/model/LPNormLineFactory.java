@@ -21,7 +21,7 @@ public class LPNormLineFactory extends LineFactory {
 
   private static final String LEGACY_TAG = "LPNORM";
   
-  private static final double DEFAULT_CAPACITY = 1e8;
+//  private static final double DEFAULT_CAPACITY = 1e2;
   private static final double DEFAULT_LENGTH = 1.0;
   private static final int DEFAULT_NUM_PHASES = 3;
   
@@ -37,8 +37,8 @@ public class LPNormLineFactory extends LineFactory {
 	 * @return
 	 * @throws MatPowerModelException 
 	 */
-	public Line createLine(JSONObject object, JSONObject lineCode, Bus fromBus, Bus toBus)  {	
-		Line line = constructLine(object, lineCode, fromBus, toBus);		
+	public Line createLine(JSONObject object, JSONObject lineCode, Bus fromBus, Bus toBus, double defaultCapacity)  {	
+		Line line = constructLine(object, lineCode, fromBus, toBus, defaultCapacity);		
 		return line;
 	}
 		
@@ -47,11 +47,11 @@ public class LPNormLineFactory extends LineFactory {
 	 * @param line
 	 * @return
 	 */
-	private Line constructLine(JSONObject object, JSONObject lineCode, Bus fromBus, Bus toBus) {
+	private Line constructLine(JSONObject object, JSONObject lineCode, Bus fromBus, Bus toBus, double defaultCapacity) {
     String legacyid = object.getString(LPNormIOConstants.LINE_ID_TAG);
     
     boolean status = true;
-    double capacity = object.containsKey(LPNormIOConstants.LINE_CAPACITY_TAG) ? object.getDouble(LPNormIOConstants.LINE_CAPACITY_TAG) : DEFAULT_CAPACITY;    
+    double capacity = object.containsKey(LPNormIOConstants.LINE_CAPACITY_TAG) ? object.getDouble(LPNormIOConstants.LINE_CAPACITY_TAG) : defaultCapacity;    
 		double length = object.containsKey(LPNormIOConstants.LINE_LENGTH_TAG) ? object.getDouble(LPNormIOConstants.LINE_LENGTH_TAG) : DEFAULT_LENGTH;
 		JSONArray rmatrix = lineCode.getArray(LPNormIOConstants.LINE_CODE_RMATRIX_TAG);
     JSONArray xmatrix = lineCode.getArray(LPNormIOConstants.LINE_CODE_XMATRIX_TAG);
