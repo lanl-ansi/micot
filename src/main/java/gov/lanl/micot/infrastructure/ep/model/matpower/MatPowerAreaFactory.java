@@ -47,8 +47,7 @@ public class MatPowerAreaFactory extends ControlAreaFactory {
 	  
   	// check to see if the area already exists
 	  ControlArea area = registerArea(legacyId);
-  	area.setActualStatus(true);
-  	area.setDesiredStatus(true);
+  	area.setStatus(true);
     return area;
 	}
 	
@@ -60,8 +59,7 @@ public class MatPowerAreaFactory extends ControlAreaFactory {
    */
   public ControlArea createArea(int legacyid) {
     ControlArea area = registerArea(legacyid);
-    area.setActualStatus(true);
-    area.setDesiredStatus(true);    
+    area.setStatus(true);
     return area;
   }
   

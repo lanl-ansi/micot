@@ -89,8 +89,7 @@ public class MatPowerLineFactory extends LineFactory {
     pfwLine.setCapacityRating(normalrating);
     pfwLine.setShortTermEmergencyCapacityRating(emergencyrating);
     pfwLine.setLongTermEmergencyCapacityRating(shortrating);
-    pfwLine.setDesiredStatus(status == 1 ? true : false);
-    pfwLine.setActualStatus(pfwLine.getDesiredStatus());
+    pfwLine.setStatus(status == 1 ? true : false);
     pfwLine.setMWFlow(0.0);
     pfwLine.setMVarFlow(0.0);
 		if (points == null) {
@@ -138,8 +137,7 @@ public class MatPowerLineFactory extends LineFactory {
     pfwLine.setCapacityRating(line.getCapacityRating());
     pfwLine.setShortTermEmergencyCapacityRating(line.getShortTermEmergencyCapacityRating());
     pfwLine.setLongTermEmergencyCapacityRating(line.getLongTermEmergencyCapacityRating());
-    pfwLine.setDesiredStatus(line.getDesiredStatus());
-    pfwLine.setActualStatus(pfwLine.getDesiredStatus());
+    pfwLine.setStatus(line.getStatus());
     pfwLine.setAttribute(MatPowerModelConstants.MATPOWER_MIN_ANGLE_DIFFERENCE_KEY, line.getAttribute(MatPowerModelConstants.MATPOWER_MIN_ANGLE_DIFFERENCE_KEY));
 	  pfwLine.setAttribute(MatPowerModelConstants.MATPOWER_MAX_ANGLE_DIFFERENCE_KEY, line.getAttribute(MatPowerModelConstants.MATPOWER_MAX_ANGLE_DIFFERENCE_KEY));
 	  return pfwLine;	  

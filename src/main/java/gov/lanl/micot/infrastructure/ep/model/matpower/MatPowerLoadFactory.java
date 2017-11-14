@@ -66,8 +66,7 @@ public class MatPowerLoadFactory extends LoadFactory {
   	load.setAttribute(Load.LOAD_NAME_KEY, name);
     load.setDesiredRealLoad(realLoad);
     load.setDesiredReactiveLoad(reactiveLoad);
-    load.setDesiredStatus(true);
-    load.setActualStatus(true);
+    load.setStatus(true);
     load.setActualRealLoad(realLoad);
     load.setActualReactiveLoad(reactiveLoad);
   	load.setCoordinate(point == null ? new PointImpl(0,0) : point);

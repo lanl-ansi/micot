@@ -16,17 +16,8 @@ import java.util.Vector;
  */
 public class CDFIntertieFactory extends IntertieFactory {
 
-//	private static CDFIntertieFactory instance            = null;
-
 	private static final String LEGACY_TAG = "CDF";
 	
-	//public static CDFIntertieFactory getInstance() {
-	//	if (instance == null) {
-		//	instance = new CDFIntertieFactory();
-	//	}
-	//	return instance;
-	//}
-
 	/**
 	 * Constructor
 	 */
@@ -62,8 +53,7 @@ public class CDFIntertieFactory extends IntertieFactory {
   	// check to see if the area already exists
   	Intertie intertie = registerIntertie(meterBus, nonMeterBus, circuit);
     intertie.setAttribute(Intertie.CIRCUIT_KEY, circuit);
-    intertie.setDesiredStatus(true);
-    intertie.setActualStatus(true);
+    intertie.setStatus(true);
   	
   	if (points == null) {
 			points = new Vector<Point>();

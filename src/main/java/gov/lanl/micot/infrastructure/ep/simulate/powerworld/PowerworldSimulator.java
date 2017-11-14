@@ -59,17 +59,14 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
   protected SimulatorSolveState simulateModel(ElectricPowerModel model) {
   	for (Bus bus : model.getBuses()) {
 			ElectricPowerNode node = model.getNode(bus);
-  		if (!bus.getActualStatus() || !bus.getDesiredStatus()) {
+  		if (!bus.getStatus()) {
   			for (Component asset : node.getComponents(Component.class)) {
-  				asset.setDesiredStatus(false);
-  				asset.setActualStatus(false);  				
+  				asset.setStatus(false);
   			}
   			
   			for (FlowConnection connection : model.getFlowConnections(node)) {
-  			  connection.setActualStatus(false);
-          connection.setDesiredStatus(false);
-  			}
-  			
+  			  connection.setStatus(false);
+  			}  			
   		}  		
   	}
 
@@ -205,8 +202,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       line.setAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE2_KEY, reactiveTo);
       line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE1_KEY, realFrom);
       line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE2_KEY, realTo);
-      line.setActualStatus(status.toLowerCase().equals(PowerworldIOConstants.BRANCH_CLOSED));
-      line.setDesiredStatus(status.toLowerCase().equals(PowerworldIOConstants.BRANCH_CLOSED));
+      line.setStatus(status.toLowerCase().equals(PowerworldIOConstants.BRANCH_CLOSED));
     }
 
     // get the bus data
@@ -331,8 +327,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       line.setAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE2_KEY, reactiveTo);
       line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE1_KEY, realFrom);
       line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE2_KEY, realTo);
-      line.setActualStatus(status.toLowerCase().equals(PowerworldIOConstants.VOLTAGE_SOURCE_CLOSED));
-      line.setDesiredStatus(status.toLowerCase().equals(PowerworldIOConstants.VOLTAGE_SOURCE_CLOSED));
+      line.setStatus(status.toLowerCase().equals(PowerworldIOConstants.VOLTAGE_SOURCE_CLOSED));
     }
     
     // get the flows on Two Terminal lines
@@ -380,8 +375,7 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       line.setAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE2_KEY, reactiveTo);
       line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE1_KEY, realFrom);
       line.setAttribute(ElectricPowerFlowConnection.MW_FLOW_SIDE2_KEY, realTo);
-      line.setActualStatus(status.toLowerCase().equals(PowerworldIOConstants.TWO_TERMINAL_CLOSED));
-      line.setDesiredStatus(status.toLowerCase().equals(PowerworldIOConstants.TWO_TERMINAL_CLOSED));
+      line.setStatus(status.toLowerCase().equals(PowerworldIOConstants.TWO_TERMINAL_CLOSED));
     }
 
     // reactivate the listener for going back to powerworld

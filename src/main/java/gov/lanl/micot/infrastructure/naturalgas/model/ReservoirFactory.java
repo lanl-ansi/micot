@@ -42,8 +42,7 @@ public abstract class ReservoirFactory {
   protected void initializeReservoir(Reservoir reservoir, Junction junction, double cfd) {
     String name = junction.getAttribute(Junction.NAME_KEY, String.class);
     reservoir.setCoordinate(junction.getCoordinate());
-    reservoir.setDesiredStatus(true);
-    reservoir.setActualStatus(true);
+    reservoir.setStatus(true);
     reservoir.setDesiredProduction(cfd);
     reservoir.setActualProduction(cfd);
     reservoir.setAttribute(Reservoir.RESERVOIR_NAME_KEY, name);

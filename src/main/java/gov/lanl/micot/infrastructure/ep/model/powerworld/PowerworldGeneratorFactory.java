@@ -93,8 +93,7 @@ public class PowerworldGeneratorFactory extends GeneratorFactory {
     bus.setRemoteVoltagePU(remoteVoltage);
     
     generator.setType(GeneratorTypeEnum.HOLD_VOLTAGE_TYPE);    
-    generator.setDesiredStatus(statusString.equalsIgnoreCase(PowerworldIOConstants.GEN_CLOSED));
-    generator.setActualStatus(generator.getDesiredStatus());   
+    generator.setStatus(statusString.equalsIgnoreCase(PowerworldIOConstants.GEN_CLOSED));
     generator.setAttribute(Generator.FUEL_TYPE_KEY, fuelType);
     generator.setAttribute(Generator.MVA_BASE_KEY, mvaBase);
     generator.setActualRealGeneration(mw);

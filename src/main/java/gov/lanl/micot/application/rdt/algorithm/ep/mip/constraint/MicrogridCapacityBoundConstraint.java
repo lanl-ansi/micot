@@ -50,7 +50,7 @@ public class MicrogridCapacityBoundConstraint implements ConstraintFactory {
         boolean isNew = generator.getAttribute(AlgorithmConstants.IS_NEW_MICROGRID_KEY) != null && generator.getAttribute(AlgorithmConstants.IS_NEW_MICROGRID_KEY, Boolean.class);                
 
         
-        if (!generator.getActualStatus() || !isNew) {
+        if (!generator.getStatus() || !isNew) {
           continue;
         }
       

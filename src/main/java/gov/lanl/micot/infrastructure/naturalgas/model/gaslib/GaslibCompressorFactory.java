@@ -119,8 +119,7 @@ public class GaslibCompressorFactory extends CompressorFactory {
     compressor.setInitialCompressionRatio(maxRatio); 
     compressor.setFlow(0.0);						 
     compressor.setCapacity(Double.MAX_VALUE);
-    compressor.setActualStatus(true);
-    compressor.setDesiredStatus(true);
+    compressor.setStatus(true);
     
     Vector<Point> points = new Vector<Point>();
     points.add(fromJunction.getCoordinate());
@@ -172,21 +171,6 @@ public class GaslibCompressorFactory extends CompressorFactory {
    }
    return compressor;
  }
- 
- /**
-  * Find an unused id number
-  * 
-  * @return
-  */
-// private String findUnusedId() {
-  // GaslibPipeFactory factory = GaslibPipeFactory.getInstance();   
-   //for (int i = 0; i < Integer.MAX_VALUE; ++i) {
-     //if (getLegacy(LEGACY_TAG, i+"") == null && factory.getLegacy(LEGACY_TAG, i+"") == null) {
-       //return i+"";
-     //}
-  // }
-   //throw new RuntimeException("Error: Cannot find an unused id");
- //}
  
  @Override
  protected Compressor getLegacy(String legacyTag, Object key) {

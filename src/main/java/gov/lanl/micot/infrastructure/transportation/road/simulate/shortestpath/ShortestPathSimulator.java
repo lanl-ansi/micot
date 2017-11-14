@@ -70,16 +70,16 @@ public class ShortestPathSimulator extends RoadSimulatorImpl {
     }
 	  	  
 	  
-	  for (Road road : roadModel.getRoads()) {
-	  	road.setActualStatus(road.getDesiredStatus());
-	  }
+//	  for (Road road : roadModel.getRoads()) {
+	//  	road.setActualStatus(road.getDesiredStatus());
+	 // }
 	  
 	  for (RoadNode node : roadModel.getNodes()) {
 	  	Intersection intersection = node.getIntersection();
-	  	intersection.setActualStatus(intersection.getDesiredStatus());
-	  	if (!intersection.getActualStatus()) {
+	  //	intersection.setActualStatus(intersection.getDesiredStatus());
+	  	if (!intersection.getStatus()) {
 	  		for (Road road : roadModel.getRoads(node)) {
-	  			road.setActualStatus(false);
+	  			road.setStatus(false);
 	  		}
 	  	}
 	  }
@@ -95,7 +95,7 @@ public class ShortestPathSimulator extends RoadSimulatorImpl {
 	  
 	  // TODO should these be bi-directional?
 	  for (Road road : roadModel.getRoads()) {
-	  	if (road.getActualStatus()) {
+	  	if (road.getStatus()) {
 	  		graph.addEdge(road, roadModel.getFirstNode(road), roadModel.getSecondNode(road));
 	  		weights.put(road, road.getLength());
 	  	}

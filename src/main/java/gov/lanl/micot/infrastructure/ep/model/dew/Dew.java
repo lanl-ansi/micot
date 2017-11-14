@@ -401,7 +401,7 @@ public class Dew {
     DewLegacyId legacyid = bus.getAttribute(DewVariables.DEW_LEGACY_ID_KEY, DewLegacyId.class);    
     String name = bus.getAttribute(Bus.NAME_KEY, String.class);
     boolean isFailed = Integer.parseInt(getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
-    boolean status = Integer.parseInt(getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
+    boolean status = Integer.parseInt(getComponentData(Asset.STATUS_KEY, legacyid, name).toString()) == 1;
     double x = Double.parseDouble(getComponentData(DewVariables.DEW_X_KEY, legacyid, name).toString());
     double y = Double.parseDouble(getComponentData(DewVariables.DEW_Y_KEY, legacyid, name).toString());
     Point point = new PointImpl(x,y);              
@@ -412,7 +412,7 @@ public class Dew {
       setComponentData(Asset.IS_FAILED_KEY, legacyid, name, actualFailed ? 1 : 0);
     }    
     if (actualStatus != status) {
-      setComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name, actualStatus ? 1 : 0);
+      setComponentData(Asset.STATUS_KEY, legacyid, name, actualStatus ? 1 : 0);
     }
     if (!bus.getCoordinate().equals(point)) {
       setComponentData(Bus.VOLTAGE_PU_KEY, legacyid, name, bus.getCoordinate());
@@ -466,7 +466,7 @@ public class Dew {
     DewLegacyId legacyid = generator.getAttribute(DewVariables.DEW_LEGACY_ID_KEY, DewLegacyId.class);    
     String name = generator.getAttribute(Generator.NAME_KEY, String.class);
     boolean isFailed = Integer.parseInt(getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
-    boolean status = Integer.parseInt(getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
+    boolean status = Integer.parseInt(getComponentData(Asset.STATUS_KEY, legacyid, name).toString()) == 1;
     double x = Double.parseDouble(getComponentData(DewVariables.DEW_X_KEY, legacyid, name).toString());
     double y = Double.parseDouble(getComponentData(DewVariables.DEW_Y_KEY, legacyid, name).toString());
     int numPhases = Integer.parseInt(getComponentData(Generator.NUM_PHASE_KEY, legacyid, name).toString());
@@ -485,7 +485,7 @@ public class Dew {
       setComponentData(Asset.IS_FAILED_KEY, legacyid, name, actualFailed ? 1 : 0);
     }    
     if (actualStatus != status) {
-      setComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name, actualStatus ? 1 : 0);
+      setComponentData(Asset.STATUS_KEY, legacyid, name, actualStatus ? 1 : 0);
     }
     if (!generator.getAttribute(Generator.NUM_PHASE_KEY).equals(numPhases)) {
       setComponentData(Generator.NUM_PHASE_KEY, legacyid, name, generator.getAttribute(Generator.NUM_PHASE_KEY));
@@ -506,7 +506,7 @@ public class Dew {
     DewLegacyId legacyid = load.getAttribute(DewVariables.DEW_LEGACY_ID_KEY, DewLegacyId.class);    
     String name = load.getAttribute(Load.LOAD_NAME_KEY, String.class);
     boolean isFailed = Integer.parseInt(getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
-    boolean status = Integer.parseInt(getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
+    boolean status = Integer.parseInt(getComponentData(Asset.STATUS_KEY, legacyid, name).toString()) == 1;
     double x = Double.parseDouble(getComponentData(DewVariables.DEW_X_KEY, legacyid, name).toString());
     double y = Double.parseDouble(getComponentData(DewVariables.DEW_Y_KEY, legacyid, name).toString());
     int numPhases = Integer.parseInt(getComponentData(Load.NUM_PHASE_KEY, legacyid, name).toString());
@@ -524,7 +524,7 @@ public class Dew {
       setComponentData(Asset.IS_FAILED_KEY, legacyid, name, actualFailed ? 1 : 0);
     }    
     if (actualStatus != status) {
-      setComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name, actualStatus ? 1 : 0);
+      setComponentData(Asset.STATUS_KEY, legacyid, name, actualStatus ? 1 : 0);
     }
     if (!load.getAttribute(Generator.NUM_PHASE_KEY).equals(numPhases)) {
       setComponentData(Generator.NUM_PHASE_KEY, legacyid, name, load.getAttribute(Generator.NUM_PHASE_KEY));
@@ -558,7 +558,7 @@ public class Dew {
     DewLegacyId legacyid = line.getAttribute(DewVariables.DEW_LEGACY_ID_KEY, DewLegacyId.class);  
     Object obj = getComponentData(Bus.NAME_KEY, legacyid, null);
     String name = obj == null ? "" : obj.toString();
-    boolean status = Integer.parseInt(getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
+    boolean status = Integer.parseInt(getComponentData(Asset.STATUS_KEY, legacyid, name).toString()) == 1;
     boolean isFailed = Integer.parseInt(getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
     ArrayList<Point> points = (ArrayList<Point>) getComponentData(Line.COORDINATE_KEY, legacyid, name);
     LineImpl l = new LineImpl(points.toArray(new Point[0]));
@@ -575,7 +575,7 @@ public class Dew {
       setComponentData(Asset.IS_FAILED_KEY, legacyid, name, actualFailed ? 1 : 0);
     }    
     if (actualStatus != status) {
-      setComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name, actualStatus ? 1 : 0);
+      setComponentData(Asset.STATUS_KEY, legacyid, name, actualStatus ? 1 : 0);
     }
     if (!line.getAttribute(Generator.NUM_PHASE_KEY).equals(numPhases)) {
       setComponentData(Generator.NUM_PHASE_KEY, legacyid, name, line.getAttribute(Generator.NUM_PHASE_KEY));
@@ -653,7 +653,7 @@ public class Dew {
     Object obj = getComponentData(Bus.NAME_KEY, legacyid, null);
     String name = obj == null ? "" : obj.toString();
     boolean isFailed = Integer.parseInt(getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
-    boolean status = Integer.parseInt(getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
+    boolean status = Integer.parseInt(getComponentData(Asset.STATUS_KEY, legacyid, name).toString()) == 1;
     ArrayList<Point> points = (ArrayList<Point>) getComponentData(Line.COORDINATE_KEY, legacyid, name);
     LineImpl l = new LineImpl(points.toArray(new Point[0]));
     int numPhases = Integer.parseInt(getComponentData(Load.NUM_PHASE_KEY, legacyid, name).toString());
@@ -669,7 +669,7 @@ public class Dew {
       setComponentData(Asset.IS_FAILED_KEY, legacyid, name, actualFailed ? 1 : 0);
     }    
     if (actualStatus != status) {
-      setComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name, actualStatus ? 1 : 0);      
+      setComponentData(Asset.STATUS_KEY, legacyid, name, actualStatus ? 1 : 0);      
     }
     if (!line.getAttribute(Generator.NUM_PHASE_KEY).equals(numPhases)) {
       setComponentData(Generator.NUM_PHASE_KEY, legacyid, name, line.getAttribute(Generator.NUM_PHASE_KEY));
@@ -749,7 +749,7 @@ public class Dew {
     Object obj =  getComponentData(DewVariables.DEW_SHUNT_NAME_KEY, legacyid, null);  
     String name = obj == null ? "" : obj.toString();
     boolean isFailed = Integer.parseInt(getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
-    boolean status = Integer.parseInt(getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
+    boolean status = Integer.parseInt(getComponentData(Asset.STATUS_KEY, legacyid, name).toString()) == 1;
     double x = Double.parseDouble(getComponentData(DewVariables.DEW_X_KEY, legacyid, name).toString());
     double y = Double.parseDouble(getComponentData(DewVariables.DEW_Y_KEY, legacyid, name).toString());
     Point point = new PointImpl(x,y);          
@@ -760,7 +760,7 @@ public class Dew {
       setComponentData(Asset.IS_FAILED_KEY, legacyid, name, actualFailed ? 1 : 0);
     }    
     if (actualStatus != status) {
-      setComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name, actualStatus ? 1 : 0);
+      setComponentData(Asset.STATUS_KEY, legacyid, name, actualStatus ? 1 : 0);
     }
   }
 

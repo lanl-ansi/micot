@@ -46,7 +46,7 @@ public class IslandGenerator {
 
         Collection<? extends FlowConnection> edges = model.getFlowConnections(node);
         for (FlowConnection edge : edges) {
-          if (edge.getDesiredStatus() == false) {
+          if (edge.getStatus() == false) {
             continue;
           }
 

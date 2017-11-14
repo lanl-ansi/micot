@@ -59,8 +59,7 @@ public class GaslibValveFactory extends ValveFactory {
     valve.setResistance(-Double.MAX_VALUE);
     valve.setFlow(0.0);
     valve.setCapacity(Double.MAX_VALUE);
-    valve.setActualStatus(true);
-    valve.setDesiredStatus(true);
+    valve.setStatus(true);
     valve.setAttribute(Valve.PRESSURE_LOSS_OUT_KEY, 0.0);    
     valve.setAttribute(Valve.PRESSURE_LOSS_IN_KEY, 0.0);    
     

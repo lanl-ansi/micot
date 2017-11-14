@@ -44,7 +44,7 @@ public class FlowAssignmentFactory implements AssignmentFactory {
         continue;
       }
       
-      if (edge.getActualStatus() == false || edge.getActualStatus() == false) {
+      if (edge.getStatus() == false) {
         edge.setMWFlow(0.0);
         continue;
       }

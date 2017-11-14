@@ -57,7 +57,7 @@ public class LinkCapacityTimeConstraint implements ConstraintFactory {
     double mva = model.getMVABase();    
     
     for (ElectricPowerFlowConnection link : model.getFlowConnections()) {
-      if (link.getActualStatus() == false) {
+      if (link.getStatus() == false) {
         continue;
       }
 

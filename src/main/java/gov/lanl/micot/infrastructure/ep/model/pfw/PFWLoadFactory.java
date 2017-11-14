@@ -14,15 +14,7 @@ import java.util.StringTokenizer;
  */
 public class PFWLoadFactory extends LoadFactory {
 
-//	private static PFWLoadFactory instance = null;
 	private static final String LEGACY_TAG = "PFW";
-	
-	//public static PFWLoadFactory getInstance() {
-		//if (instance == null) {
-		//	instance = new PFWLoadFactory();
-		//}
-		//return instance;
-	//}
 	
 	/**
 	 * Constructor
@@ -71,8 +63,7 @@ public class PFWLoadFactory extends LoadFactory {
   	load.setAttribute(Load.LOAD_NAME_KEY, name);
     load.setDesiredRealLoad(realLoad);
     load.setDesiredReactiveLoad(reactiveLoad);
-    load.setDesiredStatus(true);
-    load.setActualStatus(true);
+    load.setStatus(true);
     load.setActualRealLoad(realLoad);
     load.setActualReactiveLoad(reactiveLoad);
   	load.setCoordinate(point == null ? new PointImpl(0,0) : point);

@@ -64,7 +64,7 @@ public class ScenarioDiscreteRealGenerationConstraint extends ScenarioConstraint
       for (ElectricPowerNode node : model.getNodes()) {
         for (Generator generator : node.getComponents(Generator.class)) {
           boolean hasCost = generator.getAttribute(AlgorithmConstants.MICROGRID_COST_KEY) == null ? false : true;
-          if (!generator.getActualStatus() || !hasCost) {
+          if (!generator.getStatus() || !hasCost) {
             continue;
           }
 

@@ -62,8 +62,7 @@ public class CompressorFactoryImpl extends CompressorFactory {
     compressor.setLength(length);
     compressor.setMinimumCompressionRatio(minRatio);
     compressor.setMaximumCompressionRatio(maxRatio);
-    compressor.setDesiredStatus(status);
-    compressor.setActualStatus(status);
+    compressor.setStatus(status);
      
     Vector<Point> points = new Vector<Point>();
     points.add(node1.getJunction().getCoordinate());

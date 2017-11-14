@@ -54,7 +54,7 @@ public class LoadShedConstraint implements ConstraintFactory {
     for (ElectricPowerNode node : model.getNodes()) {
       Collection<Load> loads = node.getComponents(Load.class);
       for (Load load : loads) {
-        if (load.getActualStatus()) {
+        if (load.getStatus()) {
           LinearConstraint constraint = new LinearConstraintGreaterEq(getLoadLowerBoundConstraintName(load));
           constraint.setRightHandSide(Math.min(0.0,load.getDesiredRealLoad().doubleValue() / mva));
           constraint.addVariable(loadVariableFactory.getVariable(problem,load), 1.0);

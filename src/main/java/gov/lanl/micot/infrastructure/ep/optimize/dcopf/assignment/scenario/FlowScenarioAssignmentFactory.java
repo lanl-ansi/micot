@@ -55,7 +55,7 @@ private Collection<Scenario> scenarios = new ArrayList<Scenario>();
 
         ScenarioAttribute attribute = (ScenarioAttribute) connection.getMWFlow();
 
-        if (!scenario.computeActualStatus(connection, connection.getActualStatus())) {          
+        if (!scenario.computeActualStatus(connection, connection.getStatus())) {          
           attribute.addEntry(scenario, 0.0);          
           continue;
         }

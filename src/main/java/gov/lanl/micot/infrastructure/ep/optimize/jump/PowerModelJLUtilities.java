@@ -161,7 +161,7 @@ public class PowerModelJLUtilities {
       branchBuilder.add(ANG_MIN_TAG, -angleDiffLimit / 2.0);
       branchBuilder.add(LINE_CHARGING_TAG, line.getLineCharging());
       branchBuilder.add(LINE_RESISTANCE_TAG, line.getResistance());
-      branchBuilder.add(STATUS_TAG, line.getActualStatus() ? 1 : 0);
+      branchBuilder.add(STATUS_TAG, line.getStatus() ? 1 : 0);
       branchBuilder.add(LINE_REACTANCE_TAG, line.getReactance());
       branchBuilder.add(FROM_BUS_TAG, bus_j.getAttribute(Asset.ASSET_ID_KEY, Number.class).intValue());
       branchBuilder.add(RATE_A_TAG, rateA);
@@ -305,7 +305,7 @@ public class PowerModelJLUtilities {
    
       generatorBuilder.add(AREA_PARTICIPATION_FACTOR_TAG, apf);
       generatorBuilder.add(GENERATOR_BUS_TAG, bus_i.getAttribute(Bus.ASSET_ID_KEY,Number.class).intValue());
-      generatorBuilder.add(GENERATOR_STATUS_TAG, gen.getActualStatus() ? 1 : 0);
+      generatorBuilder.add(GENERATOR_STATUS_TAG, gen.getStatus() ? 1 : 0);
       generatorBuilder.add(MBASE_TAG, mvaBase);
       generatorBuilder.add(LOWER_REAL_POWER_OUTPUT_TAG, pc1);
       generatorBuilder.add(UPPER_REAL_POWER_OUTPUT_TAG, pc2);

@@ -44,7 +44,7 @@ public class DewShuntFactory extends ShuntCapacitorFactory {
     Object obj =  dew.getComponentData(DewVariables.DEW_SHUNT_NAME_KEY, legacyid, null);  
     String name = obj == null ? "" : obj.toString();
     boolean isFailed = Integer.parseInt(dew.getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
-    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
+    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.STATUS_KEY, legacyid, name).toString()) == 1;
     double x = Double.parseDouble(dew.getComponentData(DewVariables.DEW_X_KEY, legacyid, name).toString());
     double y = Double.parseDouble(dew.getComponentData(DewVariables.DEW_Y_KEY, legacyid, name).toString());
     int dewType = Integer.parseInt(dew.getComponentData(DewVariables.DEW_COMPONENT_TYPE_KEY, legacyid, name).toString());
@@ -76,8 +76,7 @@ public class DewShuntFactory extends ShuntCapacitorFactory {
     ShuntCapacitor shunt = registerCapacitor(legacyid);
     shunt.setAttribute(ShuntCapacitor.SHUNT_NAME_KEY, name);
     shunt.setCoordinate(new PointImpl(x,y));
-    shunt.setDesiredStatus(status);
-    shunt.setActualStatus(status);
+    shunt.setStatus(status);
     shunt.setAttribute(ShuntCapacitor.IS_FAILED_KEY, isFailed);
     shunt.setAttribute(DewVariables.DEW_COMPONENT_TYPE_KEY, dewType);
     shunt.setRealCompensation(realCompensation);

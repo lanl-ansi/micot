@@ -12,16 +12,8 @@ import gov.lanl.micot.util.geometry.PointImpl;
  */
 public class CDFShuntFactory extends ShuntCapacitorFactory {
 
-//	private static CDFShuntFactory instance = null;
   private static final String LEGACY_TAG = "CDF";
-   
-	//public static CDFShuntFactory getInstance() {
-	//	if (instance == null) {
-		//	instance = new CDFShuntFactory();
-	//	}
-	//	return instance;
-	//}
-	
+   	
 	/**
 	 * Constructor
 	 */
@@ -62,8 +54,7 @@ public class CDFShuntFactory extends ShuntCapacitorFactory {
   	shunt.setRealCompensation(generatorShunt);
   	shunt.setReactiveCompensation(busShunt);
   	shunt.setCoordinate(point == null ? new PointImpl(0,0) : point);
-  	shunt.setDesiredStatus(true);
-  	shunt.setActualStatus(true);
+  	shunt.setStatus(true);
   	return shunt;
 	}
 

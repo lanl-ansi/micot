@@ -40,8 +40,7 @@ public abstract class JunctionFactory {
    * @param capacity
    */
   protected void initializeJunction(Junction junction) {
-    junction.setDesiredStatus(true);
-    junction.setActualStatus(true);
+    junction.setStatus(true);
   }
 
   /**

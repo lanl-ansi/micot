@@ -41,7 +41,7 @@ public class LineConstructionVariableFactory implements VariableFactory {
   public Collection<Variable> createVariables(MathematicalProgram program, ElectricPowerModel model) throws VariableExistsException, InvalidVariableException {
     ArrayList<Variable> variables = new ArrayList<Variable>();
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
-      boolean isDisabled = !edge.getActualStatus();
+      boolean isDisabled = !edge.getStatus();
       boolean isNew = edge.getAttribute(AlgorithmConstants.IS_NEW_LINE_KEY) == null ? false : edge.getAttribute(AlgorithmConstants.IS_NEW_LINE_KEY, Boolean.class);
       if (isDisabled || !isNew) {
         continue;

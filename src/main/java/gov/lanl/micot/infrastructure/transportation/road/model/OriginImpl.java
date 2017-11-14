@@ -24,22 +24,13 @@ public class OriginImpl extends ProducerImpl implements Origin {
     setAttribute(Origin.ASSET_ID_KEY, assetId);
   }
  
-  /**
-   * Constructor
-   * @param origin
-   */
-//  public OriginImpl(Origin origin) {
-  //  super(origin);
-   // listeners = new HashSet<OriginChangeListener>();    
- // }
-
   @Override
   public void setActualProduction(Set<Origin> producers) {
     double producerMax      = 0;
     double actualProduction = 0;
     
     for (Origin state : producers) {
-      if (state.getDesiredStatus() == true) {
+      if (state.getStatus() == true) {
         producerMax += state.getMaximumProduction().doubleValue();
         actualProduction += state.getActualProduction().doubleValue();
       }
@@ -76,7 +67,6 @@ public class OriginImpl extends ProducerImpl implements Origin {
   
   @Override
   public OriginImpl clone() {
-    //OriginImpl newOrigin = new OriginImpl((Origin)getBaseData());
     OriginImpl newOrigin = new OriginImpl(getAttribute(ASSET_ID_KEY,Long.class));
     
     try {

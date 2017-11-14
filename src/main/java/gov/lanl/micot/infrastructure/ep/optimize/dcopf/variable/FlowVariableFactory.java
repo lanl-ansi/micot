@@ -41,7 +41,7 @@ public class FlowVariableFactory implements VariableFactory {
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       ElectricPowerNode node1 = model.getFirstNode(edge);
       ElectricPowerNode node2 = model.getSecondNode(edge);
-      if (/*nodes.contains(node1) && nodes.contains(node2) && */edge.getActualStatus()) {
+      if (/*nodes.contains(node1) && nodes.contains(node2) && */edge.getStatus()) {
         variables.add(program.makeContinuousVariable(getFlowVariableName(edge)));        
       }
     }

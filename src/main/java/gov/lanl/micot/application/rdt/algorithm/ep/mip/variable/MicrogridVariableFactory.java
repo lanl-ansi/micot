@@ -43,7 +43,7 @@ public class MicrogridVariableFactory implements VariableFactory {
       sorted.addAll(node.getComponents(Generator.class));
       for (Generator producer : sorted) {
         boolean isNew = producer.getAttribute(AlgorithmConstants.IS_NEW_MICROGRID_KEY) != null && producer.getAttribute(AlgorithmConstants.IS_NEW_MICROGRID_KEY, Boolean.class);                 
-        if (!producer.getActualStatus() || !isNew) {
+        if (!producer.getStatus() || !isNew) {
           continue;
         }
         variables.add(program.makeDiscreteVariable(getGeneratorVariableName(producer)));

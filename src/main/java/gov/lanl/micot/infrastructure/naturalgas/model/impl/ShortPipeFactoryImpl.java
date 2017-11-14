@@ -14,15 +14,6 @@ import java.util.Vector;
  */
 public class ShortPipeFactoryImpl extends ShortPipeFactory {
 
-	//private static ShortPipeFactoryImpl instance = null;
-	
-//	public static ShortPipeFactoryImpl getInstance() {
-	//	if (instance == null) {
-		//	instance = new ShortPipeFactoryImpl();
-		//}
-		//return instance;
-	//}
-	
 	/**
 	 * Constructor
 	 */
@@ -45,8 +36,7 @@ public class ShortPipeFactoryImpl extends ShortPipeFactory {
 
     pipe.setFlow(0.0);
     pipe.setCapacity(Double.MAX_VALUE);
-    pipe.setActualStatus(true);
-    pipe.setDesiredStatus(true);
+    pipe.setStatus(true);
     
     Vector<Point> points = new Vector<Point>();
     points.add(node1.getJunction().getCoordinate());

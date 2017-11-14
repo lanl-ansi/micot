@@ -65,8 +65,7 @@ public class LPNormBusFactory extends BusFactory {
     bus.setAttribute(Bus.VOLTAGE_PU_A_KEY, voltages.get(0));
     bus.setAttribute(Bus.VOLTAGE_PU_B_KEY, voltages.get(1));
     bus.setAttribute(Bus.VOLTAGE_PU_C_KEY, voltages.get(2));    
-    bus.setDesiredStatus(status);
-    bus.setActualStatus(status);
+    bus.setStatus(status);
   	bus.setMaximumVoltagePU(maxVoltage);
     bus.setMinimumVoltagePU(minVoltage);
 

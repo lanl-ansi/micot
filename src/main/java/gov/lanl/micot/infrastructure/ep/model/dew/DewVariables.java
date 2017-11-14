@@ -49,7 +49,7 @@ public class DewVariables {
     dataSources.put(Load.LOAD_NAME_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(Bus.SYSTEM_VOLTAGE_KV_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(Asset.IS_FAILED_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
-    dataSources.put(Asset.DESIRED_STATUS_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
+    dataSources.put(Asset.STATUS_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(DewVariables.DEW_X_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(DewVariables.DEW_Y_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(Generator.NUM_PHASE_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
@@ -150,7 +150,7 @@ public class DewVariables {
     phaseSources.put(Generator.NAME_KEY, 0);
     phaseSources.put(Bus.SYSTEM_VOLTAGE_KV_KEY, 0);
     phaseSources.put(Asset.IS_FAILED_KEY, 0);
-    phaseSources.put(Asset.DESIRED_STATUS_KEY, 0);
+    phaseSources.put(Asset.STATUS_KEY, 0);
     phaseSources.put(DewVariables.DEW_X_KEY, 0);
     phaseSources.put(DewVariables.DEW_Y_KEY, 0);
     phaseSources.put(Generator.NUM_PHASE_KEY, 0);
@@ -251,7 +251,7 @@ public class DewVariables {
     textFileIndicies.put(Generator.NAME_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPSERIALNUM_HEADER, DewVariables.DEW_NAME_IDX));
     textFileIndicies.put(Bus.SYSTEM_VOLTAGE_KV_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPINPSCRDATA_HEADER, DewVariables.DEW_BASEKV_IDX));
     textFileIndicies.put(Asset.IS_FAILED_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPOPER_HEADER, DewVariables.DEW_FAIL_IDX));
-    textFileIndicies.put(Asset.DESIRED_STATUS_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_HEADER, DewVariables.DEW_STATUS_IDX));
+    textFileIndicies.put(Asset.STATUS_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_HEADER, DewVariables.DEW_STATUS_IDX));
     textFileIndicies.put(DewVariables.DEW_X_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_HEADER, DewVariables.DEW_X_IDX));
     textFileIndicies.put(DewVariables.DEW_Y_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_HEADER, DewVariables.DEW_Y_IDX));
     textFileIndicies.put(Generator.NUM_PHASE_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_HEADER, DewVariables.DEW_NUMPHASES_IDX));

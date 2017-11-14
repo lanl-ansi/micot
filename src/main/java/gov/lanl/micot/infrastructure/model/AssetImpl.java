@@ -19,8 +19,6 @@ public abstract class AssetImpl implements Asset {
   protected Set<Object>          outputKeys          = null;
   private Map<Object,Object>     attributes          = null;
 
-//  private Asset baseData                             = null;
-
   /**
    * Constructor
    * @param identifierKeys
@@ -32,33 +30,24 @@ public abstract class AssetImpl implements Asset {
     outputKeys = new LinkedHashSet<Object>();
   }
   
-  /**
-   * Constructor
-   * @param asset
-   * @param identifierKeys
-   */
-//  public AssetImpl(Asset asset) {
-  //  this();
-   // baseData = asset;
-  //}
-  
   @Override
-  public void setAttribute(Object key, Object object) { 
-   // if (baseData != null && baseData.getAttribute(key) == null) {
-     // baseData.setAttribute(key,object);
-    //}
-    //else {
-      attributes.put(key,object);
-    //}
+  public void setAttribute(Object key, Object object) {
+    if (key.equals("DESIRED_STATUS")) {
+      System.err.println("Warning: DESIRED_STATUS is a deprecated attribute.  Using STATUS instead");
+      key = STATUS_KEY;
+    }
+    if (key.equals("ACTUAL_STATUS")) {
+      System.err.println("Warning: ACTUAL_STATUS is a deprecated attribute.  Using STATUS instead");
+      key = STATUS_KEY;
+    }
+    
+    attributes.put(key,object);
   }
   
   @SuppressWarnings("unchecked")
   @Override
   public <E> E getAttribute(Object key, Class<E> cls) {
-    Object obj = attributes.get(key);
-//    if (obj == null && baseData != null) {
-  //    obj = baseData.getAttribute(key);
-   // }    
+    Object obj = getAttribute(key);
     if (obj instanceof Collection && !cls.isAssignableFrom(Collection.class) &&  !cls.isAssignableFrom(Set.class)) {
       return ((Collection<E>)obj).iterator().next();
     }    
@@ -67,10 +56,16 @@ public abstract class AssetImpl implements Asset {
 
   @Override
   public Object getAttribute(Object key) {
-    //if (attributes.get(key) != null || baseData == null) {
-      return attributes.get(key);
-    //}
-    //return baseData.getAttribute(key);
+    if (key.equals("DESIRED_STATUS")) {
+      System.err.println("Warning: DESIRED_STATUS is a deprecated attribute.  Using STATUS instead");
+      key = STATUS_KEY;
+    }
+    if (key.equals("ACTUAL_STATUS")) {
+      System.err.println("Warning: ACTUAL_STATUS is a deprecated attribute.  Using STATUS instead");
+      key = STATUS_KEY;
+    }
+    
+    return attributes.get(key);
   }
   
   @Override
@@ -96,32 +91,19 @@ public abstract class AssetImpl implements Asset {
   }
   
   @Override
-  public boolean getDesiredStatus() {
-    return getAttribute(DESIRED_STATUS_KEY,Boolean.class);
+  public boolean getStatus() {
+    return getAttribute(STATUS_KEY,Boolean.class);
   }
 
   @Override
-  public void setDesiredStatus(boolean status) {
-    setAttribute(DESIRED_STATUS_KEY,status);
+  public void setStatus(boolean status) {
+    setAttribute(STATUS_KEY,status);
   }
   
-  @Override
-  public boolean getActualStatus() {
-    return getAttribute(ACTUAL_STATUS_KEY, Boolean.class);
-  }
-
-  @Override
-  public void setActualStatus(boolean status) {
-    setAttribute(ACTUAL_STATUS_KEY,status);
-  }
-
   @Override
   public Set<Object> getAttributeKeys() {
     HashSet<Object> a = new HashSet<Object>();
     a.addAll(attributes.keySet());
-//    if (baseData != null) {
-  //    a.addAll(baseData.getAttributeKeys());
-   // }
     return a;
   }
   
@@ -168,12 +150,7 @@ public abstract class AssetImpl implements Asset {
 
   @Override
   public void addOutputKey(Object key) {
-//    if (baseData == null) {
-      outputKeys.add(key);
- //   }
-  //  else {
-    //  baseData.addOutputKey(key);
-    //}
+    outputKeys.add(key);
   }
 
   /**
@@ -181,12 +158,7 @@ public abstract class AssetImpl implements Asset {
    * @return
    */
   public Set<Object> getOutputKeys() {
-   // if (baseData == null) {
-      return outputKeys;
-   // }
-   // else {
-     // return baseData.getOutputKeys();
-    //}
+    return outputKeys;
   }
 
   /**
@@ -229,14 +201,6 @@ public abstract class AssetImpl implements Asset {
     }
   }
   
-  /**
-   * Get the base data
-   * @return
-   */
-//  protected Asset getBaseData() {
-  //  return baseData;
-  //}
-
   @Override
   public abstract AssetImpl clone();
   

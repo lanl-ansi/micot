@@ -43,8 +43,7 @@ public class PowerworldZoneFactory extends ZoneFactory {
 
     // check to see if the area already exists
     Zone zone = registerZone(legacyid);
-    zone.setActualStatus(true);
-    zone.setDesiredStatus(true);
+    zone.setStatus(true);
     zone.setAttribute(Zone.ZONE_NAME_KEY, name);        
     return zone;
 	}

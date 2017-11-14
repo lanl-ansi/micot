@@ -46,7 +46,7 @@ private Collection<Scenario> scenarios = new ArrayList<Scenario>();
       for (Compressor connection : model.getCompressors()) {
         ScenarioAttribute attribute = (ScenarioAttribute) connection.getCompressionRatio();
         
-        if (!scenario.computeActualStatus(connection, connection.getActualStatus())) {          
+        if (!scenario.computeActualStatus(connection, connection.getStatus())) {          
           attribute.addEntry(scenario, 0.0);          
           continue;
         }

@@ -51,7 +51,7 @@ public class LinkChanceConstraint implements ConstraintFactory {
       }
       
       for (ElectricPowerFlowConnection connection : model.getFlowConnections()) {        
-        boolean status = scenario.computeActualStatus(connection, connection.getActualStatus());
+        boolean status = scenario.computeActualStatus(connection, connection.getStatus());
         
         if (status ) {
           if (!constraintExists(problem, connection)) {     

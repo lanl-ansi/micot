@@ -61,8 +61,7 @@ public abstract class LoadFactory {
   protected void initializeLoad(Load load, Bus bus, double mw, double mvar) {
     String name = bus.getAttribute(Bus.NAME_KEY, String.class);
     load.setCoordinate(bus.getCoordinate());
-    load.setDesiredStatus(true);
-    load.setActualStatus(true);
+    load.setStatus(true);
     load.setDesiredRealLoad(mw);
     load.setDesiredReactiveLoad(mvar);
     load.setActualRealLoad(mw);

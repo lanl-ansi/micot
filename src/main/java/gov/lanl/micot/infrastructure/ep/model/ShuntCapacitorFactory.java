@@ -42,8 +42,7 @@ public abstract class ShuntCapacitorFactory {
    */
   protected void initializeCapacitor(ShuntCapacitor capacitor, Bus bus, double bs, double gs) {
     capacitor.setCoordinate(bus.getCoordinate());
-    capacitor.setDesiredStatus(true);
-    capacitor.setActualStatus(true);
+    capacitor.setStatus(true);
     capacitor.setRealCompensation(gs);
     capacitor.setReactiveCompensation(bs);
   }

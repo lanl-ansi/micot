@@ -50,10 +50,9 @@ public abstract class BatteryFactory {
     battery.setActualReactiveGeneration(0.0);
     battery.setDesiredReactiveMax(0.0);
     battery.setReactiveMin(0.0);
-    battery.setDesiredStatus(true);
+    battery.setStatus(true);
     battery.setDesiredRealGenerationMax(maxMW);
     battery.setRealGenerationMin(minMW);
-    battery.setActualStatus(true);    
     battery.setCoordinate(point);
     battery.setUsedEnergyCapacity(used);
     battery.setAttribute(Battery.ECONOMIC_COST_KEY, cost);

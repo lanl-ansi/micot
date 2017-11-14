@@ -68,11 +68,11 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
    * Update the model status
    * @param model
    */
-  protected void updateModelStatus(Model model) {
-    for (Asset asset : model.getAssets()) {
-      asset.setActualStatus(asset.getDesiredStatus());
-    }
-  }
+ // protected void updateModelStatus(Model model) {
+   // for (Asset asset : model.getAssets()) {
+     // asset.setActualStatus(asset.getDesiredStatus());
+    //}
+ // }
 
   /**
    * Function for balancing a model in a steady state way
@@ -85,19 +85,19 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
     Vector<Load> loads = new Vector<Load>();
     for (ElectricPowerNode node : nodes) {
       for (Load load : node.getComponents(Load.class)) {
-        double consume = (node.getBus().getDesiredStatus() && load.getDesiredStatus()) ? load.getDesiredRealLoad().doubleValue() : 0.0;         
+        double consume = (node.getBus().getStatus() && load.getStatus()) ? load.getDesiredRealLoad().doubleValue() : 0.0;         
         totalConsumption += consume;   
         load.setActualRealLoad(consume);
         loads.add(load);
       }
       for (Generator generator : node.getComponents(Generator.class)) {
-        double produce = (node.getBus().getDesiredStatus() && generator.getDesiredStatus()) ? generator.getDesiredRealGeneration().doubleValue() : 0.0;
+        double produce = (node.getBus().getStatus() && generator.getStatus()) ? generator.getDesiredRealGeneration().doubleValue() : 0.0;
         totalProduction += produce;
         generator.setActualRealGeneration(produce);
         generators.add(generator);
       }
       for (Battery battery : node.getComponents(Battery.class)) {
-        double produce = (node.getBus().getDesiredStatus() && battery.getDesiredStatus()) ? battery.getDesiredRealGeneration().doubleValue() : 0.0;
+        double produce = (node.getBus().getStatus() && battery.getStatus()) ? battery.getDesiredRealGeneration().doubleValue() : 0.0;
         totalProduction += produce;
         battery.setActualRealGeneration(produce);
         generators.add(battery);
@@ -112,7 +112,7 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
           break;
         }
         
-        if (!generator.getActualStatus()) {
+        if (!generator.getStatus()) {
           continue;
         }
         
@@ -131,7 +131,7 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
           break;
         }
 
-        if (!generator.getActualStatus()) {
+        if (!generator.getStatus()) {
           continue;
         }
         
@@ -146,7 +146,7 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
     if (totalConsumption != totalProduction) {
       if (totalConsumption == 0) {
         for (ElectricPowerProducer generator : generators) {
-          generator.setActualStatus(false);
+          generator.setStatus(false);
           generator.setActualRealGeneration(0);
         }
         totalProduction = 0;
@@ -154,7 +154,7 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
       else {
         double ratio = totalProduction / totalConsumption;
         for (Load load : loads) {
-          if (load.getActualStatus()) {
+          if (load.getStatus()) {
             load.setActualRealLoad(load.getActualRealLoad().doubleValue() * ratio);
           }
         }
@@ -176,19 +176,19 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
     Vector<Load> loads = new Vector<Load>();
     for (ElectricPowerNode node : nodes) {
       for (Load load : node.getComponents(Load.class)) {
-        double consume = (node.getBus().getDesiredStatus() && load.getDesiredStatus()) ? load.getDesiredReactiveLoad().doubleValue() : 0.0;         
+        double consume = (node.getBus().getStatus() && load.getStatus()) ? load.getDesiredReactiveLoad().doubleValue() : 0.0;         
         totalConsumption += consume;   
         load.setActualReactiveLoad(consume);
         loads.add(load);
       }
       for (Generator generator : node.getComponents(Generator.class)) {
-        double produce = (node.getBus().getDesiredStatus() && generator.getDesiredStatus()) ? generator.getDesiredReactiveGeneration().doubleValue() : 0.0;
+        double produce = (node.getBus().getStatus() && generator.getStatus()) ? generator.getDesiredReactiveGeneration().doubleValue() : 0.0;
         totalProduction += produce;
         generator.setActualReactiveGeneration(produce);
         generators.add(generator);
       }
       for (Battery battery : node.getComponents(Battery.class)) {
-        double produce = (node.getBus().getDesiredStatus() && battery.getDesiredStatus()) ? battery.getDesiredReactiveGeneration().doubleValue() : 0.0;
+        double produce = (node.getBus().getStatus() && battery.getStatus()) ? battery.getDesiredReactiveGeneration().doubleValue() : 0.0;
         totalProduction += produce;
         battery.setActualReactiveGeneration(produce);
         generators.add(battery);
@@ -230,7 +230,7 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
     if (totalConsumption != totalProduction) {
       if (totalConsumption == 0) {
         for (ElectricPowerProducer generator : generators) {
-          generator.setActualStatus(false);
+          generator.setStatus(false);
           generator.setActualReactiveGeneration(0);
         }
         totalProduction = 0;
@@ -253,13 +253,13 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
    */
   protected ElectricPowerNode getSlackNode(SortedSet<ElectricPowerNode> nodes) {
   	for (ElectricPowerNode node : nodes) {
-      if (node.getGenerator() != null && node.getGenerator().getType().equals(GeneratorTypeEnum.REFERENCE_BUS_TYPE) && node.getGenerator().getActualStatus()) {
+      if (node.getGenerator() != null && node.getGenerator().getType().equals(GeneratorTypeEnum.REFERENCE_BUS_TYPE) && node.getGenerator().getStatus()) {
       	return node;
       }
     }
 
   	for (ElectricPowerNode node : nodes) {
-      if (node.getGenerator() != null && node.getGenerator().getActualStatus()) {
+      if (node.getGenerator() != null && node.getGenerator().getStatus()) {
         return node;
       }
     }

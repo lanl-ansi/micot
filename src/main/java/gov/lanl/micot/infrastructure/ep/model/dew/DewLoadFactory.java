@@ -69,7 +69,7 @@ public class DewLoadFactory extends LoadFactory {
     Object obj = dew.getComponentData(DewVariables.DEW_LOAD_NAME_KEY, legacyid, null);
     String name = obj == null ? " " : obj.toString();
     boolean isFailed = Integer.parseInt(dew.getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
-    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
+    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.STATUS_KEY, legacyid, name).toString()) == 1;
     double x = Double.parseDouble(dew.getComponentData(DewVariables.DEW_X_KEY, legacyid, name).toString());
     double y = Double.parseDouble(dew.getComponentData(DewVariables.DEW_Y_KEY, legacyid, name).toString());
     int dewType = Integer.parseInt(dew.getComponentData(DewVariables.DEW_COMPONENT_TYPE_KEY, legacyid, name).toString());
@@ -131,8 +131,7 @@ public class DewLoadFactory extends LoadFactory {
     load.setAttribute(Load.LOAD_NAME_KEY, name);
     load.setDesiredRealLoad(realLoad);
     load.setDesiredReactiveLoad(reactiveLoad);
-    load.setDesiredStatus(status);
-    load.setActualStatus(status);
+    load.setStatus(status);
     load.setActualRealLoad(realLoad);
     load.setActualReactiveLoad(reactiveLoad);
     load.setCoordinate(new PointImpl(x,y));
@@ -190,7 +189,7 @@ public class DewLoadFactory extends LoadFactory {
     Object obj = dew.getComponentData(Bus.NAME_KEY, legacyid, null);
     String name = obj == null ? " " : obj.toString();
     boolean isFailed = Integer.parseInt(dew.getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
-    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
+    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.STATUS_KEY, legacyid, name).toString()) == 1;
     double x = Double.parseDouble(dew.getComponentData(DewVariables.DEW_X_KEY, legacyid, name).toString());
     double y = Double.parseDouble(dew.getComponentData(DewVariables.DEW_Y_KEY, legacyid, name).toString());
     int dewType = Integer.parseInt(dew.getComponentData(DewVariables.DEW_COMPONENT_TYPE_KEY, legacyid, name).toString());
@@ -225,8 +224,7 @@ public class DewLoadFactory extends LoadFactory {
     load.setAttribute(Load.LOAD_NAME_KEY, name);
     load.setDesiredRealLoad(realLoad);
     load.setDesiredReactiveLoad(reactiveLoad);
-    load.setDesiredStatus(status);
-    load.setActualStatus(status);
+    load.setStatus(status);
     load.setActualRealLoad(realLoad);
     load.setActualReactiveLoad(reactiveLoad);
     load.setCoordinate(new PointImpl(x,y));

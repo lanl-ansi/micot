@@ -614,7 +614,7 @@ public class OpenDSSModel extends ElectricPowerModelImpl implements ElectricPowe
       }
     }
     
-    boolean status = bus.getDesiredStatus();
+    boolean status = bus.getStatus();
 
     activeElement.put(OpenDSSIOConstants.BUS_STATUS, status);
   }
@@ -625,18 +625,7 @@ public class OpenDSSModel extends ElectricPowerModelImpl implements ElectricPowe
    */
   public void sync(ShuntCapacitor shunt) {
     throw new RuntimeException("OpenDSSModel::Sync");
-    //TODO
-
-    
-   /* ieiss.domains.ep.entities.Capacitor ieissCapacitor = getIeissCapacitor(shunt);
-
-    ieissCapacitor.setProductionRate(new ComplexNumber(shunt.getRealCompensation(),shunt.getReactiveCompensation()));
-    ieissCapacitor.setInitialProductionRate(new ComplexNumber(shunt.getRealCompensation(),shunt.getReactiveCompensation()));
-    ieissCapacitor.setStatus(shunt.getDesiredStatus() ? Status.operating : Status.off);
-    ieissCapacitor.setActive(shunt.getDesiredStatus());      
-    Point3d[] points = new Point3d[1];
-    points[0] = new Point3d(shunt.getCoordinate().getX(),shunt.getCoordinate().getY(),0);
-    ieissCapacitor.setLocation(points);*/
+    //TODO    
   }
   
   /**
@@ -664,7 +653,7 @@ public class OpenDSSModel extends ElectricPowerModelImpl implements ElectricPowe
     
     double reactive = load.getDesiredReactiveLoad().doubleValue() * 1000.0;
     double real = load.getDesiredRealLoad().doubleValue() * 1000.0;
-    boolean status = load.getDesiredStatus();
+    boolean status = load.getStatus();
           
     co.put(OpenDSSIOConstants.LOAD_KVAR, reactive);
     co.put(OpenDSSIOConstants.LOAD_KW, real);
@@ -695,7 +684,7 @@ public class OpenDSSModel extends ElectricPowerModelImpl implements ElectricPowe
     }    
     
     
-    boolean status = line.getDesiredStatus();
+    boolean status = line.getStatus();
     
     
     // TODO, set some of the other attributes
@@ -725,7 +714,7 @@ public class OpenDSSModel extends ElectricPowerModelImpl implements ElectricPowe
       transformers.getInteger(OpenDSSIOConstants.NEXT_TRANSFORMER);          
     }       
 
-    boolean status = transformer.getDesiredStatus();
+    boolean status = transformer.getStatus();
     // TODO, set some of the other attributes
     activeElement.put(OpenDSSIOConstants.TRANSFORMER_STATUS, status);
  
@@ -758,7 +747,7 @@ public class OpenDSSModel extends ElectricPowerModelImpl implements ElectricPowe
       
       double reactive = generator.getDesiredReactiveGeneration().doubleValue() * 1000.0;
       double real = generator.getDesiredRealGeneration().doubleValue() * 1000.0;
-      boolean status = generator.getDesiredStatus();
+      boolean status = generator.getStatus();
       
       co.put(OpenDSSIOConstants.GENERATOR_KVAR, reactive);
       co.put(OpenDSSIOConstants.GENERATOR_KW, real);

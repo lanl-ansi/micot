@@ -31,9 +31,9 @@ public class ACSimulationApplication implements Application {
   @Override
   public ApplicationOutput execute() {      
     // make the actual status the desired status to start out....
-    for (Asset asset : model.getAssets()) {
-      asset.setActualStatus(asset.getDesiredStatus());
-    }
+//    for (Asset asset : model.getAssets()) {
+  //    asset.setActualStatus(asset.getDesiredStatus());
+    //}
     
     Timer timer = new Timer();
     timer.startTimer();

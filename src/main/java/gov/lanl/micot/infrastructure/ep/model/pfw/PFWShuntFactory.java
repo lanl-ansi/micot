@@ -72,8 +72,7 @@ public class PFWShuntFactory extends ShuntCapacitorFactory {
   	shunt.setRealCompensation(generatorShunt);
   	shunt.setReactiveCompensation(busShunt);
   	shunt.setCoordinate(point == null ? new PointImpl(0,0) : point);
-  	shunt.setDesiredStatus(true);
-  	shunt.setActualStatus(true);
+  	shunt.setStatus(true);
   	return shunt;
 	}
 

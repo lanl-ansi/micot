@@ -17,16 +17,7 @@ import java.util.Vector;
  */
 public class TxtShortPipeFactory extends ShortPipeFactory {
 
-//  private static TxtShortPipeFactory INSTANCE = null;
-
   private static final String LEGACY_TAG = "TXT";
-
-  //public static TxtShortPipeFactory getInstance() {
-    //if (INSTANCE == null) {
-      //INSTANCE = new TxtShortPipeFactory();
-   // }
-    //return INSTANCE;
-  //}
 
   /**
    * Singleton constructor
@@ -52,8 +43,7 @@ public class TxtShortPipeFactory extends ShortPipeFactory {
     pipe.setResistance(resistance);
     pipe.setFlow(0.0);
     pipe.setCapacity(Double.MAX_VALUE);
-    pipe.setActualStatus(true);
-    pipe.setDesiredStatus(true);
+    pipe.setStatus(true);
 
     Vector<Point> points = new Vector<Point>();
     points.add(fromJcn.getCoordinate());
@@ -73,7 +63,6 @@ public class TxtShortPipeFactory extends ShortPipeFactory {
    */
   public void updateShortPipe(ShortPipe pipe, Junction id1, Junction id2, int legacyId) {
     if (pipe.getAttribute(TxtModelConstants.TXT_LEGACY_ID_KEY) == null) {
-//      int legacyId = findUnusedId();
       pipe.setAttribute(TxtModelConstants.TXT_LEGACY_ID_KEY, legacyId);
       registerLegacy(LEGACY_TAG, legacyId, pipe);
     }
@@ -97,27 +86,6 @@ public class TxtShortPipeFactory extends ShortPipeFactory {
     return pipe;
   }
   
-  /**
-   * Find an unused id number
-   * 
-   * @return
-   */
- /* private int findUnusedId() {
-    TxtCompressorFactory cfactory = TxtCompressorFactory.getInstance();
-    TxtValveFactory vfactory = TxtValveFactory.getInstance();
-    TxtResistorFactory rfactory = TxtResistorFactory.getInstance();   
-    TxtControlValveFactory sfactory = TxtControlValveFactory.getInstance();   
-    TxtShortPipeFactory spfactory = TxtShortPipeFactory.getInstance();
-    TxtPipeFactory pfactory = TxtPipeFactory.getInstance();
-    
-    for (int i = 0; i < Integer.MAX_VALUE; ++i) {
-      if (pfactory.getLegacy(LEGACY_TAG, i) == null && cfactory.getLegacy(LEGACY_TAG, i) == null && vfactory.getLegacy(LEGACY_TAG, i) == null && rfactory.getLegacy(LEGACY_TAG, i) == null && sfactory.getLegacy(LEGACY_TAG, i) == null && spfactory.getLegacy(LEGACY_TAG, i) == null) {
-        return i;
-      }
-    }
-    throw new RuntimeException("Error: Cannot find an unused id");
-  }*/
-
   @Override
   protected ShortPipe getLegacy(String legacyTag, Object key) {
     return super.getLegacy(legacyTag, key);

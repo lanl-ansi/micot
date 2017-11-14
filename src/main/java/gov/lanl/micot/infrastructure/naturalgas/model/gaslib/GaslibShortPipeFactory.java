@@ -55,8 +55,7 @@ public class GaslibShortPipeFactory extends ShortPipeFactory {
     pipe.setResistance(-Double.MAX_VALUE);
     pipe.setFlow(0.0);
     pipe.setCapacity(Double.MAX_VALUE);
-    pipe.setActualStatus(true);
-    pipe.setDesiredStatus(true);
+    pipe.setStatus(true);
     
     Vector<Point> points = new Vector<Point>();
     points.add(fromJcn.getCoordinate());

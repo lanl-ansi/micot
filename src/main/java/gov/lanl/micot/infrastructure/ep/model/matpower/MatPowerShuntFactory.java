@@ -67,8 +67,7 @@ public class MatPowerShuntFactory extends ShuntCapacitorFactory {
   	shunt.setRealCompensation(generatorShunt);
   	shunt.setReactiveCompensation(busShunt);
   	shunt.setCoordinate(point == null ? new PointImpl(0,0) : point);
-  	shunt.setDesiredStatus(generatorShunt > 0 || busShunt > 0);
-  	shunt.setActualStatus(generatorShunt > 0 || busShunt > 0);
+  	shunt.setStatus(generatorShunt > 0 || busShunt > 0);
   	return shunt;
 	}
 

@@ -53,12 +53,10 @@ public class GaslibCityGateFactory extends CityGateFactory {
     CityGate gate = registerGate(legacyid);
     initializeGate(gate, junction, consumption);
     gate.setAttribute(Compressor.NAME_KEY, legacyid);
-    
-    
+        
     gate.setActualConsumption(consumption);
-    gate.setActualStatus(true);
+    gate.setStatus(true);
     gate.setCoordinate(new PointImpl(x,y));
-    gate.setDesiredStatus(true);
     gate.setMaximumConsumption(maxConsumption);
     gate.setMinimumConsumption(minConsumption);
 

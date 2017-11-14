@@ -117,8 +117,7 @@ public class PowerworldLineFactory extends LineFactory {
     line.setCapacityRating(rating1);
     line.setShortTermEmergencyCapacityRating(rating2);
     line.setLongTermEmergencyCapacityRating(rating3);
-    line.setDesiredStatus(status);
-    line.setActualStatus(status);
+    line.setStatus(status);
     line.setMWFlow(mwFlow);
     line.setMVarFlow(mVarFlow);
     line.setAttribute(Line.LENGTH_KEY, length);

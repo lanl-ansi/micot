@@ -237,7 +237,7 @@ public class RDTDataValidator {
    */
   private boolean canSwitch(ElectricPowerFlowConnection edge) {
     boolean hasSwitch = edge.getAttribute(AlgorithmConstants.HAS_SWITCH_KEY) != null && edge.getAttribute(AlgorithmConstants.HAS_SWITCH_KEY, Boolean.class);
-    boolean isDisabled = !edge.getActualStatus();
+    boolean isDisabled = !edge.getStatus();
     boolean hasCost = edge.getAttribute(AlgorithmConstants.LINE_SWITCH_COST_KEY) == null ? false : true;
     boolean buildSwitch = edge.getAttribute(LPNormIOConstants.LINE_CAN_ADD_SWITCH) == null ? false : edge.getAttribute(LPNormIOConstants.LINE_CAN_ADD_SWITCH, Boolean.class);
     boolean canBuild  = (isDisabled || (!hasCost && !buildSwitch)) ? false : true; 

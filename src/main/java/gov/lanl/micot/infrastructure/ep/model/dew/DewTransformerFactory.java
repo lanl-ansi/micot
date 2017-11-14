@@ -107,7 +107,7 @@ public class DewTransformerFactory extends TransformerFactory {
     String name = obj == null ? "" : obj.toString();
 //    String typeName = dew.getComponentData(, dewid, name)
     boolean isFailed = Integer.parseInt(dew.getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
-    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
+    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.STATUS_KEY, legacyid, name).toString()) == 1;
     int dewType = Integer.parseInt(dew.getComponentData(DewVariables.DEW_COMPONENT_TYPE_KEY, legacyid, name).toString());
     int numPhases = Integer.parseInt(dew.getComponentData(Generator.NUM_PHASE_KEY, legacyid, name).toString());
     int phases = Integer.parseInt(dew.getComponentData(DewVariables.DEW_PHASES_KEY, legacyid, name).toString());
@@ -214,7 +214,7 @@ public class DewTransformerFactory extends TransformerFactory {
     transformer.setAttribute(Transformer.CAPACITY_RATING_A_KEY, ratingA);
     transformer.setAttribute(Transformer.CAPACITY_RATING_B_KEY, ratingB);
     transformer.setAttribute(Transformer.CAPACITY_RATING_C_KEY, ratingC);
-    transformer.setDesiredStatus(status);
+    transformer.setStatus(status);
     transformer.setAttribute(Transformer.TYPE_KEY, transformerType);
 
     transformer.setAttribute(Transformer.TAP_ANGLE_KEY, tapAngle);
@@ -228,7 +228,6 @@ public class DewTransformerFactory extends TransformerFactory {
     transformer.setAttribute(Transformer.CONTROL_SIDE_KEY, gControlSide);   
     transformer.setAttribute(Transformer.HAS_LOAD_DROP_COMPENSATOR_KEY, compExists);
     transformer.setAttribute(Transformer.HAS_UNIDIRECTIONAL_CONTROLLER_KEY, uniDir);
-    transformer.setActualStatus(transformer.getDesiredStatus());
     transformer.setMWFlow(0.0);
     transformer.setMVarFlow(0.0);
     transformer.setCoordinates(new LineImpl(points.toArray(new Point[0])));

@@ -33,8 +33,7 @@ public abstract class LineFactory {
 		line.setCapacityRating(transformer.getCapacityRating());
 		line.setShortTermEmergencyCapacityRating(transformer.getShortTermEmergencyCapacityRating());
 		line.setLongTermEmergencyCapacityRating(transformer.getLongTermEmergencyCapacityRating());
-		line.setDesiredStatus(transformer.getDesiredStatus());
-		line.setActualStatus(line.getDesiredStatus());
+		line.setStatus(transformer.getStatus());
 		line.setCoordinates(transformer.getCoordinates());
 		return line;	  
 	}
@@ -70,8 +69,7 @@ public abstract class LineFactory {
 		line.setCapacityRating(capacityRating);
 		line.setShortTermEmergencyCapacityRating(capacityRating);
 		line.setLongTermEmergencyCapacityRating(capacityRating);
-		line.setDesiredStatus(true);
-		line.setActualStatus(true);
+		line.setStatus(true);
 
 		Vector<Point> points = new Vector<Point>();
 		points.add(node1.getBus().getCoordinate());
@@ -108,8 +106,7 @@ public abstract class LineFactory {
 		line.setCapacityRating(capacityRating);
 		line.setShortTermEmergencyCapacityRating(capacityRating);
 		line.setLongTermEmergencyCapacityRating(capacityRating);
-		line.setDesiredStatus(true);
-		line.setActualStatus(true);
+		line.setStatus(true);
 
 		Vector<Point> points = new Vector<Point>();
 		points.add(node1.getBus().getCoordinate());

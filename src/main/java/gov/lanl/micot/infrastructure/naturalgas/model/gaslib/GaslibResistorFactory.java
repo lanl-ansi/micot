@@ -69,8 +69,7 @@ public class GaslibResistorFactory extends ResistorFactory {
     resistor.setResistance(-Double.MAX_VALUE);
     resistor.setFlow(0.0);
     resistor.setCapacity(Double.MAX_VALUE);
-    resistor.setActualStatus(true);
-    resistor.setDesiredStatus(true);
+    resistor.setStatus(true);
     
     Vector<Point> points = new Vector<Point>();
     points.add(fromJcn.getCoordinate());

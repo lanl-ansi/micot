@@ -153,8 +153,7 @@ public class PowerworldTransformerFactory extends TransformerFactory {
     line.setCapacityRating(rating1);
     line.setShortTermEmergencyCapacityRating(rating2);
     line.setLongTermEmergencyCapacityRating(rating3);
-    line.setDesiredStatus(status);
-    line.setActualStatus(status);
+    line.setStatus(status);
     line.setMWFlow(mwFlow);
     line.setMVarFlow(mVarFlow);
     line.setAttribute(Transformer.LENGTH_KEY, length);

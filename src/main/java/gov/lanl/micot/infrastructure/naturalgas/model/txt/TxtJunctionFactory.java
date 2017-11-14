@@ -13,15 +13,7 @@ import gov.lanl.micot.util.geometry.PointImpl;
  */
 public class TxtJunctionFactory extends JunctionFactory {
 
-//  private static TxtJunctionFactory INSTANCE = null;
   private static final String LEGACY_TAG = "TXT";
-
-  //public static TxtJunctionFactory getInstance() {
-    //if (INSTANCE == null) {
-      //INSTANCE = new TxtJunctionFactory();
-   // }
-    //return INSTANCE;
-  //}
 
   /**
    * Singleton constructor
@@ -48,9 +40,8 @@ public class TxtJunctionFactory extends JunctionFactory {
 
     junction.setAttribute(Junction.NAME_KEY, name);
     junction.setPressure(0.0);
-    junction.setActualStatus(true);
+    junction.setStatus(true);
     junction.setCoordinate(new PointImpl(x, y));
-    junction.setDesiredStatus(true);
     junction.setInitialPressure(0.0);
     junction.setMaximumPressure(pressureMax);
     junction.setMinimumPressure(pressureMin);
@@ -103,12 +94,4 @@ public class TxtJunctionFactory extends JunctionFactory {
     }
     throw new RuntimeException("Error: Cannot find an unused id");
   }
-
-  /**
-   * Grant access of function to local package
-   */
-  //protected ModifiedJunction createModifiedJunction(Junction junction) {
-    //return super.createModifiedJunction(junction);
-  //}
-  
 }

@@ -52,12 +52,11 @@ public abstract class GeneratorFactory {
     generator.setDesiredReactiveGeneration(maxMVar);
     generator.setDesiredReactiveMax(maxMVar);
     generator.setReactiveMin(minMVar);
-    generator.setDesiredStatus(true);
+    generator.setStatus(true);
     generator.setDesiredRealGenerationMax(maxMW);
     generator.setRealGenerationMin(minMW);
     generator.setActualRealGeneration(maxMW);
     generator.setActualReactiveGeneration(maxMVar);
-    generator.setActualStatus(true);    
     generator.setAttribute(Generator.MVA_BASE_KEY, DEFAULT_MVA_BASE);
   }
 

@@ -75,8 +75,7 @@ public class GaslibControlValveFactory extends ControlValveFactory {
     valve.setResistance(-Double.MAX_VALUE);
     valve.setFlow(0.0);
     valve.setCapacity(Double.MAX_VALUE);
-    valve.setActualStatus(true);
-    valve.setDesiredStatus(true);
+    valve.setStatus(true);
     
     Vector<Point> points = new Vector<Point>();
     points.add(fromJcn.getCoordinate());

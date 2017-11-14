@@ -84,8 +84,7 @@ public class MatPowerBusFactory extends BusFactory {
     bus.setVoltagePU(voltageMagnitude);
     bus.setPhaseAngle(voltageAngle);
     bus.setSystemVoltageKV(baseKV);
-    bus.setDesiredStatus(status);
-    bus.setActualStatus(status);
+    bus.setStatus(status);
   	bus.setCoordinate(point == null ? new PointImpl(0,0) : point);  	
   	bus.setMaximumVoltagePU(maxVoltage);
     bus.setMinimumVoltagePU(minVoltage);

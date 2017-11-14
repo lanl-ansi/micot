@@ -80,7 +80,7 @@ public class FlowBalanceTimeConstraint implements ConstraintFactory {
         double time = i * incrementSize;
         double value = 0;
         for (ElectricPowerFlowConnection link : model.getFlowEdges(node)) {
-          if (link.getActualStatus() == false) {
+          if (link.getStatus() == false) {
             continue;
           }
 
@@ -94,7 +94,7 @@ public class FlowBalanceTimeConstraint implements ConstraintFactory {
         
     // create the non zero entries of the phase angle matrix
     for (ElectricPowerFlowConnection link : model.getFlowConnections()) {
-      if (link.getActualStatus() == false) {
+      if (link.getStatus() == false) {
         continue;
       }
 

@@ -57,7 +57,7 @@ public abstract class TransformerFactory {
     transformer.setCapacityRating(capacityRating);
     transformer.setShortTermEmergencyCapacityRating(capacityRating);
     transformer.setLongTermEmergencyCapacityRating(capacityRating);
-    transformer.setDesiredStatus(true);
+    transformer.setStatus(true);
     transformer.setAttribute(Transformer.TYPE_KEY, type);
     transformer.setAttribute(Transformer.TAP_RATIO_KEY, tapRatio);
     transformer.setAttribute(Transformer.TAP_ANGLE_KEY, tapAngle);
@@ -67,7 +67,6 @@ public abstract class TransformerFactory {
     transformer.setAttribute(Transformer.CONTROL_MIN_KEY, controlMin);
     transformer.setAttribute(Transformer.CONTROL_MAX_KEY, controlMax);
     transformer.setAttribute(Transformer.CONTROL_SIDE_KEY, controlSide);   
-    transformer.setActualStatus(transformer.getDesiredStatus());
 
     Vector<Point> points = new Vector<Point>();
     points.add(node1.getBus().getCoordinate());

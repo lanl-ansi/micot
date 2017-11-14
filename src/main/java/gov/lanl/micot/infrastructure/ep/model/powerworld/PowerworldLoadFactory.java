@@ -52,8 +52,7 @@ public class PowerworldLoadFactory extends LoadFactory {
     Load load = registerLoad(legacyId);    
     initializeLoad(load, bus, realLoad, reactiveLoad);
     
-    load.setDesiredStatus(status);
-    load.setActualStatus(status);
+    load.setStatus(status);
         
     return load;    
   }

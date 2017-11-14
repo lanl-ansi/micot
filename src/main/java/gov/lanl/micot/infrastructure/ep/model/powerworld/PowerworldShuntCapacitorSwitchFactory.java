@@ -62,8 +62,7 @@ public class PowerworldShuntCapacitorSwitchFactory extends ShuntCapacitorSwitchF
         
     ShuntCapacitorSwitch shunt = registerCapacitor(id);    
         
-    shunt.setDesiredStatus(status);
-    shunt.setActualStatus(status);
+    shunt.setStatus(status);
     shunt.setCoordinate(bus.getCoordinate());
     shunt.setMaxMW(maxMW);
     shunt.setMinMW(minMW);

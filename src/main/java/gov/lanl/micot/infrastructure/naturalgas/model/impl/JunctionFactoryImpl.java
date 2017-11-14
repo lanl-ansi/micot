@@ -10,15 +10,6 @@ import gov.lanl.micot.util.geometry.PointImpl;
  */
 public class JunctionFactoryImpl extends JunctionFactory {
 
-//	private static JunctionFactoryImpl instance = null;
-	
-//	public static JunctionFactoryImpl getInstance() {
-	//	if (instance == null) {
-	//		instance = new JunctionFactoryImpl();
-	//	}
-	//	return instance;
-	//}
-	
 	/**
 	 * Constructor
 	 */
@@ -46,8 +37,7 @@ public class JunctionFactoryImpl extends JunctionFactory {
    */
   public Junction createJunction(double x, double y, double minPressure, double maxPressure) {
     Junction junction = registerJunction();  
-    junction.setDesiredStatus(true);
-    junction.setActualStatus(true);
+    junction.setStatus(true);
     junction.setMaximumPressure(maxPressure);
     junction.setMinimumPressure(minPressure);
     junction.setCoordinate(new PointImpl(x,y));    

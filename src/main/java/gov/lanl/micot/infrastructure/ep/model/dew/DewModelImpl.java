@@ -176,7 +176,7 @@ public class DewModelImpl extends ElectricPowerModelImpl implements DewModel {
         status.put(legacyId, true);
         isFailed.put(legacyId, false);
       }      
-      status.put(legacyId, status.get(legacyId) && asset.getDesiredStatus());
+      status.put(legacyId, status.get(legacyId) && asset.getStatus());
       isFailed.put(legacyId, isFailed.get(legacyId) || asset.getAttribute(Asset.IS_FAILED_KEY, Boolean.class));      
     }
     

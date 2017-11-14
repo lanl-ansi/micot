@@ -1098,8 +1098,8 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    * @return
    */
   private Object[] getBusValues(Bus bus) {
-    String status = bus.getActualStatus() && bus.getDesiredStatus() ? PowerworldIOConstants.BUS_CONNECTED : PowerworldIOConstants.BUS_DISCONNECTED;
-    String cat = bus.getActualStatus() && bus.getDesiredStatus() ? bus.getAttribute(PowerworldModelConstants.POWERWORLD_BUS_CATEGORY_KEY).toString() : PowerworldIOConstants.BUS_DEAD;    
+    String status = bus.getStatus() ? PowerworldIOConstants.BUS_CONNECTED : PowerworldIOConstants.BUS_DISCONNECTED;
+    String cat = bus.getStatus() ? bus.getAttribute(PowerworldModelConstants.POWERWORLD_BUS_CATEGORY_KEY).toString() : PowerworldIOConstants.BUS_DEAD;    
     return new Object[] {getBusId(bus), bus.getVoltagePU(), bus.getPhaseAngle(), 
         bus.getCoordinate().getX(), bus.getCoordinate().getY(), bus.getSystemVoltageKV(), 
         bus.getMaximumVoltagePU(), bus.getMinimumVoltagePU(), status, cat};
@@ -1155,7 +1155,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     double linearConstant = datapoints.length >= 2 ? datapoints[1] : 0;
     double quadConstant = datapoints.length >= 3 ? datapoints[2] : 0;
     double cubeConstant = datapoints.length >= 4 ? datapoints[3] : 0;
-    String status = generator.getActualStatus() && generator.getDesiredStatus() ? PowerworldIOConstants.GEN_CLOSED : PowerworldIOConstants.GEN_OPEN;
+    String status = generator.getStatus() ? PowerworldIOConstants.GEN_CLOSED : PowerworldIOConstants.GEN_OPEN;
     
     Bus bus = getNode(generator).getBus();
     double remoteVoltage = bus.getVoltagePU().doubleValue(); 
@@ -1190,7 +1190,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    */
   private Object[] getLineValues(Line line) {
     Triple<Integer,Integer,Integer> id = getConnectionId(line);
-    String status = line.getActualStatus() && line.getDesiredStatus() ? PowerworldIOConstants.BRANCH_CLOSED : PowerworldIOConstants.BRANCH_OPEN;
+    String status = line.getStatus() ? PowerworldIOConstants.BRANCH_CLOSED : PowerworldIOConstants.BRANCH_OPEN;
     return new Object[] {
       id.getOne(), 
       id.getTwo(), 
@@ -1260,7 +1260,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    */
   private Object[] getLoadValues(Load load) {
     Pair<Integer,Integer> id = getLoadId(load);
-    String status = load.getActualStatus() && load.getDesiredStatus() ? PowerworldIOConstants.LOAD_CLOSED : PowerworldIOConstants.LOAD_OPEN;
+    String status = load.getStatus() ? PowerworldIOConstants.LOAD_CLOSED : PowerworldIOConstants.LOAD_OPEN;
     return new Object[] {id.getLeft(), id.getRight(),load.getActualReactiveLoad(),load.getActualRealLoad(),status};    
   }
   
@@ -1435,7 +1435,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    */
   private Object[] getTransformerValues(Transformer transformer) {
     Triple<Integer,Integer,Integer> id = getConnectionId(transformer);
-    String status = transformer.getActualStatus() && transformer.getDesiredStatus() ? PowerworldIOConstants.BRANCH_CLOSED : PowerworldIOConstants.BRANCH_OPEN;
+    String status = transformer.getStatus() ? PowerworldIOConstants.BRANCH_CLOSED : PowerworldIOConstants.BRANCH_OPEN;
     String type = getPowerworldTransformerType(transformer.getAttribute(Transformer.TYPE_KEY, TransformerTypeEnum.class)); 
     double tapAngle = transformer.getAttribute(Transformer.TAP_ANGLE_KEY, Number.class).doubleValue();
     double maxAngle = transformer.getAttribute(Transformer.MAX_TAP_ANGLE_KEY,Number.class).doubleValue();         
@@ -1479,7 +1479,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    */
   private Object[] getDCTwoTerminalValues(DCTwoTerminalLine line) {
     Triple<Integer,Integer,Integer> id = getConnectionId(line);
-    String status = line.getActualStatus() && line.getDesiredStatus() ? PowerworldIOConstants.TWO_TERMINAL_CLOSED : PowerworldIOConstants.TWO_TERMINAL_OPEN;
+    String status = line.getStatus() ? PowerworldIOConstants.TWO_TERMINAL_CLOSED : PowerworldIOConstants.TWO_TERMINAL_OPEN;
     double rectifierReactiveFlow = line.getAttribute(DCTwoTerminalLine.MVAR_FLOW_SIDE2_KEY, Number.class).doubleValue();
     double inverterReactiveFlow = line.getAttribute(DCTwoTerminalLine.MVAR_FLOW_SIDE1_KEY, Number.class).doubleValue();
     double rectifierRealFlow = line.getAttribute(DCTwoTerminalLine.MW_FLOW_SIDE2_KEY, Number.class).doubleValue();
@@ -1506,7 +1506,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    */
   private Object[] getDCVoltageSourceValues(DCVoltageSourceLine line) {
     String name = line.getAttribute(DCVoltageSourceLine.NAME_KEY).toString();
-    String status = line.getActualStatus() && line.getDesiredStatus() ? PowerworldIOConstants.VOLTAGE_SOURCE_CLOSED : PowerworldIOConstants.VOLTAGE_SOURCE_OPEN;
+    String status = line.getStatus() ? PowerworldIOConstants.VOLTAGE_SOURCE_CLOSED : PowerworldIOConstants.VOLTAGE_SOURCE_OPEN;
     double fromACSetPoint = line.getAttribute(DCVoltageSourceLine.FROM_AC_SET_POINT_KEY, Number.class).doubleValue();
     double toACSetPoint = line.getAttribute(DCVoltageSourceLine.TO_AC_SET_POINT_KEY, Number.class).doubleValue();
     double fromMWInput = line.getAttribute(DCVoltageSourceLine.FROM_MW_INPUT_KEY, Number.class).doubleValue();
@@ -1552,7 +1552,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    */
   private Object[] getDCMultiTerminalValues(DCMultiTerminalLine line) {
     Triple<Integer,Integer,Integer> id = getConnectionId(line);
-    String status = line.getActualStatus() && line.getDesiredStatus() ? PowerworldIOConstants.TWO_TERMINAL_CLOSED : PowerworldIOConstants.TWO_TERMINAL_OPEN;
+    String status = line.getStatus() ? PowerworldIOConstants.TWO_TERMINAL_CLOSED : PowerworldIOConstants.TWO_TERMINAL_OPEN;
     double mw = line.getMWFlow().doubleValue();
     double mvar = line.getMVarFlow().doubleValue();
     double setpoint = line.getAttribute(DCMultiTerminalLine.SETPOINT_KEY, Number.class).doubleValue();

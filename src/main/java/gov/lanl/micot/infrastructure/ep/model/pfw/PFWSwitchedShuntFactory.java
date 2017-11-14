@@ -14,15 +14,7 @@ import java.util.StringTokenizer;
  */
 public class PFWSwitchedShuntFactory extends ShuntCapacitorSwitchFactory {
 
-//	private static PFWSwitchedShuntFactory instance = null;
 	private static final String LEGACY_TAG = "PFW";
-	
-//	public static PFWSwitchedShuntFactory getInstance() {
-	//	if (instance == null) {
-		//	instance = new PFWSwitchedShuntFactory();
-		//}
-		//return instance;
-	//}
 	
 	/**
 	 * Constructor
@@ -128,9 +120,8 @@ public class PFWSwitchedShuntFactory extends ShuntCapacitorSwitchFactory {
   	// check to see if the area already exists
 		PFWSwitchedShuntControlModeEnum type = PFWSwitchedShuntControlModeEnum.getEnum(controlMode);
 		ShuntCapacitorSwitch shunt = registerCapacitor(legacyid);
-		shunt.setActualStatus((status == 1 ? true : false));
-    shunt.setDesiredStatus((status == 1 ? true : false));
-  	shunt.setDesiredVoltage(desiredVoltage);
+		shunt.setStatus((status == 1 ? true : false));
+   shunt.setDesiredVoltage(desiredVoltage);
     shunt.setScheduledLowVoltage(scheduledLowVoltage);
     shunt.setScheduleHighVoltage(scheduleHighVoltage);
     shunt.setRemoteDesiredVoltage(remotedDesiredVoltage);
@@ -178,7 +169,7 @@ public class PFWSwitchedShuntFactory extends ShuntCapacitorSwitchFactory {
       shunt.setAttribute(PFWModelConstants.PFW_SWITCHED_SHUNT_CONTROL_MODE_KEY, PFWSwitchedShuntControlModeEnum.LOCKED_MODE);
     }
     if (shunt.getAttribute(PFWModelConstants.PFW_SWITCHED_SHUNT_NORMAL_STATUS_KEY) == null) {
-      shunt.setAttribute(PFWModelConstants.PFW_SWITCHED_SHUNT_NORMAL_STATUS_KEY, shunt.getDesiredStatus() ? 1 : 0);
+      shunt.setAttribute(PFWModelConstants.PFW_SWITCHED_SHUNT_NORMAL_STATUS_KEY, shunt.getStatus() ? 1 : 0);
     }
   }	
   

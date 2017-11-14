@@ -58,7 +58,7 @@ public class GenerationConstraint implements ConstraintFactory {
         double totalMaxGeneration = 0;
         double totalMinGeneration = 0;
 
-        if (producer.getActualStatus()) {
+        if (producer.getStatus()) {
           if (producer instanceof Generator) {
             totalMaxGeneration = ((Generator)producer).computeActualRealGenerationMax().doubleValue(); // steady state model
             totalMinGeneration = ((Generator)producer).getRealGenerationMin();

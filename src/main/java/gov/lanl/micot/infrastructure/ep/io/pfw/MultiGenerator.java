@@ -32,7 +32,7 @@ public class MultiGenerator extends GeneratorImpl {
 	public Number getDesiredReactiveGeneration() {
 		Number sum = 0;
 		for (Generator d : data) {
-		  if (d.getDesiredStatus() == true) {
+		  if (d.getStatus() == true) {
 		    sum = MathUtils.ADD(d.getDesiredReactiveGeneration(),sum);
 		  }
 		}
@@ -43,7 +43,7 @@ public class MultiGenerator extends GeneratorImpl {
 	public Number getDesiredRealGeneration() {
 		Number sum = 0;
 		for (Generator d : data) {
-		  if (d.getDesiredStatus() == true) {
+		  if (d.getStatus() == true) {
 		    sum = MathUtils.ADD(d.getDesiredRealGeneration(),sum);
 		  }
 		}
@@ -54,7 +54,7 @@ public class MultiGenerator extends GeneratorImpl {
 	public double getDesiredReactiveMax() {
 		double sum = 0;
 		for (Generator d : data) {
-		  if (d.getDesiredStatus() == true) {
+		  if (d.getStatus() == true) {
 		    sum += d.getDesiredReactiveMax();
 		  }
 		}
@@ -66,7 +66,7 @@ public class MultiGenerator extends GeneratorImpl {
 	public double getReactiveMin() {
 		double sum = 0;
 		for (Generator d : data) {
-		  if (d.getDesiredStatus() == true) {
+		  if (d.getStatus() == true) {
 		    sum += d.getReactiveMin();
 		  }
 		}
@@ -78,7 +78,7 @@ public class MultiGenerator extends GeneratorImpl {
 	public double getDesiredRealGenerationMax() {
 		double sum = 0;
 		for (Generator d : data) {
-		  if (d.getDesiredStatus() == true) {
+		  if (d.getStatus() == true) {
 		    sum += d.getDesiredRealGenerationMax();
 		  }
 		}
@@ -90,7 +90,7 @@ public class MultiGenerator extends GeneratorImpl {
 	public double getRealGenerationMin() {
 		double sum = 0;
 		for (Generator d : data) {
-		  if (d.getDesiredStatus() == true) {
+		  if (d.getStatus() == true) {
 		    sum += d.getRealGenerationMin();
 		  }
 		}
@@ -99,10 +99,10 @@ public class MultiGenerator extends GeneratorImpl {
 	}
 
 	@Override
-	public boolean getDesiredStatus() {
+	public boolean getStatus() {
 	  boolean status = false;
 	  for (Generator d : data) {
-	    status |= d.getDesiredStatus();
+	    status |= d.getStatus();
 	  }
 	  return status;
 	}
@@ -111,7 +111,7 @@ public class MultiGenerator extends GeneratorImpl {
 	public void setDesiredReactiveGeneration(Number reactive) {
 		Number sum = getDesiredReactiveGeneration();
 		for (Generator d : data) {
-		  if (d.getDesiredStatus() == true) {
+		  if (d.getStatus() == true) {
 		    d.setDesiredReactiveGeneration(MathUtils.MULTIPLY(MathUtils.DIVIDE(d.getDesiredReactiveGeneration(),sum),reactive));
 		  }
 		}
@@ -121,7 +121,7 @@ public class MultiGenerator extends GeneratorImpl {
 	public void setDesiredRealGeneration(Number real) {
 		Number sum = getDesiredRealGeneration();
 		for (Generator d : data) {
-		  if (d.getDesiredStatus() == true) {
+		  if (d.getStatus() == true) {
 		    d.setDesiredRealGeneration(MathUtils.MULTIPLY(MathUtils.DIVIDE(d.getDesiredRealGeneration(),sum),real));
 		  }
 		}
@@ -131,7 +131,7 @@ public class MultiGenerator extends GeneratorImpl {
 	public void setDesiredReactiveMax(double max) {
 		double sum = getDesiredReactiveMax();
 		for (Generator d : data) {
-		  if (d.getDesiredStatus() == true) {
+		  if (d.getStatus() == true) {
 		    d.setDesiredReactiveMax((d.getDesiredReactiveMax() / sum) * max);
 		  }
 		}
@@ -141,7 +141,7 @@ public class MultiGenerator extends GeneratorImpl {
 	public void setReactiveMin(double max) {
 		double sum = getReactiveMin();
 		for (Generator d : data) {
-		  if (d.getDesiredStatus() == true) {
+		  if (d.getStatus() == true) {
 		    d.setReactiveMin((d.getReactiveMin() / sum) * max);
 		  }
 		}
@@ -151,7 +151,7 @@ public class MultiGenerator extends GeneratorImpl {
 	public void setDesiredRealGenerationMax(double real) {
 		double sum = getDesiredRealGenerationMax();
 		for (Generator d : data) {
-		  if (d.getDesiredStatus() == true) {
+		  if (d.getStatus() == true) {
 		    d.setDesiredRealGenerationMax((d.getDesiredRealGenerationMax() / sum) * real);
 		  }
 		}
@@ -161,16 +161,16 @@ public class MultiGenerator extends GeneratorImpl {
 	public void setRealGenerationMin(double real) {
 		double sum = getRealGenerationMin();
 		for (Generator d : data) {
-		  if (d.getDesiredStatus() == true) {
+		  if (d.getStatus() == true) {
 		    d.setRealGenerationMin((d.getRealGenerationMin() / sum) * real);
 		  }
 		}
 	}
 
 	@Override
-	public void setDesiredStatus(boolean b) {
+	public void setStatus(boolean b) {
 		for (Generator d : data) {
-			d.setDesiredStatus(b);
+			d.setStatus(b);
 		}
 	}
 

@@ -57,7 +57,7 @@ public class LoadConstraint implements ConstraintFactory {
     for (ElectricPowerNode node : model.getNodes()) {
       Collection<Load> loads = node.getComponents(Load.class);
       for (Load load : loads) {
-        double totalDesiredLoad = load.getActualStatus() ? load.getDesiredRealLoad().doubleValue() / mva : 0;
+        double totalDesiredLoad = load.getStatus() ? load.getDesiredRealLoad().doubleValue() / mva : 0;
         if (totalDesiredLoad <= 0) {
           LinearConstraint constraint = new LinearConstraintEquals(getLoadUpperBoundConstraintName(load));
           constraint.setRightHandSide(totalDesiredLoad);

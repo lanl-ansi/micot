@@ -26,18 +26,18 @@ public class MultiBattery extends BatteryImpl {
 	}
 
 	@Override
-	public boolean getDesiredStatus() {
+	public boolean getStatus() {
 	  boolean status = false;
 	  for (Battery d : data) {
-	    status |= d.getDesiredStatus();
+	    status |= d.getStatus();
 	  }
 	  return status;
 	}
 
 	@Override
-	public void setDesiredStatus(boolean b) {
+	public void setStatus(boolean b) {
 		for (Battery d : data) {
-			d.setDesiredStatus(b);
+			d.setStatus(b);
 		}
 	}
 

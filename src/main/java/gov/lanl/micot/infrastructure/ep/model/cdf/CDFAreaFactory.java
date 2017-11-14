@@ -9,19 +9,10 @@ import gov.lanl.micot.infrastructure.ep.model.ControlAreaFactory;
  */
 public class CDFAreaFactory extends ControlAreaFactory {
 
-//	private static CDFAreaFactory instance      = null;
 	private static final String LEGACY_TAG = "CDF";
 	
 	private static final double DEFAULT_EXPORT    = 0.0;
 	private static final double DEFAULT_TOLERANCE = 5.0;
-	
-	
-	//public static CDFAreaFactory getInstance() {
-		//if (instance == null) {
-			//instance = new CDFAreaFactory();
-		//}
-		//return instance;
-	//}
 	
 	/**
 	 * Constructor
@@ -56,8 +47,7 @@ public class CDFAreaFactory extends ControlAreaFactory {
        
   	// check to see if the area already exists
     ControlArea area = registerArea(legacyid);
-  	area.setActualStatus(true);
-  	area.setDesiredStatus(true);
+  	area.setStatus(true);
     area.setAttribute(ControlArea.AREA_BUS_NAME_KEY, name);
     area.setAttribute(ControlArea.AREA_SCHEDULED_EXPORT_KEY, scheduledExport);
     area.setAttribute(ControlArea.AREA_TOLERANCE_KEY, tolerance);
@@ -73,8 +63,7 @@ public class CDFAreaFactory extends ControlAreaFactory {
     String areaCode = new Integer(legacyid).toString() + " ";
     
     ControlArea area = this.registerArea(legacyid);
-    area.setActualStatus(true);
-    area.setDesiredStatus(true);
+    area.setStatus(true);
     area.setAttribute(ControlArea.AREA_BUS_NAME_KEY, name);
     area.setAttribute(ControlArea.AREA_SCHEDULED_EXPORT_KEY, DEFAULT_EXPORT);
     area.setAttribute(ControlArea.AREA_TOLERANCE_KEY, DEFAULT_TOLERANCE);

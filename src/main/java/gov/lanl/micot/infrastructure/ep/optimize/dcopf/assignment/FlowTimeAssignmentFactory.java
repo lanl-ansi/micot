@@ -60,7 +60,7 @@ public class FlowTimeAssignmentFactory implements AssignmentFactory {
       for (int i = 0; i < numberOfIncrements; ++i) {
         double time = i * incrementSize;
       
-        if (edge.getActualStatus() == false) {
+        if (edge.getStatus() == false) {
           function.addEntry(time, 0.0);
           continue;
         }

@@ -54,8 +54,7 @@ public class DewTest1 extends TestCase {
     // turning off bus/edge #487
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (edge.getAttribute(DewVariables.DEW_LEGACY_ID_KEY, DewLegacyId.class).getTwo() == 487) {
-        edge.setDesiredStatus(false);
-        edge.setActualStatus(false);
+        edge.setStatus(false);
       }
     }
     

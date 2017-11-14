@@ -25,14 +25,14 @@ public class OptimizationConstants {
   public static boolean allActive(Scenario scenario, Asset... assets) {
     if (scenario == null) {
       for (Asset asset : assets) {
-        if (!asset.getActualStatus()) {
+        if (!asset.getStatus()) {
           return false;
         }
       }
     }
     else {
       for (Asset asset : assets) {
-        if (!scenario.computeActualStatus(asset, asset.getActualStatus())) {
+        if (!scenario.computeActualStatus(asset, asset.getStatus())) {
           return false;
         }
       }        

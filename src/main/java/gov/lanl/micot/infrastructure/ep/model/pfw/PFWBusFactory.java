@@ -13,16 +13,8 @@ import java.util.StringTokenizer;
  */
 public class PFWBusFactory extends BusFactory {
 
-//	private static PFWBusFactory instance      = null;
 	private static final String LEGACY_TAG = "PFW";
-	
-	//public static PFWBusFactory getInstance() {
-		//if (instance == null) {
-			//instance = new PFWBusFactory();
-		//}
-		//return instance;
-	//}
-	
+		
 	/**
 	 * Constructor
 	 */
@@ -78,8 +70,7 @@ public class PFWBusFactory extends BusFactory {
     bus.setPhaseAngle(voltageAngle);
     bus.setSystemVoltageKV(baseVoltageKiloVolts);
     bus.setRemoteVoltagePU(remoteVoltage);
-    bus.setDesiredStatus(status == 1 ? true : false);
-    bus.setActualStatus(status == 1 ? true : false);
+    bus.setStatus(status == 1 ? true : false);
   	bus.setCoordinate(point == null ? new PointImpl(0,0) : point);  	
   	return bus;		
 	}

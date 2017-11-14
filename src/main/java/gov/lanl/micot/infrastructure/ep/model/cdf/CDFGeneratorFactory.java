@@ -15,15 +15,7 @@ import java.util.Collection;
  */
 public class CDFGeneratorFactory extends GeneratorFactory {
 
-	//private static CDFGeneratorFactory instance = null;
 	private static final String LEGACY_TAG = "CDF";
-	
-	//public static CDFGeneratorFactory getInstance() {
-		//if (instance == null) {
-			//instance = new CDFGeneratorFactory();
-		//}
-		//return instance;
-	//}
 	
 	/**
 	 * Constructor
@@ -81,12 +73,11 @@ public class CDFGeneratorFactory extends GeneratorFactory {
     generator.setDesiredReactiveGeneration(reactiveGeneration);
     generator.setDesiredReactiveMax(reactiveMax);
     generator.setReactiveMin(reactiveMin);
-    generator.setDesiredStatus(status);
+    generator.setStatus(status);
     generator.setDesiredRealGenerationMax(realGenerationMax);
     generator.setRealGenerationMin(realGenerationMin);
     generator.setActualRealGeneration(realGeneration);
     generator.setActualReactiveGeneration(reactiveGeneration);
-    generator.setActualStatus(status);    
     generator.setCoordinate(point == null ? new PointImpl(0,0) : point);
   	return generator;
 	}

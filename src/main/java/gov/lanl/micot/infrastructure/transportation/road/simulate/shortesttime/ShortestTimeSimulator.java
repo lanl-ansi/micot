@@ -23,12 +23,7 @@ public class ShortestTimeSimulator extends RoadSimulatorImpl {
 
   private Collection<Pair<String,Object>> allPairNodeIds = null;
   private Collection<Pair<Pair<String,Object>,Pair<String,Object>>> individualPairNodeIds = null;
-
   
-//	private Collection<RoadNode> allPairNodes = null;
-//	private Collection<Pair<RoadNode,RoadNode>> individualPairNodes = null;
-  
-	
   /**
 	 * Constructor
 	 * @param nextGenerationPFWFilename
@@ -43,9 +38,9 @@ public class ShortestTimeSimulator extends RoadSimulatorImpl {
 	  Collection<RoadNode> allPairNodes = new ArrayList<RoadNode>(); 
 	  Collection<Pair<RoadNode,RoadNode>> individualPairNodes = new ArrayList<Pair<RoadNode,RoadNode>>();
 	  
-	  for (Road road : roadModel.getRoads()) {
-	  	road.setActualStatus(road.getDesiredStatus());
-	  }
+//	  for (Road road : roadModel.getRoads()) {
+	//  	road.setActualStatus(road.getDesiredStatus());
+	 // }
 	  	  
 	   // could be quite inefficient
     for (RoadNode node : roadModel.getNodes()) {
@@ -76,10 +71,10 @@ public class ShortestTimeSimulator extends RoadSimulatorImpl {
 
 	  for (RoadNode node : roadModel.getNodes()) {
 	  	Intersection intersection = node.getIntersection();
-	  	intersection.setActualStatus(intersection.getDesiredStatus());
-	  	if (!intersection.getActualStatus()) {
+	  //	intersection.setActualStatus(intersection.getDesiredStatus());
+	  	if (!intersection.getStatus()) {
 	  		for (Road road : roadModel.getRoads(node)) {
-	  			road.setActualStatus(false);
+	  			road.setStatus(false);
 	  		}
 	  	}
 	  }
@@ -95,7 +90,7 @@ public class ShortestTimeSimulator extends RoadSimulatorImpl {
 	  
 	  // TODO should these be bi-directional?
 	  for (Road road : roadModel.getRoads()) {
-	  	if (road.getActualStatus()) {
+	  	if (road.getStatus()) {
 	  		graph.addEdge(road, roadModel.getFirstNode(road), roadModel.getSecondNode(road));
 	  		weights.put(road, road.getLength() / road.getSpeedLimit());
 	  	}

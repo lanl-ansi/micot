@@ -55,8 +55,7 @@ public class PFWZoneFactory extends ZoneFactory {
 
   	// check to see if the area already exists
 	  Zone zone = registerZone(id);
-  	zone.setActualStatus(true);
-  	zone.setDesiredStatus(true);
+  	zone.setStatus(true);
     zone.setAttribute(Zone.ZONE_NAME_KEY, name);
   	return zone;
 	}
@@ -78,8 +77,7 @@ public class PFWZoneFactory extends ZoneFactory {
     name = "\"" + name + "\"";  
     
     Zone zone = registerZone(id);
-    zone.setActualStatus(true);
-    zone.setDesiredStatus(true);
+    zone.setStatus(true);
     zone.setAttribute(Zone.ZONE_NAME_KEY, name);
     return zone;  
   }

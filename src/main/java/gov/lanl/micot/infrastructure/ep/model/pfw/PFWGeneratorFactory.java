@@ -16,16 +16,8 @@ import java.util.StringTokenizer;
  */
 public class PFWGeneratorFactory extends GeneratorFactory {
 
-//	private static PFWGeneratorFactory instance = null;
 	private static final String LEGACY_TAG = "PFW";
-	
-//	public static PFWGeneratorFactory getInstance() {
-	//	if (instance == null) {
-		//	instance = new PFWGeneratorFactory();
-		//}
-		//return instance;
-	//}
-	
+		
 	/**
 	 * Constructor
 	 */
@@ -87,12 +79,11 @@ public class PFWGeneratorFactory extends GeneratorFactory {
     generator.setDesiredReactiveGeneration(reactiveGeneration);
     generator.setDesiredReactiveMax(reactiveMaxRatio);
     generator.setReactiveMin(reactiveMinRatio);
-    generator.setDesiredStatus(status == 1 ? true : false);
+    generator.setStatus(status == 1 ? true : false);
     generator.setDesiredRealGenerationMax(realGenerationMax);
     generator.setRealGenerationMin(realGenerationMin);
     generator.setActualRealGeneration(realGeneration);
     generator.setActualReactiveGeneration(reactiveGeneration);
-    generator.setActualStatus(status == 1 ? true : false);    
     generator.setCoordinate(point == null ? new PointImpl(0,0) : point);
     
     bus.setVoltagePU(voltageSetPoint); // backwards way of doing this, but this is the voltage for the bus...

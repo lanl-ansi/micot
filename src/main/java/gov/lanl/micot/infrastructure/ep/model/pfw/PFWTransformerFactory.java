@@ -30,20 +30,8 @@ public class PFWTransformerFactory extends TransformerFactory {
   protected static final double DEFAULT_STEP_SIZE = 0.00625;
   protected static final String DEFAULT_BRANCH_RATING = "M";
 
-//	private static PFWTransformerFactory instance = null;
 	private static final String LEGACY_TAG = "PFW";
 	
-	/**
-	 * Get the instance of the transformer factory
-	 * @return
-	 */
-	//public static PFWTransformerFactory getInstance() {
-		//if (instance == null) {
-			//instance = new PFWTransformerFactory();
-		//}
-		//return instance;
-	//}
-
 	/**
 	 * Constructor
 	 */
@@ -120,7 +108,7 @@ public class PFWTransformerFactory extends TransformerFactory {
     transformer.setCapacityRating(rating1);
     transformer.setShortTermEmergencyCapacityRating(rating2);
     transformer.setLongTermEmergencyCapacityRating(rating3);
-    transformer.setDesiredStatus(status == 1 ? true : false);
+    transformer.setStatus(status == 1 ? true : false);
     transformer.setAttribute(PFWModelConstants.PFW_TRANSFORMER_BRANCH_RATING_DESGINATOR_KEY,branchRatingDesginator);
     transformer.setAttribute(Transformer.TYPE_KEY, transformerType);
     transformer.setAttribute(Transformer.TAP_RATIO_KEY, tapRatio);
@@ -131,7 +119,6 @@ public class PFWTransformerFactory extends TransformerFactory {
     transformer.setAttribute(Transformer.CONTROL_MIN_KEY, controlMin);
     transformer.setAttribute(Transformer.CONTROL_MAX_KEY, controlMax);
     transformer.setAttribute(Transformer.CONTROL_SIDE_KEY, gControlSide);   
-    transformer.setActualStatus(transformer.getDesiredStatus());
     transformer.setMWFlow(0.0);
     transformer.setMVarFlow(0.0);
 		if (points == null) {
@@ -160,7 +147,7 @@ public class PFWTransformerFactory extends TransformerFactory {
     transformer.setCapacityRating(line.getCapacityRating().intValue());
     transformer.setShortTermEmergencyCapacityRating(line.getShortTermEmergencyCapacityRating().intValue());
     transformer.setLongTermEmergencyCapacityRating(line.getLongTermEmergencyCapacityRating().intValue());
-    transformer.setDesiredStatus(line.getDesiredStatus());
+    transformer.setStatus(line.getStatus());
     transformer.setAttribute(PFWModelConstants.PFW_TRANSFORMER_BRANCH_RATING_DESGINATOR_KEY,line.getAttribute(PFWModelConstants.PFW_TRANSFORMER_BRANCH_RATING_DESGINATOR_KEY, String.class));
     transformer.setAttribute(Transformer.TYPE_KEY, line.getAttribute(Transformer.TYPE_KEY));
     transformer.setAttribute(Transformer.TAP_RATIO_KEY, line.getAttribute(Transformer.TAP_RATIO_KEY));
@@ -171,7 +158,6 @@ public class PFWTransformerFactory extends TransformerFactory {
     transformer.setAttribute(Transformer.CONTROL_MIN_KEY, line.getAttribute(Transformer.CONTROL_MIN_KEY));
     transformer.setAttribute(Transformer.CONTROL_MAX_KEY, line.getAttribute(Transformer.CONTROL_MAX_KEY));
     transformer.setAttribute(Transformer.CONTROL_SIDE_KEY, line.getAttribute(Transformer.CONTROL_SIDE_KEY));   
-    transformer.setActualStatus(transformer.getDesiredStatus());  		
 		transformer.setCoordinates(line.getCoordinates());
 		return transformer;
 		

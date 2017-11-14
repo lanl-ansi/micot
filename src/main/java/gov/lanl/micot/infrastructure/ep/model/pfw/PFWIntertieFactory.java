@@ -17,16 +17,8 @@ import java.util.Vector;
  */
 public class PFWIntertieFactory extends IntertieFactory {
 
-//	private static PFWIntertieFactory instance            = null;
 	private static final String LEGACY_TAG = "PFW";
 	
-//	public static PFWIntertieFactory getInstance() {
-	//	if (instance == null) {
-		//	instance = new PFWIntertieFactory();
-		//}
-		//return instance;
-	//}
-
 	/**
 	 * Constructor
 	 */
@@ -70,8 +62,7 @@ public class PFWIntertieFactory extends IntertieFactory {
   	// check to see if the area already exists
   	Intertie intertie = registerIntertie(meterBus, nonMeterBus, circuit);
     intertie.setAttribute(Intertie.CIRCUIT_KEY, circuit);
-    intertie.setDesiredStatus(true);
-    intertie.setActualStatus(true);
+    intertie.setStatus(true);
   	
   	if (points == null) {
 			points = new Vector<Point>();

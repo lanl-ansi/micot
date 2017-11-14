@@ -24,23 +24,14 @@ public class ReservoirImpl extends ProducerImpl implements Reservoir {
     listeners = new HashSet<ReservoirChangeListener>();
     setAttribute(Reservoir.ASSET_ID_KEY, assetId);
   }
-
-  /**
-   * Constructor
-   * @param battery
-   */
-//  public ReservoirImpl(Reservoir reservoir) {
-  //  super(reservoir);
-   // listeners = new HashSet<ReservoirChangeListener>();    
-  //}
-  
+ 
   @Override
   public void setActualProduction(Set<Reservoir> producers) {
     double producerMax      = 0;
     double actualProduction = 0;
     
     for (Reservoir state : producers) {
-      if (state.getDesiredStatus() == true) {
+      if (state.getStatus() == true) {
         producerMax += state.getMaximumProduction().doubleValue();
         actualProduction += state.getActualProduction().doubleValue();
       }

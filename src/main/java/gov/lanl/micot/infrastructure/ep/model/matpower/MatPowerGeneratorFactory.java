@@ -140,12 +140,11 @@ public class MatPowerGeneratorFactory extends GeneratorFactory {
 		generator.setDesiredReactiveGeneration(reactiveGeneration);
 		generator.setDesiredReactiveMax(reactiveMax);
 		generator.setReactiveMin(reactiveMin);
-		generator.setDesiredStatus(status);
+		generator.setStatus(status);
 		generator.setDesiredRealGenerationMax(realGenerationMax);
 		generator.setRealGenerationMin(realGenerationMin);
 		generator.setActualRealGeneration(realGeneration);
 		generator.setActualReactiveGeneration(reactiveGeneration);
-		generator.setActualStatus(status);
 		generator.setCoordinate(point == null ? new PointImpl(0, 0) : point);
 		generator.setAttribute(Generator.MVA_BASE_KEY, mBase);
 		generator.setAttribute(MatPowerModelConstants.MATPOWER_GENERATOR_MIN_REAL_CURVE_KEY, pc1);

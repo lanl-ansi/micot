@@ -14,15 +14,6 @@ import java.util.Vector;
  */
 public class PipeFactoryImpl extends PipeFactory {
 
-//	private static PipeFactoryImpl instance = null;
-	
-	//public static PipeFactoryImpl getInstance() {
-		//if (instance == null) {
-			//instance = new PipeFactoryImpl();
-		//}
-		//return instance;
-	//}
-	
 	/**
 	 * Constructor
 	 */
@@ -48,8 +39,7 @@ public class PipeFactoryImpl extends PipeFactory {
     pipe.setResistance(resistance);
     pipe.setFlow(0.0);
     pipe.setCapacity(Double.MAX_VALUE);
-    pipe.setActualStatus(true);
-    pipe.setDesiredStatus(true);
+    pipe.setStatus(true);
     
     Vector<Point> points = new Vector<Point>();
     points.add(node1.getJunction().getCoordinate());
@@ -59,10 +49,5 @@ public class PipeFactoryImpl extends PipeFactory {
     return pipe;
   }
 
-  //@Override
-  //public Pipe createPipe(NaturalGasNode node1, NaturalGasNode node2, Pipe parameters) {
-    //return createPipe(node1, node2, parameters.getDiameter(), parameters.getLength(), parameters.getResistance());
-  //}
-	
 
 }

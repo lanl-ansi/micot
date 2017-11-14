@@ -87,7 +87,7 @@ public class DewLineFactory extends LineFactory {
     Object obj = dew.getComponentData(Bus.NAME_KEY, legacyid, null);
     String name = obj == null ? "" : obj.toString();
     boolean isFailed = Integer.parseInt(dew.getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
-    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
+    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.STATUS_KEY, legacyid, name).toString()) == 1;
     int dewType = Integer.parseInt(dew.getComponentData(DewVariables.DEW_COMPONENT_TYPE_KEY, legacyid, name).toString());
     int numPhases = Integer.parseInt(dew.getComponentData(Generator.NUM_PHASE_KEY, legacyid, name).toString());
     int phases = Integer.parseInt(dew.getComponentData(DewVariables.DEW_PHASES_KEY, legacyid, name).toString());
@@ -178,8 +178,7 @@ public class DewLineFactory extends LineFactory {
     line.setAttribute(Line.CAPACITY_RATING_A_KEY, ratingA);
     line.setAttribute(Line.CAPACITY_RATING_B_KEY, ratingB);
     line.setAttribute(Line.CAPACITY_RATING_C_KEY, ratingC);
-    line.setDesiredStatus(status);
-    line.setActualStatus(line.getDesiredStatus());
+    line.setStatus(status);
     line.setMWFlow(0.0);
     line.setMVarFlow(0.0);
     line.setCoordinates(new LineImpl(points.toArray(new Point[0])));
@@ -317,8 +316,7 @@ public class DewLineFactory extends LineFactory {
     line.setAttribute(Line.CAPACITY_RATING_A_KEY, ratingA);
     line.setAttribute(Line.CAPACITY_RATING_B_KEY, ratingB);
     line.setAttribute(Line.CAPACITY_RATING_C_KEY, ratingC);
-    line.setDesiredStatus(status);
-    line.setActualStatus(line.getDesiredStatus());
+    line.setStatus(status);
     line.setMWFlow(0.0);
     line.setMVarFlow(0.0);
     line.setCoordinates(new LineImpl(points.toArray(new Point[0])));

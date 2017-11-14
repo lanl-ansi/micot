@@ -152,8 +152,7 @@ public class PowerworldDCLineFactory extends DCLineFactory {
     double mVarFlow = Math.max(inverterRealFlow, rectifierRealFlow);
     double resistance = Double.parseDouble(resistanceStr);
     
-    line.setDesiredStatus(status);
-    line.setActualStatus(status);
+    line.setStatus(status);
     line.setAttribute(DCTwoTerminalLine.INVERTER_TAP_KEY, inverterTap);
     line.setAttribute(DCTwoTerminalLine.INVERTER_MIN_TAP_KEY, inverterMin);
     line.setAttribute(DCTwoTerminalLine.INVERTER_MAX_TAP_KEY, inverterMax);
@@ -254,8 +253,7 @@ public class PowerworldDCLineFactory extends DCLineFactory {
     double dcVoltage      = Double.parseDouble(dcVoltageStr);
     DCMultiTerminalLineTerminalTypeEnum terminalType = terminalTypeStr.equalsIgnoreCase(PowerworldIOConstants.MULTI_TERMINAL_TYPE_RECT) ?  DCMultiTerminalLineTerminalTypeEnum.TYPE_IS_RECT : DCMultiTerminalLineTerminalTypeEnum.TYPE_IS_INV;
 
-    line.setDesiredStatus(status);
-    line.setActualStatus(status);
+    line.setStatus(status);
     line.setAttribute(DCMultiTerminalLine.BASE_WINDING_KEY, baseWinding);
     line.setAttribute(DCMultiTerminalLine.FIRING_ANGLE_KEY, firingAngle);
     line.setAttribute(DCMultiTerminalLine.FIRING_ANGLE_MAX_KEY, firingAngleMax);
@@ -373,8 +371,7 @@ public class PowerworldDCLineFactory extends DCLineFactory {
     double fromMVARating = Double.parseDouble(fromMVARatingStr);
     double toMVARating = Double.parseDouble(toMVARatingStr);
     
-    line.setDesiredStatus(status);
-    line.setActualStatus(status);
+    line.setStatus(status);
     line.setAttribute(DCVoltageSourceLine.FROM_AC_CONTROL_MODE_KEY, fromACControlMode);
     line.setAttribute(DCVoltageSourceLine.TO_AC_CONTROL_MODE_KEY, toACControlMode);
     line.setAttribute(DCVoltageSourceLine.FROM_DC_CONTROL_MODE_KEY, fromDCControlMode);

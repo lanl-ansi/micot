@@ -101,8 +101,7 @@ public class LPNormLineFactory extends LineFactory {
     
     
     line.setShortTermEmergencyCapacityRating(capacity);
-    line.setDesiredStatus(status);
-    line.setActualStatus(status);
+    line.setStatus(status);
     line.setAttribute(Line.LENGTH_KEY, length);
     line.setAttribute(Line.NUMBER_OF_PHASES_KEY,numberOfPhases);
     line.setAttribute(Line.HAS_PHASE_A_KEY,hasPhase.getBoolean(0));

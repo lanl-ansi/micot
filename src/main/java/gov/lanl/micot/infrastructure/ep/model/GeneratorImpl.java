@@ -23,16 +23,7 @@ public class GeneratorImpl extends ElectricPowerProducerImpl implements Generato
     setAttribute(Generator.ASSET_ID_KEY, assetId);
   }
 
-  /**
-   * Constructor
-   * @param bus
-   */
-//  public GeneratorImpl(Generator generator) {
-  //  super(generator);
-   // listeners = new HashSet<GeneratorChangeListener>();    
-  //}
-
-  @Override
+   @Override
   public void addGeneratorDataListener(GeneratorChangeListener listener) {
     listeners.add(listener);
   }
@@ -89,7 +80,7 @@ public class GeneratorImpl extends ElectricPowerProducerImpl implements Generato
     Number actualReactive = 0;
 
     for (Generator state : generators) {
-      if (state.getDesiredStatus() == true) {
+      if (state.getStatus() == true) {
         realMax = MathUtils.ADD(state.computeActualRealGenerationMax(),realMax);
         reactiveMax = MathUtils.ADD(state.computeActualReactiveGenerationMax(), reactiveMax);
         actualReal = MathUtils.ADD(actualReal, state.getActualRealGeneration());

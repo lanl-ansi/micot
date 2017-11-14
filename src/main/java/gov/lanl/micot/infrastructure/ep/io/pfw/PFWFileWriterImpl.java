@@ -354,7 +354,7 @@ public abstract class PFWFileWriterImpl implements PFWFileWriter {
 
 		sb = new StringBuilder();
 		formatter = new Formatter(sb, Locale.US);
-		formatter.format("%1d", data.getDesiredStatus() ? 1 : 0);
+		formatter.format("%1d", data.getStatus() ? 1 : 0);
 		buffer.append(formatter.toString());
     formatter.close();
 				
@@ -581,7 +581,7 @@ public abstract class PFWFileWriterImpl implements PFWFileWriter {
 		double desiredVoltage = bus.getRemoteVoltagePU(); //battery.getAttribute(Generator.DESIRED_VOLTAGE_KEY,Double.class);
 		double reactiveMax = battery.getDesiredReactiveMax();
 		double reactiveMin = battery.getReactiveMin();
-		boolean desiredStatus = battery.getDesiredStatus();
+		boolean desiredStatus = battery.getStatus();
 		double realMax = battery.getAvailableMaximumRealProduction().doubleValue();
 		double realMin = battery.getAvailableMinimumRealProduction().doubleValue();
 		int generatorType = battery.getAttribute(Generator.TYPE_KEY,GeneratorTypeEnum.class).getGeneratorType();
@@ -610,7 +610,7 @@ public abstract class PFWFileWriterImpl implements PFWFileWriter {
 		double desiredVoltage = bus.getRemoteVoltagePU(); //generator.getDesiredVoltage().doubleValue();
     double reactiveMax = generator.computeActualReactiveGenerationMax().doubleValue(); // steady state model
 		double reactiveMin = generator.getReactiveMin();
-		boolean desiredStatus = generator.getDesiredStatus();
+		boolean desiredStatus = generator.getStatus();
     double realMax = generator.computeActualRealGenerationMax().doubleValue(); // steady state model
 		double realMin = generator.getRealGenerationMin();
 		int generatorType = generator.getType().getGeneratorType();
@@ -742,7 +742,7 @@ public abstract class PFWFileWriterImpl implements PFWFileWriter {
 		buffer.append(NumberFormat.resizeBefore(new Integer(data.getLongTermEmergencyCapacityRating().intValue()).toString(), 5));
 		buffer.append(",");
 
-		buffer.append(NumberFormat.resizeBefore(new Integer(data.getDesiredStatus() ? 1 : 0).toString(), 1));
+		buffer.append(NumberFormat.resizeBefore(new Integer(data.getStatus() ? 1 : 0).toString(), 1));
 		buffer.append(",");
 
 		buffer.append(NumberFormat.resizeBefore(branchRating, 1));
@@ -829,7 +829,7 @@ public abstract class PFWFileWriterImpl implements PFWFileWriter {
 		buffer.append(NumberFormat.resizeBefore(new Integer(data.getLongTermEmergencyCapacityRating().intValue()).toString(), 5));
 		buffer.append(",");
 
-		buffer.append(NumberFormat.resizeBefore(new Integer(data.getDesiredStatus() ? 1 : 0).toString(), 1));
+		buffer.append(NumberFormat.resizeBefore(new Integer(data.getStatus() ? 1 : 0).toString(), 1));
 		buffer.append(",");
 
 		buffer.append(NumberFormat.resizeBefore(branchRating, 1));
@@ -1079,7 +1079,7 @@ public abstract class PFWFileWriterImpl implements PFWFileWriter {
 		buffer.append(NumberFormat.resizeBefore(new Integer(zone).toString(), 4));
 		buffer.append(",");
 
-		buffer.append(data.getDesiredStatus() ? 1 : 0);
+		buffer.append(data.getStatus() ? 1 : 0);
 		buffer.append(",");
 
 		buffer.append(normalStatus);

@@ -14,16 +14,8 @@ import gov.lanl.micot.util.geometry.PointImpl;
  */
 public class TxtWellFactory extends WellFactory {
 
-//  private static TxtWellFactory INSTANCE = null;
   private static final String LEGACY_TAG = "TXT";
   
-  //public static TxtWellFactory getInstance() {
-    //if (INSTANCE == null) {
-      //INSTANCE = new TxtWellFactory();
-    //}
-    //return INSTANCE;
- // }
-
   /**
    * Singleton constructor
    */
@@ -54,10 +46,9 @@ public class TxtWellFactory extends WellFactory {
     
     well.setAttribute(Well.WELL_NAME_KEY, name);
     well.setActualProduction(production);
-    well.setActualStatus(true);
+    well.setStatus(true);
     well.setCoordinate(new PointImpl(x,y));
     well.setDesiredProduction(production);
-    well.setDesiredStatus(true);
     well.setMaximumProduction(maxProduction);
     well.setMinimumProduction(minProduction);
     well.setAttribute(Well.ECONOMIC_COST_KEY, cost);

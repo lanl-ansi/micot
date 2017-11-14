@@ -11,21 +11,11 @@ import gov.lanl.micot.infrastructure.ep.model.ControlAreaFactory;
  */
 public class PFWAreaFactory extends ControlAreaFactory {
 
-//	private static PFWAreaFactory instance      = null;
-	
 	private static final double DEFAULT_EXPORT    = 0.0;
 	private static final double DEFAULT_TOLERANCE = 5.0;
 	
 	private static final String LEGACY_TAG = "PFW";
-  
-	
-//	public static PFWAreaFactory getInstance() {
-	//	if (instance == null) {
-		//	instance = new PFWAreaFactory();
-	//	}
-		//return instance;
-	//}
-	
+  	
 	/**
 	 * Constructor
 	 */
@@ -71,8 +61,7 @@ public class PFWAreaFactory extends ControlAreaFactory {
 		
   	// check to see if the area already exists
     ControlArea area = registerArea(legacyid);
-  	area.setActualStatus(true);
-  	area.setDesiredStatus(true);
+  	area.setStatus(true);
     area.setAttribute(ControlArea.AREA_BUS_NAME_KEY, name);
     area.setAttribute(ControlArea.AREA_SCHEDULED_EXPORT_KEY, scheduledExport);
     area.setAttribute(ControlArea.AREA_TOLERANCE_KEY, tolerance);
@@ -111,8 +100,7 @@ public class PFWAreaFactory extends ControlAreaFactory {
     areaCode = "\"" + areaCode + "\"";    
 
     ControlArea pair = registerArea(area);
-    pair.setActualStatus(true);
-    pair.setDesiredStatus(true);
+    pair.setStatus(true);
     pair.setAttribute(ControlArea.AREA_BUS_NAME_KEY, name);
     pair.setAttribute(ControlArea.AREA_SCHEDULED_EXPORT_KEY, DEFAULT_EXPORT);
     pair.setAttribute(ControlArea.AREA_TOLERANCE_KEY, DEFAULT_TOLERANCE);

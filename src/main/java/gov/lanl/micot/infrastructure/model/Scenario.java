@@ -136,14 +136,10 @@ public class Scenario implements Comparable<Scenario> {
    * @return
    */
   public boolean computeActualStatus(Asset asset, boolean currentStatus) {
-    if (hasModification(asset, Asset.DESIRED_STATUS_KEY)) {
-      currentStatus &= getModification(asset, Asset.DESIRED_STATUS_KEY,Boolean.class);
+    if (hasModification(asset, Asset.STATUS_KEY)) {
+      currentStatus &= getModification(asset, Asset.STATUS_KEY,Boolean.class);
     }
   	
-    if (hasModification(asset, Asset.ACTUAL_STATUS_KEY)) {
-      currentStatus &= getModification(asset, Asset.ACTUAL_STATUS_KEY,Boolean.class);
-    }
-    
     if (hasModification(asset, Asset.IS_FAILED_KEY)) {
       currentStatus &= !getModification(asset, Asset.IS_FAILED_KEY,Boolean.class);
     }

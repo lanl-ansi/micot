@@ -51,7 +51,7 @@ public class LinkCapacityConstraint implements ConstraintFactory {
     PhaseAngleVariableFactory phaseAngleVariableFactory = new PhaseAngleVariableFactory();
     
     for (ElectricPowerFlowConnection link : model.getFlowConnections()) {
-      if (link.getActualStatus() == false) {
+      if (link.getStatus() == false) {
         continue;
       }
 

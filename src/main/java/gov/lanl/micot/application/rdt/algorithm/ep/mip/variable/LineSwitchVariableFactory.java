@@ -43,7 +43,7 @@ public class LineSwitchVariableFactory implements VariableFactory {
   public Collection<Variable> createVariables(MathematicalProgram program, ElectricPowerModel model) throws VariableExistsException, InvalidVariableException {
     ArrayList<Variable> variables = new ArrayList<Variable>();
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
-      boolean isDisabled = !edge.getActualStatus();
+      boolean isDisabled = !edge.getStatus();
       boolean hasCost = edge.getAttribute(AlgorithmConstants.LINE_SWITCH_COST_KEY) == null ? false : true;
       boolean buildSwitch = edge.getAttribute(LPNormIOConstants.LINE_CAN_ADD_SWITCH) == null ? false : edge.getAttribute(LPNormIOConstants.LINE_CAN_ADD_SWITCH, Boolean.class);
       boolean canBuild  = (isDisabled || (!hasCost && !buildSwitch)) ? false : true;             

@@ -14,16 +14,7 @@ import java.util.Vector;
  */
 public class ControlValveFactoryImpl extends ControlValveFactory {
   
-//	private static ControlValveFactoryImpl instance = null;
-	
 	protected static final boolean DEFAULT_STATUS = true;
-	
-	//public static ControlValveFactoryImpl getInstance() {
-		//if (instance == null) {
-		//	instance = new ControlValveFactoryImpl();
-		//}
-		//return instance;
-	//}
 	
 	/**
 	 * Constructor
@@ -60,8 +51,7 @@ public class ControlValveFactoryImpl extends ControlValveFactory {
     valve.setResistance(0.0);
     valve.setDiameter(0.0);
     valve.setLength(0.0);
-    valve.setDesiredStatus(status);
-    valve.setActualStatus(status);
+    valve.setStatus(status);
      
     Vector<Point> points = new Vector<Point>();
     points.add(node1.getJunction().getCoordinate());

@@ -18,19 +18,7 @@ import java.util.Vector;
  */
 public class CDFTransformerFactory extends TransformerFactory {
 
-//	private static CDFTransformerFactory instance = null;
 	private static final String LEGACY_TAG = "CDF";
-	
-	/**
-	 * Get the instance of the transformer factory
-	 * @return
-	 */
-	//public static CDFTransformerFactory getInstance() {
-		//if (instance == null) {
-			//instance = new CDFTransformerFactory();
-	//	}
-	//	return instance;
-	//}
 	
 	/**
 	 * Constructor
@@ -91,7 +79,7 @@ public class CDFTransformerFactory extends TransformerFactory {
     transformer.setCapacityRating(rating1);
     transformer.setShortTermEmergencyCapacityRating(rating2);
     transformer.setLongTermEmergencyCapacityRating(rating3);
-    transformer.setDesiredStatus(status);
+    transformer.setStatus(status);
     transformer.setAttribute(Transformer.TYPE_KEY, transformerType);
     transformer.setAttribute(Transformer.TAP_RATIO_KEY, tapRatio);
     transformer.setAttribute(Transformer.TAP_ANGLE_KEY, tapAngle);
@@ -101,7 +89,6 @@ public class CDFTransformerFactory extends TransformerFactory {
     transformer.setAttribute(Transformer.CONTROL_MIN_KEY, controlMin);
     transformer.setAttribute(Transformer.CONTROL_MAX_KEY, controlMax);
     transformer.setAttribute(Transformer.CONTROL_SIDE_KEY, gControlSide);   
-    transformer.setActualStatus(transformer.getDesiredStatus());
     transformer.setMWFlow(0.0);
     transformer.setMVarFlow(0.0);
 		if (points == null) {
@@ -130,7 +117,7 @@ public class CDFTransformerFactory extends TransformerFactory {
     transformer.setCapacityRating(line.getCapacityRating().intValue());
     transformer.setShortTermEmergencyCapacityRating(line.getShortTermEmergencyCapacityRating().intValue());
     transformer.setLongTermEmergencyCapacityRating(line.getLongTermEmergencyCapacityRating().intValue());
-    transformer.setDesiredStatus(line.getDesiredStatus());
+    transformer.setStatus(line.getStatus());
     transformer.setAttribute(Transformer.TYPE_KEY, line.getAttribute(Transformer.TYPE_KEY));
     transformer.setAttribute(Transformer.TAP_RATIO_KEY, line.getAttribute(Transformer.TAP_RATIO_KEY));
     transformer.setAttribute(Transformer.TAP_ANGLE_KEY, line.getAttribute(Transformer.TAP_ANGLE_KEY));
@@ -140,7 +127,6 @@ public class CDFTransformerFactory extends TransformerFactory {
     transformer.setAttribute(Transformer.CONTROL_MIN_KEY, line.getAttribute(Transformer.CONTROL_MIN_KEY));
     transformer.setAttribute(Transformer.CONTROL_MAX_KEY, line.getAttribute(Transformer.CONTROL_MAX_KEY));
     transformer.setAttribute(Transformer.CONTROL_SIDE_KEY, line.getAttribute(Transformer.CONTROL_SIDE_KEY));   
-    transformer.setActualStatus(transformer.getDesiredStatus());  		
 		transformer.setCoordinates(line.getCoordinates());
 		return transformer;
 		

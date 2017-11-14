@@ -43,8 +43,7 @@ public class PowerworldAreaFactory extends ControlAreaFactory {
 
     // check to see if the area already exists
     ControlArea area = registerArea(legacyid);
-  	area.setActualStatus(true);
-  	area.setDesiredStatus(true);
+  	area.setStatus(true);
     area.setAttribute(ControlArea.AREA_NAME_KEY, name);
       	
   	return area;

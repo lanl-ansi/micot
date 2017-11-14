@@ -42,8 +42,7 @@ public abstract class WellFactory {
   protected void initializeWell(Well well, Junction junction, double cfd) {
     String name = junction.getAttribute(Junction.NAME_KEY, String.class);
     well.setCoordinate(junction.getCoordinate());
-    well.setDesiredStatus(true);
-    well.setActualStatus(true);
+    well.setStatus(true);
     well.setDesiredProduction(cfd);
     well.setActualProduction(cfd);
     well.setAttribute(Well.WELL_NAME_KEY, name);

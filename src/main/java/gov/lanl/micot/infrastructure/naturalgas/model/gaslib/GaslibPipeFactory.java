@@ -119,8 +119,7 @@ public class GaslibPipeFactory extends PipeFactory {
     pipe.setResistance(-Double.MAX_VALUE);
     pipe.setFlow(0.0);
     pipe.setCapacity(Double.MAX_VALUE);
-    pipe.setActualStatus(true);
-    pipe.setDesiredStatus(true);
+    pipe.setStatus(true);
 
     Vector<Point> points = new Vector<Point>();
     points.add(fromJcn.getCoordinate());
@@ -151,24 +150,6 @@ public class GaslibPipeFactory extends PipeFactory {
   }
 
   /**
-   * Create a line with a particular id
-   * 
-   * @param link
-   * @param data
-   * @param makeCircuitId
-   * @return
-   */
- // protected Pipe createParallelPipe(Pipe link) {  
-   // String legacyId =  findUnusedId();
-   // Pipe pipe = registerPipe(legacyId);    
-   // pipe.setDiameter(link.getDiameter());
-   // pipe.setLength(link.getLength());
-   // pipe.setResistance(link.getResistance());
-   // pipe.setCoordinates(link.getCoordinates());
-   // return pipe;
-  //}
-
-  /**
    * Register the pipe
    * 
    * @param legacyId
@@ -186,21 +167,6 @@ public class GaslibPipeFactory extends PipeFactory {
     return pipe;
   }
   
-  /**
-   * Find an unused id number
-   * 
-   * @return
-   */
- // private String findUnusedId() {
-  //  GaslibCompressorFactory factory = GaslibCompressorFactory.getInstance();
-    //for (int i = 0; i < Integer.MAX_VALUE; ++i) {
-      //if (getLegacy(LEGACY_TAG, i+"") == null && factory.getLegacy(LEGACY_TAG, i+"") == null) {
-        //return i+"";
-      //}
-   // }
-    //throw new RuntimeException("Error: Cannot find an unused id");
-  //}
-
   @Override
   protected Pipe getLegacy(String legacyTag, Object key) {
     return super.getLegacy(legacyTag, key);

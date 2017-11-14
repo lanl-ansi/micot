@@ -14,16 +14,8 @@ import java.util.StringTokenizer;
  */
 public class TxtCityGateFactory extends CityGateFactory {
 
-//  private static TxtCityGateFactory INSTANCE = null;
   private static final String LEGACY_TAG = "TXT";
   
-  //public static TxtCityGateFactory getInstance() {
-   // if (INSTANCE == null) {
-     // INSTANCE = new TxtCityGateFactory();
-    //}
-    //return INSTANCE;
-  //}
-
   /**
    * Singleton constructor
    */
@@ -53,9 +45,8 @@ public class TxtCityGateFactory extends CityGateFactory {
     
     gate.setAttribute(CityGate.CITYGATE_NAME_KEY, name);
     gate.setActualConsumption(consumption);
-    gate.setActualStatus(true);
+    gate.setStatus(true);
     gate.setCoordinate(new PointImpl(x,y));
-    gate.setDesiredStatus(true);
     gate.setMaximumConsumption(maxConsumption);
     gate.setMinimumConsumption(minConsumption);
 

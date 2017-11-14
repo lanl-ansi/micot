@@ -51,7 +51,7 @@ public class LinkFlowCapacityConstraint implements ConstraintFactory {
     FlowVariableFactory flowVariableFactory = new FlowVariableFactory();
     
     for (ElectricPowerFlowConnection link : model.getFlowConnections()) {
-      if (link.getActualStatus() == false) {
+      if (link.getStatus() == false) {
         continue;
       }
 

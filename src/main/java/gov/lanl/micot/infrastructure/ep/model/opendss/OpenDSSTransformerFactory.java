@@ -81,8 +81,7 @@ public class OpenDSSTransformerFactory extends TransformerFactory {
     transformer.setReactance(reactance); 
     transformer.setResistance(resistance);
     transformer.setShortTermEmergencyCapacityRating(rating);
-    transformer.setDesiredStatus(status);
-    transformer.setActualStatus(status);
+    transformer.setStatus(status);
     
     ComObject property = activeTransformer.call(OpenDSSIOConstants.PROPERTIES, OpenDSSIOConstants.TRANSFORMER_BUSES);     
     String busNames = property.getString(OpenDSSIOConstants.PROPERTY_VALUE);
@@ -206,8 +205,7 @@ public class OpenDSSTransformerFactory extends TransformerFactory {
     transformer.setReactance(reactance); 
     transformer.setResistance(resistance);
     transformer.setShortTermEmergencyCapacityRating(rating);
-    transformer.setDesiredStatus(status);
-    transformer.setActualStatus(status);
+    transformer.setStatus(status);
 
     String fromBusName = frombus.getAttribute(Bus.NAME_KEY, String.class);
     int numberOfPhases = 0;

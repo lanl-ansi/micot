@@ -9,16 +9,7 @@ import gov.lanl.micot.infrastructure.ep.model.ZoneFactory;
  */
 public class CDFZoneFactory extends ZoneFactory {
 
-	//private static CDFZoneFactory instance      = null;
-		
 	private static final String LEGACY_TAG = "CDF";
-	
-	//public static CDFZoneFactory getInstance() {
-		//if (instance == null) {
-			//instance = new CDFZoneFactory();
-	//	}
-	//	return instance;
-//	}
 	
 	/**
 	 * Constructor
@@ -49,8 +40,7 @@ public class CDFZoneFactory extends ZoneFactory {
 	  
   	// check to see if the area already exists
 	  Zone zone = registerZone(id);
-  	zone.setActualStatus(true);
-  	zone.setDesiredStatus(true);
+  	zone.setStatus(true);
     zone.setAttribute(Zone.ZONE_NAME_KEY, name);
   	return zone;
 	}
@@ -65,8 +55,7 @@ public class CDFZoneFactory extends ZoneFactory {
     String name = new Integer(id).toString() + "";
     
     Zone zone = registerZone(id);
-    zone.setActualStatus(true);
-    zone.setDesiredStatus(true);
+    zone.setStatus(true);
     zone.setAttribute(Zone.ZONE_NAME_KEY, name);
     return zone;  
   }

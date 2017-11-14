@@ -23,22 +23,13 @@ public class WellImpl extends ProducerImpl implements Well {
     setAttribute(Well.ASSET_ID_KEY, assetId);
   }
 
-  /**
-   * Constructor
-   * @param battery
-   */
-//  public WellImpl(Well well) {
-  //  super(well);
-    //listeners = new HashSet<WellChangeListener>();    
- // }
-  
   @Override
   public void setActualProduction(Set<Well> producers) {
     double producerMax      = 0;
     double actualProduction = 0;
     
     for (Well state : producers) {
-      if (state.getDesiredStatus() == true) {
+      if (state.getStatus() == true) {
         producerMax += state.getMaximumProduction().doubleValue();
         actualProduction += state.getActualProduction().doubleValue();
       }
@@ -75,7 +66,6 @@ public class WellImpl extends ProducerImpl implements Well {
 
   @Override
   public WellImpl clone() {
-    //WellImpl newWell = new WellImpl((Well)getBaseData());
     WellImpl newWell = new WellImpl(getAttribute(ASSET_ID_KEY,Long.class));
     
     try {

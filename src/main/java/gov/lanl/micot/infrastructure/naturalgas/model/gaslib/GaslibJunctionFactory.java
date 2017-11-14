@@ -59,9 +59,8 @@ public class GaslibJunctionFactory extends JunctionFactory {
     double pMax = Double.parseDouble(pressureMax);
 
     junction.setPressure(0.0);
-    junction.setActualStatus(true);
+    junction.setStatus(true);
     junction.setCoordinate(new PointImpl(x, y));
-    junction.setDesiredStatus(true);
     junction.setInitialPressure(0.0);
     junction.setMaximumPressure(pMax);
     junction.setMinimumPressure(pMin);

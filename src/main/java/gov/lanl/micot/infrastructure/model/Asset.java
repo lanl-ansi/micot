@@ -12,8 +12,7 @@ import gov.lanl.micot.util.geometry.Geometry;
  */
 public interface Asset extends Comparable<Asset>, Cloneable {
 
-  public static final String DESIRED_STATUS_KEY          = "DESIRED_STATUS";
-  public static final String ACTUAL_STATUS_KEY           = "ACTUAL_STATUS"; 
+  public static final String STATUS_KEY                  = "STATUS";
   public static final String COORDINATE_KEY              = "COORDINATE";
   public static final String ASSET_ID_KEY                = "ASSET_ID";
   public static final String IS_FAILED_KEY               = "DISABLED";
@@ -23,28 +22,14 @@ public interface Asset extends Comparable<Asset>, Cloneable {
    * 
    * @return
    */
-  public boolean getDesiredStatus();
+  public boolean getStatus();
 
   /**
    * Set the on/off status of the asset
    * 
    * @param b
    */
-  public void setDesiredStatus(boolean b);
-
-  /**
-   * Set the actual on/off status of the asset
-   * 
-   * @param status
-   */
-  public void setActualStatus(boolean status);
-
-  /**
-   * Get the actual on/off status of the asset
-   * 
-   * @return
-   */
-  public boolean getActualStatus();
+  public void setStatus(boolean b);
 
   /**
    * Routine for setting a custom attribute in the component

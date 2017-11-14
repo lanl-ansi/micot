@@ -40,7 +40,7 @@ public class DewBusFactory extends BusFactory {
 	  double minVoltage = DEFAULT_MIN_VOLTAGE;
     double maxVoltage = DEFAULT_MAX_VOLTAGE;
     boolean isFailed = Integer.parseInt(dew.getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
-    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
+    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.STATUS_KEY, legacyid, name).toString()) == 1;
     double x = Double.parseDouble(dew.getComponentData(DewVariables.DEW_X_KEY, legacyid, name).toString());
     double y = Double.parseDouble(dew.getComponentData(DewVariables.DEW_Y_KEY, legacyid, name).toString());
     int dewType = Integer.parseInt(dew.getComponentData(DewVariables.DEW_COMPONENT_TYPE_KEY, legacyid, name).toString());
@@ -54,8 +54,7 @@ public class DewBusFactory extends BusFactory {
     bus.setVoltagePU(voltageMagnitude);
     bus.setPhaseAngle(voltageAngle);
     bus.setSystemVoltageKV(baseKV);
-    bus.setDesiredStatus(status);
-    bus.setActualStatus(status);
+    bus.setStatus(status);
     bus.setCoordinate(new PointImpl(x,y));    
     bus.setMaximumVoltagePU(maxVoltage);
     bus.setMinimumVoltagePU(minVoltage);
@@ -80,7 +79,7 @@ public class DewBusFactory extends BusFactory {
     double minVoltage = DEFAULT_MIN_VOLTAGE;
     double maxVoltage = DEFAULT_MAX_VOLTAGE;
     boolean isFailed = Integer.parseInt(dew.getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
-    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
+    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.STATUS_KEY, legacyid, name).toString()) == 1;
     double x = Double.parseDouble(dew.getComponentData(DewVariables.DEW_X_KEY, legacyid, name).toString());
     double y = Double.parseDouble(dew.getComponentData(DewVariables.DEW_Y_KEY, legacyid, name).toString());
     int dewType = Integer.parseInt(dew.getComponentData(DewVariables.DEW_COMPONENT_TYPE_KEY, legacyid, name).toString());
@@ -100,8 +99,7 @@ public class DewBusFactory extends BusFactory {
     bus.setVoltagePU(voltageMagnitude);
     bus.setPhaseAngle(voltageAngle);
     bus.setSystemVoltageKV(baseKV);
-    bus.setDesiredStatus(status);
-    bus.setActualStatus(status);
+    bus.setStatus(status);
     bus.setCoordinate(new PointImpl(x,y));    
     bus.setMaximumVoltagePU(maxVoltage);
     bus.setMinimumVoltagePU(minVoltage);
@@ -134,7 +132,7 @@ public class DewBusFactory extends BusFactory {
    double minVoltage = DEFAULT_MIN_VOLTAGE;
    double maxVoltage = DEFAULT_MAX_VOLTAGE;
    boolean isFailed = Integer.parseInt(dew.getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
-   boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
+   boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.STATUS_KEY, legacyid, name).toString()) == 1;
    double x = Double.parseDouble(dew.getComponentData(DewVariables.DEW_X_KEY, legacyid, name).toString());
    double y = Double.parseDouble(dew.getComponentData(DewVariables.DEW_Y_KEY, legacyid, name).toString());
    int dewType = DewVariables.NO_DEW_TYPE;   
@@ -147,8 +145,7 @@ public class DewBusFactory extends BusFactory {
    bus.setVoltagePU(voltageMagnitude);
    bus.setPhaseAngle(voltageAngle);
    bus.setSystemVoltageKV(baseKV);
-   bus.setDesiredStatus(status);
-   bus.setActualStatus(status);
+   bus.setStatus(status);
    bus.setCoordinate(new PointImpl(x,y));    
    bus.setMaximumVoltagePU(maxVoltage);
    bus.setMinimumVoltagePU(minVoltage);

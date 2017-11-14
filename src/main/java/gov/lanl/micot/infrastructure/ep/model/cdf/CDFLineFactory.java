@@ -17,15 +17,7 @@ import java.util.Vector;
  */
 public class CDFLineFactory extends LineFactory {
 
-	//private static CDFLineFactory instance = null;
 	private static final String LEGACY_TAG = "CDF";
-	
-	//public static CDFLineFactory getInstance() {
-	//	if (instance == null) {
-		//	instance = new CDFLineFactory();
-	//	}
-	//	return instance;
-	//}
 	
 	/**
 	 * Constructor
@@ -87,8 +79,7 @@ public class CDFLineFactory extends LineFactory {
     pfwLine.setCapacityRating(rating1);
     pfwLine.setShortTermEmergencyCapacityRating(rating2);
     pfwLine.setLongTermEmergencyCapacityRating(rating3);
-    pfwLine.setDesiredStatus(status);
-    pfwLine.setActualStatus(pfwLine.getDesiredStatus());
+    pfwLine.setStatus(status);
     pfwLine.setMWFlow(0.0);
     pfwLine.setMVarFlow(0.0);
 		if (points == null) {
@@ -100,24 +91,6 @@ public class CDFLineFactory extends LineFactory {
 		
   	return pfwLine;
 	}
-	
-	/*@Override
-	public Line createLine(Transformer transformer, Bus fromBus, Bus toBus) {		
-	  String circuit = transformer.getCircuit().toString();
-    Line pfwLine = registerLine(fromBus, toBus, circuit);	  
-    pfwLine.setAttribute(Line.CIRCUIT_KEY, transformer.getCircuit());
-    pfwLine.setResistance(transformer.getResistance());
-    pfwLine.setReactance(transformer.getReactance());
-    pfwLine.setLineCharging(transformer.getLineCharging());
-    pfwLine.setCapacityRating(transformer.getCapacityRating());
-    pfwLine.setShortTermEmergencyCapacityRating(transformer.getShortTermEmergencyCapacityRating());
-    pfwLine.setLongTermEmergencyCapacityRating(transformer.getLongTermEmergencyCapacityRating());
-    pfwLine.setDesiredStatus(transformer.getDesiredStatus());
-    pfwLine.setActualStatus(pfwLine.getDesiredStatus());
-		pfwLine.setCoordinates(transformer.getCoordinates());
-		
-		return pfwLine;
-	}*/
 	
 	@Override
 	protected Line createEmptyLine(Bus fromBus, Bus toBus, Transformer transformer) {
@@ -141,42 +114,11 @@ public class CDFLineFactory extends LineFactory {
     pfwLine.setCapacityRating(line.getCapacityRating());
     pfwLine.setShortTermEmergencyCapacityRating(line.getShortTermEmergencyCapacityRating());
     pfwLine.setLongTermEmergencyCapacityRating(line.getLongTermEmergencyCapacityRating());
-    pfwLine.setDesiredStatus(line.getDesiredStatus());
-    pfwLine.setActualStatus(pfwLine.getDesiredStatus());
+    pfwLine.setStatus(line.getStatus());
 		
 	  pfwLine.setCoordinates(((Line)line).getCoordinates());
 	  return pfwLine;	  
 	}
-
-	/*@Override
-	public Line createLine(ElectricPowerNode node1, ElectricPowerNode node2, double reactance, double resistance, double charging, double capacity, Object c) {						
-		Bus from = node1.getBus();
-    Bus to = node2.getBus();    
-		String circuit = c.toString(); 
-		
-		int rating1 = (int)capacity; 
-		int rating2 = (int)capacity; 
-		int rating3 = (int)capacity; 
-		boolean status = true;
-		
-		Line pfwLine = registerLine(from, to, circuit);
-    pfwLine.setAttribute(Line.CIRCUIT_KEY, circuit);
-    pfwLine.setResistance(resistance);
-    pfwLine.setReactance(reactance);
-    pfwLine.setLineCharging(charging);
-    pfwLine.setCapacityRating(rating1);
-    pfwLine.setShortTermEmergencyCapacityRating(rating2);
-    pfwLine.setLongTermEmergencyCapacityRating(rating3);
-    pfwLine.setDesiredStatus(status);
-    pfwLine.setActualStatus(status);
-        
-    Vector<Point> points = new Vector<Point>();
-    points.add(node1.getBus().getCoordinate());
-    points.add(node2.getBus().getCoordinate());
-    pfwLine.setCoordinates(new LineImpl(points.toArray(new Point[0])));
-
-    return pfwLine;    
-	}*/
 
 	@Override
   protected Line createEmptyLine(Bus fromBus, Bus toBus, Object circuit) {

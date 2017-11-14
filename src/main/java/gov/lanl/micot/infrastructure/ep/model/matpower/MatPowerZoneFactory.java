@@ -71,8 +71,7 @@ public class MatPowerZoneFactory extends ZoneFactory {
     String name = new Integer(id).toString() + "";
     
     Zone zone = registerZone(id);
-    zone.setActualStatus(true);
-    zone.setDesiredStatus(true);
+    zone.setStatus(true);
     zone.setAttribute(Zone.ZONE_NAME_KEY, name);
     return zone;    
   }

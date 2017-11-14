@@ -107,8 +107,7 @@ public class OpenDSSGeneratorFactory extends GeneratorFactory {
     double realGeneration = iGenerator.getDouble(OpenDSSIOConstants.GENERATOR_KW) / 1000.0;
     boolean status = activeGenerator.getBoolean(OpenDSSIOConstants.GENERATOR_STATUS);
         
-    generator.setDesiredStatus(status);
-    generator.setActualStatus(status);
+    generator.setStatus(status);
     generator.setDesiredReactiveGeneration(reactiveGeneration);
     generator.setDesiredRealGeneration(realGeneration);    
     generator.setActualRealGeneration(realGeneration);

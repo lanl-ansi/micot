@@ -154,12 +154,12 @@ public abstract class JumpOptimizer<N extends Node, M extends Model> extends Opt
    */
   protected void updateModelStatus(M model) {
     for (Asset asset : model.getAssets()) {
-      boolean status = asset.getDesiredStatus();      
+      boolean status = asset.getStatus();      
       Object failed = asset.getAttribute(Asset.IS_FAILED_KEY);
       if (failed != null) {
           status = status &= !(Boolean)failed;
         }
-      asset.setActualStatus(status);
+      asset.setStatus(status);
 	  }
 	}
   

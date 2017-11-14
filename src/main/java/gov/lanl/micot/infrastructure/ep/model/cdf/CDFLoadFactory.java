@@ -12,15 +12,7 @@ import gov.lanl.micot.util.geometry.PointImpl;
  */
 public class CDFLoadFactory extends LoadFactory {
 
-//	private static CDFLoadFactory instance = null;
 	private static final String LEGACY_TAG = "CDF";
-	
-//	public static CDFLoadFactory getInstance() {
-	//	if (instance == null) {
-		//	instance = new CDFLoadFactory();
-	//	}
-	//	return instance;
-	//}
 	
 	/**
 	 * Constructor
@@ -61,8 +53,7 @@ public class CDFLoadFactory extends LoadFactory {
   	load.setAttribute(Load.LOAD_NAME_KEY, name);
     load.setDesiredRealLoad(realLoad);
     load.setDesiredReactiveLoad(reactiveLoad);
-    load.setDesiredStatus(true);
-    load.setActualStatus(true);
+    load.setStatus(true);
     load.setActualRealLoad(realLoad);
     load.setActualReactiveLoad(reactiveLoad);
   	load.setCoordinate(point == null ? new PointImpl(0,0) : point);
@@ -94,14 +85,6 @@ public class CDFLoadFactory extends LoadFactory {
     }
   }
 	
-//  @Override
-  //public Load createLoad(Bus bus, double realLoad, double reactiveLoad) {
-    //int legacyId = bus.getAttribute(CDFModelConstants.CDF_LEGACY_ID_KEY, Integer.class);
-    //Load load = registerLoad(legacyId);    
-    //initializeLoad(load, bus, realLoad, reactiveLoad);
-    //return load;    
-  //}    
-
   @Override
   protected Load createEmptyLoad(Bus bus) {
     int legacyId = bus.getAttribute(CDFModelConstants.CDF_LEGACY_ID_KEY, Integer.class);

@@ -71,9 +71,8 @@ public class PowerworldBusFactory extends BusFactory {
     Bus bus = registerBus(id);   
     bus.setCoordinate(new PointImpl(x,y));
     bus.setAttribute(Bus.NAME_KEY, name);
-    bus.setDesiredStatus(status);
+    bus.setStatus(status);
     bus.setSystemVoltageKV(kvbase);
-    bus.setActualStatus(status); 
     bus.setMaximumVoltagePU(maxPU);
     bus.setMinimumVoltagePU(minPU);
     bus.setPhaseAngle(angle);
@@ -114,9 +113,8 @@ public class PowerworldBusFactory extends BusFactory {
     Bus bus = registerDCBus(new Pair<Integer, Integer>(id, id2));   
     bus.setCoordinate(new PointImpl(x,y));
     bus.setAttribute(Bus.NAME_KEY, name);
-    bus.setDesiredStatus(status);
+    bus.setStatus(status);
     bus.setVoltagePU(kv);
-    bus.setActualStatus(status); 
     
     bus.setAttribute(PowerworldModelConstants.POWERWORLD_BUS_CATEGORY_KEY, PowerworldModelConstants.POWER_WORLD_DC_BUS_CAT);
     

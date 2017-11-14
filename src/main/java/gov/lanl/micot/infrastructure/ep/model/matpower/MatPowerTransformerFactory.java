@@ -79,8 +79,7 @@ public class MatPowerTransformerFactory extends TransformerFactory {
     transformer.setCapacityRating(normalrating);
     transformer.setShortTermEmergencyCapacityRating(emergencyrating);
     transformer.setLongTermEmergencyCapacityRating(shortrating);
-    transformer.setDesiredStatus(status == 1 ? true : false);
-    transformer.setActualStatus(transformer.getDesiredStatus());
+    transformer.setStatus(status == 1 ? true : false);
     transformer.setMWFlow(0.0);
     transformer.setMVarFlow(0.0);
     transformer.setAttribute(Transformer.TAP_RATIO_KEY, tapRatio);
@@ -121,7 +120,7 @@ public class MatPowerTransformerFactory extends TransformerFactory {
     transformer.setCapacityRating(line.getCapacityRating().intValue());
     transformer.setShortTermEmergencyCapacityRating(line.getShortTermEmergencyCapacityRating().intValue());
     transformer.setLongTermEmergencyCapacityRating(line.getLongTermEmergencyCapacityRating().intValue());
-    transformer.setDesiredStatus(line.getDesiredStatus());
+    transformer.setStatus(line.getStatus());
     transformer.setAttribute(Transformer.TYPE_KEY, line.getAttribute(Transformer.TYPE_KEY));
     transformer.setAttribute(Transformer.TAP_RATIO_KEY, line.getAttribute(Transformer.TAP_RATIO_KEY));
     transformer.setAttribute(Transformer.TAP_ANGLE_KEY, line.getAttribute(Transformer.TAP_ANGLE_KEY));
@@ -134,7 +133,6 @@ public class MatPowerTransformerFactory extends TransformerFactory {
     transformer.setAttribute(MatPowerModelConstants.MATPOWER_MIN_ANGLE_DIFFERENCE_KEY, line.getAttribute(MatPowerModelConstants.MATPOWER_MIN_ANGLE_DIFFERENCE_KEY));
 	  transformer.setAttribute(MatPowerModelConstants.MATPOWER_MAX_ANGLE_DIFFERENCE_KEY, line.getAttribute(MatPowerModelConstants.MATPOWER_MAX_ANGLE_DIFFERENCE_KEY));
 
-    transformer.setActualStatus(transformer.getDesiredStatus());  		
 		transformer.setCoordinates(line.getCoordinates());
 		return transformer;		
 	}

@@ -54,7 +54,7 @@ public class PowerworldTest extends TestCase {
     		assertTrue(connection.getMWFlow().doubleValue() > 0.0);
     	}
     	
-    	System.out.println(connection.toString() + " " + connection.getMWFlow() + " " + connection.getDesiredStatus());
+    	System.out.println(connection.toString() + " " + connection.getMWFlow() + " " + connection.getStatus());
     }
     
   }

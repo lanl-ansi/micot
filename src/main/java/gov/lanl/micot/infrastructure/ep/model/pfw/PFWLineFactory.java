@@ -23,15 +23,7 @@ public class PFWLineFactory extends LineFactory {
 	protected static final String DEFAULT_BRANCH_RATING = "M";
 	protected static final int    DEFAULT_UNKNOWN = 0;
 	
-//	private static PFWLineFactory instance = null;
 	private static final String LEGACY_TAG = "PFW";
-	
-	//public static PFWLineFactory getInstance() {
-		//if (instance == null) {
-			//instance = new PFWLineFactory();
-	//	}
-	//	return instance;
-	//}
 	
 	/**
 	 * Constructor
@@ -105,10 +97,9 @@ public class PFWLineFactory extends LineFactory {
     pfwLine.setCapacityRating(rating1);
     pfwLine.setShortTermEmergencyCapacityRating(rating2);
     pfwLine.setLongTermEmergencyCapacityRating(rating3);
-    pfwLine.setDesiredStatus(status == 1 ? true : false);
+    pfwLine.setStatus(status == 1 ? true : false);
     pfwLine.setAttribute(PFWModelConstants.PFW_LINE_BRANCH_RATING_DESGINATOR_KEY,branchRatingDesginator);
     pfwLine.setAttribute(PFWModelConstants.PFW_LINE_UNKNOWN_KEY,unknown);
-    pfwLine.setActualStatus(pfwLine.getDesiredStatus());
     pfwLine.setMWFlow(0.0);
     pfwLine.setMVarFlow(0.0);
 		if (points == null) {
@@ -147,10 +138,9 @@ public class PFWLineFactory extends LineFactory {
     pfwLine.setCapacityRating(line.getCapacityRating());
     pfwLine.setShortTermEmergencyCapacityRating(line.getShortTermEmergencyCapacityRating());
     pfwLine.setLongTermEmergencyCapacityRating(line.getLongTermEmergencyCapacityRating());
-    pfwLine.setDesiredStatus(line.getDesiredStatus());
+    pfwLine.setStatus(line.getStatus());
     pfwLine.setAttribute(PFWModelConstants.PFW_LINE_BRANCH_RATING_DESGINATOR_KEY,line.getAttribute(PFWModelConstants.PFW_LINE_BRANCH_RATING_DESGINATOR_KEY));
     pfwLine.setAttribute(PFWModelConstants.PFW_LINE_UNKNOWN_KEY,line.getAttribute(PFWModelConstants.PFW_LINE_UNKNOWN_KEY));
-    pfwLine.setActualStatus(pfwLine.getDesiredStatus());
 		
 	  pfwLine.setCoordinates(((Line)line).getCoordinates());
 	  return pfwLine;  

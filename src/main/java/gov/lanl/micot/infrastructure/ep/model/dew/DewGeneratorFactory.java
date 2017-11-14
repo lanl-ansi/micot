@@ -60,7 +60,7 @@ public class DewGeneratorFactory extends GeneratorFactory {
 	    Object n = dew.getComponentData(Generator.NAME_KEY, legacyid, null);
 	    String name = n +"";
 	    boolean isFailed = Integer.parseInt(dew.getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
-	    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
+	    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.STATUS_KEY, legacyid, name).toString()) == 1;
 	    double x = Double.parseDouble(dew.getComponentData(DewVariables.DEW_X_KEY, legacyid, name).toString());
 	    double y = Double.parseDouble(dew.getComponentData(DewVariables.DEW_Y_KEY, legacyid, name).toString());
 	 	  int dewType = DewVariables.NO_DEW_TYPE;
@@ -95,12 +95,11 @@ public class DewGeneratorFactory extends GeneratorFactory {
 	    generator.setDesiredReactiveGeneration(reactiveGeneration);
 	    generator.setDesiredReactiveMax(reactiveMax);
 	    generator.setReactiveMin(reactiveMin);
-	    generator.setDesiredStatus(status);
+	    generator.setStatus(status);
 	    generator.setDesiredRealGenerationMax(realMax);
 	    generator.setRealGenerationMin(realMin);
 	    generator.setActualRealGeneration(realGeneration);
 	    generator.setActualReactiveGeneration(reactiveGeneration);
-	    generator.setActualStatus(status);    
 	    generator.setCoordinate(new PointImpl(x,y));
 	    generator.setAttribute(Generator.IS_FAILED_KEY, isFailed);
 	    generator.setAttribute(DewVariables.DEW_COMPONENT_TYPE_KEY, dewType);
@@ -142,7 +141,7 @@ public class DewGeneratorFactory extends GeneratorFactory {
     String name = temp.toString();
     
     boolean isFailed = Integer.parseInt(dew.getComponentData(Asset.IS_FAILED_KEY, legacyid, name).toString()) > 0;
-    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.DESIRED_STATUS_KEY, legacyid, name).toString()) == 1;
+    boolean status = !isFailed && Integer.parseInt(dew.getComponentData(Asset.STATUS_KEY, legacyid, name).toString()) == 1;
     double x = Double.parseDouble(dew.getComponentData(DewVariables.DEW_X_KEY, legacyid, name).toString());
     double y = Double.parseDouble(dew.getComponentData(DewVariables.DEW_Y_KEY, legacyid, name).toString());
     int dewType = Integer.parseInt(dew.getComponentData(DewVariables.DEW_COMPONENT_TYPE_KEY, legacyid, name).toString());
@@ -178,12 +177,11 @@ public class DewGeneratorFactory extends GeneratorFactory {
     generator.setDesiredReactiveGeneration(reactiveGeneration);
     generator.setDesiredReactiveMax(reactiveMax);
     generator.setReactiveMin(reactiveMin);
-    generator.setDesiredStatus(status);
+    generator.setStatus(status);
     generator.setDesiredRealGenerationMax(realMax);
     generator.setRealGenerationMin(realMin);
     generator.setActualRealGeneration(realGeneration);
     generator.setActualReactiveGeneration(reactiveGeneration);
-    generator.setActualStatus(status);    
     generator.setCoordinate(new PointImpl(x,y));
     generator.setAttribute(Generator.IS_FAILED_KEY, isFailed);
     generator.setAttribute(DewVariables.DEW_COMPONENT_TYPE_KEY, dewType);

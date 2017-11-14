@@ -126,8 +126,7 @@ public class OpenDSSLineFactory extends LineFactory {
     line.setAttribute(Line.REACTANCE_PHASE_C_KEY,xmatrix.get(8) * length  * ohmsConversion);
         
     line.setShortTermEmergencyCapacityRating(emergencyCapacity);
-    line.setDesiredStatus(status);
-    line.setActualStatus(status);
+    line.setStatus(status);
     line.setAttribute(Line.LENGTH_KEY, length);
     line.setAttribute(Line.NUMBER_OF_PHASES_KEY,numberOfPhases);
     line.setAttribute(Line.HAS_PHASE_A_KEY,carriesPhaseA);
@@ -299,8 +298,7 @@ public class OpenDSSLineFactory extends LineFactory {
     line.setReactance(reactance); 
     line.setResistance(resistance);
     line.setShortTermEmergencyCapacityRating(emergencyCapacity);
-    line.setDesiredStatus(status);
-    line.setActualStatus(status);
+    line.setStatus(status);
     line.setAttribute(Line.LENGTH_KEY, length);
     line.setAttribute(Line.NUMBER_OF_PHASES_KEY,numberOfPhases);
     line.setAttribute(Line.HAS_PHASE_A_KEY,carriesPhaseA);

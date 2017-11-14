@@ -105,7 +105,7 @@ public class SecurityConstraint implements ConstraintFactory {
     
     // create the n-1 constraints for links in the model
     for (ElectricPowerFlowConnection contingency : model.getFlowConnections()) {
-      if (contingency.getActualStatus() == false) {
+      if (contingency.getStatus() == false) {
         continue;
       }
 
@@ -150,7 +150,7 @@ public class SecurityConstraint implements ConstraintFactory {
       for (ElectricPowerNode node : model.getNodes()) {
         double value = 0;
         for (ElectricPowerFlowConnection link : model.getFlowEdges(node)) {
-          if (link.getActualStatus() == false || link.equals(contingency)) {
+          if (link.getStatus() == false || link.equals(contingency)) {
             continue;
           }
 
@@ -163,7 +163,7 @@ public class SecurityConstraint implements ConstraintFactory {
       
       // create the non zero entries of the admittance matrix for this contingency
       for (ElectricPowerFlowConnection link : model.getFlowConnections()) {
-        if (link.getActualStatus() == false || link.equals(contingency)) {
+        if (link.getStatus() == false || link.equals(contingency)) {
           continue;
         }
 
@@ -188,7 +188,7 @@ public class SecurityConstraint implements ConstraintFactory {
       
       // create the flow capacity constraints
       for (ElectricPowerFlowConnection link : model.getFlowConnections()) {
-        if (link.getActualStatus() == false || link.equals(contingency)) {
+        if (link.getStatus() == false || link.equals(contingency)) {
           continue;
         }
 

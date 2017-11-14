@@ -14,16 +14,7 @@ import java.util.Vector;
  */
 public class ResistorFactoryImpl extends ResistorFactory {
   
-//	private static ResistorFactoryImpl instance = null;
-	
 	protected static final boolean    DEFAULT_STATUS = true;
-	
-	//public static ResistorFactoryImpl getInstance() {
-		//if (instance == null) {
-			//instance = new ResistorFactoryImpl();
-		//}
-		//return instance;
-	//}
 	
 	/**
 	 * Constructor
@@ -60,8 +51,7 @@ public class ResistorFactoryImpl extends ResistorFactory {
     resistor.setResistance(0.0);
     resistor.setDiameter(0.0);
     resistor.setLength(0.0);
-    resistor.setDesiredStatus(status);
-    resistor.setActualStatus(status);
+    resistor.setStatus(status);
      
     Vector<Point> points = new Vector<Point>();
     points.add(node1.getJunction().getCoordinate());

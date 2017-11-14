@@ -50,8 +50,7 @@ public class PowerworldShuntCapacitorFactory extends ShuntCapacitorFactory {
     boolean status = statusString.toLowerCase().equals(PowerworldIOConstants.SHUNT_CLOSED);   
     ShuntCapacitor shunt = registerCapacitor(id);    
         
-    shunt.setDesiredStatus(status);
-    shunt.setActualStatus(status);
+    shunt.setStatus(status);
     shunt.setReactiveCompensation(reactive);    
     shunt.setRealCompensation(real);
     shunt.setCoordinate(bus.getCoordinate());

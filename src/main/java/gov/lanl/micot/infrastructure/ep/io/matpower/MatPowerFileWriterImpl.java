@@ -359,7 +359,7 @@ public abstract class MatPowerFileWriterImpl implements MatPowerFileWriter {
 		buffer.append(generator.getAttribute(Generator.MVA_BASE_KEY) + "\t");
 
 		// write status
-		buffer.append((generator.getDesiredStatus() ? 1 : 0) + "\t");
+		buffer.append((generator.getStatus() ? 1 : 0) + "\t");
 
 		// write the max real generation
 		buffer.append(generator.getDesiredRealGenerationMax() + "\t");
@@ -441,7 +441,7 @@ public abstract class MatPowerFileWriterImpl implements MatPowerFileWriter {
 		double emergencyRating = data.getShortTermEmergencyCapacityRating();
 		double ratio = (data instanceof Line) ? 1.0 : ((Transformer) data).getAttribute(Transformer.TAP_RATIO_KEY, Double.class);
 		double angle = (data instanceof Line) ? 0 : ((Transformer) data).getAttribute(Transformer.TAP_ANGLE_KEY, Double.class);
-		int status = data.getDesiredStatus() ? 1 : 0;
+		int status = data.getStatus() ? 1 : 0;
 		double minAngle = data.getAttribute(MatPowerModelConstants.MATPOWER_MIN_ANGLE_DIFFERENCE_KEY, Double.class);
 		double maxAngle = data.getAttribute(MatPowerModelConstants.MATPOWER_MAX_ANGLE_DIFFERENCE_KEY, Double.class);
 

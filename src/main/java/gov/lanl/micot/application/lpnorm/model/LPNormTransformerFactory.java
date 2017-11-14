@@ -102,8 +102,7 @@ public class LPNormTransformerFactory extends TransformerFactory {
     transformer.setAttribute(Transformer.REACTANCE_PHASE_C_KEY,xmatrix.getArray(2).getDouble(2) * length);
         
     transformer.setShortTermEmergencyCapacityRating(capacity);
-    transformer.setDesiredStatus(status);
-    transformer.setActualStatus(status);
+    transformer.setStatus(status);
     transformer.setAttribute(Transformer.LENGTH_KEY, length);
     transformer.setAttribute(Transformer.NUMBER_OF_PHASES_KEY,numberOfPhases);
     transformer.setAttribute(Transformer.HAS_PHASE_A_KEY,hasPhase.getBoolean(0));

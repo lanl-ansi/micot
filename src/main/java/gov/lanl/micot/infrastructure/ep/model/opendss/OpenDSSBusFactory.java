@@ -44,12 +44,8 @@ public class OpenDSSBusFactory extends BusFactory {
     openDSSBus.setAttribute(Bus.VOLTAGE_PU_B_KEY, 1.0);
     openDSSBus.setAttribute(Bus.VOLTAGE_PU_C_KEY, 1.0);
     
-       
-    openDSSBus.setDesiredStatus(status);
+    openDSSBus.setStatus(status);
     openDSSBus.setSystemVoltageKV(kvbase);
-    openDSSBus.setActualStatus(status); 
-    
-    
     return openDSSBus;    
   }
   
@@ -114,9 +110,8 @@ public class OpenDSSBusFactory extends BusFactory {
     
     // TODO need to get the voltage values for the bus
        
-    openDSSBus.setDesiredStatus(status);
+    openDSSBus.setStatus(status);
     openDSSBus.setSystemVoltageKV(kvbase);
-    openDSSBus.setActualStatus(status); 	  
 	  
     return openDSSBus;
   }

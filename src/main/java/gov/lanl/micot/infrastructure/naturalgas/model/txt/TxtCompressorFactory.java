@@ -16,16 +16,8 @@ import java.util.Vector;
  */
 public class TxtCompressorFactory extends CompressorFactory {
 
- // private static TxtCompressorFactory INSTANCE              = null;
   private static final String LEGACY_TAG = "TXT";
   
-  //public static TxtCompressorFactory getInstance() {
-    //if (INSTANCE == null) {
-      //INSTANCE = new TxtCompressorFactory();
-   // }
-    //return INSTANCE;
-  //}
-
   /**
    * Constructor
    */
@@ -59,8 +51,7 @@ public class TxtCompressorFactory extends CompressorFactory {
     compressor.setInitialCompressionRatio(maxRatio); 
     compressor.setFlow(0.0);						 
     compressor.setCapacity(Double.MAX_VALUE);
-    compressor.setActualStatus(true);
-    compressor.setDesiredStatus(true);
+    compressor.setStatus(true);
     
     Vector<Point> points = new Vector<Point>();
     points.add(fromJunction.getCoordinate());
@@ -99,8 +90,7 @@ public class TxtCompressorFactory extends CompressorFactory {
     compressor.setInitialCompressionRatio(maxRatio); 
     compressor.setFlow(0.0);             
     compressor.setCapacity(Double.MAX_VALUE);
-    compressor.setActualStatus(true);
-    compressor.setDesiredStatus(true);
+    compressor.setStatus(true);
     
     Vector<Point> points = new Vector<Point>();
     points.add(fromJunction.getCoordinate());

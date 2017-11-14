@@ -43,7 +43,7 @@ private Collection<Scenario> scenarios = new ArrayList<Scenario>();
       for (Junction junction : model.getJunctions()) {
         ScenarioAttribute attribute = (ScenarioAttribute) junction.getPressure();
         
-        if (!scenario.computeActualStatus(junction, junction.getActualStatus())) {          
+        if (!scenario.computeActualStatus(junction, junction.getStatus())) {          
           attribute.addEntry(scenario, 0.0);          
           continue;
         }

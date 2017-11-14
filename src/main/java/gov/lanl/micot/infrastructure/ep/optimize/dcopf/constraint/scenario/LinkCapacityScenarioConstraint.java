@@ -59,7 +59,7 @@ public class LinkCapacityScenarioConstraint implements ConstraintFactory {
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException, InvalidConstraintException {
     for (Scenario scenario : scenarios) {
       for (ElectricPowerFlowConnection link : model.getFlowConnections()) {
-        boolean status = link.getActualStatus();
+        boolean status = link.getStatus();
         boolean isDisabled = !scenario.computeActualStatus(link, status);
 
         // no capacity constraint if the link is disabled (not present)

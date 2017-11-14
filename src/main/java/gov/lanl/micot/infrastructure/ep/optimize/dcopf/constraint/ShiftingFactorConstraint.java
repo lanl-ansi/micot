@@ -95,7 +95,7 @@ public class ShiftingFactorConstraint implements ConstraintFactory {
     for (ElectricPowerNode node : nodeIndicies.keySet()) {
       if (nodeIndicies.get(node) >= 0) {
         for (Generator generator : node.getComponents(Generator.class)) {
-          if (generator.getActualStatus()) {
+          if (generator.getStatus()) {
             sortedGenerators.add(generator);
           }
         }
@@ -121,7 +121,7 @@ public class ShiftingFactorConstraint implements ConstraintFactory {
     for (ElectricPowerNode node : nodeIndicies.keySet()) {
       if (nodeIndicies.get(node) >= 0) {
         for (Load load : node.getComponents(Load.class)) {
-          if (load.getActualStatus()) {
+          if (load.getStatus()) {
             sortedLoads.add(load);
           }
         }
@@ -264,7 +264,7 @@ public class ShiftingFactorConstraint implements ConstraintFactory {
     for (ElectricPowerNode node : nodeIndicies.keySet()) {
       if (nodeIndicies.get(node) >= 0) {
         for (Generator generator : node.getComponents(Generator.class)) {
-          if (generator.getActualStatus()) {
+          if (generator.getStatus()) {
             incidence.set(nodeIndicies.get(node), generatorIndicies.get(generator), 1);
           }
         }
@@ -284,7 +284,7 @@ public class ShiftingFactorConstraint implements ConstraintFactory {
     for (ElectricPowerNode node : nodeIndicies.keySet()) {
       if (nodeIndicies.get(node) >= 0) {
         for (Load load : node.getComponents(Load.class)) {
-          if (load.getActualStatus()) {
+          if (load.getStatus()) {
             incidence.set(nodeIndicies.get(node), loadIndicies.get(load), 1);
           }
         }
@@ -304,7 +304,7 @@ public class ShiftingFactorConstraint implements ConstraintFactory {
 
     Map<ElectricPowerFlowConnection,Boolean> status = new HashMap<ElectricPowerFlowConnection, Boolean>();
     for (ElectricPowerFlowConnection connection : model.getFlowConnections()) {
-      status.put(connection, connection.getActualStatus());
+      status.put(connection, connection.getStatus());
     }
     
     nodeIndicies = createNodeIndicies(nodes);

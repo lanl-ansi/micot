@@ -49,16 +49,16 @@ public class StubRoadSimulator extends RoadSimulatorImpl {
 
 	  
 	  
-	  for (Road road : roadModel.getRoads()) {
-	  	road.setActualStatus(road.getDesiredStatus());
-	  }
+//	  for (Road road : roadModel.getRoads()) {
+	//  	road.setActualStatus(road.getDesiredStatus());
+	 // }
 	  
 	  for (RoadNode node : roadModel.getNodes()) {
 	  	Intersection intersection = node.getIntersection();
-	  	intersection.setActualStatus(intersection.getDesiredStatus());
-	  	if (!intersection.getActualStatus()) {
+	  	//intersection.setActualStatus(intersection.getDesiredStatus());
+	  	if (!intersection.getStatus()) {
 	  		for (Road road : roadModel.getRoads(node)) {
-	  			road.setActualStatus(false);
+	  			road.setStatus(false);
 	  		}
 	  	}
 	  }

@@ -39,8 +39,7 @@ public abstract class BusFactory {
     bus.setAttribute(Bus.NAME_KEY,name);
     bus.setPhaseAngle(voltageAngle);
     bus.setSystemVoltageKV(baseKV);
-    bus.setDesiredStatus(status);
-    bus.setActualStatus(status);
+    bus.setStatus(status);
     bus.setVoltagePU(voltageMagnitude);    
     bus.setCoordinate(new PointImpl(x,y));        
     return bus;

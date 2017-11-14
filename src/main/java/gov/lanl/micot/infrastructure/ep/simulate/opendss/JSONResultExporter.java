@@ -52,7 +52,7 @@ public class JSONResultExporter {
       busBuilder = busBuilder.add("base_kv", baseKV);
       busBuilder = busBuilder.add("owner", bus.getOwnerName());
       busBuilder = busBuilder.add("name", bus.getAttribute(Bus.NAME_KEY, String.class));
-      busBuilder = busBuilder.add("status", bus.getActualStatus() && bus.getDesiredStatus());
+      busBuilder = busBuilder.add("status", bus.getStatus());
       busesBuilder = busesBuilder.add(busBuilder);
     }
     mainBuilder = mainBuilder.add("bus", busesBuilder);
@@ -70,7 +70,7 @@ public class JSONResultExporter {
       branchBuilder = branchBuilder.add("mvar_i", connection.getAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE1_KEY, Number.class).doubleValue());
       branchBuilder = branchBuilder.add("mvar_j", connection.getAttribute(ElectricPowerFlowConnection.MVAR_FLOW_SIDE2_KEY, Number.class).doubleValue());
       branchBuilder = branchBuilder.add("base_kv", baseKV);      
-      branchBuilder = branchBuilder.add("status", connection.getActualStatus() && connection.getDesiredStatus());
+      branchBuilder = branchBuilder.add("status", connection.getStatus());
       branchesBuilder = branchesBuilder.add(branchBuilder);
     }
     mainBuilder = mainBuilder.add("branch", branchesBuilder);
@@ -90,7 +90,7 @@ public class JSONResultExporter {
       mvarBuilder.add(generator.getActualReactiveGeneration().doubleValue());
       mvarBuilder.add(generator.getDesiredReactiveMax());
       generatorBuilder = generatorBuilder.add("mvar", mvarBuilder);
-      generatorBuilder = generatorBuilder.add("status", generator.getActualStatus() && generator.getDesiredStatus());
+      generatorBuilder = generatorBuilder.add("status", generator.getStatus());
       generatorsBuilder = generatorsBuilder.add(generatorBuilder);
     }
     mainBuilder = mainBuilder.add("gen", generatorsBuilder);
@@ -110,7 +110,7 @@ public class JSONResultExporter {
       mvarBuilder.add(load.getActualReactiveLoad().doubleValue());
       mvarBuilder.add(load.getDesiredReactiveLoad().doubleValue());
       loadBuilder = loadBuilder.add("mvar", mvarBuilder);
-      loadBuilder = loadBuilder.add("status", load.getActualStatus() && load.getDesiredStatus());
+      loadBuilder = loadBuilder.add("status", load.getStatus());
       loadsBuilder = loadsBuilder.add(loadBuilder);
     }
     mainBuilder = mainBuilder.add("load", loadsBuilder);
@@ -122,7 +122,7 @@ public class JSONResultExporter {
       shuntBuilder = shuntBuilder.add("shunt_i", shunt.toString());
       shuntBuilder = shuntBuilder.add("bs", shunt.getRealCompensation() * model.getMVABase());
       shuntBuilder = shuntBuilder.add("gs", shunt.getReactiveCompensation() * model.getMVABase());
-      shuntBuilder = shuntBuilder.add("status", shunt.getActualStatus() && shunt.getDesiredStatus());
+      shuntBuilder = shuntBuilder.add("status", shunt.getStatus());
       shuntsBuilder = shuntsBuilder.add(shuntBuilder);
     }
     mainBuilder = mainBuilder.add("shunt", shuntsBuilder);

@@ -14,16 +14,7 @@ import java.util.Vector;
  */
 public class ValveFactoryImpl extends ValveFactory {
   
-	//private static ValveFactoryImpl instance = null;
-	
 	protected static final boolean    DEFAULT_STATUS = true;
-	
-	//public static ValveFactoryImpl getInstance() {
-		//if (instance == null) {
-			//instance = new ValveFactoryImpl();
-		//}
-		//return instance;
-	//}
 	
 	/**
 	 * Constructor
@@ -60,8 +51,7 @@ public class ValveFactoryImpl extends ValveFactory {
     valve.setResistance(0.0);
     valve.setDiameter(0.0);
     valve.setLength(0.0);
-    valve.setDesiredStatus(status);
-    valve.setActualStatus(status);
+    valve.setStatus(status);
      
     Vector<Point> points = new Vector<Point>();
     points.add(node1.getJunction().getCoordinate());

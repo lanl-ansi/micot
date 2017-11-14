@@ -47,7 +47,7 @@ private Collection<Scenario> scenarios = new ArrayList<Scenario>();
         ScenarioAttribute fattribute = connection.getAttribute(Constants.IS_FLOW_FORWARD_KEY, ScenarioAttribute.class);
         ScenarioAttribute rattribute = connection.getAttribute(Constants.IS_FLOW_REVERSE_KEY, ScenarioAttribute.class);
         
-        if (!scenario.computeActualStatus(connection, connection.getActualStatus())) {          
+        if (!scenario.computeActualStatus(connection, connection.getStatus())) {          
           fattribute.addEntry(scenario, 0);          
           rattribute.addEntry(scenario, 0);          
           continue;

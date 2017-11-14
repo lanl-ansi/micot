@@ -1,6 +1,5 @@
 package gov.lanl.micot.infrastructure.naturalgas.simulate;
 
-import gov.lanl.micot.infrastructure.model.Asset;
 import gov.lanl.micot.infrastructure.model.Model;
 import gov.lanl.micot.infrastructure.naturalgas.model.NaturalGasModel;
 import gov.lanl.micot.infrastructure.simulate.SimulationExecutionException;
@@ -55,11 +54,11 @@ public abstract class NaturalGasSimulatorImpl implements NaturalGasSimulator {
    * Update the model status
    * @param model
    */
-  protected void updateModelStatus(Model model) {
-    for (Asset asset : model.getAssets()) {
-      asset.setActualStatus(asset.getDesiredStatus());
-    }
-  }
+//  protected void updateModelStatus(Model model) {
+  //  for (Asset asset : model.getAssets()) {
+    //  asset.setActualStatus(asset.getDesiredStatus());
+    //}
+  //}
 
   @Override
   public void close() {  

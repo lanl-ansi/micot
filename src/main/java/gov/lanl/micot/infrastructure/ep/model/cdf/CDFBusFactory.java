@@ -11,15 +11,7 @@ import gov.lanl.micot.util.geometry.PointImpl;
  */
 public class CDFBusFactory extends BusFactory {
 
-//	private static CDFBusFactory instance = null;
 	private static final String LEGACY_TAG = "CDF";
-	
-	//public static CDFBusFactory getInstance() {
-		//if (instance == null) {
-			//instance = new CDFBusFactory();
-		//}
-		//return instance;
-	//}
 	
 	/**
 	 * Constructor
@@ -74,8 +66,7 @@ public class CDFBusFactory extends BusFactory {
     bus.setPhaseAngle(voltageAngle);
     bus.setSystemVoltageKV(baseKV);
     bus.setRemoteVoltagePU(remoteVoltage);
-    bus.setDesiredStatus(status);
-    bus.setActualStatus(status);
+    bus.setStatus(status);
   	bus.setCoordinate(point == null ? new PointImpl(0,0) : point);  	
   	return bus;
 	}
