@@ -73,7 +73,7 @@ public class JsonResultExporter {
     JSONObjectBuilder designSolutionBuilder = JSON.getDefaultJSON().createObjectBuilder();
     JSONArrayBuilder scenarioSolutionBuilder = JSON.getDefaultJSON().createArrayBuilder();
         
-    ElectricPowerModel model = output.get(RDDTApplication.MODEL_FLAG, ElectricPowerModel.class);
+    ElectricPowerModel model = output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class);
     if (model.getAssets().iterator().next().getAttribute("OPENDSS_LEGACY_ID") != null) {
       tag = "OPENDSS_LEGACY_ID";
     }
@@ -85,8 +85,8 @@ public class JsonResultExporter {
       tag = "LPNORM_LEGACY_ID";
     }
     
-    double objective = output.getDouble(RDDTApplication.OBJECTIVE_FLAG);
-    boolean isFeasible = output.getBoolean(RDDTApplication.IS_FEASIBLE_FLAG);
+    double objective = output.getDouble(RDTApplication.OBJECTIVE_FLAG);
+    boolean isFeasible = output.getBoolean(RDTApplication.IS_FEASIBLE_FLAG);
     
     double totalLoad       = 0;
     for (Load load : model.getLoads()) {

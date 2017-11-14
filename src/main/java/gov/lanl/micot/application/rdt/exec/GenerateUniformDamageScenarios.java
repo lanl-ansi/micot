@@ -1,6 +1,6 @@
 package gov.lanl.micot.application.rdt.exec;
 
-import gov.lanl.micot.application.rdt.RDDTApplicationFactory;
+import gov.lanl.micot.application.rdt.RDTApplicationFactory;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.application.rdt.algorithm.ep.mip.ResilienceExpansionFactory;
 import gov.lanl.micot.application.scenariobuilder.ScenarioConfigurationBuilder;
@@ -197,7 +197,7 @@ public class GenerateUniformDamageScenarios {
       AlgorithmConfiguration algorithmConfiguration = new AlgorithmConfiguration();
       OutputConfiguration output = new OutputConfiguration();
       ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration();
-      applicationConfiguration.setApplicationFactoryClass(RDDTApplicationFactory.class.getCanonicalName());
+      applicationConfiguration.setApplicationFactoryClass(RDTApplicationFactory.class.getCanonicalName());
       
       master.addModelConfiguration(modelConfiguration);
       master.addAlgorithmConfiguration(algorithmConfiguration);

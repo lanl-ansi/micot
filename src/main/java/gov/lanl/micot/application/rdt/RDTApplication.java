@@ -11,7 +11,7 @@ import gov.lanl.micot.infrastructure.optimize.Optimizer;
  * @author Russell Bent
  *
  */
-public class RDDTApplication implements Application {
+public class RDTApplication implements Application {
   
   public static final String MODEL_FLAG = "Model";
   public static final String OBJECTIVE_FLAG = "Objective";
@@ -23,7 +23,7 @@ public class RDDTApplication implements Application {
   /**
    * Only one way to instantiate it
    */
-  protected RDDTApplication() {    
+  protected RDTApplication() {    
   }
   
   @Override

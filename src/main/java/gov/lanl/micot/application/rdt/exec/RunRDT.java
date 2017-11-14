@@ -5,7 +5,7 @@ import gov.lanl.micot.infrastructure.application.ApplicationOutput;
 import gov.lanl.micot.infrastructure.project.JsonProjectConfigurationReader;
 import gov.lanl.micot.infrastructure.project.ProjectConfiguration;
 import gov.lanl.micot.application.rdt.JsonResultExporter;
-import gov.lanl.micot.application.rdt.RDDTApplicationFactory;
+import gov.lanl.micot.application.rdt.RDTApplicationFactory;
 import gov.lanl.micot.util.io.ParameterReader;
 
 import java.io.File;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Code for running RDDT Code for multiple scenarios simultaneously
+ * Code for running RDT Code for multiple scenarios simultaneously
  * 
  * @author Russell Bent
  */
@@ -57,7 +57,7 @@ public class RunRDT  {
     JsonProjectConfigurationReader reader = new JsonProjectConfigurationReader();
     ProjectConfiguration configuration = reader.readConfiguration(masterFile, scenarioConfigurationFiles);
     
-    RDDTApplicationFactory factory = new RDDTApplicationFactory();
+    RDTApplicationFactory factory = new RDTApplicationFactory();
     Application application = factory.createApplication(configuration);
     ApplicationOutput output = application.execute();
     

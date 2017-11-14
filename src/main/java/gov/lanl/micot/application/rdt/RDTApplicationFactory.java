@@ -17,14 +17,14 @@ import gov.lanl.micot.infrastructure.project.ProjectConfigurationUtility;
 import gov.lanl.micot.infrastructure.project.ScenarioConfiguration;
 
 /**
- * Factory method for creating RDDT applications
+ * Factory method for creating RDT applications
  * @author Russell Bent
  */
-public class RDDTApplicationFactory implements ApplicationFactory {
+public class RDTApplicationFactory implements ApplicationFactory {
 
   @SuppressWarnings("unchecked")
   @Override
-  public RDDTApplication createApplication(ProjectConfiguration configuration) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
+  public RDTApplication createApplication(ProjectConfiguration configuration) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
     
     // set up the models for the application
     if (configuration.getModels().size() > 1) {
@@ -49,7 +49,7 @@ public class RDDTApplicationFactory implements ApplicationFactory {
     AlgorithmConfiguration algorithmConfiguration = configuration.getFirstAlgorithm(); // assumes a single algorithm
     Optimizer<ElectricPowerNode, ElectricPowerModel> algorithm = ( Optimizer<ElectricPowerNode, ElectricPowerModel>) ProjectConfigurationUtility.createOptimizer(configuration, algorithmConfiguration, model);
     
-    RDDTApplication application = new RDDTApplication();
+    RDTApplication application = new RDTApplication();
     application.setModel(model);
     application.setAlgorithm(algorithm);
 

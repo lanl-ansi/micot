@@ -6,13 +6,13 @@ import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.Line;
 import gov.lanl.micot.infrastructure.project.ScenarioConfiguration;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
-import gov.lanl.micot.application.rdt.RDDTApplicationFactory;
+import gov.lanl.micot.application.rdt.RDTApplicationFactory;
 
 /**
  * Factory method for creating LPNorm versions of RDT applications 
  * @author Russell Bent
  */
-public class LPNormApplicationFactory extends RDDTApplicationFactory {
+public class LPNormApplicationFactory extends RDTApplicationFactory {
 
   private static final double LARGE_HARDEN_COST = 1e10;
     

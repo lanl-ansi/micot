@@ -16,7 +16,7 @@ import gov.lanl.micot.infrastructure.project.ProjectConfiguration;
 import gov.lanl.micot.application.lpnorm.LPNormApplicationFactory;
 import gov.lanl.micot.application.lpnorm.io.LPNormJsonProjectConfigurationReader;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
-import gov.lanl.micot.application.rdt.RDDTApplication;
+import gov.lanl.micot.application.rdt.RDTApplication;
 import junit.framework.TestCase;
 
 /**
@@ -47,8 +47,8 @@ public class LPNormTest  extends TestCase {
     Application application = factory.createApplication(configuration);
     ApplicationOutput output = application.execute();
 
-    ElectricPowerModel model = output.get(RDDTApplication.MODEL_FLAG, ElectricPowerModel.class);
-    double cost = output.get(RDDTApplication.OBJECTIVE_FLAG, Number.class).doubleValue();
+    ElectricPowerModel model = output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class);
+    double cost = output.get(RDTApplication.OBJECTIVE_FLAG, Number.class).doubleValue();
     assertEquals(cost, -5000.0);
     
     Scenario scenario = configuration.getFirstScenario();
@@ -96,10 +96,10 @@ public class LPNormTest  extends TestCase {
     Application application = factory.createApplication(configuration);
     ApplicationOutput output = application.execute();
 
-    ElectricPowerModel model = output.get(RDDTApplication.MODEL_FLAG, ElectricPowerModel.class);
+    ElectricPowerModel model = output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class);
     Scenario scenario = configuration.getFirstScenario();
     
-    double cost = output.get(RDDTApplication.OBJECTIVE_FLAG, Number.class).doubleValue();
+    double cost = output.get(RDTApplication.OBJECTIVE_FLAG, Number.class).doubleValue();
     assertEquals(cost, -5000.0, 1e-2);
     
     for (ElectricPowerFlowConnection connection : model.getFlowConnections()) {
@@ -146,10 +146,10 @@ public class LPNormTest  extends TestCase {
     Application application = factory.createApplication(configuration);
     ApplicationOutput output = application.execute();
 
-    ElectricPowerModel model = output.get(RDDTApplication.MODEL_FLAG, ElectricPowerModel.class);
+    ElectricPowerModel model = output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class);
     Scenario scenario = configuration.getFirstScenario();
     
-    double cost = output.get(RDDTApplication.OBJECTIVE_FLAG, Number.class).doubleValue();
+    double cost = output.get(RDTApplication.OBJECTIVE_FLAG, Number.class).doubleValue();
     assertEquals(cost, -5000.0);
 
     
@@ -199,9 +199,9 @@ public class LPNormTest  extends TestCase {
     Application application = factory.createApplication(configuration);
     ApplicationOutput output = application.execute();
 
-    ElectricPowerModel model = output.get(RDDTApplication.MODEL_FLAG, ElectricPowerModel.class);
+    ElectricPowerModel model = output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class);
     Scenario scenario = configuration.getFirstScenario();
-    double cost = output.get(RDDTApplication.OBJECTIVE_FLAG, Number.class).doubleValue();
+    double cost = output.get(RDTApplication.OBJECTIVE_FLAG, Number.class).doubleValue();
     assertEquals(cost, -1001.413, 1.0);
 
     for (Generator generator : model.getGenerators()) {
@@ -251,8 +251,8 @@ public class LPNormTest  extends TestCase {
     Application application = factory.createApplication(configuration);
     ApplicationOutput output = application.execute();
 
-    ElectricPowerModel model = output.get(RDDTApplication.MODEL_FLAG, ElectricPowerModel.class);
-    double cost = output.get(RDDTApplication.OBJECTIVE_FLAG, Number.class).doubleValue();
+    ElectricPowerModel model = output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class);
+    double cost = output.get(RDTApplication.OBJECTIVE_FLAG, Number.class).doubleValue();
     assertEquals(cost, -5000.0);
     
     Scenario scenario = configuration.getFirstScenario();

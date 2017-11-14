@@ -7,8 +7,8 @@ import gov.lanl.micot.infrastructure.project.JsonProjectConfigurationReader;
 import gov.lanl.micot.infrastructure.project.ProjectConfiguration;
 import gov.lanl.micot.application.lpnorm.LPNormApplicationFactory;
 import gov.lanl.micot.application.lpnorm.io.LPNormJsonProjectConfigurationReader;
-import gov.lanl.micot.application.rdt.RDDTApplication;
-import gov.lanl.micot.application.rdt.RDDTApplicationFactory;
+import gov.lanl.micot.application.rdt.RDTApplication;
+import gov.lanl.micot.application.rdt.RDTApplicationFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,14 +49,14 @@ public class Test123Network extends TestCase {
 
     JsonProjectConfigurationReader reader = new JsonProjectConfigurationReader();
     ProjectConfiguration configuration = reader.readConfiguration(masterFile, scenarioFiles);
-    RDDTApplicationFactory factory = new RDDTApplicationFactory();
+    RDTApplicationFactory factory = new RDTApplicationFactory();
     Application application = factory.createApplication(configuration);
     ApplicationOutput output = application.execute();
-    double objValue = output.getDouble(RDDTApplication.OBJECTIVE_FLAG);
+    double objValue = output.getDouble(RDTApplication.OBJECTIVE_FLAG);
     
-    ElectricPowerModel model = output.get(RDDTApplication.MODEL_FLAG, ElectricPowerModel.class);
+    ElectricPowerModel model = output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class);
 
-    assertEquals(output.getBoolean(RDDTApplication.IS_FEASIBLE_FLAG).booleanValue(), true);
+    assertEquals(output.getBoolean(RDTApplication.IS_FEASIBLE_FLAG).booleanValue(), true);
     assertEquals(0.0, -objValue, 1e-4);
     assertEquals(model.getGenerators().size(), 9);
   }
@@ -73,10 +73,10 @@ public class Test123Network extends TestCase {
     LPNormJsonProjectConfigurationReader reader = new LPNormJsonProjectConfigurationReader();
     ProjectConfiguration configuration = reader.readConfiguration(filename);    
     LPNormApplicationFactory factory = new LPNormApplicationFactory();
-    RDDTApplication application = factory.createApplication(configuration);
+    RDTApplication application = factory.createApplication(configuration);
     ApplicationOutput output = application.execute();
-    double objValue = output.getDouble(RDDTApplication.OBJECTIVE_FLAG);        
-    assertEquals(output.getBoolean(RDDTApplication.IS_FEASIBLE_FLAG).booleanValue(), true);
+    double objValue = output.getDouble(RDTApplication.OBJECTIVE_FLAG);        
+    assertEquals(output.getBoolean(RDTApplication.IS_FEASIBLE_FLAG).booleanValue(), true);
     assertEquals(0.0, -objValue, 1e-4);
   }
 

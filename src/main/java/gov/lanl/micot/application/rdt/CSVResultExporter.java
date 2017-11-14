@@ -50,9 +50,9 @@ public class CSVResultExporter {
    * @throws FileNotFoundException 
    */
   public void exportResults(ApplicationOutput output, ProjectConfiguration configuration, String path) throws FileNotFoundException {
-    ElectricPowerModel model = output.get(RDDTApplication.MODEL_FLAG, ElectricPowerModel.class);
-    double objective = output.getDouble(RDDTApplication.OBJECTIVE_FLAG);
-    boolean isFeasible = output.getBoolean(RDDTApplication.IS_FEASIBLE_FLAG);
+    ElectricPowerModel model = output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class);
+    double objective = output.getDouble(RDTApplication.OBJECTIVE_FLAG);
+    boolean isFeasible = output.getBoolean(RDTApplication.IS_FEASIBLE_FLAG);
     
     //String path = System.getProperty("user.dir");
         

@@ -7,8 +7,8 @@ import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.project.JsonProjectConfigurationReader;
 import gov.lanl.micot.infrastructure.project.ProjectConfiguration;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
-import gov.lanl.micot.application.rdt.RDDTApplication;
-import gov.lanl.micot.application.rdt.RDDTApplicationFactory;
+import gov.lanl.micot.application.rdt.RDTApplication;
+import gov.lanl.micot.application.rdt.RDTApplicationFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,11 +43,11 @@ public class RobustEPNoHardenTest1 extends TestCase {
 
     JsonProjectConfigurationReader reader = new JsonProjectConfigurationReader();
     ProjectConfiguration configuration = reader.readConfiguration(masterFile, scenarioFiles);
-    RDDTApplicationFactory factory = new RDDTApplicationFactory();
+    RDTApplicationFactory factory = new RDTApplicationFactory();
     Application application = factory.createApplication(configuration);
     ApplicationOutput output = application.execute();
-    double objValue = output.getDouble(RDDTApplication.OBJECTIVE_FLAG);        
-    ElectricPowerModel model = output.get(RDDTApplication.MODEL_FLAG, ElectricPowerModel.class);
+    double objValue = output.getDouble(RDTApplication.OBJECTIVE_FLAG);        
+    ElectricPowerModel model = output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class);
 
     assertEquals(2984.5998, -objValue, 1.0);
     for (ElectricPowerFlowConnection connection : model.getFlowConnections()) {

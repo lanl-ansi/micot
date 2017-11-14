@@ -14,8 +14,8 @@ import gov.lanl.micot.infrastructure.project.JsonProjectConfigurationReader;
 import gov.lanl.micot.infrastructure.project.ProjectConfiguration;
 import gov.lanl.micot.application.lpnorm.LPNormApplicationFactory;
 import gov.lanl.micot.application.lpnorm.io.LPNormJsonProjectConfigurationReader;
-import gov.lanl.micot.application.rdt.RDDTApplication;
-import gov.lanl.micot.application.rdt.RDDTApplicationFactory;
+import gov.lanl.micot.application.rdt.RDTApplication;
+import gov.lanl.micot.application.rdt.RDTApplicationFactory;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 
 import java.io.File;
@@ -52,11 +52,11 @@ public class RobustEPHardenTest1 extends TestCase {
 
     JsonProjectConfigurationReader reader = new JsonProjectConfigurationReader();
     ProjectConfiguration configuration = reader.readConfiguration(masterFile, scenarioFiles);
-    RDDTApplicationFactory factory = new RDDTApplicationFactory();
+    RDTApplicationFactory factory = new RDTApplicationFactory();
     Application application = factory.createApplication(configuration);
     ApplicationOutput output = application.execute();
-    double objValue = output.getDouble(RDDTApplication.OBJECTIVE_FLAG);            
-    assertEquals(output.getBoolean(RDDTApplication.IS_FEASIBLE_FLAG).booleanValue(), true);
+    double objValue = output.getDouble(RDTApplication.OBJECTIVE_FLAG);            
+    assertEquals(output.getBoolean(RDTApplication.IS_FEASIBLE_FLAG).booleanValue(), true);
     assertEquals(3410.051385, -objValue, 1e-4);
   }
       
@@ -71,10 +71,10 @@ public class RobustEPHardenTest1 extends TestCase {
     LPNormJsonProjectConfigurationReader reader = new LPNormJsonProjectConfigurationReader();
     ProjectConfiguration configuration = reader.readConfiguration(filename);    
     LPNormApplicationFactory factory = new LPNormApplicationFactory();
-    RDDTApplication application = factory.createApplication(configuration);
+    RDTApplication application = factory.createApplication(configuration);
     ApplicationOutput output = application.execute();
-    double objValue = output.getDouble(RDDTApplication.OBJECTIVE_FLAG);        
-    assertEquals(output.getBoolean(RDDTApplication.IS_FEASIBLE_FLAG).booleanValue(), true);
+    double objValue = output.getDouble(RDTApplication.OBJECTIVE_FLAG);        
+    assertEquals(output.getBoolean(RDTApplication.IS_FEASIBLE_FLAG).booleanValue(), true);
     assertEquals(3410.051385, -objValue, 1e-4);
   }
 

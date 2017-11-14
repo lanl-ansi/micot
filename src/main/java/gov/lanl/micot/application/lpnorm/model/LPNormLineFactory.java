@@ -19,9 +19,7 @@ import java.util.Vector;
  */
 public class LPNormLineFactory extends LineFactory {
 
-  private static final String LEGACY_TAG = "LPNORM";
-  
-//  private static final double DEFAULT_CAPACITY = 1e2;
+  private static final String LEGACY_TAG = "LPNORM";  
   private static final double DEFAULT_LENGTH = 1.0;
   private static final int DEFAULT_NUM_PHASES = 3;
   

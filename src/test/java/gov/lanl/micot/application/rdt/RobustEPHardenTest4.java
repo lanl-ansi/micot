@@ -4,8 +4,8 @@ import gov.lanl.micot.infrastructure.application.Application;
 import gov.lanl.micot.infrastructure.application.ApplicationOutput;
 import gov.lanl.micot.infrastructure.project.JsonProjectConfigurationReader;
 import gov.lanl.micot.infrastructure.project.ProjectConfiguration;
-import gov.lanl.micot.application.rdt.RDDTApplication;
-import gov.lanl.micot.application.rdt.RDDTApplicationFactory;
+import gov.lanl.micot.application.rdt.RDTApplication;
+import gov.lanl.micot.application.rdt.RDTApplicationFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,10 +38,10 @@ public class RobustEPHardenTest4 extends TestCase {
 
     JsonProjectConfigurationReader reader = new JsonProjectConfigurationReader();
     ProjectConfiguration configuration = reader.readConfiguration(masterFile, scenarioFiles);
-    RDDTApplicationFactory factory = new RDDTApplicationFactory();
+    RDTApplicationFactory factory = new RDTApplicationFactory();
     Application application = factory.createApplication(configuration);
     ApplicationOutput output = application.execute();
-    double objValue = output.getDouble(RDDTApplication.OBJECTIVE_FLAG);        
+    double objValue = output.getDouble(RDTApplication.OBJECTIVE_FLAG);        
     assertEquals(3410.051385, -objValue, 1e-4);*/
   }
   

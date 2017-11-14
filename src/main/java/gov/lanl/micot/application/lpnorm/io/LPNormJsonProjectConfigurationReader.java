@@ -15,7 +15,7 @@ import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.application.rdt.algorithm.ep.mip.MIPInfrastructureExpansionAlgorithmFlags;
 import gov.lanl.micot.application.rdt.algorithm.ep.mip.ResilienceExpansionFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.sbd.SBDResilienceFactory;
-import gov.lanl.micot.application.rdt.RDDTApplicationFactory;
+import gov.lanl.micot.application.rdt.RDTApplicationFactory;
 import gov.lanl.micot.util.io.Flags;
 import gov.lanl.micot.util.io.FlagsImpl;
 import gov.lanl.micot.util.io.json.JSON;
@@ -221,7 +221,7 @@ public class LPNormJsonProjectConfigurationReader {
    */
   private void readApplication(ProjectConfiguration projectConfiguration, JSONObject application)  {
     ApplicationConfiguration configuration = new ApplicationConfiguration();    
-    configuration.setApplicationFactoryClass(RDDTApplicationFactory.class.getCanonicalName());
+    configuration.setApplicationFactoryClass(RDTApplicationFactory.class.getCanonicalName());
     Flags flags = new FlagsImpl();
     configuration.setApplicationFlags(flags);    
     projectConfiguration.setApplicationConfiguration(configuration);

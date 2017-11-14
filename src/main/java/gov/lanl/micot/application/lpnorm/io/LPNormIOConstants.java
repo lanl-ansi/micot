@@ -2,7 +2,7 @@ package gov.lanl.micot.application.lpnorm.io;
 
 
 /**
- * Some constants associated with interacting with matpower
+ * Some constants associated with interacting with LPNORM input data specs
  * @author Russell Bent
  *
  */

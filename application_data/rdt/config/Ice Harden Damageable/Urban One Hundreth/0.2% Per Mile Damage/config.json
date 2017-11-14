@@ -2,7 +2,7 @@
 {
     "version":1.0,
     "application":{
-        "application_factory":"gov.lanl.micot.rdt.application.RDDTApplicationFactory"
+        "application_factory":"gov.lanl.micot.rdt.application.RDTApplicationFactory"
     },
     "models":[
         {
