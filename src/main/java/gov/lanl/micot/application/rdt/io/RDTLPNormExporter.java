@@ -164,7 +164,6 @@ public class RDTLPNormExporter {
       busBuilder = busBuilder.add(LPNormIOConstants.BUS_MAX_VOLTAGE_TAG, bus.getMaximumVoltagePU());
       busBuilder = busBuilder.add(LPNormIOConstants.BUS_VOLTAGE_TAG, voltageBuilder);
       busBuilder = busBuilder.add(LPNormIOConstants.BUS_HAS_PHASE_TAG, phaseBuilder);
-      busBuilder = busBuilder.add(LPNormIOConstants.BUS_HAS_GENERATOR_TAG, model.getNode(bus).getGenerator() != null);   
       arrayBuilder = arrayBuilder.add(busBuilder);
     }
 

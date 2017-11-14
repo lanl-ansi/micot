@@ -12352,7 +12352,7 @@
       "is_transformer": false,
       "line_code": 64,
       "num_poles": 2,
-	  "can_add_switch":=true,
+	  "can_add_switch":true,
       "switch_cost": 5000.0,      
       "is_new": false,
       "has_switch": false

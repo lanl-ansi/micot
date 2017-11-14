@@ -16,7 +16,6 @@ public class LPNormIOConstants {
   public static final String BUS_MAX_VOLTAGE_TAG = "max_voltage";
   public static final String BUS_VOLTAGE_TAG = "ref_voltage";
   public static final String BUS_HAS_PHASE_TAG = "has_phase";
-  public static final String BUS_HAS_GENERATOR_TAG = "has_generator";
 
   public static final String LOADS_TAG = "loads";
   public static final String LOAD_ID_TAG = "id";
