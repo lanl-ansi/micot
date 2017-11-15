@@ -25,19 +25,19 @@ public class OriginImpl extends ProducerImpl implements Origin {
   }
  
   @Override
-  public void setActualProduction(Set<Origin> producers) {
+  public void setProduction(Set<Origin> producers) {
     double producerMax      = 0;
     double actualProduction = 0;
     
     for (Origin state : producers) {
       if (state.getStatus() == true) {
         producerMax += state.getMaximumProduction().doubleValue();
-        actualProduction += state.getActualProduction().doubleValue();
+        actualProduction += state.getProduction().doubleValue();
       }
     }
 
     double percentage = actualProduction / producerMax; 
-    setActualProduction(percentage * getMaximumProduction().doubleValue());
+    setProduction(percentage * getMaximumProduction().doubleValue());
   }
 
   @Override

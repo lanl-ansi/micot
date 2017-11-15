@@ -35,7 +35,7 @@ public interface Well extends Producer, Component {
    * Fill from a set of wells
    * @param stateDataMap
    */
-  public void setActualProduction(Set<Well> wells);
+  public void setProduction(Set<Well> wells);
 	    
   /**
    * Add a listener to the producer data

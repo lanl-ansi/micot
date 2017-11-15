@@ -8,8 +8,6 @@ import gov.lanl.micot.infrastructure.application.ApplicationOutput;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.Generator;
-import gov.lanl.micot.infrastructure.ep.model.Line;
-import gov.lanl.micot.infrastructure.ep.model.Load;
 import gov.lanl.micot.infrastructure.model.Scenario;
 import gov.lanl.micot.infrastructure.model.ScenarioAttribute;
 import gov.lanl.micot.infrastructure.project.ProjectConfiguration;

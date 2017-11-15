@@ -26,19 +26,19 @@ public class ReservoirImpl extends ProducerImpl implements Reservoir {
   }
  
   @Override
-  public void setActualProduction(Set<Reservoir> producers) {
+  public void setProduction(Set<Reservoir> producers) {
     double producerMax      = 0;
     double actualProduction = 0;
     
     for (Reservoir state : producers) {
       if (state.getStatus() == true) {
         producerMax += state.getMaximumProduction().doubleValue();
-        actualProduction += state.getActualProduction().doubleValue();
+        actualProduction += state.getProduction().doubleValue();
       }
     }
 
     double percentage = actualProduction / producerMax; 
-    setActualProduction(percentage * getMaximumProduction().doubleValue());
+    setProduction(percentage * getMaximumProduction().doubleValue());
   }
 
   @Override

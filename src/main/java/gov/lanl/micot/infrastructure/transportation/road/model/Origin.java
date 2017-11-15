@@ -11,17 +11,11 @@ import gov.lanl.micot.infrastructure.model.Producer;
  */
 public interface Origin extends Producer, Component {
  
-	 /**
-   * Fill with partial generator data (the many to one case)
-   * @param generator
-   */
-  //public void fillPartiallyWith(Origin origin, Map<Object,Double> percents);
-	
   /**
    * Fill from a set of wells
    * @param stateDataMap
    */
-  public void setActualProduction(Set<Origin> origins);
+  public void setProduction(Set<Origin> origins);
 	    
   /**
    * Add a listener to the producer data

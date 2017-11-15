@@ -67,7 +67,7 @@ public class FlowBalanceScenarioConstraint implements ConstraintFactory {
         }
 
         for (Well well : wells) {
-          load += well.getActualProduction().doubleValue();
+          load += well.getProduction().doubleValue();
         }
 
         for (CityGate gate : gates) {

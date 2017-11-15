@@ -190,9 +190,7 @@ public class GaslibModelFile extends FileParser implements NaturalGasModelFile {
             if (well != null) {
               well.setMaximumProduction(flow);
               well.setMinimumProduction(flow);
-              well.setActualProduction(flow);
-              well.setDesiredProduction(flow);
-              
+              well.setProduction(flow);
             }
             else {
               gate.setMaximumConsumption(flow);

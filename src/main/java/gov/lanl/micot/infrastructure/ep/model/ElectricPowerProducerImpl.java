@@ -98,25 +98,14 @@ public abstract class ElectricPowerProducerImpl extends ProducerImpl implements 
   }
 
   @Override
-  public Number getDesiredProduction() {
+  public Number getProduction() {
     return MathUtils.SIGNED_NORM(getDesiredRealGeneration(), getDesiredReactiveGeneration());    
   }
 
   @Override
-  public void setDesiredProduction(Number consumption) {
+  public void setProduction(Number consumption) {
     setDesiredRealGeneration(consumption.doubleValue());
     setDesiredReactiveGeneration(0.0);
-  }
-
-  @Override
-  public Number getActualProduction() {
-    return MathUtils.SIGNED_NORM(getActualRealGeneration(), getActualReactiveGeneration());    
-  }
-
-  @Override
-  public void setActualProduction(Number consumption) {
-    setActualRealGeneration(consumption.doubleValue());
-    setActualReactiveGeneration(0.0);
   }
 
   @Override

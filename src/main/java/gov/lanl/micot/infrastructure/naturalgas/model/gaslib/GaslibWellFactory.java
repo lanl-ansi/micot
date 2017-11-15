@@ -57,10 +57,9 @@ public class GaslibWellFactory extends WellFactory {
     initializeWell(well, junction, production);
     well.setAttribute(Compressor.NAME_KEY, legacyid);
         
-    well.setActualProduction(production);
+    well.setProduction(production);
     well.setStatus(true);
     well.setCoordinate(new PointImpl(x,y));
-    well.setDesiredProduction(production);
     well.setMaximumProduction(maxProduction);
     well.setMinimumProduction(minProduction);
     

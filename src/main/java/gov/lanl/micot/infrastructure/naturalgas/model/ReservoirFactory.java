@@ -43,8 +43,7 @@ public abstract class ReservoirFactory {
     String name = junction.getAttribute(Junction.NAME_KEY, String.class);
     reservoir.setCoordinate(junction.getCoordinate());
     reservoir.setStatus(true);
-    reservoir.setDesiredProduction(cfd);
-    reservoir.setActualProduction(cfd);
+    reservoir.setProduction(cfd);
     reservoir.setAttribute(Reservoir.RESERVOIR_NAME_KEY, name);
   }
 

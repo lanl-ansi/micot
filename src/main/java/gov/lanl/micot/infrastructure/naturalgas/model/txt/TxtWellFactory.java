@@ -45,10 +45,9 @@ public class TxtWellFactory extends WellFactory {
     initializeWell(well, junction, production);
     
     well.setAttribute(Well.WELL_NAME_KEY, name);
-    well.setActualProduction(production);
+    well.setProduction(production);
     well.setStatus(true);
     well.setCoordinate(new PointImpl(x,y));
-    well.setDesiredProduction(production);
     well.setMaximumProduction(maxProduction);
     well.setMinimumProduction(minProduction);
     well.setAttribute(Well.ECONOMIC_COST_KEY, cost);

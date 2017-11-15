@@ -1,6 +1,5 @@
 package gov.lanl.micot.infrastructure.model;
 
-
 /**
  * Some common code for components that can be used
  * @author Russell Bent
@@ -14,32 +13,14 @@ public abstract class ProducerImpl extends ComponentImpl implements Producer  {
     super();
   }
   
-  /**
-   * Constructor
-   * @param battery
-   */
-//  public ProducerImpl(Producer producer) {
-  //  super(producer/*, ((ProducerImpl)producer).getOredKeys(), ((ProducerImpl)producer).getAdditiveKeys(), ((ProducerImpl)producer).getSubtractiveKeys()*/);
- // }
-
   @Override
-  public Number getDesiredProduction() {
-    return getAttribute(DESIRED_PRODUCTION_KEY, Double.class);
+  public Number getProduction() {
+    return getAttribute(PRODUCTION_KEY, Double.class);
   }
 
   @Override
-  public void setDesiredProduction(Number consumption) {
-    setAttribute(DESIRED_PRODUCTION_KEY,consumption);
-  }
-
-  @Override
-  public Number getActualProduction() {
-    return getAttribute(ACTUAL_PRODUCTION_KEY, Double.class);
-  }
-
-  @Override
-  public void setActualProduction(Number consumption) {
-    setAttribute(ACTUAL_PRODUCTION_KEY,consumption);
+  public void setProduction(Number consumption) {
+    setAttribute(PRODUCTION_KEY,consumption);
   }
 
   @Override
@@ -61,7 +42,18 @@ public abstract class ProducerImpl extends ComponentImpl implements Producer  {
   public void setMaximumProduction(Number production) {
     setAttribute(MAXIMUM_PRODUCTION_KEY, production);
   }
-
   
+  @Override
+  public void setAttribute(Object key, Object object) {
+    if (key.equals("DESIRED_PRODUCTION")) {
+      System.err.println("Warning: DESIRED_PRODUCTION is a deprecated attribute.  Using PRODUCTION instead");
+      key = PRODUCTION_KEY;
+    }
+    if (key.equals("ACTUAL_PRODUCTION")) {
+      System.err.println("Warning: ACTUAL_PRODUCTION is a deprecated attribute.  Using PRODUCTION instead");
+      key = PRODUCTION_KEY;
+    }
+    super.setAttribute(key,object);
+  }
   
 }

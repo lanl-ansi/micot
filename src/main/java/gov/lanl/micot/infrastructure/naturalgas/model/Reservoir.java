@@ -13,19 +13,12 @@ public interface Reservoir extends Producer, Component {
 
   public static final String CAPACITY_KEY           = "CAPACITY";
   public static final String RESERVOIR_NAME_KEY     = "NAME";
-  
-  
-	 /**
-   * Fill with partial generator data (the many to one case)
-   * @param generator
-   */
- // public void fillPartiallyWith(Reservoir res, Map<Object,Double> percents);
-	
+    
   /**
    * Fill from a set of wells
    * @param stateDataMap
    */
-  public void setActualProduction(Set<Reservoir> reservoir);
+  public void setProduction(Set<Reservoir> reservoir);
 	
   /**
    * Set the capacity

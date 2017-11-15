@@ -24,19 +24,19 @@ public class WellImpl extends ProducerImpl implements Well {
   }
 
   @Override
-  public void setActualProduction(Set<Well> producers) {
+  public void setProduction(Set<Well> producers) {
     double producerMax      = 0;
     double actualProduction = 0;
     
     for (Well state : producers) {
       if (state.getStatus() == true) {
         producerMax += state.getMaximumProduction().doubleValue();
-        actualProduction += state.getActualProduction().doubleValue();
+        actualProduction += state.getProduction().doubleValue();
       }
     }
 
     double percentage = actualProduction / producerMax; 
-    setActualProduction(percentage * getMaximumProduction().doubleValue());
+    setProduction(percentage * getMaximumProduction().doubleValue());
   }
 
   @Override

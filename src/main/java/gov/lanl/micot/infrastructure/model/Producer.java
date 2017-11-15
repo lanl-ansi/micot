@@ -6,37 +6,23 @@ package gov.lanl.micot.infrastructure.model;
  */
 public interface Producer extends Component {
 
-  public static final String DESIRED_PRODUCTION_KEY = "DESIRED_PRODUCTION_KEY";
-  public static final String ACTUAL_PRODUCTION_KEY  = "ACTUAL_PRODUCTION_KEY";
+  public static final String PRODUCTION_KEY         = "PRODUCTION_KEY";
   public static final String MAXIMUM_PRODUCTION_KEY = "MAXIMUM_PRODUCTION_KEY";
   public static final String MINIMUM_PRODUCTION_KEY = "MINIMUM_PRODUCTION_KEY";
   public static final String CARBON_OUTPUT_KEY      = "CARBON_OUTPUT_KEY";
   public static final String ECONOMIC_COST_KEY      = "ECONOMIC_COST_KEY";
   
   /**
-   * Get the desired production
+   * Get the production
    * @return
    */
-  public Number getDesiredProduction();
+  public Number getProduction();
   
   /**
-   * Set the desired production
+   * Set the production
    * @param production
    */
-  public void setDesiredProduction(Number production);
-
-  /**
-   * Get the actual production
-   * @return
-   */
-  public Number getActualProduction();
-  
-  /**
-   * Set the actual production
-   * @param production
-   */
-  public void setActualProduction(Number production);
-
+  public void setProduction(Number production);
 
   /**
    * Get the minimum production
