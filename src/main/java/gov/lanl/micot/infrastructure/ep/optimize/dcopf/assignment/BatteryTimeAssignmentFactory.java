@@ -40,14 +40,14 @@ public class BatteryTimeAssignmentFactory implements AssignmentFactory {
     
     for (ElectricPowerNode node : model.getNodes()) {
       for (Battery battery : node.getComponents(Battery.class)) {
-        battery.setActualRealGeneration(new LookupTableTimeDependentFunction());
+        battery.setRealGeneration(new LookupTableTimeDependentFunction());
       }
       
       for (int i = 0; i < numberOfIncrements; ++i) {        
         double time = i * incrementSize;
         for (Battery battery : node.getComponents(Battery.class)) {
           Variable variable = batteryVariableFactory.getVariable(problem, battery, time);
-          ((LookupTableTimeDependentFunction)battery.getActualRealGeneration()).addEntry(time, solution.getValueDouble(variable) * mva);          
+          ((LookupTableTimeDependentFunction)battery.getRealGeneration()).addEntry(time, solution.getValueDouble(variable) * mva);          
         }        
       }
       
@@ -59,8 +59,8 @@ public class BatteryTimeAssignmentFactory implements AssignmentFactory {
       
         for (int i = 0; i < numberOfIncrements; ++i) {
           double time = i * incrementSize;
-          charge = charge - ((LookupTableTimeDependentFunction)battery.getActualRealGeneration()).getValue(time).doubleValue();
-          double newUsed = lastUsed - ((LookupTableTimeDependentFunction)battery.getActualRealGeneration()).getValue(time).doubleValue();
+          charge = charge - ((LookupTableTimeDependentFunction)battery.getRealGeneration()).getValue(time).doubleValue();
+          double newUsed = lastUsed - ((LookupTableTimeDependentFunction)battery.getRealGeneration()).getValue(time).doubleValue();
           used.addEntry(time+incrementSize,newUsed);
           lastUsed = newUsed;
         }

@@ -25,7 +25,7 @@ public class GenerationAssignmentFactory implements AssignmentFactory {
     for (ElectricPowerNode node : model.getNodes()) {
       for (ElectricPowerProducer producer : node.getComponents(ElectricPowerProducer.class)) {
         Variable variable = generatorVariableFactory.getVariable(problem, producer);
-        producer.setActualRealGeneration(solution.getValueDouble(variable) * mva);
+        producer.setRealGeneration(solution.getValueDouble(variable) * mva);
       }
     }
   }

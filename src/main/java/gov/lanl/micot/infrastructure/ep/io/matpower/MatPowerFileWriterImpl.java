@@ -340,10 +340,10 @@ public abstract class MatPowerFileWriterImpl implements MatPowerFileWriter {
 		buffer.append(id + "\t");
 
 		// write the real generation
-		buffer.append(generator.getDesiredRealGeneration() + "\t\t");
+		buffer.append(generator.getRealGeneration() + "\t\t");
 
 		// write the reactive generation
-		buffer.append(generator.getDesiredReactiveGeneration() + "\t\t");
+		buffer.append(generator.getReactiveGeneration() + "\t\t");
 
 		// write the max reactive generation
 		buffer.append(generator.getDesiredReactiveMax() + "\t\t");

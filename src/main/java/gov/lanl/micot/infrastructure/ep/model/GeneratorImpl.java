@@ -73,7 +73,7 @@ public class GeneratorImpl extends ElectricPowerProducerImpl implements Generato
   }
 
   @Override
-  public void setActualGeneration(Set<Generator> generators) {
+  public void setGeneration(Set<Generator> generators) {
     Number realMax = 0;
     Number reactiveMax = 0;
     Number actualReal = 0;
@@ -83,16 +83,16 @@ public class GeneratorImpl extends ElectricPowerProducerImpl implements Generato
       if (state.getStatus() == true) {
         realMax = MathUtils.ADD(state.computeActualRealGenerationMax(),realMax);
         reactiveMax = MathUtils.ADD(state.computeActualReactiveGenerationMax(), reactiveMax);
-        actualReal = MathUtils.ADD(actualReal, state.getActualRealGeneration());
-        actualReactive = MathUtils.ADD(actualReactive, state.getActualReactiveGeneration());
+        actualReal = MathUtils.ADD(actualReal, state.getRealGeneration());
+        actualReactive = MathUtils.ADD(actualReactive, state.getReactiveGeneration());
       }
     }
 
     Number realPercentage = MathUtils.DIVIDE(actualReal,realMax);
     Number reactivePercentage = MathUtils.DIVIDE(actualReactive,reactiveMax);
 
-    setActualReactiveGeneration(MathUtils.MULTIPLY(reactivePercentage,computeActualReactiveGenerationMax()));
-    setActualRealGeneration(MathUtils.MULTIPLY(realPercentage,computeActualRealGenerationMax()));
+    setReactiveGeneration(MathUtils.MULTIPLY(reactivePercentage,computeActualReactiveGenerationMax()));
+    setRealGeneration(MathUtils.MULTIPLY(realPercentage,computeActualRealGenerationMax()));
   }
 
   @Override
@@ -113,7 +113,6 @@ public class GeneratorImpl extends ElectricPowerProducerImpl implements Generato
 
   @Override
   public GeneratorImpl clone() {
-//    GeneratorImpl newGenerator = new GeneratorImpl((Generator)getBaseData());
     GeneratorImpl newGenerator = new GeneratorImpl(getAttribute(ASSET_ID_KEY,Long.class));
 
     try {

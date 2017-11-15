@@ -88,7 +88,7 @@ public interface Generator extends ElectricPowerProducer, Component {
    * Fill from a set of generators based on ratios
    * @param stateDataMap
    */
-  public void setActualGeneration(Set<Generator> generators);
+  public void setGeneration(Set<Generator> generators);
 
   /**
    * This function updates the bounds in the generators to make them feasible

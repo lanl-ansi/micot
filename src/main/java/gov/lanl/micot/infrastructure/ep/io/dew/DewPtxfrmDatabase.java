@@ -62,9 +62,9 @@ public class DewPtxfrmDatabase  {
       d.setDseckv(row.getBigDecimal(DSECKV).doubleValue());
       d.setDnomkva(row.getBigDecimal(DNOMKVA).doubleValue());      
       
-      d.setSnumsteps(row.getInt(SNUMSTEPS));
+      d.setSnumsteps(row.getShort(SNUMSTEPS));
       d.setDstepsizefr(row.getBigDecimal(DSTEPSIZEFR).doubleValue());
-      d.setQcompexists(row.getShort(QCOMPEXISTS));
+      d.setQcompexists(row.getShort(QCOMPEXISTS) == null ? -1 : row.getShort(QCOMPEXISTS));
       d.setQunidirection(row.getShort(QUNIDIRECTION));
 // ---------------------------------
       

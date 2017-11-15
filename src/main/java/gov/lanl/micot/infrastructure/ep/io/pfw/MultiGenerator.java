@@ -24,27 +24,26 @@ public class MultiGenerator extends GeneratorImpl {
 	 */
 	public MultiGenerator(Collection<Generator> data) {
 	  super(data.iterator().next().getAttribute(Generator.ASSET_ID_KEY, Long.class));
-		//super(data.iterator().next().getIdentifierKeys(), data.iterator().next().getOredKeys(),data.iterator().next().getAdditiveKeys(), data.iterator().next().getSubtractiveKeys());
 		this.data = data;
 	}
 
 	@Override
-	public Number getDesiredReactiveGeneration() {
+	public Number getReactiveGeneration() {
 		Number sum = 0;
 		for (Generator d : data) {
 		  if (d.getStatus() == true) {
-		    sum = MathUtils.ADD(d.getDesiredReactiveGeneration(),sum);
+		    sum = MathUtils.ADD(d.getReactiveGeneration(),sum);
 		  }
 		}
 		return sum;
 	}
 
 	@Override
-	public Number getDesiredRealGeneration() {
+	public Number getRealGeneration() {
 		Number sum = 0;
 		for (Generator d : data) {
 		  if (d.getStatus() == true) {
-		    sum = MathUtils.ADD(d.getDesiredRealGeneration(),sum);
+		    sum = MathUtils.ADD(d.getRealGeneration(),sum);
 		  }
 		}
 		return sum;
@@ -108,21 +107,21 @@ public class MultiGenerator extends GeneratorImpl {
 	}
 
 	@Override
-	public void setDesiredReactiveGeneration(Number reactive) {
-		Number sum = getDesiredReactiveGeneration();
+	public void setReactiveGeneration(Number reactive) {
+		Number sum = getReactiveGeneration();
 		for (Generator d : data) {
 		  if (d.getStatus() == true) {
-		    d.setDesiredReactiveGeneration(MathUtils.MULTIPLY(MathUtils.DIVIDE(d.getDesiredReactiveGeneration(),sum),reactive));
+		    d.setReactiveGeneration(MathUtils.MULTIPLY(MathUtils.DIVIDE(d.getReactiveGeneration(),sum),reactive));
 		  }
 		}
 	}
 
 	@Override
-	public void setDesiredRealGeneration(Number real) {
-		Number sum = getDesiredRealGeneration();
+	public void setRealGeneration(Number real) {
+		Number sum = getRealGeneration();
 		for (Generator d : data) {
 		  if (d.getStatus() == true) {
-		    d.setDesiredRealGeneration(MathUtils.MULTIPLY(MathUtils.DIVIDE(d.getDesiredRealGeneration(),sum),real));
+		    d.setRealGeneration(MathUtils.MULTIPLY(MathUtils.DIVIDE(d.getRealGeneration(),sum),real));
 		  }
 		}
 	}

@@ -96,10 +96,8 @@ public class PowerworldGeneratorFactory extends GeneratorFactory {
     generator.setStatus(statusString.equalsIgnoreCase(PowerworldIOConstants.GEN_CLOSED));
     generator.setAttribute(Generator.FUEL_TYPE_KEY, fuelType);
     generator.setAttribute(Generator.MVA_BASE_KEY, mvaBase);
-    generator.setActualRealGeneration(mw);
-    generator.setDesiredRealGeneration(mw);
-    generator.setActualReactiveGeneration(mvar);
-    generator.setDesiredReactiveGeneration(mvar);
+    generator.setRealGeneration(mw);
+    generator.setReactiveGeneration(mvar);
         
     generator.setAttribute(Generator.ECONOMIC_COST_KEY, PolynomialFunctionFactory.getInstance().createDefaultPolynomialFunction(coefficients));
 

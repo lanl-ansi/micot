@@ -91,15 +91,13 @@ public class DewGeneratorFactory extends GeneratorFactory {
 	    Generator generator = registerGenerator(legacyid);
 	    generator.setAttribute(Generator.NAME_KEY, name);
 	    generator.setType(gType);    
-	    generator.setDesiredRealGeneration(realGeneration);
-	    generator.setDesiredReactiveGeneration(reactiveGeneration);
+	    generator.setRealGeneration(realGeneration);
+	    generator.setReactiveGeneration(reactiveGeneration);
 	    generator.setDesiredReactiveMax(reactiveMax);
 	    generator.setReactiveMin(reactiveMin);
 	    generator.setStatus(status);
 	    generator.setDesiredRealGenerationMax(realMax);
 	    generator.setRealGenerationMin(realMin);
-	    generator.setActualRealGeneration(realGeneration);
-	    generator.setActualReactiveGeneration(reactiveGeneration);
 	    generator.setCoordinate(new PointImpl(x,y));
 	    generator.setAttribute(Generator.IS_FAILED_KEY, isFailed);
 	    generator.setAttribute(DewVariables.DEW_COMPONENT_TYPE_KEY, dewType);
@@ -162,8 +160,8 @@ public class DewGeneratorFactory extends GeneratorFactory {
     }
 
  
-    double realGeneration = dew.getComponentData(Generator.DESIRED_REAL_GENERATION_KEY, legacyid, name) == null ? 0.0 : Double.parseDouble(dew.getComponentData(Generator.DESIRED_REAL_GENERATION_KEY, legacyid, name).toString());
-    double reactiveGeneration = dew.getComponentData(Generator.DESIRED_REACTIVE_GENERATION_KEY, legacyid, name) == null ? 0.0 : Double.parseDouble(dew.getComponentData(Generator.DESIRED_REACTIVE_GENERATION_KEY, legacyid, name).toString());
+    double realGeneration = dew.getComponentData(Generator.REAL_GENERATION_KEY, legacyid, name) == null ? 0.0 : Double.parseDouble(dew.getComponentData(Generator.REAL_GENERATION_KEY, legacyid, name).toString());
+    double reactiveGeneration = dew.getComponentData(Generator.REACTIVE_GENERATION_KEY, legacyid, name) == null ? 0.0 : Double.parseDouble(dew.getComponentData(Generator.REACTIVE_GENERATION_KEY, legacyid, name).toString());
     double reactiveMax = dew.getComponentData(Generator.DESIRED_REACTIVE_MAX_KEY, legacyid, name) == null ? 0.0 : Double.parseDouble(dew.getComponentData(Generator.DESIRED_REACTIVE_MAX_KEY, legacyid, name).toString());
     double reactiveMin = dew.getComponentData(Generator.REACTIVE_MIN_KEY, legacyid, name) == null ? 0.0 : Double.parseDouble(dew.getComponentData(Generator.REACTIVE_MIN_KEY, legacyid, name).toString());
     double realMax = realGeneration;
@@ -173,15 +171,13 @@ public class DewGeneratorFactory extends GeneratorFactory {
     Generator generator = registerGenerator(legacyid);
     generator.setAttribute(Generator.NAME_KEY, name);
     generator.setType(gType);    
-    generator.setDesiredRealGeneration(realGeneration);
-    generator.setDesiredReactiveGeneration(reactiveGeneration);
+    generator.setRealGeneration(realGeneration);
+    generator.setReactiveGeneration(reactiveGeneration);
     generator.setDesiredReactiveMax(reactiveMax);
     generator.setReactiveMin(reactiveMin);
     generator.setStatus(status);
     generator.setDesiredRealGenerationMax(realMax);
     generator.setRealGenerationMin(realMin);
-    generator.setActualRealGeneration(realGeneration);
-    generator.setActualReactiveGeneration(reactiveGeneration);
     generator.setCoordinate(new PointImpl(x,y));
     generator.setAttribute(Generator.IS_FAILED_KEY, isFailed);
     generator.setAttribute(DewVariables.DEW_COMPONENT_TYPE_KEY, dewType);

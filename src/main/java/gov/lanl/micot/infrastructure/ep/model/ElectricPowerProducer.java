@@ -9,38 +9,43 @@ import gov.lanl.micot.infrastructure.model.Producer;
  */
 public interface ElectricPowerProducer extends Producer, Component {
 
-  public static final String ACTUAL_REACTIVE_GENERATION_KEY  = "ACTUAL_REACTIVE_GENERATION";
-  public static final String DESIRED_REACTIVE_GENERATION_KEY = "DESIRED_REACTIVE_GENERATION";
-  public static final String ACTUAL_REAL_GENERATION_KEY      = "ACTUAL_REAL_GENERATION";
-  public static final String DESIRED_REAL_GENERATION_KEY     = "DESIRED_REAL_GENERATION";
+  public static final String REACTIVE_GENERATION_KEY  = "REACTIVE_GENERATION";
+  public static final String REAL_GENERATION_KEY      = "REAL_GENERATION";  
+  
+//  public static final String ACTUAL_REACTIVE_GENERATION_KEY  = "ACTUAL_REACTIVE_GENERATION";
+  //public static final String DESIRED_REACTIVE_GENERATION_KEY = "DESIRED_REACTIVE_GENERATION";
+ // public static final String ACTUAL_REAL_GENERATION_KEY      = "ACTUAL_REAL_GENERATION";  
+  //public static final String DESIRED_REAL_GENERATION_KEY     = "DESIRED_REAL_GENERATION";
+
   public static final String DESIRED_REACTIVE_MAX_KEY        = "REACTIVE_MAX";
-  public static final String REACTIVE_MIN_KEY                = "REACTIVE_MIN";
   public static final String DESIRED_REAL_GENERATION_MAX_KEY = "REAL_GENERATION_MAX";
+  
   public static final String REAL_GENERATION_MIN_KEY         = "REAL_GENERATION_MIN";
-				
+  public static final String REACTIVE_MIN_KEY                = "REACTIVE_MIN";
+  			
 	 /**
    * Get the real generation of a generator
    * @return
    */
-  public Number getDesiredRealGeneration();
+  public Number getRealGeneration();
   
   /**
    * Set the real generation
    * @param real
    */
-  public void setDesiredRealGeneration(Number real);
+  public void setRealGeneration(Number real);
   
   /**
    * Get the reactive generation
    * @return
    */
-  public Number getDesiredReactiveGeneration();
+  public Number getReactiveGeneration();
   
   /**
    * Set the reactive generation
    * @param reactive
    */
-  public void setDesiredReactiveGeneration(Number reactive);
+  public void setReactiveGeneration(Number reactive);
   
   /**
    * Get the reactive max ratio
@@ -94,25 +99,25 @@ public interface ElectricPowerProducer extends Producer, Component {
    * Get the real generation of a generator
    * @return
    */
-  public Number getActualRealGeneration();
+//  public Number getActualRealGeneration();
   
   /**
    * Set the real generation
    * @param real
    */
-  public void setActualRealGeneration(Number real);
+ // public void setActualRealGeneration(Number real);
   
   /**
    * Get the reactive generation
    * @return
    */
-  public Number getActualReactiveGeneration();
+  //public Number getActualReactiveGeneration();
   
   /**
    * Set the reactive generation
    * @param reactive
    */
-  public void setActualReactiveGeneration(Number reactive);
+ // public void setActualReactiveGeneration(Number reactive);
   
   /**
    * Get the economic cost of a producer

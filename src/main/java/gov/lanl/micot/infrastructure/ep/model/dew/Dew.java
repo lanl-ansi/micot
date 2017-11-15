@@ -494,8 +494,8 @@ public class Dew {
       setComponentData(DewVariables.DEW_PHASES_KEY, legacyid, name, generatorPhases);
     }
     
-    setComponentData(Generator.DESIRED_REAL_GENERATION_KEY, legacyid, name, generator.getActualRealGeneration());
-    setComponentData(Generator.DESIRED_REACTIVE_GENERATION_KEY, legacyid, name, generator.getActualReactiveGeneration());
+    setComponentData(Generator.REAL_GENERATION_KEY, legacyid, name, generator.getRealGeneration());
+    setComponentData(Generator.REACTIVE_GENERATION_KEY, legacyid, name, generator.getReactiveGeneration());
   }
 
   /**

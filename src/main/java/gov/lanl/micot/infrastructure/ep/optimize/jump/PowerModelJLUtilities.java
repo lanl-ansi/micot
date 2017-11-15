@@ -309,14 +309,14 @@ public class PowerModelJLUtilities {
       generatorBuilder.add(MBASE_TAG, mvaBase);
       generatorBuilder.add(LOWER_REAL_POWER_OUTPUT_TAG, pc1);
       generatorBuilder.add(UPPER_REAL_POWER_OUTPUT_TAG, pc2);
-      generatorBuilder.add(REAL_GENERATION_TAG, gen.getDesiredRealGeneration().doubleValue());
+      generatorBuilder.add(REAL_GENERATION_TAG, gen.getRealGeneration().doubleValue());
       generatorBuilder.add(REAL_GENERATION_MAX_TAG, gen.getDesiredRealGenerationMax());
       generatorBuilder.add(REAL_GENERATION_MIN_TAG, gen.getRealGenerationMin());
       generatorBuilder.add(MAX_REACTIVE_GENERATION_PC1_TAG, qc1max);
       generatorBuilder.add(MIN_REACTIVE_GENERATION_PC1_TAG, qc1min);
       generatorBuilder.add(MAX_REACTIVE_GENERATION_PC2_TAG, qc2max);
       generatorBuilder.add(MIN_REACTIVE_GENERATION_PC2_TAG, qc2min);
-      generatorBuilder.add(REACTIVE_GENERATION_TAG, gen.getDesiredReactiveGeneration().doubleValue());
+      generatorBuilder.add(REACTIVE_GENERATION_TAG, gen.getReactiveGeneration().doubleValue());
       generatorBuilder.add(REACTIVE_GENERATION_MAX_TAG, gen.getDesiredReactiveMax());
       generatorBuilder.add(REACTIVE_GENERATION_MIN_TAG, gen.getReactiveMin());
       generatorBuilder.add(RAMP_30_TAG, ramp30);

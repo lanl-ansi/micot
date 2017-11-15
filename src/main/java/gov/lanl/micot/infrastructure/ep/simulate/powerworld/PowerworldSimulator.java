@@ -281,10 +281,8 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       double voltage = Double.parseDouble(voltageString.trim());
       double mvar = Double.parseDouble(mvarString.trim());
       double mw = Double.parseDouble(mwString.trim());
-      generator.setActualRealGeneration(mw);
-      generator.setDesiredRealGeneration(mw);
-      generator.setActualReactiveGeneration(mvar);
-      generator.setDesiredReactiveGeneration(mvar);
+      generator.setRealGeneration(mw);
+      generator.setReactiveGeneration(mvar);
     }
 
     // get the flows on Voltage Source lines

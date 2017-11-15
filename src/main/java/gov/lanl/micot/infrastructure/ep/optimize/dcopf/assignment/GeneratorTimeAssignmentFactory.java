@@ -40,14 +40,14 @@ public class GeneratorTimeAssignmentFactory implements AssignmentFactory {
     
     for (ElectricPowerNode node : model.getNodes()) {
       for (Generator gen : node.getComponents(Generator.class)) {
-        gen.setActualRealGeneration(new LookupTableTimeDependentFunction());
+        gen.setRealGeneration(new LookupTableTimeDependentFunction());
       }
       
       for (int i = 0; i < numberOfIncrements; ++i) {
         double time = i * incrementSize;  
         for (Generator gen : node.getComponents(Generator.class)) {
           Variable variable = generatorVariableFactory.getVariable(problem, gen, time);
-          ((LookupTableTimeDependentFunction)gen.getActualRealGeneration()).addEntry(time, solution.getValueDouble(variable) * mva);
+          ((LookupTableTimeDependentFunction)gen.getRealGeneration()).addEntry(time, solution.getValueDouble(variable) * mva);
         }
       }
     }

@@ -926,7 +926,7 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
       listener.generatorAdded(generator);      
     }
     for (ModelListener listener : getModelListeners()) {
-      listener.attributeUpdated(generator, getNode(generator), Generator.ACTUAL_REAL_GENERATION_KEY, generator.getActualRealGeneration()); 
+      listener.attributeUpdated(generator, getNode(generator), Generator.REAL_GENERATION_KEY, generator.getRealGeneration()); 
       listener.attributeUpdated(generator, getNode(generator), Generator.MAXIMUM_PRODUCTION_KEY, generator.getDesiredRealGenerationMax()); 
     }
   }
@@ -942,7 +942,7 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
       listener.batteryAdded(battery);      
     }
     for (ModelListener listener : getModelListeners()) {
-      listener.attributeUpdated(battery, getNode(battery), Battery.ACTUAL_REAL_GENERATION_KEY, battery.getActualRealGeneration()); 
+      listener.attributeUpdated(battery, getNode(battery), Battery.REAL_GENERATION_KEY, battery.getRealGeneration()); 
       listener.attributeUpdated(battery, getNode(battery), Battery.ENERGY_CAPACITY_KEY, battery.getEnergyCapacity().doubleValue());           
     }
   }
@@ -981,7 +981,7 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     }
     for (ModelListener listener : getModelListeners()) {
       listener.attributeUpdated(generator, getNode(generator), Generator.MAXIMUM_PRODUCTION_KEY, 0.0); 
-      listener.attributeUpdated(generator, getNode(generator), Generator.ACTUAL_REAL_GENERATION_KEY, 0.0);       
+      listener.attributeUpdated(generator, getNode(generator), Generator.REAL_GENERATION_KEY, 0.0);       
     }
   }
 
@@ -995,7 +995,7 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
       listener.batteryRemove(battery);
     }
     for (ModelListener listener : getModelListeners()) {
-      listener.attributeUpdated(battery, getNode(battery), Battery.ACTUAL_REAL_GENERATION_KEY, 0.0);
+      listener.attributeUpdated(battery, getNode(battery), Battery.REAL_GENERATION_KEY, 0.0);
       listener.attributeUpdated(battery, getNode(battery), Battery.ENERGY_CAPACITY_KEY, 0.0);         
     }
   }

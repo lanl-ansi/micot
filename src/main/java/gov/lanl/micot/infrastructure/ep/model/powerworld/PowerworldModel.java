@@ -1162,7 +1162,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     
     return new Object[] {id.getLeft(), id.getRight(), 
       ft, costConstant, linearConstant, quadConstant, cubeConstant, generator.getAttribute(Generator.MVA_BASE_KEY), 
-      generator.getActualReactiveGeneration(), generator.getActualRealGeneration(), 
+      generator.getReactiveGeneration(), generator.getRealGeneration(), 
       generator.getDesiredReactiveMax(), generator.getDesiredRealGenerationMax(), 
       generator.getReactiveMin(), generator.getRealGenerationMin(), status, remoteVoltage};  		
   }

@@ -62,8 +62,8 @@ public class OpenDSSTest2 extends TestCase {
         assertEquals(load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY), 0.0);
         assertEquals(load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY), 0.0);
 
-        assertEquals(load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY), 175.0);
-        assertEquals(load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY), 350.0);
+        assertEquals(load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY), 0.175);
+        assertEquals(load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY), 0.35);
       }      
     }
   }

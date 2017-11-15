@@ -18,44 +18,44 @@ public abstract class ElectricPowerProducerImpl extends ProducerImpl implements 
   }
      
   @Override
-  public Number getDesiredRealGeneration() {
-    return getAttribute(DESIRED_REAL_GENERATION_KEY, Number.class);
+  public Number getRealGeneration() {
+    return getAttribute(REAL_GENERATION_KEY, Number.class);
   }
 
   @Override
-  public void setDesiredRealGeneration(Number realGeneration) {
-    setAttribute(DESIRED_REAL_GENERATION_KEY, realGeneration);
+  public void setRealGeneration(Number realGeneration) {
+    setAttribute(REAL_GENERATION_KEY, realGeneration);
+  }
+
+//  @Override
+  //public Number getActualRealGeneration() {
+    //return getAttribute(ACTUAL_REAL_GENERATION_KEY, Number.class);
+  //}
+
+  //@Override
+  //public void setActualRealGeneration(Number realGeneration) {
+    //setAttribute(ACTUAL_REAL_GENERATION_KEY, realGeneration);
+  //}
+
+  @Override
+  public Number getReactiveGeneration() {
+    return getAttribute(REACTIVE_GENERATION_KEY, Number.class);
   }
 
   @Override
-  public Number getActualRealGeneration() {
-    return getAttribute(ACTUAL_REAL_GENERATION_KEY, Number.class);
+  public void setReactiveGeneration(Number reactiveGeneration) {
+    setAttribute(REACTIVE_GENERATION_KEY, reactiveGeneration);
   }
 
-  @Override
-  public void setActualRealGeneration(Number realGeneration) {
-    setAttribute(ACTUAL_REAL_GENERATION_KEY, realGeneration);
-  }
+//  @Override
+  //public Number getActualReactiveGeneration() {
+    //return getAttribute(ACTUAL_REACTIVE_GENERATION_KEY, Number.class);
+ // }
 
-  @Override
-  public Number getDesiredReactiveGeneration() {
-    return getAttribute(DESIRED_REACTIVE_GENERATION_KEY, Number.class);
-  }
-
-  @Override
-  public void setDesiredReactiveGeneration(Number reactiveGeneration) {
-    setAttribute(DESIRED_REACTIVE_GENERATION_KEY, reactiveGeneration);
-  }
-
-  @Override
-  public Number getActualReactiveGeneration() {
-    return getAttribute(ACTUAL_REACTIVE_GENERATION_KEY, Number.class);
-  }
-
-  @Override
-  public void setActualReactiveGeneration(Number reactiveGeneration) {
-    setAttribute(ACTUAL_REACTIVE_GENERATION_KEY, reactiveGeneration);
-  }
+  //@Override
+ // public void setActualReactiveGeneration(Number reactiveGeneration) {
+   // setAttribute(ACTUAL_REACTIVE_GENERATION_KEY, reactiveGeneration);
+  //}
 
   @Override
   public double getDesiredReactiveMax() {
@@ -99,13 +99,13 @@ public abstract class ElectricPowerProducerImpl extends ProducerImpl implements 
 
   @Override
   public Number getProduction() {
-    return MathUtils.SIGNED_NORM(getDesiredRealGeneration(), getDesiredReactiveGeneration());    
+    return MathUtils.SIGNED_NORM(getRealGeneration(), getReactiveGeneration());    
   }
 
   @Override
   public void setProduction(Number consumption) {
-    setDesiredRealGeneration(consumption.doubleValue());
-    setDesiredReactiveGeneration(0.0);
+    setRealGeneration(consumption.doubleValue());
+    setReactiveGeneration(0.0);
   }
 
   @Override
@@ -159,4 +159,52 @@ public abstract class ElectricPowerProducerImpl extends ProducerImpl implements 
   public void setEconomicCost(double cost) {
     setAttribute(ECONOMIC_COST_KEY,cost);    
   }
+  
+  
+  @Override
+  public void setAttribute(Object key, Object object) {
+    if (key.equals("ACTUAL_REACTIVE_GENERATION")) {
+      System.err.println("Warning: ACTUAL_REACTIVE_GENERATION is a deprecated attribute.  Using REACTIVE_GENERATION instead");
+      key = REACTIVE_GENERATION_KEY;
+    }
+    if (key.equals("ACTUAL_REAL_GENERATION")) {
+      System.err.println("Warning: ACTUAL_REAL_GENERATION is a deprecated attribute.  Using REAL_GENERATION instead");
+      key = REAL_GENERATION_KEY;
+    }
+    
+    if (key.equals("DESIRED_REACTIVE_GENERATION")) {
+      System.err.println("Warning: DESIRED_REACTIVE_GENERATION is a deprecated attribute.  Using REACTIVE_GENERATION instead");
+      key = REACTIVE_GENERATION_KEY;
+    }
+    if (key.equals("DESIRED_REAL_GENERATION")) {
+      System.err.println("Warning: DESIRED_REAL_GENERATION is a deprecated attribute.  Using REAL_GENERATION instead");
+      key = REAL_GENERATION_KEY;
+    }
+    
+    super.setAttribute(key,object);
+  }
+  
+  @Override
+  public Object getAttribute(Object key) {
+    if (key.equals("ACTUAL_REACTIVE_GENERATION")) {
+      System.err.println("Warning: ACTUAL_REACTIVE_GENERATION is a deprecated attribute.  Using REACTIVE_GENERATION instead");
+      key = REACTIVE_GENERATION_KEY;
+    }
+    if (key.equals("ACTUAL_REAL_GENERATION")) {
+      System.err.println("Warning: ACTUAL_REAL_GENERATION is a deprecated attribute.  Using REAL_GENERATION instead");
+      key = REAL_GENERATION_KEY;
+    }
+    
+    if (key.equals("DESIRED_REACTIVE_GENERATION")) {
+      System.err.println("Warning: DESIRED_REACTIVE_GENERATION is a deprecated attribute.  Using REACTIVE_GENERATION instead");
+      key = REACTIVE_GENERATION_KEY;
+    }
+    if (key.equals("DESIRED_REAL_GENERATION")) {
+      System.err.println("Warning: DESIRED_REAL_GENERATION is a deprecated attribute.  Using REAL_GENERATION instead");
+      key = REAL_GENERATION_KEY;
+    }
+    
+    return super.getAttribute(key);
+  }
+  
 }

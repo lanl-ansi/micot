@@ -745,8 +745,8 @@ public class OpenDSSModel extends ElectricPowerModelImpl implements ElectricPowe
         generators.getInteger(OpenDSSIOConstants.NEXT_GENERATOR);          
       }    
       
-      double reactive = generator.getDesiredReactiveGeneration().doubleValue() * 1000.0;
-      double real = generator.getDesiredRealGeneration().doubleValue() * 1000.0;
+      double reactive = generator.getReactiveGeneration().doubleValue() * 1000.0;
+      double real = generator.getRealGeneration().doubleValue() * 1000.0;
       boolean status = generator.getStatus();
       
       co.put(OpenDSSIOConstants.GENERATOR_KVAR, reactive);

@@ -105,10 +105,10 @@ public class JSONResultExporter {
       Bus bus = model.getNode(generator).getBus();      
       JSONObjectBuilder generatorBuilder = json.createObjectBuilder();
       generatorBuilder = generatorBuilder.add("gen_i", generator.toString());
-      generatorBuilder = generatorBuilder.add("mw", generator.getActualRealGeneration().doubleValue());
+      generatorBuilder = generatorBuilder.add("mw", generator.getRealGeneration().doubleValue());
       generatorBuilder = generatorBuilder.add("mw_min", generator.getRealGenerationMin());
       generatorBuilder = generatorBuilder.add("mw_max", generator.getDesiredRealGenerationMax());
-      generatorBuilder = generatorBuilder.add("mvar", generator.getActualReactiveGeneration().doubleValue());
+      generatorBuilder = generatorBuilder.add("mvar", generator.getReactiveGeneration().doubleValue());
       generatorBuilder = generatorBuilder.add("mvar_min", generator.getReactiveMin());
       generatorBuilder = generatorBuilder.add("mvar_max", generator.getDesiredReactiveMax());
       generatorBuilder = generatorBuilder.add("status", generator.getStatus());

@@ -98,8 +98,8 @@ public class DewSimulator extends ElectricPowerSimulatorImpl {
         generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_A_KEY, mvarA);
         generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_B_KEY, mvarB);
         generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_C_KEY, mvarC);
-        generator.setActualRealGeneration(mwA + mwB + mwC);
-        generator.setActualReactiveGeneration(mvarA + mvarB + mvarC);
+        generator.setRealGeneration(mwA + mwB + mwC);
+        generator.setReactiveGeneration(mvarA + mvarB + mvarC);
         
       
         

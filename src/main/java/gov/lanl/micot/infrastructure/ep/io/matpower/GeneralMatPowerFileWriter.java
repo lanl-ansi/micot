@@ -335,9 +335,9 @@ public class GeneralMatPowerFileWriter extends MatPowerFileWriterImpl {
   private void setupGenerators(ElectricPowerModel model) {
     double maxReal = 0;
     for (Generator generator : model.getGenerators()) {
-      if (slackBus == null || maxReal < generator.getDesiredRealGeneration().doubleValue()) {
+      if (slackBus == null || maxReal < generator.getRealGeneration().doubleValue()) {
         slackBus = model.getNode(generator).getBus();
-        maxReal = generator.getDesiredRealGeneration().doubleValue();
+        maxReal = generator.getRealGeneration().doubleValue();
       }
     }
     

@@ -319,8 +319,7 @@ public abstract class CDFFileWriterImpl implements CDFFileWriter {
 		formatter.close();
 
 		// write the real generation
-		double mwGen = (generator == null) ? 0 : generator
-				.getDesiredRealGeneration().doubleValue();
+		double mwGen = (generator == null) ? 0 : generator.getRealGeneration().doubleValue();
 		sb = new StringBuilder();
 		formatter = new Formatter(sb, Locale.US);
 		formatter.format("%8.1f", mwGen);
@@ -332,8 +331,7 @@ public abstract class CDFFileWriterImpl implements CDFFileWriter {
 		formatter.close();
 
 		// write the reactive generation
-		double mVarGen = (generator == null) ? 0 : generator
-				.getDesiredReactiveGeneration().doubleValue();
+		double mVarGen = (generator == null) ? 0 : generator.getReactiveGeneration().doubleValue();
 		sb = new StringBuilder();
 		formatter = new Formatter(sb, Locale.US);
 		formatter.format("%8.1f", mVarGen);

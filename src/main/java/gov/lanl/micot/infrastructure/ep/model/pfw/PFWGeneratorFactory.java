@@ -75,15 +75,13 @@ public class PFWGeneratorFactory extends GeneratorFactory {
   	Generator generator = registerGenerator(id);
     generator.setAttribute(Generator.NAME_KEY, name);
     generator.setType(gType);    
-    generator.setDesiredRealGeneration(realGeneration);
-    generator.setDesiredReactiveGeneration(reactiveGeneration);
+    generator.setRealGeneration(realGeneration);
+    generator.setReactiveGeneration(reactiveGeneration);
     generator.setDesiredReactiveMax(reactiveMaxRatio);
     generator.setReactiveMin(reactiveMinRatio);
     generator.setStatus(status == 1 ? true : false);
     generator.setDesiredRealGenerationMax(realGenerationMax);
     generator.setRealGenerationMin(realGenerationMin);
-    generator.setActualRealGeneration(realGeneration);
-    generator.setActualReactiveGeneration(reactiveGeneration);
     generator.setCoordinate(point == null ? new PointImpl(0,0) : point);
     
     bus.setVoltagePU(voltageSetPoint); // backwards way of doing this, but this is the voltage for the bus...

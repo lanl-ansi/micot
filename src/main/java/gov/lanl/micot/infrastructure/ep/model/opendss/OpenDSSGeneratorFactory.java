@@ -108,10 +108,8 @@ public class OpenDSSGeneratorFactory extends GeneratorFactory {
     boolean status = activeGenerator.getBoolean(OpenDSSIOConstants.GENERATOR_STATUS);
         
     generator.setStatus(status);
-    generator.setDesiredReactiveGeneration(reactiveGeneration);
-    generator.setDesiredRealGeneration(realGeneration);    
-    generator.setActualRealGeneration(realGeneration);
-    generator.setActualReactiveGeneration(reactiveGeneration);
+    generator.setReactiveGeneration(reactiveGeneration);
+    generator.setRealGeneration(realGeneration);    
 
     ComObject property = activeGenerator.call(OpenDSSIOConstants.PROPERTIES, OpenDSSIOConstants.GENERATOR_PHASES);
     int phases = Integer.parseInt(property.getString(OpenDSSIOConstants.PROPERTY_VALUE));

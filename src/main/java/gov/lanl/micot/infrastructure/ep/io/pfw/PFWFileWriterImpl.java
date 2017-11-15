@@ -574,10 +574,10 @@ public abstract class PFWFileWriterImpl implements PFWFileWriter {
 	  int area = a.getAttribute(PFWModelConstants.PFW_LEGACY_ID_KEY,Integer.class);
     int zone = z.getAttribute(PFWModelConstants.PFW_LEGACY_ID_KEY,Integer.class);
     int remoteBus = rb.getAttribute(PFWModelConstants.PFW_LEGACY_ID_KEY,Integer.class);    
-    double vt = bus.getMaximumVoltagePU(); //battery.getAttribute(Generator.MAX_VOLTAGE_KEY,Double.class);
-    double vb = bus.getMinimumVoltagePU(); //battery.getAttribute(Generator.MIN_VOLTAGE_KEY,Double.class);
-		double realGeneration = battery.getDesiredRealGeneration().doubleValue();
-		double reactiveGeneration = battery.getDesiredReactiveGeneration().doubleValue();
+    double vt = bus.getMaximumVoltagePU(); 
+    double vb = bus.getMinimumVoltagePU(); 
+		double realGeneration = battery.getRealGeneration().doubleValue();
+		double reactiveGeneration = battery.getReactiveGeneration().doubleValue();
 		double desiredVoltage = bus.getRemoteVoltagePU(); //battery.getAttribute(Generator.DESIRED_VOLTAGE_KEY,Double.class);
 		double reactiveMax = battery.getDesiredReactiveMax();
 		double reactiveMin = battery.getReactiveMin();
@@ -603,11 +603,11 @@ public abstract class PFWFileWriterImpl implements PFWFileWriter {
     int area = a.getAttribute(PFWModelConstants.PFW_LEGACY_ID_KEY,Integer.class);
     int zone = z.getAttribute(PFWModelConstants.PFW_LEGACY_ID_KEY,Integer.class);
     int remoteBus = rb.getAttribute(PFWModelConstants.PFW_LEGACY_ID_KEY,Integer.class);
-    double vt = bus.getMaximumVoltagePU(); //generator.getMaximumVoltage();
-    double vb = bus.getMinimumVoltagePU(); //generator.getMinimumVoltage();
-		double realGeneration = generator.getDesiredRealGeneration().doubleValue();
-		double reactiveGeneration = generator.getDesiredReactiveGeneration().doubleValue();
-		double desiredVoltage = bus.getRemoteVoltagePU(); //generator.getDesiredVoltage().doubleValue();
+    double vt = bus.getMaximumVoltagePU(); 
+    double vb = bus.getMinimumVoltagePU(); 
+		double realGeneration = generator.getRealGeneration().doubleValue();
+		double reactiveGeneration = generator.getReactiveGeneration().doubleValue();
+		double desiredVoltage = bus.getRemoteVoltagePU(); 
     double reactiveMax = generator.computeActualReactiveGenerationMax().doubleValue(); // steady state model
 		double reactiveMin = generator.getReactiveMin();
 		boolean desiredStatus = generator.getStatus();
@@ -617,8 +617,7 @@ public abstract class PFWFileWriterImpl implements PFWFileWriter {
 
 		return getPFWGeneratorLine(id, name, area, zone, remoteBus, vt, vb, realGeneration,
 				reactiveGeneration, desiredVoltage, reactiveMax, reactiveMin, desiredStatus, realMax, realMin,
-				generatorType);
-		
+				generatorType);		
 	}
 
 	/**

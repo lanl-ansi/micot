@@ -1,22 +1,12 @@
 package gov.lanl.micot.infrastructure.ep.simulate;
 
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.Vector;
 
-import gov.lanl.micot.infrastructure.ep.model.Battery;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerNode;
-import gov.lanl.micot.infrastructure.ep.model.ElectricPowerProducer;
-import gov.lanl.micot.infrastructure.ep.model.Generator;
 import gov.lanl.micot.infrastructure.ep.model.GeneratorTypeEnum;
-import gov.lanl.micot.infrastructure.ep.model.Load;
-import gov.lanl.micot.infrastructure.model.Asset;
 import gov.lanl.micot.infrastructure.model.Model;
 import gov.lanl.micot.infrastructure.simulate.SimulationExecutionException;
-import gov.lanl.micot.util.math.MathUtils;
 
 /**
  * Abstract class for interacting with the simulator
@@ -78,7 +68,7 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
    * Function for balancing a model in a steady state way
    * @param model
    */
-  protected double balanceSteadyStateRealPower(Collection<ElectricPowerNode> nodes) {    
+  /*protected double balanceSteadyStateRealPower(Collection<ElectricPowerNode> nodes) {    
     double totalProduction = 0;
     double totalConsumption = 0;  
     Vector<ElectricPowerProducer> generators = new Vector<ElectricPowerProducer>();
@@ -162,14 +152,14 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
       }
     }
     return totalProduction;
-  }
+  }*/
 
 
   /**
    * Function for balancing a model in a steady state
    * @param model
    */
-  protected double balanceSteadyStateReactivePower(Collection<ElectricPowerNode> nodes) {    
+  /*protected double balanceSteadyStateReactivePower(Collection<ElectricPowerNode> nodes) {    
     double totalProduction = 0;
     double totalConsumption = 0;  
     Vector<ElectricPowerProducer> generators = new Vector<ElectricPowerProducer>();
@@ -244,7 +234,7 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
       }
     }
     return totalProduction;
-  }
+  }*/
   
   /**
    * Function for finding the slack node
@@ -272,7 +262,7 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
    * @author Russell Bent
    *
    */
-  private class UnderRealGenerationComparator implements Comparator<ElectricPowerProducer> {
+ /* private class UnderRealGenerationComparator implements Comparator<ElectricPowerProducer> {
     @Override
     public int compare(ElectricPowerProducer arg0, ElectricPowerProducer arg1) {
       double arg0Max =(arg0 instanceof Generator) ? ((Generator) arg0).computeActualRealGenerationMax().doubleValue() : ((Battery)arg0).getAvailableMaximumRealProduction().doubleValue();
@@ -280,13 +270,13 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
       // most space
       return -MathUtils.COMPARE_TO(MathUtils.SUBTRACT(arg0Max,arg0.getActualRealGeneration()),MathUtils.SUBTRACT(arg1Max,arg1.getActualRealGeneration()));
     }
-  }
+  }*/
 
   /**
    * Comparator of over real generation
    * @author Russell Bent
    */
-  private class OverRealGenerationComparator implements Comparator<ElectricPowerProducer> {
+  /*private class OverRealGenerationComparator implements Comparator<ElectricPowerProducer> {
     @Override
     public int compare(ElectricPowerProducer arg0, ElectricPowerProducer arg1) {
       double arg0Min =(arg0 instanceof Generator) ? ((Generator) arg0).getRealGenerationMin() : ((Battery)arg0).getAvailableMinimumRealProduction().doubleValue();
@@ -295,14 +285,14 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
       // most space
       return MathUtils.COMPARE_TO((MathUtils.SUBTRACT(arg0Min,arg0.getActualRealGeneration())),(MathUtils.SUBTRACT(arg1Min,arg1.getActualRealGeneration())));
     }
-  }
+  }*/
 
   /**
    * Under reactive generation comparator
    * @author Russell Bent
    *
    */
-  private class UnderReactiveGenerationComparator implements Comparator<ElectricPowerProducer> {
+  /*private class UnderReactiveGenerationComparator implements Comparator<ElectricPowerProducer> {
     @Override
     public int compare(ElectricPowerProducer arg0, ElectricPowerProducer arg1) {
       double arg0Max =(arg0 instanceof Generator) ? ((Generator) arg0).computeActualReactiveGenerationMax().doubleValue() : ((Battery)arg0).getAvailableMaximumReactiveProduction().doubleValue();
@@ -311,13 +301,13 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
       // most space
       return -MathUtils.COMPARE_TO(MathUtils.SUBTRACT(arg0Max,arg0.getActualReactiveGeneration()),(MathUtils.SUBTRACT(arg1Max,arg1.getActualReactiveGeneration())));
     }
-  }
+  }*/
 
   /**
    * Comparator of over real generation
    * @author Russell Bent
    */
-  private class OverReactiveGenerationComparator implements Comparator<ElectricPowerProducer> {
+  /*private class OverReactiveGenerationComparator implements Comparator<ElectricPowerProducer> {
     @Override
     public int compare(ElectricPowerProducer arg0, ElectricPowerProducer arg1) {
     	 double arg0Min =(arg0 instanceof Generator) ? ((Generator) arg0).getReactiveMin() : ((Battery)arg0).getAvailableMinimumReactiveProduction().doubleValue();
@@ -326,7 +316,7 @@ public abstract class ElectricPowerSimulatorImpl implements ElectricPowerSimulat
       // most space
       return MathUtils.COMPARE_TO(MathUtils.SUBTRACT(arg0Min,arg0.getActualReactiveGeneration()),(MathUtils.SUBTRACT(arg1Min,arg1.getActualReactiveGeneration())));
     }
-  }
+  }*/
 
   @Override
   public void close() {    

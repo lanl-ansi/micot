@@ -54,11 +54,11 @@ public class DewVariables {
     dataSources.put(DewVariables.DEW_Y_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(Generator.NUM_PHASE_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(DewVariables.DEW_PHASES_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
-    dataSources.put(Generator.DESIRED_REAL_GENERATION_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
+    dataSources.put(Generator.REAL_GENERATION_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(Generator.DESIRED_REAL_GENERATION_A_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(Generator.DESIRED_REAL_GENERATION_B_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(Generator.DESIRED_REAL_GENERATION_C_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
-    dataSources.put(Generator.DESIRED_REACTIVE_GENERATION_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
+    dataSources.put(Generator.REACTIVE_GENERATION_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(Generator.DESIRED_REACTIVE_GENERATION_A_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(Generator.DESIRED_REACTIVE_GENERATION_B_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(Generator.DESIRED_REACTIVE_GENERATION_C_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
@@ -155,11 +155,11 @@ public class DewVariables {
     phaseSources.put(DewVariables.DEW_Y_KEY, 0);
     phaseSources.put(Generator.NUM_PHASE_KEY, 0);
     phaseSources.put(DewVariables.DEW_PHASES_KEY, 0);
-    phaseSources.put(Generator.DESIRED_REAL_GENERATION_KEY, 0);
+    phaseSources.put(Generator.REAL_GENERATION_KEY, 0);
     phaseSources.put(Generator.DESIRED_REAL_GENERATION_A_KEY, 0);
     phaseSources.put(Generator.DESIRED_REAL_GENERATION_B_KEY, 1);
     phaseSources.put(Generator.DESIRED_REAL_GENERATION_C_KEY, 2);
-    phaseSources.put(Generator.DESIRED_REACTIVE_GENERATION_KEY, 0);
+    phaseSources.put(Generator.REACTIVE_GENERATION_KEY, 0);
     phaseSources.put(Generator.DESIRED_REACTIVE_GENERATION_A_KEY, 0);
     phaseSources.put(Generator.DESIRED_REACTIVE_GENERATION_B_KEY, 1);
     phaseSources.put(Generator.DESIRED_REACTIVE_GENERATION_C_KEY, 2);
@@ -256,8 +256,8 @@ public class DewVariables {
     textFileIndicies.put(DewVariables.DEW_Y_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_HEADER, DewVariables.DEW_Y_IDX));
     textFileIndicies.put(Generator.NUM_PHASE_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_HEADER, DewVariables.DEW_NUMPHASES_IDX));
     textFileIndicies.put(DewVariables.DEW_PHASES_KEY, new Pair<String,Integer>(DewVariables.DEW_CMP_HEADER, DewVariables.DEW_PHASES_IDX));
-    textFileIndicies.put(Generator.DESIRED_REAL_GENERATION_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPCTR_HEADER, DewVariables.DEW_MW_GEN_IDX));
-    textFileIndicies.put(Generator.DESIRED_REACTIVE_GENERATION_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPCTR_HEADER, DewVariables.DEW_MVAR_GEN_IDX));
+    textFileIndicies.put(Generator.REAL_GENERATION_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPCTR_HEADER, DewVariables.DEW_MW_GEN_IDX));
+    textFileIndicies.put(Generator.REACTIVE_GENERATION_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPCTR_HEADER, DewVariables.DEW_MVAR_GEN_IDX));
     textFileIndicies.put(Generator.REACTIVE_MIN_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPCTR_HEADER, DewVariables.DEW_MVAR_MIN_GEN_IDX));
     textFileIndicies.put(Generator.DESIRED_REACTIVE_MAX_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPCTR_HEADER, DewVariables.DEW_MVAR_MAX_GEN_IDX));
     textFileIndicies.put(Bus.VOLTAGE_PU_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPCTR_HEADER, DewVariables.DEW_VOLTAGE_GEN_IDX));

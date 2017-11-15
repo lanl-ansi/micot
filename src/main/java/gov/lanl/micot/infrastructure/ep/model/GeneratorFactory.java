@@ -48,15 +48,13 @@ public abstract class GeneratorFactory {
     generator.setCoordinate(point);
     GeneratorTypeEnum type = GeneratorTypeEnum.HOLD_GENERATION_TYPE;    
     generator.setType(type);    
-    generator.setDesiredRealGeneration(maxMW);
-    generator.setDesiredReactiveGeneration(maxMVar);
+    generator.setRealGeneration(maxMW);
+    generator.setReactiveGeneration(maxMVar);
     generator.setDesiredReactiveMax(maxMVar);
     generator.setReactiveMin(minMVar);
     generator.setStatus(true);
     generator.setDesiredRealGenerationMax(maxMW);
     generator.setRealGenerationMin(minMW);
-    generator.setActualRealGeneration(maxMW);
-    generator.setActualReactiveGeneration(maxMVar);
     generator.setAttribute(Generator.MVA_BASE_KEY, DEFAULT_MVA_BASE);
   }
 

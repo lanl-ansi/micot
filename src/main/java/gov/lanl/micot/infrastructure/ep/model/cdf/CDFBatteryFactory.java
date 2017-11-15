@@ -72,7 +72,7 @@ public class CDFBatteryFactory extends BatteryFactory {
     double cost = Double.parseDouble(tokenizer.nextToken());
     double maxMW = Double.parseDouble(tokenizer.nextToken());
     double minMW = Double.parseDouble(tokenizer.nextToken());    
-    Number mw    = generator.getDesiredRealGeneration();
+    Number mw    = generator.getRealGeneration();
     
     Battery battery = registerBattery(legacyid, bus);
     initializeBattery(battery, bus, maxMW, minMW, mw, capacity, used, cost, generator.getCoordinate());
