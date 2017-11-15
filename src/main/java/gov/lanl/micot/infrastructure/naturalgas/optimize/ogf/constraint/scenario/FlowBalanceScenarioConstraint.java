@@ -71,7 +71,7 @@ public class FlowBalanceScenarioConstraint implements ConstraintFactory {
         }
 
         for (CityGate gate : gates) {
-          load -= gate.getActualConsumption().doubleValue();
+          load -= gate.getConsumption().doubleValue();
         }
 
         totalLoad += load;

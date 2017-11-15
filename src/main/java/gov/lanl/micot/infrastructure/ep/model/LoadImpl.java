@@ -23,22 +23,13 @@ public class LoadImpl extends ConsumerImpl implements Load {
     setAttribute(Load.ASSET_ID_KEY, assetId);
   }
 
-  /**
-   * Constructor
-   * @param bus
-   */
-//  public LoadImpl(Load load) {
-  //  super(load);
-   // listeners = new HashSet<LoadChangeListener>();    
-  //}
-  
   @Override
-  public Number getDesiredConsumption() {
+  public Number getConsumption() {
     return getDesiredLoadNorm();
   }
 
   @Override
-  public void setDesiredConsumption(Number consumption) {
+  public void setConsumption(Number consumption) {
     setDesiredRealLoad(consumption.doubleValue());
     setDesiredReactiveLoad(0.0);    
   }
@@ -103,17 +94,6 @@ public class LoadImpl extends ConsumerImpl implements Load {
   }
 
   @Override
-  public Number getActualConsumption() {
-    return getActualLoadNorm();
-  }
-
-  @Override
-  public void setActualConsumption(Number consumption) {
-    setActualRealLoad(consumption.doubleValue());
-    setActualReactiveLoad(0.0);    
-  }
-
-  @Override
   public Number getDesiredLoadNorm() {
     return MathUtils.SIGNED_NORM(getDesiredRealLoad(), getDesiredReactiveLoad());
   }
@@ -134,7 +114,6 @@ public class LoadImpl extends ConsumerImpl implements Load {
   
   @Override
   public LoadImpl clone() {
-//    LoadImpl newLoad = new LoadImpl((Load)getBaseData());
     LoadImpl newLoad = new LoadImpl(getAttribute(ASSET_ID_KEY,Long.class));
 
     try {

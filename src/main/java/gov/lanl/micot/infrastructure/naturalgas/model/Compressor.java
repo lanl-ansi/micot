@@ -13,8 +13,8 @@ public interface Compressor extends NaturalGasConnection {
   public static final String COMPRESSION_RATIO_KEY         = "COMPRESSION_RATIO";
   public static final String MINIMUM_COMPRESSION_RATIO_KEY = "MINIMUM_COMPRESSION_RATIO";
   public static final String MAXIMUM_COMPRESSION_RATIO_KEY = "MAXIMUM_COMPRESSION_RATIO";
-  public static final String ACTUAL_CONSUMPTION_KEY        = Consumer.ACTUAL_CONSUMPTION_KEY;
-  public static final String DESIRED_CONSUMPTION_KEY       = Consumer.DESIRED_CONSUMPTION_KEY;  
+  public static final String ACTUAL_CONSUMPTION_KEY        = Consumer.CONSUMPTION_KEY;
+  public static final String DESIRED_CONSUMPTION_KEY       = Consumer.CONSUMPTION_KEY;  
   public static final String MINIMUM_PRESSURE_KEY          = Pipe.MINIMUM_PRESSURE_KEY;
   public static final String MAXIMUM_PRESSURE_KEY          = Pipe.MAXIMUM_PRESSURE_KEY;
   public static final String PRESSURE_KEY                  = Pipe.PRESSURE_KEY;

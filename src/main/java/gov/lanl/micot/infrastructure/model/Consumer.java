@@ -6,8 +6,7 @@ package gov.lanl.micot.infrastructure.model;
  */
 public interface Consumer extends Component {
 
-  public static final String DESIRED_CONSUMPTION_KEY = "DESIRED_CONSUMPTION";
-  public static final String ACTUAL_CONSUMPTION_KEY  = "ACTUAL_CONSUMPTION";
+  public static final String CONSUMPTION_KEY = "CONSUMPTION";
   public static final String MAXIMUM_CONSUMPTION_KEY  = "MAXIMUM_CONSUMPTION";
   public static final String MINIMUM_CONSUMPTION_KEY  = "MINIMUM_CONSUMPTION";
 
@@ -15,25 +14,13 @@ public interface Consumer extends Component {
    * Get desired consumption rate
    * @return
    */
-  public Number getDesiredConsumption();
+  public Number getConsumption();
 
   /**
    * Set the desired comsumption rate
    * @param consumption
    */
-  public void setDesiredConsumption(Number consumption);
-
-  /**
-   * Get the actual consumption rate
-   * @return
-   */
-  public Number getActualConsumption();
-  
-  /**
-   * Sets the actual consumption rate
-   * @param consumption
-   */
-  public void setActualConsumption(Number consumption);
+  public void setConsumption(Number consumption);
 
   /**
    * Get the actual consumption rate

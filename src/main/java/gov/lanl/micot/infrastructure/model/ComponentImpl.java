@@ -16,14 +16,6 @@ public abstract class ComponentImpl extends AssetImpl implements Component  {
     super();
   }
 
-  /**
-   * Constructor
-   * @param component
-   */
-//  public ComponentImpl(Component component) {
-  //  super(component);
-  //}
-
   @Override
   public Point getCoordinate() {
     return getAttribute(COORDINATE_KEY,Point.class);
@@ -40,5 +32,6 @@ public abstract class ComponentImpl extends AssetImpl implements Component  {
   }
 
   public abstract ComponentImpl clone();
+  
   
 }

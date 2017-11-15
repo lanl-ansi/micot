@@ -40,8 +40,7 @@ public abstract class CityGateFactory {
     String name = junction.getAttribute(Junction.NAME_KEY, String.class);
     gate.setCoordinate(junction.getCoordinate());
     gate.setStatus(true);
-    gate.setDesiredConsumption(cfd);
-    gate.setActualConsumption(cfd);
+    gate.setConsumption(cfd);
     gate.setAttribute(CityGate.CITYGATE_NAME_KEY, name);
   }
 

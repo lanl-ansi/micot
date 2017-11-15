@@ -62,7 +62,7 @@ public class ValveOperationFlowScenarioConstraint implements ConstraintFactory {
     
     double maxFlow = 0;
     for (CityGate gate : model.getCityGates()) {
-      maxFlow += gate.getDesiredConsumption().doubleValue();
+      maxFlow += gate.getMaximumConsumption().doubleValue();
     }
 
     Set<NaturalGasConnection> connections = new HashSet<NaturalGasConnection>();

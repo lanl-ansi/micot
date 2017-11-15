@@ -56,4 +56,19 @@ public abstract class ProducerImpl extends ComponentImpl implements Producer  {
     super.setAttribute(key,object);
   }
   
+  @Override
+  public Object getAttribute(Object key) {
+    if (key.equals("DESIRED_PRODUCTION")) {
+      System.err.println("Warning: DESIRED_PRODUCTION is a deprecated attribute.  Using PRODUCTION instead");
+      key = PRODUCTION_KEY;
+    }
+    if (key.equals("ACTUAL_PRODUCTION")) {
+      System.err.println("Warning: ACTUAL_PRODUCTION is a deprecated attribute.  Using PRODUCTION instead");
+      key = PRODUCTION_KEY;
+    }
+    
+    return super.getAttribute(key);
+  }
+
+  
 }

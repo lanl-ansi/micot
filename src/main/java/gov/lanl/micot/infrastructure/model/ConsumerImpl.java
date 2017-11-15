@@ -14,32 +14,14 @@ public abstract class ConsumerImpl extends ComponentImpl implements Consumer  {
     super();
   }
   
-  /**
-   * Constructor
-   * @param consumer
-   */
-//  public ConsumerImpl(Consumer consumer) {
-  //  super(consumer/*, ((ConsumerImpl)consumer).getOredKeys(), ((ConsumerImpl)consumer).getAdditiveKeys(), ((ConsumerImpl)consumer).getSubtractiveKeys()*/);
-  //}
-  
   @Override
-  public Number getActualConsumption() {
-    return getAttribute(ACTUAL_CONSUMPTION_KEY,Double.class);
+  public Number getConsumption() {
+    return getAttribute(CONSUMPTION_KEY,Double.class);
   }
 
   @Override
-  public void setActualConsumption(Number consumption) {
-    setAttribute(ACTUAL_CONSUMPTION_KEY, consumption);
-  }
-
-  @Override
-  public Number getDesiredConsumption() {
-    return getAttribute(DESIRED_CONSUMPTION_KEY,Double.class);
-  }
-
-  @Override
-  public void setDesiredConsumption(Number consumption) {
-    setAttribute(DESIRED_CONSUMPTION_KEY, consumption);
+  public void setConsumption(Number consumption) {
+    setAttribute(CONSUMPTION_KEY, consumption);
   }
 
   @Override
@@ -63,5 +45,31 @@ public abstract class ConsumerImpl extends ComponentImpl implements Consumer  {
   }
 
   public abstract ConsumerImpl clone();
+  
+  @Override
+  public void setAttribute(Object key, Object object) {
+    if (key.equals("DESIRED_CONSUMPTION")) {
+      System.err.println("Warning: DESIRED_CONSUMPTION is a deprecated attribute.  Using CONSUMPTION instead");
+      key = CONSUMPTION_KEY;
+    }
+    if (key.equals("ACTUAL_CONSUMPTION")) {
+      System.err.println("Warning: ACTUAL_CONSUMPTION is a deprecated attribute.  Using CONSUMPTION instead");
+      key = CONSUMPTION_KEY;
+    }
+    super.setAttribute(key,object);
+  }
+  
+  @Override
+  public Object getAttribute(Object key) {
+    if (key.equals("DESIRED_CONSUMPTION")) {
+      System.err.println("Warning: DESIRED_CONSUMPTION is a deprecated attribute.  Using CONSUMPTION instead");
+      key = CONSUMPTION_KEY;
+    }
+    if (key.equals("ACTUAL_CONSUMPTION")) {
+      System.err.println("Warning: ACTUAL_CONSUMPTION is a deprecated attribute.  Using CONSUMPTION instead");
+      key = CONSUMPTION_KEY;
+    }    
+    return super.getAttribute(key);
+  }
   
 }

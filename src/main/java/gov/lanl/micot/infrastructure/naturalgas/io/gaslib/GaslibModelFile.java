@@ -195,8 +195,7 @@ public class GaslibModelFile extends FileParser implements NaturalGasModelFile {
             else {
               gate.setMaximumConsumption(flow);
               gate.setMinimumConsumption(flow);
-              gate.setActualConsumption(flow);
-              gate.setDesiredConsumption(flow);
+              gate.setConsumption(flow);
             }
           }
           

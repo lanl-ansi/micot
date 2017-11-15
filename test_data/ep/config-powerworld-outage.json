@@ -19,7 +19,7 @@
           ],
           "modification": [
             {
-              "modification_key": "DESIRED_STATUS",
+              "modification_key": "STATUS",
               "modification_value": false,
               "modification_type": "boolean"
             }
