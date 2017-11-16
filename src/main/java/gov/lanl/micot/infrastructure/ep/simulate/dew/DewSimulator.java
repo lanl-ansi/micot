@@ -78,12 +78,12 @@ public class DewSimulator extends ElectricPowerSimulatorImpl {
         DewLegacyId legacyid = generator.getAttribute(DewVariables.DEW_LEGACY_ID_KEY, DewLegacyId.class);
         String name = generator.getAttribute(Generator.NAME_KEY, String.class);   
         
-        Object realA = dew.getComponentData(Generator.ACTUAL_REAL_GENERATION_A_KEY, legacyid, name);
-        Object realB = dew.getComponentData(Generator.ACTUAL_REAL_GENERATION_B_KEY, legacyid, name);
-        Object realC = dew.getComponentData(Generator.ACTUAL_REAL_GENERATION_C_KEY, legacyid, name);
-        Object reactiveA = dew.getComponentData(Generator.ACTUAL_REACTIVE_GENERATION_A_KEY, legacyid, name);
-        Object reactiveB = dew.getComponentData(Generator.ACTUAL_REACTIVE_GENERATION_B_KEY, legacyid, name);
-        Object reactiveC = dew.getComponentData(Generator.ACTUAL_REACTIVE_GENERATION_C_KEY, legacyid, name);
+        Object realA = dew.getComponentData(Generator.REAL_GENERATION_A_KEY, legacyid, name);
+        Object realB = dew.getComponentData(Generator.REAL_GENERATION_B_KEY, legacyid, name);
+        Object realC = dew.getComponentData(Generator.REAL_GENERATION_C_KEY, legacyid, name);
+        Object reactiveA = dew.getComponentData(Generator.REACTIVE_GENERATION_A_KEY, legacyid, name);
+        Object reactiveB = dew.getComponentData(Generator.REACTIVE_GENERATION_B_KEY, legacyid, name);
+        Object reactiveC = dew.getComponentData(Generator.REACTIVE_GENERATION_C_KEY, legacyid, name);
                 
         double mwA = realA == null ? 0.0 : Double.parseDouble(realA.toString());
         double mwB = realB == null ? 0.0 : Double.parseDouble(realB.toString());
@@ -92,12 +92,12 @@ public class DewSimulator extends ElectricPowerSimulatorImpl {
         double mvarB = reactiveB == null ? 0.0 : Double.parseDouble(reactiveB.toString());
         double mvarC = reactiveC == null ? 0.0 : Double.parseDouble(reactiveC.toString());
       
-        generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY, mwA);
-        generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY, mwB);
-        generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY, mwC);
-        generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_A_KEY, mvarA);
-        generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_B_KEY, mvarB);
-        generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_C_KEY, mvarC);
+        generator.setAttribute(Generator.REAL_GENERATION_A_KEY, mwA);
+        generator.setAttribute(Generator.REAL_GENERATION_B_KEY, mwB);
+        generator.setAttribute(Generator.REAL_GENERATION_C_KEY, mwC);
+        generator.setAttribute(Generator.REACTIVE_GENERATION_A_KEY, mvarA);
+        generator.setAttribute(Generator.REACTIVE_GENERATION_B_KEY, mvarB);
+        generator.setAttribute(Generator.REACTIVE_GENERATION_C_KEY, mvarC);
         generator.setRealGeneration(mwA + mwB + mwC);
         generator.setReactiveGeneration(mvarA + mvarB + mvarC);
         

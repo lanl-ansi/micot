@@ -100,7 +100,7 @@ public class BatteryTimeConstraint implements ConstraintFactory {
       for (int i = 0; i < numberOfIncrements; ++i) {
         double time = i * incrementSize;
         for (Battery battery : batteries) {
-          double totalMaxGeneration = battery.getStatus() == true ? MathUtils.TO_FUNCTION(battery.getDesiredRealGenerationMax()).getValue(time).doubleValue() / mva : 0;
+          double totalMaxGeneration = battery.getStatus() == true ? MathUtils.TO_FUNCTION(battery.getRealGenerationMax()).getValue(time).doubleValue() / mva : 0;
           double totalMinGeneration = battery.getStatus() == true ? MathUtils.TO_FUNCTION(battery.getRealGenerationMin()).getValue(time).doubleValue() / mva : 0;      
           
           // constraints on actual production rates

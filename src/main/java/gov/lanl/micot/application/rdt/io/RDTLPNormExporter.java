@@ -241,22 +241,21 @@ public class RDTLPNormExporter {
        if (!OptimizationConstants.allActive(null, genBus, gen)) {
          continue;
        }
-             
-             
+                          
        JSONArrayBuilder phaseBuilder = JSON.getDefaultJSON().createArrayBuilder();
        phaseBuilder = phaseBuilder.add(gen.getAttribute(Generator.HAS_PHASE_A_KEY, Boolean.class));
        phaseBuilder = phaseBuilder.add(gen.getAttribute(Generator.HAS_PHASE_B_KEY, Boolean.class));
        phaseBuilder = phaseBuilder.add(gen.getAttribute(Generator.HAS_PHASE_C_KEY, Boolean.class));
 
        JSONArrayBuilder realBuilder = JSON.getDefaultJSON().createArrayBuilder();
-       realBuilder = realBuilder.add(gen.getAttribute(Generator.DESIRED_REAL_GENERATION_A_KEY, Number.class).doubleValue());
-       realBuilder = realBuilder.add(gen.getAttribute(Generator.DESIRED_REAL_GENERATION_B_KEY, Number.class).doubleValue());
-       realBuilder = realBuilder.add(gen.getAttribute(Generator.DESIRED_REAL_GENERATION_C_KEY, Number.class).doubleValue());
+       realBuilder = realBuilder.add(gen.getAttribute(Generator.REAL_GENERATION_A_KEY, Number.class).doubleValue());
+       realBuilder = realBuilder.add(gen.getAttribute(Generator.REAL_GENERATION_B_KEY, Number.class).doubleValue());
+       realBuilder = realBuilder.add(gen.getAttribute(Generator.REAL_GENERATION_C_KEY, Number.class).doubleValue());
 
        JSONArrayBuilder reactiveBuilder = JSON.getDefaultJSON().createArrayBuilder();
-       reactiveBuilder = reactiveBuilder.add(gen.getAttribute(Generator.DESIRED_REACTIVE_GENERATION_A_KEY, Number.class).doubleValue());
-       reactiveBuilder = reactiveBuilder.add(gen.getAttribute(Generator.DESIRED_REACTIVE_GENERATION_B_KEY, Number.class).doubleValue());
-       reactiveBuilder = reactiveBuilder.add(gen.getAttribute(Generator.DESIRED_REACTIVE_GENERATION_C_KEY, Number.class).doubleValue());
+       reactiveBuilder = reactiveBuilder.add(gen.getAttribute(Generator.REACTIVE_GENERATION_A_KEY, Number.class).doubleValue());
+       reactiveBuilder = reactiveBuilder.add(gen.getAttribute(Generator.REACTIVE_GENERATION_B_KEY, Number.class).doubleValue());
+       reactiveBuilder = reactiveBuilder.add(gen.getAttribute(Generator.REACTIVE_GENERATION_C_KEY, Number.class).doubleValue());
        
        double microgridCost  = gen.getAttribute(AlgorithmConstants.MICROGRID_COST_KEY) == null ? 0.0 : gen.getAttribute(AlgorithmConstants.MICROGRID_COST_KEY,Number.class).doubleValue();
        double microgridFixedCost  = gen.getAttribute(AlgorithmConstants.MICROGRID_FIXED_COST_KEY) == null ? 0.0 : gen.getAttribute(AlgorithmConstants.MICROGRID_FIXED_COST_KEY,Number.class).doubleValue();

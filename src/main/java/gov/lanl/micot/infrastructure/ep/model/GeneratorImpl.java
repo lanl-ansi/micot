@@ -81,8 +81,8 @@ public class GeneratorImpl extends ElectricPowerProducerImpl implements Generato
 
     for (Generator state : generators) {
       if (state.getStatus() == true) {
-        realMax = MathUtils.ADD(state.computeActualRealGenerationMax(),realMax);
-        reactiveMax = MathUtils.ADD(state.computeActualReactiveGenerationMax(), reactiveMax);
+        realMax = MathUtils.ADD(state.computeRealGenerationMax(),realMax);
+        reactiveMax = MathUtils.ADD(state.computeReactiveGenerationMax(), reactiveMax);
         actualReal = MathUtils.ADD(actualReal, state.getRealGeneration());
         actualReactive = MathUtils.ADD(actualReactive, state.getReactiveGeneration());
       }
@@ -91,24 +91,24 @@ public class GeneratorImpl extends ElectricPowerProducerImpl implements Generato
     Number realPercentage = MathUtils.DIVIDE(actualReal,realMax);
     Number reactivePercentage = MathUtils.DIVIDE(actualReactive,reactiveMax);
 
-    setReactiveGeneration(MathUtils.MULTIPLY(reactivePercentage,computeActualReactiveGenerationMax()));
-    setRealGeneration(MathUtils.MULTIPLY(realPercentage,computeActualRealGenerationMax()));
+    setReactiveGeneration(MathUtils.MULTIPLY(reactivePercentage,computeReactiveGenerationMax()));
+    setRealGeneration(MathUtils.MULTIPLY(realPercentage,computeRealGenerationMax()));
   }
 
   @Override
-  public Number computeActualRealGenerationMax() {
-    return MathUtils.MULTIPLY(getCapacityFactor(),getDesiredRealGenerationMax());
+  public Number computeRealGenerationMax() {
+    return MathUtils.MULTIPLY(getCapacityFactor(),getRealGenerationMax());
   }
 
   @Override
-  public Number computeActualReactiveGenerationMax() {
-    return MathUtils.MULTIPLY(getCapacityFactor(),getDesiredReactiveMax());
+  public Number computeReactiveGenerationMax() {
+    return MathUtils.MULTIPLY(getCapacityFactor(),getReactiveGenerationMax());
   }
 
   @Override
   public void makeGenerationBoundsFeasible() {
-    setReactiveMin(Math.min(getReactiveMin(), MathUtils.MIN(computeActualReactiveGenerationMax()).doubleValue()));
-    setRealGenerationMin(Math.min(getRealGenerationMin(), MathUtils.MIN(computeActualRealGenerationMax()).doubleValue()));    
+    setReactiveGenerationMin(Math.min(getReactiveGenerationMin(), MathUtils.MIN(computeReactiveGenerationMax()).doubleValue()));
+    setRealGenerationMin(Math.min(getRealGenerationMin(), MathUtils.MIN(computeRealGenerationMax()).doubleValue()));    
   }
 
   @Override

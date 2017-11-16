@@ -183,7 +183,7 @@ public class CSVResultExporter {
 
     // Output the actual microgrid generation
     for (Generator generator : generators) {
-      if (generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY) != null || generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY) != null || generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY) != null) {
+      if (generator.getAttribute(Generator.REAL_GENERATION_A_KEY) != null || generator.getAttribute(Generator.REAL_GENERATION_B_KEY) != null || generator.getAttribute(Generator.REAL_GENERATION_C_KEY) != null) {
         generationAPS.print(generator + ",");
         generationBPS.print(generator + ",");
         generationCPS.print(generator + ",");
@@ -196,24 +196,24 @@ public class CSVResultExporter {
     for (ScenarioConfiguration scenarioConfiguration : configuration.getScenarioConfigurations()) {
       Scenario scenario = scenarioConfiguration.getScenario();
       for (Generator generator : generators) {
-        if (generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY) != null || generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY) != null || generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY) != null) {
-          ScenarioAttribute attribute = generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY, ScenarioAttribute.class);
+        if (generator.getAttribute(Generator.REAL_GENERATION_A_KEY) != null || generator.getAttribute(Generator.REAL_GENERATION_B_KEY) != null || generator.getAttribute(Generator.REAL_GENERATION_C_KEY) != null) {
+          ScenarioAttribute attribute = generator.getAttribute(Generator.REAL_GENERATION_A_KEY, ScenarioAttribute.class);
           double capacity = attribute == null ? 0 : attribute.getValue(scenario) == null ? 0 : attribute.getValue(scenario).doubleValue();
           generationAPS.print(capacity + ",");
         }
       }
       generationAPS.println();
       for (Generator generator : generators) {
-        if (generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY) != null || generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY) != null || generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY) != null) {
-          ScenarioAttribute attribute = generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY, ScenarioAttribute.class);
+        if (generator.getAttribute(Generator.REAL_GENERATION_A_KEY) != null || generator.getAttribute(Generator.REAL_GENERATION_B_KEY) != null || generator.getAttribute(Generator.REAL_GENERATION_C_KEY) != null) {
+          ScenarioAttribute attribute = generator.getAttribute(Generator.REAL_GENERATION_B_KEY, ScenarioAttribute.class);
           double capacity = attribute == null ? 0 : attribute.getValue(scenario) == null ? 0 : attribute.getValue(scenario).doubleValue();
           generationBPS.print(capacity + ",");
         }
       }
       generationBPS.println();
       for (Generator generator : generators) {
-        if (generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY) != null || generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY) != null || generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY) != null) {
-          ScenarioAttribute attribute = generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY, ScenarioAttribute.class);
+        if (generator.getAttribute(Generator.REAL_GENERATION_A_KEY) != null || generator.getAttribute(Generator.REAL_GENERATION_B_KEY) != null || generator.getAttribute(Generator.REAL_GENERATION_C_KEY) != null) {
+          ScenarioAttribute attribute = generator.getAttribute(Generator.REAL_GENERATION_C_KEY, ScenarioAttribute.class);
           double capacity = attribute == null ? 0 : attribute.getValue(scenario) == null ? 0 : attribute.getValue(scenario).doubleValue();
           generationCPS.print(capacity + ",");
         }

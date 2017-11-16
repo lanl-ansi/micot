@@ -54,7 +54,7 @@ public class BatteryImpl extends ElectricPowerProducerImpl implements Battery {
 
 	@Override
 	public Number getAvailableMaximumRealProduction() {
-		return Math.min(getDesiredRealGenerationMax(), getUsedEnergyCapacity().doubleValue());
+		return Math.min(getRealGenerationMax(), getUsedEnergyCapacity().doubleValue());
 	}
 
 	@Override
@@ -64,12 +64,12 @@ public class BatteryImpl extends ElectricPowerProducerImpl implements Battery {
 
 	@Override
 	public Number getAvailableMaximumReactiveProduction() {
-		return Math.min(getDesiredReactiveMax(), 0.0);
+		return Math.min(getReactiveGenerationMax(), 0.0);
 	}
 
 	@Override
 	public Number getAvailableMinimumReactiveProduction() {
-		return Math.max(getReactiveMin(), 0.0);
+		return Math.max(getReactiveGenerationMin(), 0.0);
 	}
 
 	@Override

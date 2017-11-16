@@ -72,7 +72,7 @@ public class ScenarioDiscreteRealGenerationConstraint extends ScenarioConstraint
             LinearConstraint constraint = new LinearConstraintLessEq(getConstraintLEName(generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_A, scenario));
             constraint.addVariable(generatorVariableFactory.getVariable(problem, generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_A, scenario));
             constraint.setRightHandSide(vFactory.getVariable(problem, generator, scenario), generator.getAttribute(AlgorithmConstants.MAX_MICROGRID_KEY, Double.class) / mvaBase);
-            constraint.setRightHandSide(generator.getDesiredRealGenerationMax() / mvaBase);
+            constraint.setRightHandSide(generator.getRealGenerationMax() / mvaBase);
             problem.addLinearConstraint(constraint);
 
             constraint = new LinearConstraintGreaterEq(getConstraintGEName(generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_A, scenario));
@@ -85,7 +85,7 @@ public class ScenarioDiscreteRealGenerationConstraint extends ScenarioConstraint
             LinearConstraint constraint = new LinearConstraintLessEq(getConstraintLEName(generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_B, scenario));
             constraint.addVariable(generatorVariableFactory.getVariable(problem, generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_B, scenario));
             constraint.setRightHandSide(vFactory.getVariable(problem, generator, scenario), generator.getAttribute(AlgorithmConstants.MAX_MICROGRID_KEY, Double.class) / mvaBase);
-            constraint.setRightHandSide(generator.getDesiredRealGenerationMax() / mvaBase);
+            constraint.setRightHandSide(generator.getRealGenerationMax() / mvaBase);
             problem.addLinearConstraint(constraint);
 
             constraint = new LinearConstraintGreaterEq(getConstraintGEName(generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_B, scenario));
@@ -98,7 +98,7 @@ public class ScenarioDiscreteRealGenerationConstraint extends ScenarioConstraint
             LinearConstraint constraint = new LinearConstraintLessEq(getConstraintLEName(generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_C, scenario));
             constraint.addVariable(generatorVariableFactory.getVariable(problem, generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_C, scenario));
             constraint.setRightHandSide(vFactory.getVariable(problem, generator, scenario), generator.getAttribute(AlgorithmConstants.MAX_MICROGRID_KEY, Double.class) / mvaBase);
-            constraint.setRightHandSide(generator.getDesiredRealGenerationMax() / mvaBase);
+            constraint.setRightHandSide(generator.getRealGenerationMax() / mvaBase);
             problem.addLinearConstraint(constraint);
 
             constraint = new LinearConstraintGreaterEq(getConstraintGEName(generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_C, scenario));

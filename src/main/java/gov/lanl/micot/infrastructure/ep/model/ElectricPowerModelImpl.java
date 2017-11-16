@@ -927,7 +927,7 @@ public abstract class ElectricPowerModelImpl extends ModelImpl implements Electr
     }
     for (ModelListener listener : getModelListeners()) {
       listener.attributeUpdated(generator, getNode(generator), Generator.REAL_GENERATION_KEY, generator.getRealGeneration()); 
-      listener.attributeUpdated(generator, getNode(generator), Generator.MAXIMUM_PRODUCTION_KEY, generator.getDesiredRealGenerationMax()); 
+      listener.attributeUpdated(generator, getNode(generator), Generator.MAXIMUM_PRODUCTION_KEY, generator.getRealGenerationMax()); 
     }
   }
 

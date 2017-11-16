@@ -459,8 +459,8 @@ public class CDFFile extends FileParser implements ElectricPowerModelFile {
         generator.setCapacityFactor(capacityFactor);
         
         // update the max generation
-        generator.setDesiredReactiveMax(generator.getDesiredReactiveMax() / capacityFactor);
-        generator.setDesiredRealGenerationMax(generator.getDesiredRealGenerationMax() / capacityFactor);
+        generator.setReactiveGenerationMax(generator.getReactiveGenerationMax() / capacityFactor);
+        generator.setRealGenerationMax(generator.getRealGenerationMax() / capacityFactor);
       }
     }
     
@@ -540,7 +540,7 @@ public class CDFFile extends FileParser implements ElectricPowerModelFile {
     ElectricPowerModel model = new CDFFile().readModel(initialFile);
     double netload = 0;
     for (Generator generator : model.getGenerators()) {    	
-    	netload += generator.getDesiredRealGenerationMax();
+    	netload += generator.getRealGenerationMax();
     }
     
     System.out.println(netload);

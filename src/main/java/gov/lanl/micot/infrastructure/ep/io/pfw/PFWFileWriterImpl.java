@@ -579,8 +579,8 @@ public abstract class PFWFileWriterImpl implements PFWFileWriter {
 		double realGeneration = battery.getRealGeneration().doubleValue();
 		double reactiveGeneration = battery.getReactiveGeneration().doubleValue();
 		double desiredVoltage = bus.getRemoteVoltagePU(); //battery.getAttribute(Generator.DESIRED_VOLTAGE_KEY,Double.class);
-		double reactiveMax = battery.getDesiredReactiveMax();
-		double reactiveMin = battery.getReactiveMin();
+		double reactiveMax = battery.getReactiveGenerationMax();
+		double reactiveMin = battery.getReactiveGenerationMin();
 		boolean desiredStatus = battery.getStatus();
 		double realMax = battery.getAvailableMaximumRealProduction().doubleValue();
 		double realMin = battery.getAvailableMinimumRealProduction().doubleValue();
@@ -608,10 +608,10 @@ public abstract class PFWFileWriterImpl implements PFWFileWriter {
 		double realGeneration = generator.getRealGeneration().doubleValue();
 		double reactiveGeneration = generator.getReactiveGeneration().doubleValue();
 		double desiredVoltage = bus.getRemoteVoltagePU(); 
-    double reactiveMax = generator.computeActualReactiveGenerationMax().doubleValue(); // steady state model
-		double reactiveMin = generator.getReactiveMin();
+    double reactiveMax = generator.computeReactiveGenerationMax().doubleValue(); // steady state model
+		double reactiveMin = generator.getReactiveGenerationMin();
 		boolean desiredStatus = generator.getStatus();
-    double realMax = generator.computeActualRealGenerationMax().doubleValue(); // steady state model
+    double realMax = generator.computeRealGenerationMax().doubleValue(); // steady state model
 		double realMin = generator.getRealGenerationMin();
 		int generatorType = generator.getType().getGeneratorType();
 
@@ -1270,7 +1270,7 @@ public abstract class PFWFileWriterImpl implements PFWFileWriter {
     double used = battery.getUsedEnergyCapacity().doubleValue();
     double cost = battery.getAttribute(Battery.ECONOMIC_COST_KEY) == null ? 0 : battery.getAttribute(Battery.ECONOMIC_COST_KEY, Double.class);
     String name = battery.getAttribute(Generator.NAME_KEY, String.class);
-    double max = battery.getDesiredRealGenerationMax(); 
+    double max = battery.getRealGenerationMax(); 
     double min = battery.getRealGenerationMin();
       
     return id + "," + name + "," + capacity + "," + used + "," + cost + "," + max + "," + min; 

@@ -36,35 +36,35 @@ public class ScenarioGeneratorRealPhaseAssignmentFactory extends ScenarioAssignm
     
     for (Generator generator : model.getGenerators()) {
       
-      if (generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY) == null || !(generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY) instanceof ScenarioAttribute)) {
-        generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY, new ScenarioAttribute());
+      if (generator.getAttribute(Generator.REAL_GENERATION_A_KEY) == null || !(generator.getAttribute(Generator.REAL_GENERATION_A_KEY) instanceof ScenarioAttribute)) {
+        generator.setAttribute(Generator.REAL_GENERATION_A_KEY, new ScenarioAttribute());
       }
       
-      if (generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY) == null || !(generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY) instanceof ScenarioAttribute)) {         
-        generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY, new ScenarioAttribute());
+      if (generator.getAttribute(Generator.REAL_GENERATION_B_KEY) == null || !(generator.getAttribute(Generator.REAL_GENERATION_B_KEY) instanceof ScenarioAttribute)) {         
+        generator.setAttribute(Generator.REAL_GENERATION_B_KEY, new ScenarioAttribute());
       }
       
-      if (generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY) == null || !(generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY) instanceof ScenarioAttribute)) {         
-        generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY, new ScenarioAttribute());
+      if (generator.getAttribute(Generator.REAL_GENERATION_C_KEY) == null || !(generator.getAttribute(Generator.REAL_GENERATION_C_KEY) instanceof ScenarioAttribute)) {         
+        generator.setAttribute(Generator.REAL_GENERATION_C_KEY, new ScenarioAttribute());
       }
 
       for (Scenario scenario : getScenarios()) {
         Variable variable = generatorVariableFactory.getVariable(problem, generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_A, scenario);
         if (variable != null) {
           double gen = solution.getValueDouble(variable) * mvaBase;
-          generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY, ScenarioAttribute.class).addEntry(scenario, gen);
+          generator.getAttribute(Generator.REAL_GENERATION_A_KEY, ScenarioAttribute.class).addEntry(scenario, gen);
         }
 
         variable = generatorVariableFactory.getVariable(problem, generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_B, scenario);
         if (variable != null) {
           double gen = solution.getValueDouble(variable) * mvaBase;
-          generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY, ScenarioAttribute.class).addEntry(scenario, gen);
+          generator.getAttribute(Generator.REAL_GENERATION_B_KEY, ScenarioAttribute.class).addEntry(scenario, gen);
         }
 
         variable = generatorVariableFactory.getVariable(problem, generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_C, scenario);
         if (variable != null) {
           double gen = solution.getValueDouble(variable) * mvaBase;
-          generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY, ScenarioAttribute.class).addEntry(scenario, gen);
+          generator.getAttribute(Generator.REAL_GENERATION_C_KEY, ScenarioAttribute.class).addEntry(scenario, gen);
         }
       }
     }

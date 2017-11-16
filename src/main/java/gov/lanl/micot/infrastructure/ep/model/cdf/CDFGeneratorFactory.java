@@ -71,10 +71,10 @@ public class CDFGeneratorFactory extends GeneratorFactory {
     generator.setType(gType);    
     generator.setRealGeneration(realGeneration);
     generator.setReactiveGeneration(reactiveGeneration);
-    generator.setDesiredReactiveMax(reactiveMax);
-    generator.setReactiveMin(reactiveMin);
+    generator.setReactiveGenerationMax(reactiveMax);
+    generator.setReactiveGenerationMin(reactiveMin);
     generator.setStatus(status);
-    generator.setDesiredRealGenerationMax(realGenerationMax);
+    generator.setRealGenerationMax(realGenerationMax);
     generator.setRealGenerationMin(realGenerationMin);
     generator.setCoordinate(point == null ? new PointImpl(0,0) : point);
   	return generator;

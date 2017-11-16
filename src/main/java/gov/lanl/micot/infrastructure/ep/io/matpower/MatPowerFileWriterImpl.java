@@ -346,10 +346,10 @@ public abstract class MatPowerFileWriterImpl implements MatPowerFileWriter {
 		buffer.append(generator.getReactiveGeneration() + "\t\t");
 
 		// write the max reactive generation
-		buffer.append(generator.getDesiredReactiveMax() + "\t\t");
+		buffer.append(generator.getReactiveGenerationMax() + "\t\t");
 
 		// write the min reactive generation
-		buffer.append(generator.getReactiveMin() + "\t\t");
+		buffer.append(generator.getReactiveGenerationMin() + "\t\t");
 
 		// write desired voltage
 //		buffer.append(generator.getDesiredVoltage() + "\t");
@@ -362,7 +362,7 @@ public abstract class MatPowerFileWriterImpl implements MatPowerFileWriter {
 		buffer.append((generator.getStatus() ? 1 : 0) + "\t");
 
 		// write the max real generation
-		buffer.append(generator.getDesiredRealGenerationMax() + "\t");
+		buffer.append(generator.getRealGenerationMax() + "\t");
 
 		// write the min real generation
 		buffer.append(generator.getRealGenerationMin() + "\t");
@@ -492,8 +492,8 @@ public abstract class MatPowerFileWriterImpl implements MatPowerFileWriter {
 		Double coefficients[] = null;
 		if (cost instanceof Number) {
 			coefficients = new Double[2];
-			coefficients[0] = generator.getDesiredRealGenerationMax();
-			coefficients[1] = generator.getDesiredRealGenerationMax() * ((Number)cost).doubleValue();
+			coefficients[0] = generator.getRealGenerationMax();
+			coefficients[1] = generator.getRealGenerationMax() * ((Number)cost).doubleValue();
 		}
 		else if (cost instanceof PolynomialFunction) {
 			Collection<Double> dataPoints = ((PolynomialFunction)cost).getPolynomialCoefficients();
@@ -552,7 +552,7 @@ public abstract class MatPowerFileWriterImpl implements MatPowerFileWriter {
 		double capacity = battery.getEnergyCapacity().doubleValue();
 		double used = battery.getUsedEnergyCapacity().doubleValue();
 		double cost = battery.getAttribute(Battery.ECONOMIC_COST_KEY) == null ? 0 : battery.getAttribute(Battery.ECONOMIC_COST_KEY, Double.class);
-		double max = battery.getDesiredRealGenerationMax();
+		double max = battery.getRealGenerationMax();
 		double min = battery.getRealGenerationMin();
 		return "\t" + id + "\t" + capacity + "\t" + used + "\t" + cost + "\t" + max + "\t" + min + ";";
 	}

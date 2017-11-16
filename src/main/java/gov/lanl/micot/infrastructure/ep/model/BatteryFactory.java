@@ -46,10 +46,10 @@ public abstract class BatteryFactory {
     battery.setAttribute(Generator.TYPE_KEY, DEFAULT_TYPE);
     battery.setRealGeneration(mw);
     battery.setReactiveGeneration(0.0);
-    battery.setDesiredReactiveMax(0.0);
-    battery.setReactiveMin(0.0);
+    battery.setReactiveGenerationMax(0.0);
+    battery.setReactiveGenerationMin(0.0);
     battery.setStatus(true);
-    battery.setDesiredRealGenerationMax(maxMW);
+    battery.setRealGenerationMax(maxMW);
     battery.setRealGenerationMin(minMW);
     battery.setCoordinate(point);
     battery.setUsedEnergyCapacity(used);

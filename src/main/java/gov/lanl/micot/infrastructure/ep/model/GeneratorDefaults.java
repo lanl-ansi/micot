@@ -158,7 +158,7 @@ public class GeneratorDefaults {
    * @return
    */
   public Number convertToLinearCost(ElectricPowerProducer generator) {
-    if (generator.getRealGenerationMin() == generator.getDesiredRealGenerationMax()) {
+    if (generator.getRealGenerationMin() == generator.getRealGenerationMax()) {
       return 0;
     }
     Object cost = generator.getAttribute(ElectricPowerProducer.ECONOMIC_COST_KEY);   
@@ -180,7 +180,7 @@ public class GeneratorDefaults {
     // return just the linear component
     if (cost instanceof PolynomialFunction) {
       double xmin = 0;
-      double xmax = generator.getDesiredRealGenerationMax();
+      double xmax = generator.getRealGenerationMax();
       double ymin = 0;
       double ymax = 0;
       
@@ -200,7 +200,7 @@ public class GeneratorDefaults {
   }
 
   public Number getConstantPartOfCost(ElectricPowerProducer generator) {
-	    if (generator.getRealGenerationMin() == generator.getDesiredRealGenerationMax()) {
+	    if (generator.getRealGenerationMin() == generator.getRealGenerationMax()) {
 	      return 0;
 	    }
 	    Object cost = generator.getAttribute(ElectricPowerProducer.ECONOMIC_COST_KEY);   
@@ -239,7 +239,7 @@ public class GeneratorDefaults {
    * @return
    */
   public Number getLinearPartOfCost(ElectricPowerProducer generator) {
-    if (generator.getRealGenerationMin() == generator.getDesiredRealGenerationMax()) {
+    if (generator.getRealGenerationMin() == generator.getRealGenerationMax()) {
       return 0;
     }
     Object cost = generator.getAttribute(ElectricPowerProducer.ECONOMIC_COST_KEY);   
@@ -278,7 +278,7 @@ public class GeneratorDefaults {
    * @return
    */
   public Number getQuadraticPartOfCost(ElectricPowerProducer generator) {
-    if (generator.getRealGenerationMin() == generator.getDesiredRealGenerationMax()) {
+    if (generator.getRealGenerationMin() == generator.getRealGenerationMax()) {
       return 0;
     }
     Object cost = generator.getAttribute(ElectricPowerProducer.ECONOMIC_COST_KEY);   
@@ -317,7 +317,7 @@ public class GeneratorDefaults {
     for (ElectricPowerNode node : nodes) {
       for (ElectricPowerProducer producer : node.getComponents(ElectricPowerProducer.class)) {      
 
-        if (producer.getRealGenerationMin() == producer.getDesiredRealGenerationMax()) {
+        if (producer.getRealGenerationMin() == producer.getRealGenerationMax()) {
           continue;
         }
       

@@ -77,10 +77,10 @@ public class PFWGeneratorFactory extends GeneratorFactory {
     generator.setType(gType);    
     generator.setRealGeneration(realGeneration);
     generator.setReactiveGeneration(reactiveGeneration);
-    generator.setDesiredReactiveMax(reactiveMaxRatio);
-    generator.setReactiveMin(reactiveMinRatio);
+    generator.setReactiveGenerationMax(reactiveMaxRatio);
+    generator.setReactiveGenerationMin(reactiveMinRatio);
     generator.setStatus(status == 1 ? true : false);
-    generator.setDesiredRealGenerationMax(realGenerationMax);
+    generator.setRealGenerationMax(realGenerationMax);
     generator.setRealGenerationMin(realGenerationMin);
     generator.setCoordinate(point == null ? new PointImpl(0,0) : point);
     

@@ -50,11 +50,11 @@ public class MultiGenerator extends GeneratorImpl {
 	}
 
 	@Override
-	public double getDesiredReactiveMax() {
+	public double getReactiveGenerationMax() {
 		double sum = 0;
 		for (Generator d : data) {
 		  if (d.getStatus() == true) {
-		    sum += d.getDesiredReactiveMax();
+		    sum += d.getReactiveGenerationMax();
 		  }
 		}
 		return sum;
@@ -62,11 +62,11 @@ public class MultiGenerator extends GeneratorImpl {
 	}
 
 	@Override
-	public double getReactiveMin() {
+	public double getReactiveGenerationMin() {
 		double sum = 0;
 		for (Generator d : data) {
 		  if (d.getStatus() == true) {
-		    sum += d.getReactiveMin();
+		    sum += d.getReactiveGenerationMin();
 		  }
 		}
 		return sum;
@@ -74,11 +74,11 @@ public class MultiGenerator extends GeneratorImpl {
 	}
 
 	@Override
-	public double getDesiredRealGenerationMax() {
+	public double getRealGenerationMax() {
 		double sum = 0;
 		for (Generator d : data) {
 		  if (d.getStatus() == true) {
-		    sum += d.getDesiredRealGenerationMax();
+		    sum += d.getRealGenerationMax();
 		  }
 		}
 		return sum;
@@ -127,31 +127,31 @@ public class MultiGenerator extends GeneratorImpl {
 	}
 
 	@Override
-	public void setDesiredReactiveMax(double max) {
-		double sum = getDesiredReactiveMax();
+	public void setReactiveGenerationMax(double max) {
+		double sum = getReactiveGenerationMax();
 		for (Generator d : data) {
 		  if (d.getStatus() == true) {
-		    d.setDesiredReactiveMax((d.getDesiredReactiveMax() / sum) * max);
+		    d.setReactiveGenerationMax((d.getReactiveGenerationMax() / sum) * max);
 		  }
 		}
 	}
 
 	@Override
-	public void setReactiveMin(double max) {
-		double sum = getReactiveMin();
+	public void setReactiveGenerationMin(double max) {
+		double sum = getReactiveGenerationMin();
 		for (Generator d : data) {
 		  if (d.getStatus() == true) {
-		    d.setReactiveMin((d.getReactiveMin() / sum) * max);
+		    d.setReactiveGenerationMin((d.getReactiveGenerationMin() / sum) * max);
 		  }
 		}
 	}
 
 	@Override
-	public void setDesiredRealGenerationMax(double real) {
-		double sum = getDesiredRealGenerationMax();
+	public void setRealGenerationMax(double real) {
+		double sum = getRealGenerationMax();
 		for (Generator d : data) {
 		  if (d.getStatus() == true) {
-		    d.setDesiredRealGenerationMax((d.getDesiredRealGenerationMax() / sum) * real);
+		    d.setRealGenerationMax((d.getRealGenerationMax() / sum) * real);
 		  }
 		}
 	}

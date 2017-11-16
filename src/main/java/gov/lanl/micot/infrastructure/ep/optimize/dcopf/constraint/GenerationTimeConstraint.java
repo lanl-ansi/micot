@@ -66,7 +66,7 @@ public class GenerationTimeConstraint implements ConstraintFactory {
       for (int i = 0; i < numberOfIncrements; ++i) {
         double time = i * incrementSize;
         for (Generator gen : generators) {
-          double totalMaxGeneration = gen.getStatus() == true ? MathUtils.TO_FUNCTION(gen.computeActualRealGenerationMax()).getValue(time).doubleValue() / mva : 0;
+          double totalMaxGeneration = gen.getStatus() == true ? MathUtils.TO_FUNCTION(gen.computeRealGenerationMax()).getValue(time).doubleValue() / mva : 0;
           double totalMinGeneration = gen.getStatus() == true ? MathUtils.TO_FUNCTION(gen.getRealGenerationMin()).getValue(time).doubleValue() / mva : 0;
           
            if (totalMaxGeneration == totalMinGeneration) {

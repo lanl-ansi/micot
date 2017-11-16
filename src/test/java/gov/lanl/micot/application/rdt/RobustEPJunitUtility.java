@@ -132,7 +132,7 @@ public class RobustEPJunitUtility {
     // Output the actual microgrid generation
     System.out.println("Actual Microgrid Generation");
     for (Generator generator : model.getGenerators()) {
-      if (generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY) != null || generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY) != null || generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY) != null) {
+      if (generator.getAttribute(Generator.REAL_GENERATION_A_KEY) != null || generator.getAttribute(Generator.REAL_GENERATION_B_KEY) != null || generator.getAttribute(Generator.REAL_GENERATION_C_KEY) != null) {
         System.out.print(generator + ",");
         System.out.print(generator + ",");
         System.out.print(generator + ",");
@@ -144,24 +144,24 @@ public class RobustEPJunitUtility {
 
     for (Scenario scenario : scenarios) {
       for (Generator generator : model.getGenerators()) {
-        if (generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY) != null || generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY) != null || generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY) != null) {
-          ScenarioAttribute attribute = generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY, ScenarioAttribute.class);
+        if (generator.getAttribute(Generator.REAL_GENERATION_A_KEY) != null || generator.getAttribute(Generator.REAL_GENERATION_B_KEY) != null || generator.getAttribute(Generator.REAL_GENERATION_C_KEY) != null) {
+          ScenarioAttribute attribute = generator.getAttribute(Generator.REAL_GENERATION_A_KEY, ScenarioAttribute.class);
           double capacity = attribute == null ? 0 : attribute.getValue(scenario) == null ? 0 : attribute.getValue(scenario).doubleValue();
           System.out.print(capacity + ",");
         }
       }
       System.out.println();
       for (Generator generator : model.getGenerators()) {
-        if (generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY) != null || generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY) != null || generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY) != null) {
-          ScenarioAttribute attribute = generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY, ScenarioAttribute.class);
+        if (generator.getAttribute(Generator.REAL_GENERATION_A_KEY) != null || generator.getAttribute(Generator.REAL_GENERATION_B_KEY) != null || generator.getAttribute(Generator.REAL_GENERATION_C_KEY) != null) {
+          ScenarioAttribute attribute = generator.getAttribute(Generator.REAL_GENERATION_B_KEY, ScenarioAttribute.class);
           double capacity = attribute == null ? 0 : attribute.getValue(scenario) == null ? 0 : attribute.getValue(scenario).doubleValue();
           System.out.print(capacity + ",");
         }
       }
       System.out.println();
       for (Generator generator : model.getGenerators()) {
-        if (generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY) != null || generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY) != null || generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY) != null) {
-          ScenarioAttribute attribute = generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY, ScenarioAttribute.class);
+        if (generator.getAttribute(Generator.REAL_GENERATION_A_KEY) != null || generator.getAttribute(Generator.REAL_GENERATION_B_KEY) != null || generator.getAttribute(Generator.REAL_GENERATION_C_KEY) != null) {
+          ScenarioAttribute attribute = generator.getAttribute(Generator.REAL_GENERATION_C_KEY, ScenarioAttribute.class);
           double capacity = attribute == null ? 0 : attribute.getValue(scenario) == null ? 0 : attribute.getValue(scenario).doubleValue();
           System.out.print(capacity + ",");
         }

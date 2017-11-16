@@ -61,19 +61,19 @@ public class LPNormGeneratorFactory extends GeneratorFactory {
     generator.setAttribute(Generator.HAS_PHASE_B_KEY, hasPhase.getBoolean(1));
     generator.setAttribute(Generator.HAS_PHASE_C_KEY, hasPhase.getBoolean(2));
 
-    generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_A_KEY, reactive.getDouble(0));
-    generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY, real.getDouble(0));
-    generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_B_KEY,reactive.getDouble(1));
-    generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY, real.getDouble(1));
-    generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_C_KEY, reactive.getDouble(2));
-    generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY, real.getDouble(2));
+    generator.setAttribute(Generator.REACTIVE_GENERATION_A_KEY, reactive.getDouble(0));
+    generator.setAttribute(Generator.REAL_GENERATION_A_KEY, real.getDouble(0));
+    generator.setAttribute(Generator.REACTIVE_GENERATION_B_KEY,reactive.getDouble(1));
+    generator.setAttribute(Generator.REAL_GENERATION_B_KEY, real.getDouble(1));
+    generator.setAttribute(Generator.REACTIVE_GENERATION_C_KEY, reactive.getDouble(2));
+    generator.setAttribute(Generator.REAL_GENERATION_C_KEY, real.getDouble(2));
 
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_A_KEY, reactive.getDouble(0));
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_A_KEY, real.getDouble(0));
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_B_KEY, reactive.getDouble(1));
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_B_KEY, real.getDouble(1));
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_C_KEY, reactive.getDouble(2));
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_C_KEY, real.getDouble(2));
+//    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_A_KEY, reactive.getDouble(0));
+ //   generator.setAttribute(Generator.DESIRED_REAL_GENERATION_A_KEY, real.getDouble(0));
+  //  generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_B_KEY, reactive.getDouble(1));
+   // generator.setAttribute(Generator.DESIRED_REAL_GENERATION_B_KEY, real.getDouble(1));
+    // generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_C_KEY, reactive.getDouble(2));
+    //generator.setAttribute(Generator.DESIRED_REAL_GENERATION_C_KEY, real.getDouble(2));
 
     generator.setAttribute(AlgorithmConstants.MICROGRID_FIXED_COST_KEY, microgridFixedCost);
     generator.setAttribute(AlgorithmConstants.MICROGRID_COST_KEY, microgridCost);

@@ -37,19 +37,12 @@ public class OpenDSSGeneratorFactory extends GeneratorFactory {
     generator.setAttribute(Generator.HAS_PHASE_B_KEY, true);
     generator.setAttribute(Generator.HAS_PHASE_C_KEY, true);
 
-    generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_A_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_B_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_C_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY, Double.MAX_VALUE);
-
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_A_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_A_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_B_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_B_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_C_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_C_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REACTIVE_GENERATION_A_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REAL_GENERATION_A_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REACTIVE_GENERATION_B_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REAL_GENERATION_B_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REACTIVE_GENERATION_C_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REAL_GENERATION_C_KEY, Double.MAX_VALUE);
     
     return generator;    
   }
@@ -159,22 +152,16 @@ public class OpenDSSGeneratorFactory extends GeneratorFactory {
     }
     
     generator.setAttribute(Generator.NUM_PHASE_KEY, phases);
-    generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_A_KEY, reactivePhaseA);
-    generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY, realPhaseA);
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_A_KEY, reactivePhaseA);
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_A_KEY, realPhaseA);
+    generator.setAttribute(Generator.REACTIVE_GENERATION_A_KEY, reactivePhaseA);
+    generator.setAttribute(Generator.REAL_GENERATION_A_KEY, realPhaseA);
     generator.setAttribute(Generator.HAS_PHASE_A_KEY, hasPhaseA);
     
-    generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_B_KEY, reactivePhaseB);
-    generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY, realPhaseB);
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_B_KEY, reactivePhaseB);
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_B_KEY, realPhaseB);
+    generator.setAttribute(Generator.REACTIVE_GENERATION_B_KEY, reactivePhaseB);
+    generator.setAttribute(Generator.REAL_GENERATION_B_KEY, realPhaseB);
     generator.setAttribute(Generator.HAS_PHASE_B_KEY, hasPhaseB);
 
-    generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_C_KEY, reactivePhaseC);
-    generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY, realPhaseC);
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_C_KEY, reactivePhaseC);
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_C_KEY, realPhaseC);
+    generator.setAttribute(Generator.REACTIVE_GENERATION_C_KEY, reactivePhaseC);
+    generator.setAttribute(Generator.REAL_GENERATION_C_KEY, realPhaseC);
     generator.setAttribute(Generator.HAS_PHASE_C_KEY, hasPhaseC);
 
    }
@@ -201,20 +188,12 @@ public class OpenDSSGeneratorFactory extends GeneratorFactory {
     generator.setAttribute(Generator.HAS_PHASE_B_KEY, true);
     generator.setAttribute(Generator.HAS_PHASE_C_KEY, true);
 
-    generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_A_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_B_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_C_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY, Double.MAX_VALUE);
-
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_A_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_A_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_B_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_B_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_C_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_C_KEY, Double.MAX_VALUE);
-    
+    generator.setAttribute(Generator.REACTIVE_GENERATION_A_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REAL_GENERATION_A_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REACTIVE_GENERATION_B_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REAL_GENERATION_B_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REACTIVE_GENERATION_C_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REAL_GENERATION_C_KEY, Double.MAX_VALUE);
     return generator;	  
   }
 
@@ -237,19 +216,12 @@ public class OpenDSSGeneratorFactory extends GeneratorFactory {
     generator.setAttribute(Generator.HAS_PHASE_B_KEY, true);
     generator.setAttribute(Generator.HAS_PHASE_C_KEY, true);
 
-    generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_A_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_B_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.ACTUAL_REACTIVE_GENERATION_C_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY, Double.MAX_VALUE);
-
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_A_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_A_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_B_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_B_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_C_KEY, Double.MAX_VALUE);
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_C_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REACTIVE_GENERATION_A_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REAL_GENERATION_A_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REACTIVE_GENERATION_B_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REAL_GENERATION_B_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REACTIVE_GENERATION_C_KEY, Double.MAX_VALUE);
+    generator.setAttribute(Generator.REAL_GENERATION_C_KEY, Double.MAX_VALUE);
     
     return generator;
   }

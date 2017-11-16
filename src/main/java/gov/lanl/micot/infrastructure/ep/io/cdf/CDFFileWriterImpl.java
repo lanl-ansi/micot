@@ -375,7 +375,7 @@ public abstract class CDFFileWriterImpl implements CDFFileWriter {
 			limit = bus.getMaximumVoltagePU();//generator.getMaximumVoltage();
 		} 
 		else if (type == 2) {
-			limit = generator.computeActualReactiveGenerationMax().doubleValue(); // steady state model
+			limit = generator.computeReactiveGenerationMax().doubleValue(); // steady state model
 		}
 		sb = new StringBuilder();
 		formatter = new Formatter(sb, Locale.US);
@@ -393,7 +393,7 @@ public abstract class CDFFileWriterImpl implements CDFFileWriter {
 			limit = bus.getMinimumVoltagePU(); //generator.getMinimumVoltage();
 		} 
 		else if (type == 2) {
-			limit = generator.getReactiveMin();
+			limit = generator.getReactiveGenerationMin();
 		}
 		sb = new StringBuilder();
 		formatter = new Formatter(sb, Locale.US);
@@ -1165,7 +1165,7 @@ public abstract class CDFFileWriterImpl implements CDFFileWriter {
 		double cost = battery.getAttribute(Battery.ECONOMIC_COST_KEY) == null ? 0
 				: battery.getAttribute(Battery.ECONOMIC_COST_KEY, Double.class);
 		String name = battery.getAttribute(Generator.NAME_KEY, String.class);
-		double max = battery.getDesiredRealGenerationMax();
+		double max = battery.getRealGenerationMax();
 		double min = battery.getRealGenerationMin();
 
 		return id + "," + name + "," + capacity + "," + used + "," + cost + ","

@@ -83,12 +83,12 @@ public class JSONResultExporter {
       JSONArrayBuilder mwBuilder = json.createArrayBuilder();
       mwBuilder.add(generator.getRealGenerationMin());
       mwBuilder.add(generator.getRealGeneration().doubleValue());
-      mwBuilder.add(generator.getDesiredRealGenerationMax());
+      mwBuilder.add(generator.getRealGenerationMax());
       generatorBuilder = generatorBuilder.add("mw", mwBuilder);
       JSONArrayBuilder mvarBuilder = json.createArrayBuilder();
-      mvarBuilder.add(generator.getReactiveMin());
+      mvarBuilder.add(generator.getReactiveGenerationMin());
       mvarBuilder.add(generator.getReactiveGeneration().doubleValue());
-      mvarBuilder.add(generator.getDesiredReactiveMax());
+      mvarBuilder.add(generator.getReactiveGenerationMax());
       generatorBuilder = generatorBuilder.add("mvar", mvarBuilder);
       generatorBuilder = generatorBuilder.add("status", generator.getStatus());
       generatorsBuilder = generatorsBuilder.add(generatorBuilder);

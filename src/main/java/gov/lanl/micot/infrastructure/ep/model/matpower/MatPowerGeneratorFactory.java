@@ -138,10 +138,10 @@ public class MatPowerGeneratorFactory extends GeneratorFactory {
 		generator.setType(gType);
 		generator.setRealGeneration(realGeneration);
 		generator.setReactiveGeneration(reactiveGeneration);
-		generator.setDesiredReactiveMax(reactiveMax);
-		generator.setReactiveMin(reactiveMin);
+		generator.setReactiveGenerationMax(reactiveMax);
+		generator.setReactiveGenerationMin(reactiveMin);
 		generator.setStatus(status);
-		generator.setDesiredRealGenerationMax(realGenerationMax);
+		generator.setRealGenerationMax(realGenerationMax);
 		generator.setRealGenerationMin(realGenerationMin);
 		generator.setCoordinate(point == null ? new PointImpl(0, 0) : point);
 		generator.setAttribute(Generator.MVA_BASE_KEY, mBase);
@@ -160,12 +160,12 @@ public class MatPowerGeneratorFactory extends GeneratorFactory {
     generator.setAttribute(Generator.HAS_PHASE_A_KEY, true);
     generator.setAttribute(Generator.HAS_PHASE_B_KEY, false);
     generator.setAttribute(Generator.HAS_PHASE_C_KEY, false);
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_A_KEY, realGenerationMax);
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_B_KEY, realGenerationMax);
-    generator.setAttribute(Generator.DESIRED_REAL_GENERATION_C_KEY, realGenerationMax);
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_A_KEY, reactiveMax);
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_B_KEY, reactiveMax);
-    generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_C_KEY, reactiveMax);
+    generator.setAttribute(Generator.REAL_GENERATION_A_KEY, realGenerationMax);
+    generator.setAttribute(Generator.REAL_GENERATION_B_KEY, realGenerationMax);
+    generator.setAttribute(Generator.REAL_GENERATION_C_KEY, realGenerationMax);
+    generator.setAttribute(Generator.REACTIVE_GENERATION_A_KEY, reactiveMax);
+    generator.setAttribute(Generator.REACTIVE_GENERATION_B_KEY, reactiveMax);
+    generator.setAttribute(Generator.REACTIVE_GENERATION_C_KEY, reactiveMax);
 
     bus.setVoltagePU(desiredVoltage); // this should be the voltage set point based on the generator data
     

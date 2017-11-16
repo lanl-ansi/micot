@@ -367,33 +367,33 @@ public class JsonResultExporter {
        generatorBuilder = generatorBuilder.add(GENERATOR_ID_TAG, generator.getAttribute(tag).toString());
 
        double realA = 0.0;
-       if (generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY) != null && generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY) instanceof ScenarioAttribute && generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
-         realA = generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_A_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
+       if (generator.getAttribute(Generator.REAL_GENERATION_A_KEY) != null && generator.getAttribute(Generator.REAL_GENERATION_A_KEY) instanceof ScenarioAttribute && generator.getAttribute(Generator.REAL_GENERATION_A_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
+         realA = generator.getAttribute(Generator.REAL_GENERATION_A_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
 
        double realB = 0.0;
-       if (generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY) != null && generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY) instanceof ScenarioAttribute && generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
-         realB = generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_B_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
+       if (generator.getAttribute(Generator.REAL_GENERATION_B_KEY) != null && generator.getAttribute(Generator.REAL_GENERATION_B_KEY) instanceof ScenarioAttribute && generator.getAttribute(Generator.REAL_GENERATION_B_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
+         realB = generator.getAttribute(Generator.REAL_GENERATION_B_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
 
        double realC = 0.0;
-       if (generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY) != null && generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY) instanceof ScenarioAttribute && generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
-         realC = generator.getAttribute(Generator.ACTUAL_REAL_GENERATION_C_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
+       if (generator.getAttribute(Generator.REAL_GENERATION_C_KEY) != null && generator.getAttribute(Generator.REAL_GENERATION_C_KEY) instanceof ScenarioAttribute && generator.getAttribute(Generator.REAL_GENERATION_C_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
+         realC = generator.getAttribute(Generator.REAL_GENERATION_C_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
 
        double reactiveA = 0.0;
-       if (generator.getAttribute(Generator.ACTUAL_REACTIVE_GENERATION_A_KEY) != null && generator.getAttribute(Generator.ACTUAL_REACTIVE_GENERATION_A_KEY) instanceof ScenarioAttribute && generator.getAttribute(Generator.ACTUAL_REACTIVE_GENERATION_A_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
-         reactiveA = generator.getAttribute(Generator.ACTUAL_REACTIVE_GENERATION_A_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
+       if (generator.getAttribute(Generator.REACTIVE_GENERATION_A_KEY) != null && generator.getAttribute(Generator.REACTIVE_GENERATION_A_KEY) instanceof ScenarioAttribute && generator.getAttribute(Generator.REACTIVE_GENERATION_A_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
+         reactiveA = generator.getAttribute(Generator.REACTIVE_GENERATION_A_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
 
        double reactiveB = 0.0;
-       if (generator.getAttribute(Generator.ACTUAL_REACTIVE_GENERATION_B_KEY) != null && generator.getAttribute(Generator.ACTUAL_REACTIVE_GENERATION_B_KEY) instanceof ScenarioAttribute && generator.getAttribute(Generator.ACTUAL_REACTIVE_GENERATION_B_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
-         reactiveB = generator.getAttribute(Generator.ACTUAL_REACTIVE_GENERATION_B_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
+       if (generator.getAttribute(Generator.REACTIVE_GENERATION_B_KEY) != null && generator.getAttribute(Generator.REACTIVE_GENERATION_B_KEY) instanceof ScenarioAttribute && generator.getAttribute(Generator.REACTIVE_GENERATION_B_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
+         reactiveB = generator.getAttribute(Generator.REACTIVE_GENERATION_B_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
 
        double reactiveC = 0.0;
-       if (generator.getAttribute(Generator.ACTUAL_REACTIVE_GENERATION_C_KEY) != null && generator.getAttribute(Generator.ACTUAL_REACTIVE_GENERATION_C_KEY) instanceof ScenarioAttribute && generator.getAttribute(Generator.ACTUAL_REACTIVE_GENERATION_C_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
-         reactiveC = generator.getAttribute(Generator.ACTUAL_REACTIVE_GENERATION_C_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
+       if (generator.getAttribute(Generator.REACTIVE_GENERATION_C_KEY) != null && generator.getAttribute(Generator.REACTIVE_GENERATION_C_KEY) instanceof ScenarioAttribute && generator.getAttribute(Generator.REACTIVE_GENERATION_C_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
+         reactiveC = generator.getAttribute(Generator.REACTIVE_GENERATION_C_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
 
        JSONArrayBuilder realBuilder = JSON.getDefaultJSON().createArrayBuilder();

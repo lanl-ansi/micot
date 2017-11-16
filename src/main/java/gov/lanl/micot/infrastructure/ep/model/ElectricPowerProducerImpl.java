@@ -58,33 +58,33 @@ public abstract class ElectricPowerProducerImpl extends ProducerImpl implements 
   //}
 
   @Override
-  public double getDesiredReactiveMax() {
-    return getAttribute(DESIRED_REACTIVE_MAX_KEY, Double.class);
+  public double getReactiveGenerationMax() {
+    return getAttribute(REACTIVE_MAX_KEY, Double.class);
   }
 
   @Override
-  public void setDesiredReactiveMax(double reactiveMaxRatio) {
-    setAttribute(DESIRED_REACTIVE_MAX_KEY, reactiveMaxRatio);
+  public void setReactiveGenerationMax(double reactiveMaxRatio) {
+    setAttribute(REACTIVE_MAX_KEY, reactiveMaxRatio);
   }
 
   @Override
-  public double getReactiveMin() {
-    return getAttribute(REACTIVE_MIN_KEY, Double.class);
+  public double getReactiveGenerationMin() {
+    return getAttribute(REACTIVE_GENERATION_MIN_KEY, Double.class);
   }
 
   @Override
-  public void setReactiveMin(double reactiveMinRatio) {
-    setAttribute(REACTIVE_MIN_KEY, reactiveMinRatio);
+  public void setReactiveGenerationMin(double reactiveMinRatio) {
+    setAttribute(REACTIVE_GENERATION_MIN_KEY, reactiveMinRatio);
   }
 
   @Override
-  public double getDesiredRealGenerationMax() {
-    return getAttribute(DESIRED_REAL_GENERATION_MAX_KEY, Double.class);
+  public double getRealGenerationMax() {
+    return getAttribute(REAL_GENERATION_MAX_KEY, Double.class);
   }
 
   @Override
-  public void setDesiredRealGenerationMax(double realGenerationMax) {
-    setAttribute(DESIRED_REAL_GENERATION_MAX_KEY, realGenerationMax);
+  public void setRealGenerationMax(double realGenerationMax) {
+    setAttribute(REAL_GENERATION_MAX_KEY, realGenerationMax);
   }
 
   @Override
@@ -110,11 +110,11 @@ public abstract class ElectricPowerProducerImpl extends ProducerImpl implements 
 
   @Override
   public Number getMinimumProduction() {
-  	double value = Math.sqrt(getRealGenerationMin() * getRealGenerationMin() + getReactiveMin() * getReactiveMin()); 
-  	if (getRealGenerationMin() < 0 && getRealGenerationMin() < getReactiveMin()) {
+  	double value = Math.sqrt(getRealGenerationMin() * getRealGenerationMin() + getReactiveGenerationMin() * getReactiveGenerationMin()); 
+  	if (getRealGenerationMin() < 0 && getRealGenerationMin() < getReactiveGenerationMin()) {
     	value = -value;
     }
-    else if (getReactiveMin() < 0 && getRealGenerationMin() > getReactiveMin()) {
+    else if (getReactiveGenerationMin() < 0 && getRealGenerationMin() > getReactiveGenerationMin()) {
     	value = -value;
     }  	
     return value; 
@@ -123,16 +123,16 @@ public abstract class ElectricPowerProducerImpl extends ProducerImpl implements 
   @Override
   public void setMinimumProduction(Number generation) {
     setRealGenerationMin(generation.doubleValue());
-    setReactiveMin(0.0);
+    setReactiveGenerationMin(0.0);
   }
 
   @Override
   public Number getMaximumProduction() {
-    double value =  Math.sqrt(getDesiredRealGenerationMax() * getDesiredRealGenerationMax() + getDesiredReactiveMax() * getDesiredReactiveMax());
-    if (getDesiredRealGenerationMax() < 0 && getDesiredRealGenerationMax() < getDesiredReactiveMax()) {
+    double value =  Math.sqrt(getRealGenerationMax() * getRealGenerationMax() + getReactiveGenerationMax() * getReactiveGenerationMax());
+    if (getRealGenerationMax() < 0 && getRealGenerationMax() < getReactiveGenerationMax()) {
     	value = -value;
     }
-    else if (getDesiredReactiveMax() < 0 && getDesiredRealGenerationMax() > getDesiredReactiveMax()) {
+    else if (getReactiveGenerationMax() < 0 && getRealGenerationMax() > getReactiveGenerationMax()) {
     	value = -value;
     }    
     return value;
@@ -140,8 +140,8 @@ public abstract class ElectricPowerProducerImpl extends ProducerImpl implements 
 
   @Override
   public void setMaximumProduction(Number production) {
-    setDesiredRealGenerationMax(production.doubleValue());
-    setDesiredReactiveMax(0.0);    
+    setRealGenerationMax(production.doubleValue());
+    setReactiveGenerationMax(0.0);    
   }
 
   /**
@@ -180,6 +180,14 @@ public abstract class ElectricPowerProducerImpl extends ProducerImpl implements 
       System.err.println("Warning: DESIRED_REAL_GENERATION is a deprecated attribute.  Using REAL_GENERATION instead");
       key = REAL_GENERATION_KEY;
     }
+    if (key.equals("REACTIVE_MAX")) {
+      System.err.println("Warning: REACTIVE_MAX is a deprecated attribute.  Using REACTIVE_GENERATION_MAX instead");
+      key = REACTIVE_MAX_KEY;
+    }
+    if (key.equals("REACTIVE_MIN")) {
+      System.err.println("Warning: REACTIVE_MIN is a deprecated attribute.  Using REACTIVE_GENERATION_MIN instead");
+      key = REACTIVE_GENERATION_MIN_KEY;
+    }
     
     super.setAttribute(key,object);
   }
@@ -203,7 +211,15 @@ public abstract class ElectricPowerProducerImpl extends ProducerImpl implements 
       System.err.println("Warning: DESIRED_REAL_GENERATION is a deprecated attribute.  Using REAL_GENERATION instead");
       key = REAL_GENERATION_KEY;
     }
-    
+    if (key.equals("REACTIVE_MAX")) {
+      System.err.println("Warning: REACTIVE_MAX is a deprecated attribute.  Using REACTIVE_GENERATION_MAX instead");
+      key = REACTIVE_MAX_KEY;
+    }
+    if (key.equals("REACTIVE_MIN")) {
+      System.err.println("Warning: REACTIVE_MIN is a deprecated attribute.  Using REACTIVE_GENERATION_MIN instead");
+      key = REACTIVE_GENERATION_MIN_KEY;
+    }
+        
     return super.getAttribute(key);
   }
   

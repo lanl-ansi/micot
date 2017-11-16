@@ -74,7 +74,7 @@ public class ScenarioRealGenerationConstraint extends ScenarioConstraintFactory<
             LinearConstraint constraint = new LinearConstraintLessEq(getConstraintLEName(generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_A, scenario));
             constraint.addVariable(generatorVariableFactory.getVariable(problem, generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_A, scenario));
             constraint.setRightHandSide(microgridVariableFactory.getVariable(problem, generator, ScenarioMicrogridCapacityVariableFactory.PHASE_A, scenario), 1.0);
-            constraint.setRightHandSide(generator.getDesiredRealGenerationMax() / mvaBase);
+            constraint.setRightHandSide(generator.getRealGenerationMax() / mvaBase);
             problem.addLinearConstraint(constraint);
 
             constraint = new LinearConstraintGreaterEq(getConstraintGEName(generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_A, scenario));
@@ -87,7 +87,7 @@ public class ScenarioRealGenerationConstraint extends ScenarioConstraintFactory<
             LinearConstraint constraint = new LinearConstraintLessEq(getConstraintLEName(generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_B, scenario));
             constraint.addVariable(generatorVariableFactory.getVariable(problem, generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_B, scenario));
             constraint.setRightHandSide(microgridVariableFactory.getVariable(problem, generator, ScenarioMicrogridCapacityVariableFactory.PHASE_B, scenario), 1.0);
-            constraint.setRightHandSide(generator.getDesiredRealGenerationMax() / mvaBase);
+            constraint.setRightHandSide(generator.getRealGenerationMax() / mvaBase);
             problem.addLinearConstraint(constraint);
 
             constraint = new LinearConstraintGreaterEq(getConstraintGEName(generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_B, scenario));
@@ -100,7 +100,7 @@ public class ScenarioRealGenerationConstraint extends ScenarioConstraintFactory<
             LinearConstraint constraint = new LinearConstraintLessEq(getConstraintLEName(generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_C, scenario));
             constraint.addVariable(generatorVariableFactory.getVariable(problem, generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_C, scenario));
             constraint.setRightHandSide(microgridVariableFactory.getVariable(problem, generator, ScenarioMicrogridCapacityVariableFactory.PHASE_C, scenario), 1.0);
-            constraint.setRightHandSide(generator.getDesiredRealGenerationMax() / mvaBase);
+            constraint.setRightHandSide(generator.getRealGenerationMax() / mvaBase);
             problem.addLinearConstraint(constraint);
 
             constraint = new LinearConstraintGreaterEq(getConstraintGEName(generator, ScenarioGeneratorRealPhaseVariableFactory.PHASE_C, scenario));
