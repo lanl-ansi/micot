@@ -25,15 +25,6 @@ public class CompressorImpl extends FlowConnectionImpl implements Compressor {
     setAttribute(Compressor.ASSET_ID_KEY, assetId);
   }
 
-  /**
-   * Constructor
-   * @param compressor
-   */
-//  public CompressorImpl(Compressor compressor) {
-  //  super(compressor);
-   // listeners = new HashSet<CompressorChangeListener>();    
- // }
-  
   @Override
   public void addCompressorChangeListener(CompressorChangeListener listener) {
     listeners.add(listener);
@@ -55,6 +46,15 @@ public class CompressorImpl extends FlowConnectionImpl implements Compressor {
   
   @Override
   public void setAttribute(Object key, Object object) {
+    if (key.equals("DESIRED_CONSUMPTION")) {
+      System.err.println("Warning: DESIRED_CONSUMPTION is a deprecated attribute.  Using CONSUMPTION instead");
+      key = CONSUMPTION_KEY;
+    }
+    if (key.equals("ACTUAL_CONSUMPTION")) {
+      System.err.println("Warning: ACTUAL_CONSUMPTION is a deprecated attribute.  Using CONSUMPTION instead");
+      key = CONSUMPTION_KEY;
+    }
+    
     super.setAttribute(key,object);
     fireCompressorDataChangeEvent(key);
   }
@@ -161,7 +161,6 @@ public class CompressorImpl extends FlowConnectionImpl implements Compressor {
 
   @Override
   public CompressorImpl clone() {
-//    CompressorImpl newCompressor = new CompressorImpl((Compressor)getBaseData());
     CompressorImpl newCompressor = new CompressorImpl(getAttribute(ASSET_ID_KEY,Long.class));
     try {
       deepCopy(newCompressor);
@@ -172,5 +171,18 @@ public class CompressorImpl extends FlowConnectionImpl implements Compressor {
     return newCompressor;
   }
   
+  @Override
+  public Object getAttribute(Object key) {
+    if (key.equals("DESIRED_CONSUMPTION")) {
+      System.err.println("Warning: DESIRED_CONSUMPTION is a deprecated attribute.  Using CONSUMPTION instead");
+      key = CONSUMPTION_KEY;
+    }
+    if (key.equals("ACTUAL_CONSUMPTION")) {
+      System.err.println("Warning: ACTUAL_CONSUMPTION is a deprecated attribute.  Using CONSUMPTION instead");
+      key = CONSUMPTION_KEY;
+    }    
+    return super.getAttribute(key);
+  }
 
+  
 }
