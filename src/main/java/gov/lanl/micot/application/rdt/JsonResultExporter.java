@@ -90,9 +90,9 @@ public class JsonResultExporter {
     
     double totalLoad       = 0;
     for (Load load : model.getLoads()) {
-      Number loadA = load.getAttribute(Load.DESIRED_REAL_LOAD_A_KEY, Number.class);
-      Number loadB =  load.getAttribute(Load.DESIRED_REAL_LOAD_B_KEY, Number.class);
-      Number loadC = load.getAttribute(Load.DESIRED_REAL_LOAD_C_KEY, Number.class);
+      Number loadA = load.getAttribute(Load.REAL_LOAD_A_MAX_KEY, Number.class);
+      Number loadB =  load.getAttribute(Load.REAL_LOAD_B_MAX_KEY, Number.class);
+      Number loadC = load.getAttribute(Load.REAL_LOAD_C_MAX_KEY, Number.class);
 
       if (loadA != null) {
         totalLoad += loadA.doubleValue();
@@ -120,9 +120,9 @@ public class JsonResultExporter {
       
       for (Load load : model.getLoads()) {
         Object attribute = load.getAttribute(AlgorithmConstants.IS_CRITICAL_LOAD_KEY);
-        ScenarioAttribute scenarioAttributeA = load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY, ScenarioAttribute.class);
-        ScenarioAttribute scenarioAttributeB = load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY, ScenarioAttribute.class);
-        ScenarioAttribute scenarioAttributeC = load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY, ScenarioAttribute.class);
+        ScenarioAttribute scenarioAttributeA = load.getAttribute(Load.REAL_LOAD_A_KEY, ScenarioAttribute.class);
+        ScenarioAttribute scenarioAttributeB = load.getAttribute(Load.REAL_LOAD_B_KEY, ScenarioAttribute.class);
+        ScenarioAttribute scenarioAttributeC = load.getAttribute(Load.REAL_LOAD_C_KEY, ScenarioAttribute.class);
         
         
         if (attribute != null && (Boolean)attribute) {
@@ -431,33 +431,33 @@ public class JsonResultExporter {
        loadBuilder = loadBuilder.add(LOAD_ID_TAG, load.getAttribute(tag).toString());
 
        double realA = 0.0;
-       if (load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY) != null && load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
-         realA = load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
+       if (load.getAttribute(Load.REAL_LOAD_A_KEY) != null && load.getAttribute(Load.REAL_LOAD_A_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.REAL_LOAD_A_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
+         realA = load.getAttribute(Load.REAL_LOAD_A_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
 
        double realB = 0.0;
-       if (load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY) != null && load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
-         realB = load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
+       if (load.getAttribute(Load.REAL_LOAD_B_KEY) != null && load.getAttribute(Load.REAL_LOAD_B_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.REAL_LOAD_B_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
+         realB = load.getAttribute(Load.REAL_LOAD_B_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
        
        double realC = 0.0;
-       if (load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY) != null && load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
-         realC = load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
+       if (load.getAttribute(Load.REAL_LOAD_C_KEY) != null && load.getAttribute(Load.REAL_LOAD_C_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.REAL_LOAD_C_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
+         realC = load.getAttribute(Load.REAL_LOAD_C_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
 
        double reactiveA = 0.0;
-       if (load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY) != null && load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
-         reactiveA = load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
+       if (load.getAttribute(Load.REACTIVE_LOAD_A_KEY) != null && load.getAttribute(Load.REACTIVE_LOAD_A_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.REACTIVE_LOAD_A_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
+         reactiveA = load.getAttribute(Load.REACTIVE_LOAD_A_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
 
        double reactiveB = 0.0;
-       if (load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_B_KEY) != null && load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_B_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_B_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
-         reactiveB = load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_B_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
+       if (load.getAttribute(Load.REACTIVE_LOAD_B_KEY) != null && load.getAttribute(Load.REACTIVE_LOAD_B_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.REACTIVE_LOAD_B_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
+         reactiveB = load.getAttribute(Load.REACTIVE_LOAD_B_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
        
        double reactiveC = 0.0;
-       if (load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY) != null && load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
-         reactiveC = load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
+       if (load.getAttribute(Load.REACTIVE_LOAD_C_KEY) != null && load.getAttribute(Load.REACTIVE_LOAD_C_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.REACTIVE_LOAD_C_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
+         reactiveC = load.getAttribute(Load.REACTIVE_LOAD_C_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
        
        JSONArrayBuilder realBuilder = JSON.getDefaultJSON().createArrayBuilder();

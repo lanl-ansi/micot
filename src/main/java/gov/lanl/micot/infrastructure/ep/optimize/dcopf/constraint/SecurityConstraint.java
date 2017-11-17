@@ -106,13 +106,6 @@ public class SecurityConstraint implements ConstraintFactory {
       if (contingency.getStatus() == false) {
         continue;
       }
-
-      ElectricPowerNode node1 = model.getFirstNode(contingency);
-      ElectricPowerNode node2 = model.getSecondNode(contingency);
-
-//      if (!nodes.contains(node1) || !nodes.contains(node2)) {
-  //      continue;
-   //   }
       
       // link is the component that will "fail"
 

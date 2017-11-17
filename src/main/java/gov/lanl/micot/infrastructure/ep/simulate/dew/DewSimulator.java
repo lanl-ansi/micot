@@ -110,19 +110,19 @@ public class DewSimulator extends ElectricPowerSimulatorImpl {
       for (Load load : model.getLoads()) {
         DewLegacyId legacyid = load.getAttribute(DewVariables.DEW_LEGACY_ID_KEY, DewLegacyId.class);
         String name = load.getAttribute(Load.LOAD_NAME_KEY, String.class);      
-        double mwA = Double.parseDouble(dew.getComponentData(Load.ACTUAL_REAL_LOAD_A_KEY, legacyid, name).toString());
-        double mwB = Double.parseDouble(dew.getComponentData(Load.ACTUAL_REAL_LOAD_B_KEY, legacyid, name).toString());
-        double mwC = Double.parseDouble(dew.getComponentData(Load.ACTUAL_REAL_LOAD_C_KEY, legacyid, name).toString());
-        double mvarA = Double.parseDouble(dew.getComponentData(Load.ACTUAL_REACTIVE_LOAD_A_KEY, legacyid, name).toString());
-        double mvarB = Double.parseDouble(dew.getComponentData(Load.ACTUAL_REACTIVE_LOAD_B_KEY, legacyid, name).toString());
-        double mvarC = Double.parseDouble(dew.getComponentData(Load.ACTUAL_REACTIVE_LOAD_C_KEY, legacyid, name).toString());
+        double mwA = Double.parseDouble(dew.getComponentData(Load.REAL_LOAD_A_KEY, legacyid, name).toString());
+        double mwB = Double.parseDouble(dew.getComponentData(Load.REAL_LOAD_B_KEY, legacyid, name).toString());
+        double mwC = Double.parseDouble(dew.getComponentData(Load.REAL_LOAD_C_KEY, legacyid, name).toString());
+        double mvarA = Double.parseDouble(dew.getComponentData(Load.REACTIVE_LOAD_A_KEY, legacyid, name).toString());
+        double mvarB = Double.parseDouble(dew.getComponentData(Load.REACTIVE_LOAD_B_KEY, legacyid, name).toString());
+        double mvarC = Double.parseDouble(dew.getComponentData(Load.REACTIVE_LOAD_C_KEY, legacyid, name).toString());
       
-        load.setAttribute(Load.ACTUAL_REAL_LOAD_A_KEY, mwA);
-        load.setAttribute(Load.ACTUAL_REAL_LOAD_B_KEY, mwB);
-        load.setAttribute(Load.ACTUAL_REAL_LOAD_C_KEY, mwC);
-        load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY, mvarA);
-        load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_B_KEY, mvarB);
-        load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY, mvarC);
+        load.setAttribute(Load.REAL_LOAD_A_KEY, mwA);
+        load.setAttribute(Load.REAL_LOAD_B_KEY, mwB);
+        load.setAttribute(Load.REAL_LOAD_C_KEY, mwC);
+        load.setAttribute(Load.REACTIVE_LOAD_A_KEY, mvarA);
+        load.setAttribute(Load.REACTIVE_LOAD_B_KEY, mvarB);
+        load.setAttribute(Load.REACTIVE_LOAD_C_KEY, mvarC);
         load.setRealLoad(mwA + mwB + mwC);
         load.setReactiveLoad(mvarA + mvarB + mvarC);
         

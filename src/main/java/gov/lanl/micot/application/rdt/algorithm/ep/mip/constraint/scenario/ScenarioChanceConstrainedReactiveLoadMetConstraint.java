@@ -68,21 +68,21 @@ public class ScenarioChanceConstrainedReactiveLoadMetConstraint extends Scenario
           Variable variable = factory.getVariable(problem, load, ScenarioReactiveLoadPhaseVariableFactory.PHASE_A, scenario);
           if (variable != null) {
             constraint.addVariable(variable, 1.0);
-            double demand = load.getAttribute(Load.DESIRED_REACTIVE_LOAD_A_KEY, Number.class).doubleValue();            
+            double demand = load.getAttribute(Load.REACTIVE_LOAD_A_MAX_KEY, Number.class).doubleValue();            
             totalLoad += demand;
           }
 
           variable = factory.getVariable(problem, load, ScenarioReactiveLoadPhaseVariableFactory.PHASE_B, scenario);
           if (variable != null) {
             constraint.addVariable(variable, 1.0);
-            double demand = load.getAttribute(Load.DESIRED_REACTIVE_LOAD_B_KEY, Number.class).doubleValue();
+            double demand = load.getAttribute(Load.REACTIVE_LOAD_B_MAX_KEY, Number.class).doubleValue();
             totalLoad += demand;
           }
 
           variable = factory.getVariable(problem, load, ScenarioReactiveLoadPhaseVariableFactory.PHASE_C, scenario);
           if (variable != null) {
             constraint.addVariable(variable, 1.0);
-            double demand = load.getAttribute(Load.DESIRED_REACTIVE_LOAD_C_KEY, Number.class).doubleValue();
+            double demand = load.getAttribute(Load.REACTIVE_LOAD_C_MAX_KEY, Number.class).doubleValue();
             totalLoad += demand;
           }
         }

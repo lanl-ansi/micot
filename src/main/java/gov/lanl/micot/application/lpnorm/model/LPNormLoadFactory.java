@@ -52,22 +52,28 @@ public class LPNormLoadFactory extends LoadFactory {
     Load load = registerLoad(legacyid, bus);    
 
     load.setAttribute(Load.NUM_PHASE_KEY, phases);
-    load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY, reactive.getDouble(0));
-    load.setAttribute(Load.ACTUAL_REAL_LOAD_A_KEY, real.getDouble(0));
-    load.setAttribute(Load.DESIRED_REACTIVE_LOAD_A_KEY, reactive.getDouble(0));
-    load.setAttribute(Load.DESIRED_REAL_LOAD_A_KEY, real.getDouble(0));
+    load.setAttribute(Load.REACTIVE_LOAD_A_KEY, reactive.getDouble(0));
+    load.setAttribute(Load.REAL_LOAD_A_KEY, real.getDouble(0));
+    load.setAttribute(Load.REACTIVE_LOAD_A_MAX_KEY, reactive.getDouble(0));
+    load.setAttribute(Load.REAL_LOAD_A_MAX_KEY, real.getDouble(0));
+    load.setAttribute(Load.REACTIVE_LOAD_A_MIN_KEY, 0.0);
+    load.setAttribute(Load.REAL_LOAD_A_MIN_KEY, 0.0);
     load.setAttribute(Load.HAS_PHASE_A_KEY, hasPhase.getBoolean(0));
     
-    load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_B_KEY, reactive.getDouble(1));
-    load.setAttribute(Load.ACTUAL_REAL_LOAD_B_KEY, real.getDouble(1));
-    load.setAttribute(Load.DESIRED_REACTIVE_LOAD_B_KEY, reactive.getDouble(1));
-    load.setAttribute(Load.DESIRED_REAL_LOAD_B_KEY, real.getDouble(1));
+    load.setAttribute(Load.REACTIVE_LOAD_B_KEY, reactive.getDouble(1));
+    load.setAttribute(Load.REAL_LOAD_B_KEY, real.getDouble(1));
+    load.setAttribute(Load.REACTIVE_LOAD_B_MAX_KEY, reactive.getDouble(1));
+    load.setAttribute(Load.REAL_LOAD_B_MAX_KEY, real.getDouble(1));
+    load.setAttribute(Load.REACTIVE_LOAD_B_MIN_KEY, 0.0);
+    load.setAttribute(Load.REAL_LOAD_B_MIN_KEY, 0.0);
     load.setAttribute(Load.HAS_PHASE_B_KEY, hasPhase.getBoolean(1));
     
-    load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY, reactive.getDouble(2));
-    load.setAttribute(Load.ACTUAL_REAL_LOAD_C_KEY, real.getDouble(2));
-    load.setAttribute(Load.DESIRED_REACTIVE_LOAD_C_KEY, reactive.getDouble(2));
-    load.setAttribute(Load.DESIRED_REAL_LOAD_C_KEY, real.getDouble(2));
+    load.setAttribute(Load.REACTIVE_LOAD_C_KEY, reactive.getDouble(2));
+    load.setAttribute(Load.REAL_LOAD_C_KEY, real.getDouble(2));
+    load.setAttribute(Load.REACTIVE_LOAD_C_MAX_KEY, reactive.getDouble(2));
+    load.setAttribute(Load.REAL_LOAD_C_MAX_KEY, real.getDouble(2));    
+    load.setAttribute(Load.REACTIVE_LOAD_C_MIN_KEY, 0.0);
+    load.setAttribute(Load.REAL_LOAD_C_MIN_KEY, 0.0);
     load.setAttribute(Load.HAS_PHASE_C_KEY, hasPhase.getBoolean(2));
     
     load.setStatus(status);

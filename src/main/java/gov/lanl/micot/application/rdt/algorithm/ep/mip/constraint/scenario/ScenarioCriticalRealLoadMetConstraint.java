@@ -65,19 +65,19 @@ public class ScenarioCriticalRealLoadMetConstraint extends ScenarioConstraintFac
           Variable variable = factory.getVariable(problem, load, ScenarioRealLoadPhaseVariableFactory.PHASE_A, scenario);
           if (variable != null) {
             constraint.addVariable(variable, 1.0);
-            totalLoad += load.getAttribute(Load.DESIRED_REAL_LOAD_A_KEY, Number.class).doubleValue();
+            totalLoad += load.getAttribute(Load.REAL_LOAD_A_MAX_KEY, Number.class).doubleValue();
           }
 
           variable = factory.getVariable(problem, load, ScenarioRealLoadPhaseVariableFactory.PHASE_B, scenario);
           if (variable != null) {
             constraint.addVariable(variable, 1.0);
-            totalLoad += load.getAttribute(Load.DESIRED_REAL_LOAD_B_KEY, Number.class).doubleValue();
+            totalLoad += load.getAttribute(Load.REAL_LOAD_B_MAX_KEY, Number.class).doubleValue();
           }
 
           variable = factory.getVariable(problem, load, ScenarioRealLoadPhaseVariableFactory.PHASE_C, scenario);
           if (variable != null) {
             constraint.addVariable(variable, 1.0);
-            totalLoad += load.getAttribute(Load.DESIRED_REAL_LOAD_C_KEY, Number.class).doubleValue();
+            totalLoad += load.getAttribute(Load.REAL_LOAD_C_MAX_KEY, Number.class).doubleValue();
           }
         }
       }

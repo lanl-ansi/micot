@@ -59,11 +59,11 @@ public class OpenDSSTest2 extends TestCase {
         assertEquals(load.getAttribute(Load.NUM_PHASE_KEY), 1);
         assertEquals(load.getAttribute(Load.HAS_PHASE_A_KEY), false);
         assertEquals(load.getAttribute(Load.HAS_PHASE_C_KEY), true);
-        assertEquals(load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY), 0.0);
-        assertEquals(load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY), 0.0);
+        assertEquals(load.getAttribute(Load.REACTIVE_LOAD_A_KEY), 0.0);
+        assertEquals(load.getAttribute(Load.REAL_LOAD_A_KEY), 0.0);
 
-        assertEquals(load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY), 0.175);
-        assertEquals(load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY), 0.35);
+        assertEquals(load.getAttribute(Load.REACTIVE_LOAD_C_KEY), 0.175);
+        assertEquals(load.getAttribute(Load.REAL_LOAD_C_KEY), 0.35);
       }      
     }
   }

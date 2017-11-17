@@ -52,21 +52,21 @@ public class ScenarioReactiveLoadServeConstraint extends ScenarioConstraintFacto
           if (load.getAttribute(Load.HAS_PHASE_A_KEY, Boolean.class)) {
             LinearConstraintEquals constraint = new LinearConstraintEquals(getConstraintName(load, ScenarioReactiveLoadPhaseVariableFactory.PHASE_A, scenario));
             constraint.addVariable(loadVariableFactory.getVariable(problem, load, ScenarioReactiveLoadPhaseVariableFactory.PHASE_A, scenario));
-            constraint.setRightHandSide(loadServeVariableFactory.getVariable(problem, node, scenario), load.getAttribute(Load.DESIRED_REACTIVE_LOAD_A_KEY, Number.class).doubleValue() / mvaBase);
+            constraint.setRightHandSide(loadServeVariableFactory.getVariable(problem, node, scenario), load.getAttribute(Load.REACTIVE_LOAD_A_MAX_KEY, Number.class).doubleValue() / mvaBase);
             problem.addLinearConstraint(constraint);
           }
 
           if (load.getAttribute(Load.HAS_PHASE_B_KEY, Boolean.class)) {
             LinearConstraintEquals constraint = new LinearConstraintEquals(getConstraintName(load, ScenarioReactiveLoadPhaseVariableFactory.PHASE_B, scenario));
             constraint.addVariable(loadVariableFactory.getVariable(problem, load, ScenarioReactiveLoadPhaseVariableFactory.PHASE_B, scenario));
-            constraint.setRightHandSide(loadServeVariableFactory.getVariable(problem, node, scenario), load.getAttribute(Load.DESIRED_REACTIVE_LOAD_B_KEY, Number.class).doubleValue() / mvaBase);
+            constraint.setRightHandSide(loadServeVariableFactory.getVariable(problem, node, scenario), load.getAttribute(Load.REACTIVE_LOAD_B_MAX_KEY, Number.class).doubleValue() / mvaBase);
             problem.addLinearConstraint(constraint);
           }
 
           if (load.getAttribute(Load.HAS_PHASE_C_KEY, Boolean.class)) {
             LinearConstraintEquals constraint = new LinearConstraintEquals(getConstraintName(load, ScenarioReactiveLoadPhaseVariableFactory.PHASE_C, scenario));
             constraint.addVariable(loadVariableFactory.getVariable(problem, load, ScenarioReactiveLoadPhaseVariableFactory.PHASE_C, scenario));
-            constraint.setRightHandSide(loadServeVariableFactory.getVariable(problem, node, scenario), load.getAttribute(Load.DESIRED_REACTIVE_LOAD_C_KEY, Number.class).doubleValue() / mvaBase);
+            constraint.setRightHandSide(loadServeVariableFactory.getVariable(problem, node, scenario), load.getAttribute(Load.REACTIVE_LOAD_C_MAX_KEY, Number.class).doubleValue() / mvaBase);
             problem.addLinearConstraint(constraint);
           }
         }

@@ -71,8 +71,8 @@ public class MatPowerLoadFactory extends LoadFactory {
   	load.setAttribute(Load.HAS_PHASE_A_KEY, true);
     load.setAttribute(Load.HAS_PHASE_B_KEY, false);
     load.setAttribute(Load.HAS_PHASE_C_KEY, false);
-    load.setAttribute(Load.DESIRED_REAL_LOAD_A_KEY, realLoad);
-    load.setAttribute(Load.DESIRED_REACTIVE_LOAD_A_KEY, reactiveLoad);
+    load.setAttribute(Load.REAL_LOAD_A_MAX_KEY, realLoad);
+    load.setAttribute(Load.REACTIVE_LOAD_A_MAX_KEY, reactiveLoad);
   	
   	return load;
 	}

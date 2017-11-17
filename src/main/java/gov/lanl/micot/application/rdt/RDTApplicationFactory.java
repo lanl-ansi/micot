@@ -75,8 +75,8 @@ public class RDTApplicationFactory implements ApplicationFactory {
         load.setAttribute(Load.HAS_PHASE_B_KEY, false);
         load.setAttribute(Load.HAS_PHASE_C_KEY, false);
         load.setAttribute(Load.NUM_PHASE_KEY, 1);
-        load.setAttribute(Load.DESIRED_REAL_LOAD_A_KEY, load.getRealLoadMax());
-        load.setAttribute(Load.ACTUAL_REAL_LOAD_A_KEY, load.getRealLoad());
+        load.setAttribute(Load.REAL_LOAD_A_MAX_KEY, load.getRealLoadMax());
+        load.setAttribute(Load.REAL_LOAD_A_KEY, load.getRealLoad());
       }
     }
     for (ElectricPowerFlowConnection edge : model.getConnections(ElectricPowerFlowConnection.class)) {

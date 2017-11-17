@@ -196,14 +196,14 @@ public class RDTLPNormExporter {
        phaseBuilder = phaseBuilder.add(load.getAttribute(Load.HAS_PHASE_C_KEY, Boolean.class));
 
        JSONArrayBuilder realBuilder = JSON.getDefaultJSON().createArrayBuilder();
-       realBuilder = realBuilder.add(load.getAttribute(Load.DESIRED_REAL_LOAD_A_KEY, Number.class).doubleValue());
-       realBuilder = realBuilder.add(load.getAttribute(Load.DESIRED_REAL_LOAD_B_KEY, Number.class).doubleValue());
-       realBuilder = realBuilder.add(load.getAttribute(Load.DESIRED_REAL_LOAD_C_KEY, Number.class).doubleValue());
+       realBuilder = realBuilder.add(load.getAttribute(Load.REAL_LOAD_A_MAX_KEY, Number.class).doubleValue());
+       realBuilder = realBuilder.add(load.getAttribute(Load.REAL_LOAD_B_MAX_KEY, Number.class).doubleValue());
+       realBuilder = realBuilder.add(load.getAttribute(Load.REAL_LOAD_C_MAX_KEY, Number.class).doubleValue());
 
        JSONArrayBuilder reactiveBuilder = JSON.getDefaultJSON().createArrayBuilder();
-       reactiveBuilder = reactiveBuilder.add(load.getAttribute(Load.DESIRED_REACTIVE_LOAD_A_KEY, Number.class).doubleValue());
-       reactiveBuilder = reactiveBuilder.add(load.getAttribute(Load.DESIRED_REACTIVE_LOAD_B_KEY, Number.class).doubleValue());
-       reactiveBuilder = reactiveBuilder.add(load.getAttribute(Load.DESIRED_REACTIVE_LOAD_C_KEY, Number.class).doubleValue());
+       reactiveBuilder = reactiveBuilder.add(load.getAttribute(Load.REACTIVE_LOAD_A_MAX_KEY, Number.class).doubleValue());
+       reactiveBuilder = reactiveBuilder.add(load.getAttribute(Load.REACTIVE_LOAD_B_MAX_KEY, Number.class).doubleValue());
+       reactiveBuilder = reactiveBuilder.add(load.getAttribute(Load.REACTIVE_LOAD_C_MAX_KEY, Number.class).doubleValue());
        
        boolean isCritical = load.getAttribute(AlgorithmConstants.IS_CRITICAL_LOAD_KEY) == null ? false : load.getAttribute(AlgorithmConstants.IS_CRITICAL_LOAD_KEY, Boolean.class);
        

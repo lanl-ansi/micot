@@ -223,7 +223,7 @@ public class CSVResultExporter {
     
     // output the load served
     for (Load load : loads) {
-      if (load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY) != null || load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY) != null || load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY) != null) {
+      if (load.getAttribute(Load.REAL_LOAD_A_KEY) != null || load.getAttribute(Load.REAL_LOAD_B_KEY) != null || load.getAttribute(Load.REAL_LOAD_C_KEY) != null) {
         demandAPS.print(load + ",");
         demandBPS.print(load + ",");
         demandCPS.print(load + ",");
@@ -236,24 +236,24 @@ public class CSVResultExporter {
     for (ScenarioConfiguration scenarioConfiguration : configuration.getScenarioConfigurations()) {
       Scenario scenario = scenarioConfiguration.getScenario();
       for (Load load : loads) {
-        if (load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY) != null || load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY) != null || load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY) != null) {
-          ScenarioAttribute attribute = load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY, ScenarioAttribute.class);
+        if (load.getAttribute(Load.REAL_LOAD_A_KEY) != null || load.getAttribute(Load.REAL_LOAD_B_KEY) != null || load.getAttribute(Load.REAL_LOAD_C_KEY) != null) {
+          ScenarioAttribute attribute = load.getAttribute(Load.REAL_LOAD_A_KEY, ScenarioAttribute.class);
           double demand = attribute == null ? 0 : attribute.getValue(scenario) == null ? 0 : attribute.getValue(scenario).doubleValue();
           demandAPS.print(demand + ",");
         }
       }
       demandAPS.println();
       for (Load load : loads) {
-        if (load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY) != null || load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY) != null || load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY) != null) {
-          ScenarioAttribute attribute = load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY, ScenarioAttribute.class);
+        if (load.getAttribute(Load.REAL_LOAD_A_KEY) != null || load.getAttribute(Load.REAL_LOAD_B_KEY) != null || load.getAttribute(Load.REAL_LOAD_C_KEY) != null) {
+          ScenarioAttribute attribute = load.getAttribute(Load.REAL_LOAD_B_KEY, ScenarioAttribute.class);
           double demand = attribute == null ? 0 : attribute.getValue(scenario) == null ? 0 : attribute.getValue(scenario).doubleValue();
           demandBPS.print(demand + ",");
         }
       }
       demandBPS.println();
       for (Load load : loads) {
-        if (load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY) != null || load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY) != null || load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY) != null) {
-          ScenarioAttribute attribute = load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY, ScenarioAttribute.class);
+        if (load.getAttribute(Load.REAL_LOAD_A_KEY) != null || load.getAttribute(Load.REAL_LOAD_B_KEY) != null || load.getAttribute(Load.REAL_LOAD_C_KEY) != null) {
+          ScenarioAttribute attribute = load.getAttribute(Load.REAL_LOAD_C_KEY, ScenarioAttribute.class);
           double demand = attribute == null ? 0 : attribute.getValue(scenario) == null ? 0 : attribute.getValue(scenario).doubleValue();
           demandCPS.print(demand + ",");
         }

@@ -173,7 +173,7 @@ public class RobustEPJunitUtility {
     // output the load served
     System.out.println("Load Served");
     for (Load load : model.getLoads()) {
-      if (load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY) != null || load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY) != null || load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY) != null) {
+      if (load.getAttribute(Load.REAL_LOAD_A_KEY) != null || load.getAttribute(Load.REAL_LOAD_B_KEY) != null || load.getAttribute(Load.REAL_LOAD_C_KEY) != null) {
         System.out.print(load + ",");
         System.out.print(load + ",");
         System.out.print(load + ",");
@@ -185,24 +185,24 @@ public class RobustEPJunitUtility {
 
     for (Scenario scenario : scenarios) {
       for (Load load : model.getLoads()) {
-        if (load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY) != null || load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY) != null || load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY) != null) {
-          ScenarioAttribute attribute = load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY, ScenarioAttribute.class);
+        if (load.getAttribute(Load.REAL_LOAD_A_KEY) != null || load.getAttribute(Load.REAL_LOAD_B_KEY) != null || load.getAttribute(Load.REAL_LOAD_C_KEY) != null) {
+          ScenarioAttribute attribute = load.getAttribute(Load.REAL_LOAD_A_KEY, ScenarioAttribute.class);
           double demand = attribute == null ? 0 : attribute.getValue(scenario) == null ? 0 : attribute.getValue(scenario).doubleValue();
           System.out.print(demand + ",");
         }
       }
       System.out.println();
       for (Load load : model.getLoads()) {
-        if (load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY) != null || load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY) != null || load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY) != null) {
-          ScenarioAttribute attribute = load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY, ScenarioAttribute.class);
+        if (load.getAttribute(Load.REAL_LOAD_A_KEY) != null || load.getAttribute(Load.REAL_LOAD_B_KEY) != null || load.getAttribute(Load.REAL_LOAD_C_KEY) != null) {
+          ScenarioAttribute attribute = load.getAttribute(Load.REAL_LOAD_B_KEY, ScenarioAttribute.class);
           double demand = attribute == null ? 0 : attribute.getValue(scenario) == null ? 0 : attribute.getValue(scenario).doubleValue();
           System.out.print(demand + ",");
         }
       }
       System.out.println();
       for (Load load : model.getLoads()) {
-        if (load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY) != null || load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY) != null || load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY) != null) {
-          ScenarioAttribute attribute = load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY, ScenarioAttribute.class);
+        if (load.getAttribute(Load.REAL_LOAD_A_KEY) != null || load.getAttribute(Load.REAL_LOAD_B_KEY) != null || load.getAttribute(Load.REAL_LOAD_C_KEY) != null) {
+          ScenarioAttribute attribute = load.getAttribute(Load.REAL_LOAD_C_KEY, ScenarioAttribute.class);
           double demand = attribute == null ? 0 : attribute.getValue(scenario) == null ? 0 : attribute.getValue(scenario).doubleValue();
           System.out.print(demand + ",");
         }

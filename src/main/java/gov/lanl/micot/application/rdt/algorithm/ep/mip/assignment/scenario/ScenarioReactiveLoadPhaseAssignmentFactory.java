@@ -36,35 +36,35 @@ public class ScenarioReactiveLoadPhaseAssignmentFactory extends ScenarioAssignme
 
     for (Load load : model.getLoads()) {
       
-      if (load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY) == null || !(load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY) instanceof ScenarioAttribute)) {
-        load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY, new ScenarioAttribute());
+      if (load.getAttribute(Load.REACTIVE_LOAD_A_KEY) == null || !(load.getAttribute(Load.REACTIVE_LOAD_A_KEY) instanceof ScenarioAttribute)) {
+        load.setAttribute(Load.REACTIVE_LOAD_A_KEY, new ScenarioAttribute());
       }
 
-      if (load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_B_KEY) == null || !(load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_B_KEY) instanceof ScenarioAttribute)) {
-        load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_B_KEY, new ScenarioAttribute());
+      if (load.getAttribute(Load.REACTIVE_LOAD_B_KEY) == null || !(load.getAttribute(Load.REACTIVE_LOAD_B_KEY) instanceof ScenarioAttribute)) {
+        load.setAttribute(Load.REACTIVE_LOAD_B_KEY, new ScenarioAttribute());
       }
       
-      if (load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY) == null || !(load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY) instanceof ScenarioAttribute)) {
-        load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY, new ScenarioAttribute());
+      if (load.getAttribute(Load.REACTIVE_LOAD_C_KEY) == null || !(load.getAttribute(Load.REACTIVE_LOAD_C_KEY) instanceof ScenarioAttribute)) {
+        load.setAttribute(Load.REACTIVE_LOAD_C_KEY, new ScenarioAttribute());
       }
 
       for (Scenario scenario : getScenarios()) {
         Variable variable = gridVariableFactory.getVariable(problem, load, ScenarioReactiveLoadPhaseVariableFactory.PHASE_A, scenario);
         if (variable != null) {
           double demand = solution.getValueDouble(variable) * mvaBase;
-          load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY, ScenarioAttribute.class).addEntry(scenario, demand);
+          load.getAttribute(Load.REACTIVE_LOAD_A_KEY, ScenarioAttribute.class).addEntry(scenario, demand);
         }
 
         variable = gridVariableFactory.getVariable(problem, load, ScenarioReactiveLoadPhaseVariableFactory.PHASE_B, scenario);
         if (variable != null) {
           double demand = solution.getValueDouble(variable) * mvaBase;
-          load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_B_KEY, ScenarioAttribute.class).addEntry(scenario, demand);
+          load.getAttribute(Load.REACTIVE_LOAD_B_KEY, ScenarioAttribute.class).addEntry(scenario, demand);
         }
 
         variable = gridVariableFactory.getVariable(problem, load, ScenarioReactiveLoadPhaseVariableFactory.PHASE_C, scenario);
         if (variable != null) {
           double demand = solution.getValueDouble(variable) * mvaBase;
-          load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY, ScenarioAttribute.class).addEntry(scenario, demand);
+          load.getAttribute(Load.REACTIVE_LOAD_C_KEY, ScenarioAttribute.class).addEntry(scenario, demand);
         }
 
       }

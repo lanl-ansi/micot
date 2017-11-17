@@ -534,12 +534,12 @@ public class Dew {
     }
     
     if (dewType == 9) {
-      setComponentData(Load.DESIRED_REAL_LOAD_A_KEY, legacyid, name,load.getAttribute(Load.ACTUAL_REAL_LOAD_A_KEY, Double.class) * 1000.0);
-      setComponentData(Load.DESIRED_REAL_LOAD_B_KEY, legacyid, name,load.getAttribute(Load.ACTUAL_REAL_LOAD_B_KEY, Double.class) * 1000.0);
-      setComponentData(Load.DESIRED_REAL_LOAD_C_KEY, legacyid, name,load.getAttribute(Load.ACTUAL_REAL_LOAD_C_KEY, Double.class) * 1000.0);
-      setComponentData(Load.DESIRED_REACTIVE_LOAD_A_KEY, legacyid, name,load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY, Double.class) * 1000.0);
-      setComponentData(Load.DESIRED_REACTIVE_LOAD_B_KEY, legacyid, name,load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_B_KEY, Double.class) * 1000.0);
-      setComponentData(Load.DESIRED_REACTIVE_LOAD_C_KEY, legacyid, name,load.getAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY, Double.class) * 1000.0);
+      setComponentData(Load.REAL_LOAD_A_MAX_KEY, legacyid, name,load.getAttribute(Load.REAL_LOAD_A_KEY, Double.class) * 1000.0);
+      setComponentData(Load.REAL_LOAD_B_MAX_KEY, legacyid, name,load.getAttribute(Load.REAL_LOAD_B_KEY, Double.class) * 1000.0);
+      setComponentData(Load.REAL_LOAD_C_MAX_KEY, legacyid, name,load.getAttribute(Load.REAL_LOAD_C_KEY, Double.class) * 1000.0);
+      setComponentData(Load.REACTIVE_LOAD_A_MAX_KEY, legacyid, name,load.getAttribute(Load.REACTIVE_LOAD_A_KEY, Double.class) * 1000.0);
+      setComponentData(Load.REACTIVE_LOAD_B_MAX_KEY, legacyid, name,load.getAttribute(Load.REACTIVE_LOAD_B_KEY, Double.class) * 1000.0);
+      setComponentData(Load.REACTIVE_LOAD_C_MAX_KEY, legacyid, name,load.getAttribute(Load.REACTIVE_LOAD_C_KEY, Double.class) * 1000.0);
     }
   }
 

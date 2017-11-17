@@ -140,22 +140,28 @@ public class OpenDSSLoadFactory extends LoadFactory {
     }
 
     load.setAttribute(Load.NUM_PHASE_KEY, phases);
-    load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY, reactivePhaseA);
-    load.setAttribute(Load.ACTUAL_REAL_LOAD_A_KEY, realPhaseA);
-    load.setAttribute(Load.DESIRED_REACTIVE_LOAD_A_KEY, reactivePhaseA);
-    load.setAttribute(Load.DESIRED_REAL_LOAD_A_KEY, realPhaseA);
+    load.setAttribute(Load.REACTIVE_LOAD_A_KEY, reactivePhaseA);
+    load.setAttribute(Load.REAL_LOAD_A_KEY, realPhaseA);
+    load.setAttribute(Load.REACTIVE_LOAD_A_MAX_KEY, reactivePhaseA);
+    load.setAttribute(Load.REAL_LOAD_A_MAX_KEY, realPhaseA);
+    load.setAttribute(Load.REACTIVE_LOAD_A_MIN_KEY, 0.0);
+    load.setAttribute(Load.REAL_LOAD_A_MIN_KEY, 0.0);
     load.setAttribute(Load.HAS_PHASE_A_KEY, hasPhaseA);
 
-    load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_B_KEY, reactivePhaseB);
-    load.setAttribute(Load.ACTUAL_REAL_LOAD_B_KEY, realPhaseB);
-    load.setAttribute(Load.DESIRED_REACTIVE_LOAD_B_KEY, reactivePhaseB);
-    load.setAttribute(Load.DESIRED_REAL_LOAD_B_KEY, realPhaseB);
+    load.setAttribute(Load.REACTIVE_LOAD_B_KEY, reactivePhaseB);
+    load.setAttribute(Load.REAL_LOAD_B_KEY, realPhaseB);
+    load.setAttribute(Load.REACTIVE_LOAD_B_MAX_KEY, reactivePhaseB);
+    load.setAttribute(Load.REAL_LOAD_B_MAX_KEY, realPhaseB);
+    load.setAttribute(Load.REACTIVE_LOAD_B_MIN_KEY, 0.0);
+    load.setAttribute(Load.REAL_LOAD_B_MIN_KEY, 0.0);
     load.setAttribute(Load.HAS_PHASE_B_KEY, hasPhaseB);
 
-    load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY, reactivePhaseC);
-    load.setAttribute(Load.ACTUAL_REAL_LOAD_C_KEY, realPhaseC);
-    load.setAttribute(Load.DESIRED_REACTIVE_LOAD_C_KEY, reactivePhaseC);
-    load.setAttribute(Load.DESIRED_REAL_LOAD_C_KEY, realPhaseC);
+    load.setAttribute(Load.REACTIVE_LOAD_C_KEY, reactivePhaseC);
+    load.setAttribute(Load.REAL_LOAD_C_KEY, realPhaseC);
+    load.setAttribute(Load.REACTIVE_LOAD_C_MAX_KEY, reactivePhaseC);
+    load.setAttribute(Load.REAL_LOAD_C_MAX_KEY, realPhaseC);
+    load.setAttribute(Load.REACTIVE_LOAD_C_MIN_KEY, 0.0);
+    load.setAttribute(Load.REAL_LOAD_C_MIN_KEY, 0.0);
     load.setAttribute(Load.HAS_PHASE_C_KEY, hasPhaseC);
 
     load.setStatus(status);
@@ -253,22 +259,28 @@ public class OpenDSSLoadFactory extends LoadFactory {
     }
 
     load.setAttribute(Load.NUM_PHASE_KEY, phases);
-    load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY, reactivePhaseA);
-    load.setAttribute(Load.ACTUAL_REAL_LOAD_A_KEY, realPhaseA);
-    load.setAttribute(Load.DESIRED_REACTIVE_LOAD_A_KEY, reactivePhaseA);
-    load.setAttribute(Load.DESIRED_REAL_LOAD_A_KEY, realPhaseA);
+    load.setAttribute(Load.REACTIVE_LOAD_A_KEY, reactivePhaseA);
+    load.setAttribute(Load.REAL_LOAD_A_KEY, realPhaseA);
+    load.setAttribute(Load.REACTIVE_LOAD_A_MAX_KEY, reactivePhaseA);
+    load.setAttribute(Load.REAL_LOAD_A_MAX_KEY, realPhaseA);
+    load.setAttribute(Load.REACTIVE_LOAD_A_MIN_KEY, 0.0);
+    load.setAttribute(Load.REAL_LOAD_A_MIN_KEY, 0.0);
     load.setAttribute(Load.HAS_PHASE_A_KEY, hasPhaseA);
 
-    load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_B_KEY, reactivePhaseB);
-    load.setAttribute(Load.ACTUAL_REAL_LOAD_B_KEY, realPhaseB);
-    load.setAttribute(Load.DESIRED_REACTIVE_LOAD_B_KEY, reactivePhaseB);
-    load.setAttribute(Load.DESIRED_REAL_LOAD_B_KEY, realPhaseB);
+    load.setAttribute(Load.REACTIVE_LOAD_B_KEY, reactivePhaseB);
+    load.setAttribute(Load.REAL_LOAD_B_KEY, realPhaseB);
+    load.setAttribute(Load.REACTIVE_LOAD_B_MAX_KEY, reactivePhaseB);
+    load.setAttribute(Load.REAL_LOAD_B_MAX_KEY, realPhaseB);
+    load.setAttribute(Load.REACTIVE_LOAD_B_MIN_KEY, 0.0);
+    load.setAttribute(Load.REAL_LOAD_B_MIN_KEY, 0.0);
     load.setAttribute(Load.HAS_PHASE_B_KEY, hasPhaseB);
 
-    load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY, reactivePhaseC);
-    load.setAttribute(Load.ACTUAL_REAL_LOAD_C_KEY, realPhaseC);
-    load.setAttribute(Load.DESIRED_REACTIVE_LOAD_C_KEY, reactivePhaseC);
-    load.setAttribute(Load.DESIRED_REAL_LOAD_C_KEY, realPhaseC);
+    load.setAttribute(Load.REACTIVE_LOAD_C_KEY, reactivePhaseC);
+    load.setAttribute(Load.REAL_LOAD_C_KEY, realPhaseC);
+    load.setAttribute(Load.REACTIVE_LOAD_C_MAX_KEY, reactivePhaseC);
+    load.setAttribute(Load.REAL_LOAD_C_MAX_KEY, realPhaseC);
+    load.setAttribute(Load.REACTIVE_LOAD_C_MIN_KEY, 0.0);
+    load.setAttribute(Load.REAL_LOAD_C_MIN_KEY, 0.0);
     load.setAttribute(Load.HAS_PHASE_C_KEY, hasPhaseC);
 
     load.setStatus(status);

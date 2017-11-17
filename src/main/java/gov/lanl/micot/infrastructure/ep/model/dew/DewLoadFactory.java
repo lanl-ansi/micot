@@ -140,24 +140,29 @@ public class DewLoadFactory extends LoadFactory {
     load.setAttribute(Load.HAS_PHASE_B_KEY, hasPhaseB);
     load.setAttribute(Load.HAS_PHASE_C_KEY, hasPhaseC);
     
-    load.setAttribute(Load.DESIRED_REAL_LOAD_A_KEY, phaseAMW);
-    load.setAttribute(Load.ACTUAL_REAL_LOAD_A_KEY, phaseAMW);
+    load.setAttribute(Load.REAL_LOAD_A_MAX_KEY, phaseAMW);
+    load.setAttribute(Load.REAL_LOAD_A_KEY, phaseAMW);
+    load.setAttribute(Load.REAL_LOAD_A_MIN_KEY, 0.0);
     
-    load.setAttribute(Load.DESIRED_REACTIVE_LOAD_A_KEY, phaseAMVAR);
-    load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY, phaseAMVAR);
+    load.setAttribute(Load.REACTIVE_LOAD_A_MAX_KEY, phaseAMVAR);
+    load.setAttribute(Load.REACTIVE_LOAD_A_KEY, phaseAMVAR);
+    load.setAttribute(Load.REACTIVE_LOAD_A_MIN_KEY, 0.0);
+    
+    load.setAttribute(Load.REAL_LOAD_B_MAX_KEY, phaseBMW);
+    load.setAttribute(Load.REAL_LOAD_B_KEY, phaseBMW);
+    load.setAttribute(Load.REAL_LOAD_B_MIN_KEY, 0.0);
+    
+    load.setAttribute(Load.REACTIVE_LOAD_B_MAX_KEY, phaseBMVAR);
+    load.setAttribute(Load.REACTIVE_LOAD_B_KEY, phaseBMVAR);
+    load.setAttribute(Load.REACTIVE_LOAD_B_MIN_KEY, 0.0);
 
+    load.setAttribute(Load.REAL_LOAD_C_MAX_KEY, phaseCMW);
+    load.setAttribute(Load.REAL_LOAD_C_KEY, phaseCMW);
+    load.setAttribute(Load.REAL_LOAD_C_MIN_KEY, 0.0);
     
-    load.setAttribute(Load.DESIRED_REAL_LOAD_B_KEY, phaseBMW);
-    load.setAttribute(Load.ACTUAL_REAL_LOAD_B_KEY, phaseBMW);
-    
-    load.setAttribute(Load.DESIRED_REACTIVE_LOAD_B_KEY, phaseBMVAR);
-    load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_B_KEY, phaseBMVAR);
-
-    load.setAttribute(Load.DESIRED_REAL_LOAD_C_KEY, phaseCMW);
-    load.setAttribute(Load.ACTUAL_REAL_LOAD_C_KEY, phaseCMW);
-    
-    load.setAttribute(Load.DESIRED_REACTIVE_LOAD_C_KEY, phaseCMVAR);
-    load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY, phaseCMVAR);
+    load.setAttribute(Load.REACTIVE_LOAD_C_MAX_KEY, phaseCMVAR);
+    load.setAttribute(Load.REACTIVE_LOAD_C_KEY, phaseCMVAR);
+    load.setAttribute(Load.REACTIVE_LOAD_C_MIN_KEY, 0.0);
     
     int subId = Integer.parseInt(dew.getComponentData(DewVariables.DEW_SUBSTATION_KEY, legacyid, name).toString());
     load.setAttribute(DewVariables.DEW_SUBSTATION_KEY, subId);
@@ -230,19 +235,25 @@ public class DewLoadFactory extends LoadFactory {
     load.setAttribute(Load.HAS_PHASE_A_KEY, hasPhaseA);
     load.setAttribute(Load.HAS_PHASE_B_KEY, hasPhaseB);
     load.setAttribute(Load.HAS_PHASE_C_KEY, hasPhaseC);
-    load.setAttribute(Load.DESIRED_REAL_LOAD_A_KEY, phaseAMW);
-    load.setAttribute(Load.ACTUAL_REAL_LOAD_A_KEY, phaseAMW);
-    load.setAttribute(Load.DESIRED_REACTIVE_LOAD_A_KEY, phaseAMVAR);
-    load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY, phaseAMVAR);
-    load.setAttribute(Load.DESIRED_REAL_LOAD_B_KEY, phaseBMW);
-    load.setAttribute(Load.ACTUAL_REAL_LOAD_B_KEY, phaseBMW);
-    load.setAttribute(Load.DESIRED_REACTIVE_LOAD_B_KEY, phaseBMVAR);
-    load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_B_KEY, phaseBMVAR);
-    load.setAttribute(Load.DESIRED_REAL_LOAD_C_KEY, phaseCMW);
-    load.setAttribute(Load.ACTUAL_REAL_LOAD_C_KEY, phaseCMW);
-    load.setAttribute(Load.DESIRED_REACTIVE_LOAD_C_KEY, phaseCMVAR);
-    load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY, phaseCMVAR);
-    
+    load.setAttribute(Load.REAL_LOAD_A_MAX_KEY, phaseAMW);
+    load.setAttribute(Load.REAL_LOAD_A_KEY, phaseAMW);
+    load.setAttribute(Load.REAL_LOAD_A_MIN_KEY, 0.0);
+    load.setAttribute(Load.REACTIVE_LOAD_A_MAX_KEY, phaseAMVAR);
+    load.setAttribute(Load.REACTIVE_LOAD_A_KEY, phaseAMVAR);
+    load.setAttribute(Load.REACTIVE_LOAD_A_MIN_KEY, 0.0);    
+    load.setAttribute(Load.REAL_LOAD_B_MAX_KEY, phaseBMW);
+    load.setAttribute(Load.REAL_LOAD_B_KEY, phaseBMW);
+    load.setAttribute(Load.REAL_LOAD_B_MIN_KEY, 0.0);    
+    load.setAttribute(Load.REACTIVE_LOAD_B_MAX_KEY, phaseBMVAR);
+    load.setAttribute(Load.REACTIVE_LOAD_B_KEY, phaseBMVAR);
+    load.setAttribute(Load.REACTIVE_LOAD_B_MIN_KEY, 0.0);    
+    load.setAttribute(Load.REAL_LOAD_C_MAX_KEY, phaseCMW);
+    load.setAttribute(Load.REAL_LOAD_C_KEY, phaseCMW);
+    load.setAttribute(Load.REAL_LOAD_C_MIN_KEY, 0.0);    
+    load.setAttribute(Load.REACTIVE_LOAD_C_MAX_KEY, phaseCMVAR);
+    load.setAttribute(Load.REACTIVE_LOAD_C_KEY, phaseCMVAR);
+    load.setAttribute(Load.REACTIVE_LOAD_C_MIN_KEY, 0.0);
+       
     int subId = Integer.parseInt(dew.getComponentData(DewVariables.DEW_SUBSTATION_KEY, legacyid, name).toString());
     load.setAttribute(DewVariables.DEW_SUBSTATION_KEY, subId);   
     

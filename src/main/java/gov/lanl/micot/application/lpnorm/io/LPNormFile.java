@@ -106,12 +106,12 @@ public class LPNormFile implements ElectricPowerModelFile {
       String busid = load.getString(LPNormIOConstants.LOAD_BUS_ID_TAG);
       Load l = loadFactory.createLoad(load, buses.get(busid));
       model.addLoad(l, buses.get(busid));      
-      defaultLineCapacity += l.getAttribute(Load.DESIRED_REACTIVE_LOAD_A_KEY, Number.class).doubleValue()
-                          + l.getAttribute(Load.DESIRED_REACTIVE_LOAD_B_KEY, Number.class).doubleValue()
-                          + l.getAttribute(Load.DESIRED_REACTIVE_LOAD_C_KEY, Number.class).doubleValue()
-                          + l.getAttribute(Load.DESIRED_REAL_LOAD_A_KEY, Number.class).doubleValue()
-                          + l.getAttribute(Load.DESIRED_REAL_LOAD_B_KEY, Number.class).doubleValue()
-                          + l.getAttribute(Load.DESIRED_REAL_LOAD_C_KEY, Number.class).doubleValue();
+      defaultLineCapacity += l.getAttribute(Load.REACTIVE_LOAD_A_MAX_KEY, Number.class).doubleValue()
+                          + l.getAttribute(Load.REACTIVE_LOAD_B_MAX_KEY, Number.class).doubleValue()
+                          + l.getAttribute(Load.REACTIVE_LOAD_C_MAX_KEY, Number.class).doubleValue()
+                          + l.getAttribute(Load.REAL_LOAD_A_MAX_KEY, Number.class).doubleValue()
+                          + l.getAttribute(Load.REAL_LOAD_B_MAX_KEY, Number.class).doubleValue()
+                          + l.getAttribute(Load.REAL_LOAD_C_MAX_KEY, Number.class).doubleValue();
     }
       
     HashMap<Integer, JSONObject> lineCodes = new HashMap<Integer,JSONObject>();

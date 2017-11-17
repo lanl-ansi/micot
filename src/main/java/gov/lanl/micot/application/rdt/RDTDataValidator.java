@@ -96,13 +96,13 @@ public class RDTDataValidator {
   private boolean checkLoadData(ElectricPowerModel model) {       
     double totalLoad = 0.0;
     for (Load load : model.getLoads()) {
-      totalLoad += load.getAttribute(Load.DESIRED_REACTIVE_LOAD_A_KEY, Double.class);
-      totalLoad += load.getAttribute(Load.DESIRED_REACTIVE_LOAD_B_KEY, Double.class);
-      totalLoad += load.getAttribute(Load.DESIRED_REACTIVE_LOAD_C_KEY, Double.class);
+      totalLoad += load.getAttribute(Load.REACTIVE_LOAD_A_MAX_KEY, Double.class);
+      totalLoad += load.getAttribute(Load.REACTIVE_LOAD_B_MAX_KEY, Double.class);
+      totalLoad += load.getAttribute(Load.REACTIVE_LOAD_C_MAX_KEY, Double.class);
 
-      totalLoad += load.getAttribute(Load.DESIRED_REAL_LOAD_A_KEY, Double.class);
-      totalLoad += load.getAttribute(Load.DESIRED_REAL_LOAD_B_KEY, Double.class);
-      totalLoad += load.getAttribute(Load.DESIRED_REAL_LOAD_C_KEY, Double.class);
+      totalLoad += load.getAttribute(Load.REAL_LOAD_A_MAX_KEY, Double.class);
+      totalLoad += load.getAttribute(Load.REAL_LOAD_B_MAX_KEY, Double.class);
+      totalLoad += load.getAttribute(Load.REAL_LOAD_C_MAX_KEY, Double.class);
     }
     
     if (totalLoad > 0) {
@@ -289,13 +289,13 @@ public class RDTDataValidator {
     double totalReactiveLoadC = 0.0;
 
     for (Load load : model.getLoads()) {
-      totalReactiveLoadA += load.getAttribute(Load.DESIRED_REACTIVE_LOAD_A_KEY, Double.class);
-      totalReactiveLoadB += load.getAttribute(Load.DESIRED_REACTIVE_LOAD_B_KEY, Double.class);
-      totalReactiveLoadC += load.getAttribute(Load.DESIRED_REACTIVE_LOAD_C_KEY, Double.class);
+      totalReactiveLoadA += load.getAttribute(Load.REACTIVE_LOAD_A_MAX_KEY, Double.class);
+      totalReactiveLoadB += load.getAttribute(Load.REACTIVE_LOAD_B_MAX_KEY, Double.class);
+      totalReactiveLoadC += load.getAttribute(Load.REACTIVE_LOAD_C_MAX_KEY, Double.class);
 
-      totalRealLoadA += load.getAttribute(Load.DESIRED_REAL_LOAD_A_KEY, Double.class);
-      totalRealLoadB += load.getAttribute(Load.DESIRED_REAL_LOAD_B_KEY, Double.class);
-      totalRealLoadC += load.getAttribute(Load.DESIRED_REAL_LOAD_C_KEY, Double.class);
+      totalRealLoadA += load.getAttribute(Load.REAL_LOAD_A_MAX_KEY, Double.class);
+      totalRealLoadB += load.getAttribute(Load.REAL_LOAD_B_MAX_KEY, Double.class);
+      totalRealLoadC += load.getAttribute(Load.REAL_LOAD_C_MAX_KEY, Double.class);
     }
     
     double totalRealCapacityA = 0.0;

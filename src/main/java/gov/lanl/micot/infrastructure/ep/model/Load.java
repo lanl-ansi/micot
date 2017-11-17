@@ -10,10 +10,6 @@ import gov.lanl.micot.infrastructure.model.Consumer;
  */
 public interface Load extends Consumer, Component {	
 
-//  public static final String ACTUAL_REACTIVE_LOAD_KEY        = "ACTUAL_REACTIVE_LOAD";
- // public static final String ACTUAL_REAL_LOAD_KEY            = "ACTUAL_REAL_LOAD";
-  //public static final String DESIRED_REACTIVE_LOAD_KEY       = "DESIRED_REACTIVE_LOAD";
-  //public static final String DESIRED_REAL_LOAD_KEY           = "DESIRED_REAL_LOAD";
   public static final String REACTIVE_LOAD_KEY                 = "REACTIVE_LOAD";
   public static final String REAL_LOAD_KEY                     = "REAL_LOAD";
 
@@ -26,24 +22,30 @@ public interface Load extends Consumer, Component {
   public static final String LOAD_NAME_KEY                   = "NAME";
 
   public static final String NUM_PHASE_KEY                   = "NUMBER_OF_PHASES";
-  public static final String ACTUAL_REACTIVE_LOAD_A_KEY      = "ACTUAL_REACTIVE_LOAD_A";
-  public static final String ACTUAL_REAL_LOAD_A_KEY          = "ACTUAL_REAL_LOAD_A";
-  public static final String DESIRED_REACTIVE_LOAD_A_KEY     = "DESIRED_REACTIVE_LOAD_A";
-  public static final String DESIRED_REAL_LOAD_A_KEY         = "DESIRED_REAL_LOAD_A";
+  public static final String REACTIVE_LOAD_A_KEY             = "REACTIVE_LOAD_A";
+  public static final String REAL_LOAD_A_KEY                 = "REAL_LOAD_A";
+  public static final String REACTIVE_LOAD_A_MAX_KEY         = "REACTIVE_LOAD_A_MAX";
+  public static final String REAL_LOAD_A_MAX_KEY             = "REAL_LOAD_A_MAX";
+  public static final String REACTIVE_LOAD_A_MIN_KEY         = "REACTIVE_LOAD_A_MIN";
+  public static final String REAL_LOAD_A_MIN_KEY             = "REAL_LOAD_A_MIN";
   public static final String TARGET_REACTIVE_LOAD_A_KEY      = "TARGET_REACTIVE_LOAD_A";
   public static final String TARGET_REAL_LOAD_A_KEY          = "TARGET_REAL_LOAD_A";
   
-  public static final String ACTUAL_REACTIVE_LOAD_B_KEY      = "ACTUAL_REACTIVE_LOAD_B";
-  public static final String ACTUAL_REAL_LOAD_B_KEY          = "ACTUAL_REAL_LOAD_B";
-  public static final String DESIRED_REACTIVE_LOAD_B_KEY     = "DESIRED_REACTIVE_LOAD_B";
-  public static final String DESIRED_REAL_LOAD_B_KEY         = "DESIRED_REAL_LOAD_B";
+  public static final String REACTIVE_LOAD_B_KEY             = "REACTIVE_LOAD_B";
+  public static final String REAL_LOAD_B_KEY                 = "REAL_LOAD_B";
+  public static final String REACTIVE_LOAD_B_MAX_KEY         = "REACTIVE_LOAD_B_MAX";
+  public static final String REAL_LOAD_B_MAX_KEY             = "REAL_LOAD_B_MAX";
+  public static final String REACTIVE_LOAD_B_MIN_KEY         = "REACTIVE_LOAD_B_MIN";
+  public static final String REAL_LOAD_B_MIN_KEY             = "REAL_LOAD_B_MIN";
   public static final String TARGET_REACTIVE_LOAD_B_KEY      = "TARGET_REACTIVE_LOAD_B";
   public static final String TARGET_REAL_LOAD_B_KEY          = "TARGET_REAL_LOAD_B";
   
-  public static final String ACTUAL_REACTIVE_LOAD_C_KEY      = "ACTUAL_REACTIVE_LOAD_C";
-  public static final String ACTUAL_REAL_LOAD_C_KEY          = "ACTUAL_REAL_LOAD_C";
-  public static final String DESIRED_REACTIVE_LOAD_C_KEY     = "DESIRED_REACTIVE_LOAD_C";
-  public static final String DESIRED_REAL_LOAD_C_KEY         = "DESIRED_REAL_LOAD_C";
+  public static final String REACTIVE_LOAD_C_KEY             = "REACTIVE_LOAD_C";
+  public static final String REAL_LOAD_C_KEY                 = "REAL_LOAD_C";
+  public static final String REACTIVE_LOAD_C_MAX_KEY         = "REACTIVE_LOAD_C_MAX";
+  public static final String REAL_LOAD_C_MAX_KEY             = "REAL_LOAD_C_MAX";
+  public static final String REACTIVE_LOAD_C_MIN_KEY         = "REACTIVE_LOAD_C_MIN";
+  public static final String REAL_LOAD_C_MIN_KEY             = "REAL_LOAD_C_MIN";
   public static final String TARGET_REACTIVE_LOAD_C_KEY      = "TARGET_REACTIVE_LOAD_C";
   public static final String TARGET_REAL_LOAD_C_KEY          = "TARGET_REAL_LOAD_C";
 
