@@ -123,8 +123,8 @@ public class DewSimulator extends ElectricPowerSimulatorImpl {
         load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_A_KEY, mvarA);
         load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_B_KEY, mvarB);
         load.setAttribute(Load.ACTUAL_REACTIVE_LOAD_C_KEY, mvarC);
-        load.setActualRealLoad(mwA + mwB + mwC);
-        load.setActualReactiveLoad(mvarA + mvarB + mvarC);
+        load.setRealLoad(mwA + mwB + mwC);
+        load.setReactiveLoad(mvarA + mvarB + mvarC);
         
       }
        

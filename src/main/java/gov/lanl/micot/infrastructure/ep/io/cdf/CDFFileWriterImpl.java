@@ -293,8 +293,7 @@ public abstract class CDFFileWriterImpl implements CDFFileWriter {
 		buffer.append(temp);
 
 		// write the real load
-		double mwLoad = (load == null) ? 0 : load.getDesiredRealLoad()
-				.doubleValue();
+		double mwLoad = (load == null) ? 0 : load.getRealLoad().doubleValue();
 		sb = new StringBuilder();
 		formatter = new Formatter(sb, Locale.US);
 		formatter.format("%8.1f", mwLoad);
@@ -306,7 +305,7 @@ public abstract class CDFFileWriterImpl implements CDFFileWriter {
 		formatter.close();
 
 		// write the reactive load
-		double mVarLoad = (load == null) ? 0 : load.getDesiredReactiveLoad()
+		double mVarLoad = (load == null) ? 0 : load.getReactiveLoad()
 				.doubleValue();
 		sb = new StringBuilder();
 		formatter = new Formatter(sb, Locale.US);

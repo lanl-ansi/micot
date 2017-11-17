@@ -32,7 +32,7 @@ public class LoadVariableAssignmentFactory implements AssignmentFactory {
     for (ElectricPowerNode node : model.getNodes()) {
       for (Load load : node.getComponents(Load.class)) {
         Variable variable = loadVariableFactory.getVariable(problem,load);
-        load.setActualRealLoad(solution.getValueDouble(variable) * mva);        
+        load.setRealLoad(solution.getValueDouble(variable) * mva);        
         SummationConstraint constraint = loadConstraintFactory.getUpperBoundConstraint(problem, load);
         if (solution.getShadowPrice(constraint) != null) {
           load.setAttribute(OptimizationConstants.SHADOW_PRICE_KEY, solution.getShadowPrice(constraint));

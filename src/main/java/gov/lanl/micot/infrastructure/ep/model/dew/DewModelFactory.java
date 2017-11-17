@@ -392,7 +392,7 @@ public class DewModelFactory implements ModelFactory<ElectricPowerModel> {
           model.addBus(bus1);
           
           Load load = loadFactory.constructLoad(b1, engine, lineData);
-          if (load.getDesiredRealLoad().doubleValue() > 0.0 || load.getDesiredReactiveLoad().doubleValue() > 0.0) {
+          if (load.getRealLoad().doubleValue() > 0.0 || load.getReactiveLoad().doubleValue() > 0.0) {
             model.addLoad(load, bus1);
           }
           
@@ -406,7 +406,7 @@ public class DewModelFactory implements ModelFactory<ElectricPowerModel> {
           model.addBus(bus2);
           
           Load load = loadFactory.constructLoad(id, engine, lineData);
-          if (load.getDesiredRealLoad().doubleValue() > 0.0 || load.getDesiredReactiveLoad().doubleValue() > 0.0) {
+          if (load.getRealLoad().doubleValue() > 0.0 || load.getReactiveLoad().doubleValue() > 0.0) {
             model.addLoad(load, bus2);
           }
           
@@ -465,7 +465,7 @@ public class DewModelFactory implements ModelFactory<ElectricPowerModel> {
           model.addBus(bus1);
           
           Load load = loadFactory.constructLoad(b1, engine, lineData);
-          if (load.getDesiredRealLoad().doubleValue() > 0.0 || load.getDesiredReactiveLoad().doubleValue() > 0.0) {
+          if (load.getRealLoad().doubleValue() > 0.0 || load.getReactiveLoad().doubleValue() > 0.0) {
             model.addLoad(load, bus1);
           }
       }
@@ -477,7 +477,7 @@ public class DewModelFactory implements ModelFactory<ElectricPowerModel> {
           buses.put(id, bus2);
           model.addBus(bus2);
           Load load = loadFactory.constructLoad(b2, engine, lineData);
-          if (load.getDesiredRealLoad().doubleValue() > 0.0 || load.getDesiredReactiveLoad().doubleValue() > 0.0) {
+          if (load.getRealLoad().doubleValue() > 0.0 || load.getReactiveLoad().doubleValue() > 0.0) {
             model.addLoad(load, bus2);
           }
           
@@ -497,7 +497,7 @@ public class DewModelFactory implements ModelFactory<ElectricPowerModel> {
             
             
             Load load = loadFactory.constructLoad(feeder, engine, lineData);
-            if (load.getDesiredRealLoad().doubleValue() > 0.0 || load.getDesiredReactiveLoad().doubleValue() > 0.0) {
+            if (load.getRealLoad().doubleValue() > 0.0 || load.getReactiveLoad().doubleValue() > 0.0) {
               model.addLoad(load, side2);
             }
             
@@ -520,7 +520,7 @@ public class DewModelFactory implements ModelFactory<ElectricPowerModel> {
             
             
             Load load = loadFactory.constructLoad(id, engine, lineData);
-            if (load.getDesiredRealLoad().doubleValue() > 0.0 || load.getDesiredReactiveLoad().doubleValue() > 0.0) {
+            if (load.getRealLoad().doubleValue() > 0.0 || load.getReactiveLoad().doubleValue() > 0.0) {
               model.addLoad(load, side2);
             }
             

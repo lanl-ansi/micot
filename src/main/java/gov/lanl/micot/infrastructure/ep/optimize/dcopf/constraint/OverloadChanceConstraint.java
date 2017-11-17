@@ -107,16 +107,12 @@ public class OverloadChanceConstraint implements ConstraintFactory {
     double totalLoad = 0.0;
     for (ElectricPowerNode node : ns) {
       for (Load load : node.getComponents(Load.class)) {
-        double demand = load.getDesiredRealLoad().doubleValue();
-        if (scenario.hasModification(load, Load.DESIRED_REAL_LOAD_KEY)) {
-          demand = scenario.getModification(load, Load.DESIRED_REAL_LOAD_KEY, Number.class).doubleValue();
+        double demand = load.getRealLoad().doubleValue();
+        if (scenario.hasModification(load, Load.REAL_LOAD_KEY)) {
+          demand = scenario.getModification(load, Load.REAL_LOAD_KEY, Number.class).doubleValue();
         }        
         totalLoad += demand;
-      }
-      
-//      if (node.getLoad() != null) {
-  //      totalLoad += node.getLoad().getDesiredRealLoad().doubleValue();
-   //   }
+      }      
     }
     totalLoad = totalLoad / mva;
         

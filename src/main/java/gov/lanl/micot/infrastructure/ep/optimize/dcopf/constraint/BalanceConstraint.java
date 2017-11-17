@@ -54,7 +54,7 @@ public class BalanceConstraint implements ConstraintFactory {
     for (Load load : node.getComponents(Load.class)) {
       Variable variable = loadShedVariableFactory.getVariable(program,load);
       if (variable != null) {
-        constraint.setRightHandSide(constraint.getRightHandSide() + load.getDesiredRealLoad().doubleValue() / mva);
+        constraint.setRightHandSide(constraint.getRightHandSide() + load.getRealLoadMax() / mva);
       }
     }
     

@@ -1261,7 +1261,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
   private Object[] getLoadValues(Load load) {
     Pair<Integer,Integer> id = getLoadId(load);
     String status = load.getStatus() ? PowerworldIOConstants.LOAD_CLOSED : PowerworldIOConstants.LOAD_OPEN;
-    return new Object[] {id.getLeft(), id.getRight(),load.getActualReactiveLoad(),load.getActualRealLoad(),status};    
+    return new Object[] {id.getLeft(), id.getRight(),load.getReactiveLoad(),load.getRealLoad(),status};    
   }
   
   @Override

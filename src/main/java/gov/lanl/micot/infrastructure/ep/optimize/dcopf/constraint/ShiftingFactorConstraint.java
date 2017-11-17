@@ -365,7 +365,7 @@ public class ShiftingFactorConstraint implements ConstraintFactory {
       Variable loadVariable = loadShedVariableFactory.getVariable(problem, load);
       if (loadVariable != null) {
         constraint.addVariable(loadVariable, loadCoeffs.get(edgeIndicies.get(edge), loadIndicies.get(load)).doubleValue());        
-        constraint.setRightHandSide(constraint.getRightHandSide() + loadCoeffs.get(edgeIndicies.get(edge), loadIndicies.get(load)).doubleValue() * (load.getDesiredRealLoad().doubleValue() / mva));
+        constraint.setRightHandSide(constraint.getRightHandSide() + loadCoeffs.get(edgeIndicies.get(edge), loadIndicies.get(load)).doubleValue() * (load.getRealLoadMax() / mva));
       }
       else {
         loadVariable = loadVariableFactory.getVariable(problem, load); 
@@ -373,7 +373,7 @@ public class ShiftingFactorConstraint implements ConstraintFactory {
           constraint.addVariable(loadVariable, -loadCoeffs.get(edgeIndicies.get(edge), loadIndicies.get(load)).doubleValue());
         }
         else {
-          constraint.setRightHandSide(constraint.getRightHandSide() + loadCoeffs.get(edgeIndicies.get(edge), loadIndicies.get(load)).doubleValue() * (load.getDesiredRealLoad().doubleValue() / mva));
+          constraint.setRightHandSide(constraint.getRightHandSide() + loadCoeffs.get(edgeIndicies.get(edge), loadIndicies.get(load)).doubleValue() * (load.getRealLoadMax() / mva));
         }
       }
     }      

@@ -172,7 +172,7 @@ public class ShiftingFactorScenarioConstraint extends ShiftingFactorConstraint {
       Variable loadVariable = loadShedVariableFactory.getVariable(problem, load);
       if (loadVariable != null) {
         constraint.addVariable(loadVariable, loadCoeffs.get(scenario).get(edgeIndicies.get(scenario).get(edge), loadIndicies.get(scenario).get(load)).doubleValue());        
-        constraint.setRightHandSide(constraint.getRightHandSide() + loadCoeffs.get(scenario).get(edgeIndicies.get(scenario).get(edge), loadIndicies.get(scenario).get(load)).doubleValue() * (load.getDesiredRealLoad().doubleValue() / mva));
+        constraint.setRightHandSide(constraint.getRightHandSide() + loadCoeffs.get(scenario).get(edgeIndicies.get(scenario).get(edge), loadIndicies.get(scenario).get(load)).doubleValue() * (load.getRealLoadMax() / mva));
       }
       else {
         loadVariable = loadVariableFactory.getVariable(problem, load);
@@ -180,7 +180,7 @@ public class ShiftingFactorScenarioConstraint extends ShiftingFactorConstraint {
           constraint.addVariable(loadVariable, -loadCoeffs.get(scenario).get(edgeIndicies.get(scenario).get(edge), loadIndicies.get(scenario).get(load)).doubleValue());
         }
         else {
-          constraint.setRightHandSide(constraint.getRightHandSide() + loadCoeffs.get(scenario).get(edgeIndicies.get(scenario).get(edge), loadIndicies.get(scenario).get(load)).doubleValue() * (load.getDesiredRealLoad().doubleValue() / mva));
+          constraint.setRightHandSide(constraint.getRightHandSide() + loadCoeffs.get(scenario).get(edgeIndicies.get(scenario).get(edge), loadIndicies.get(scenario).get(load)).doubleValue() * (load.getRealLoadMax() / mva));
         }
       }
     }      

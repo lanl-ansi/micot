@@ -159,10 +159,12 @@ public class OpenDSSLoadFactory extends LoadFactory {
     load.setAttribute(Load.HAS_PHASE_C_KEY, hasPhaseC);
 
     load.setStatus(status);
-    load.setDesiredReactiveLoad(reactiveLoad);
-    load.setDesiredRealLoad(realLoad);
-    load.setActualReactiveLoad(load.getStatus() ? actualReactiveLoad : 0.0);
-    load.setActualRealLoad(load.getStatus() ? actualRealLoad : 0.0);
+    load.setReactiveLoadMax(reactiveLoad);
+    load.setRealLoadMax(realLoad);
+    load.setReactiveLoadMin(0.0);
+    load.setRealLoadMin(0.0);
+    load.setReactiveLoad(load.getStatus() ? actualReactiveLoad : 0.0);
+    load.setRealLoad(load.getStatus() ? actualRealLoad : 0.0);
     load.setCoordinate(bus.getCoordinate());
 
     bus.setMinimumVoltagePU(minPU);
@@ -270,10 +272,12 @@ public class OpenDSSLoadFactory extends LoadFactory {
     load.setAttribute(Load.HAS_PHASE_C_KEY, hasPhaseC);
 
     load.setStatus(status);
-    load.setDesiredReactiveLoad(reactiveLoad);
-    load.setDesiredRealLoad(realLoad);
-    load.setActualReactiveLoad(load.getStatus() ? actualReactiveLoad : 0.0);
-    load.setActualRealLoad(load.getStatus() ? actualRealLoad : 0.0);
+    load.setReactiveLoadMax(reactiveLoad);
+    load.setRealLoadMax(realLoad);
+    load.setReactiveLoadMin(0.0);
+    load.setRealLoadMin(0.0);
+    load.setReactiveLoad(load.getStatus() ? actualReactiveLoad : 0.0);
+    load.setRealLoad(load.getStatus() ? actualRealLoad : 0.0);
     load.setCoordinate(bus.getCoordinate());
   }
 

@@ -12,7 +12,7 @@ public interface ElectricPowerProducer extends Producer, Component {
   public static final String REACTIVE_GENERATION_KEY         = "REACTIVE_GENERATION";
   public static final String REAL_GENERATION_KEY             = "REAL_GENERATION";  
   
-  public static final String REACTIVE_MAX_KEY                = "REACTIVE_GENERATION_MAX";
+  public static final String REACTIVE_GENERATION_MAX_KEY     = "REACTIVE_GENERATION_MAX";
   public static final String REAL_GENERATION_MAX_KEY         = "REAL_GENERATION_MAX";
   
   public static final String REAL_GENERATION_MIN_KEY         = "REAL_GENERATION_MIN";

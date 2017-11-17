@@ -63,7 +63,7 @@ public class DewVariables {
     dataSources.put(Generator.REACTIVE_GENERATION_B_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(Generator.REACTIVE_GENERATION_C_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(Generator.REACTIVE_GENERATION_MIN_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
-    dataSources.put(Generator.REACTIVE_MAX_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
+    dataSources.put(Generator.REACTIVE_GENERATION_MAX_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(Bus.VOLTAGE_PU_KEY, DewModelTypeEnum.TEXTFILE_TYPE);
     dataSources.put(Load.DESIRED_REAL_LOAD_A_KEY, DewModelTypeEnum.TEXTFILE_FIRST_TYPE);
     dataSources.put(Load.DESIRED_REAL_LOAD_B_KEY, DewModelTypeEnum.TEXTFILE_FIRST_TYPE);
@@ -164,7 +164,7 @@ public class DewVariables {
     phaseSources.put(Generator.REACTIVE_GENERATION_B_KEY, 1);
     phaseSources.put(Generator.REACTIVE_GENERATION_C_KEY, 2);
     phaseSources.put(Generator.REACTIVE_GENERATION_MIN_KEY, 0);
-    phaseSources.put(Generator.REACTIVE_MAX_KEY, 0);
+    phaseSources.put(Generator.REACTIVE_GENERATION_MAX_KEY, 0);
     phaseSources.put(Bus.VOLTAGE_PU_KEY, 0);
     phaseSources.put(Load.DESIRED_REAL_LOAD_A_KEY, 0);
     phaseSources.put(Load.DESIRED_REAL_LOAD_B_KEY, 1);
@@ -259,7 +259,7 @@ public class DewVariables {
     textFileIndicies.put(Generator.REAL_GENERATION_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPCTR_HEADER, DewVariables.DEW_MW_GEN_IDX));
     textFileIndicies.put(Generator.REACTIVE_GENERATION_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPCTR_HEADER, DewVariables.DEW_MVAR_GEN_IDX));
     textFileIndicies.put(Generator.REACTIVE_GENERATION_MIN_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPCTR_HEADER, DewVariables.DEW_MVAR_MIN_GEN_IDX));
-    textFileIndicies.put(Generator.REACTIVE_MAX_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPCTR_HEADER, DewVariables.DEW_MVAR_MAX_GEN_IDX));
+    textFileIndicies.put(Generator.REACTIVE_GENERATION_MAX_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPCTR_HEADER, DewVariables.DEW_MVAR_MAX_GEN_IDX));
     textFileIndicies.put(Bus.VOLTAGE_PU_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPCTR_HEADER, DewVariables.DEW_VOLTAGE_GEN_IDX));
     textFileIndicies.put(Load.DESIRED_REAL_LOAD_A_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPCHN_HEADER, DewVariables.DEW_LOAD_MW_A_IDX));
     textFileIndicies.put(Load.DESIRED_REAL_LOAD_B_KEY, new Pair<String,Integer>(DewVariables.DEW_CMPCHN_HEADER, DewVariables.DEW_LOAD_MW_B_IDX));

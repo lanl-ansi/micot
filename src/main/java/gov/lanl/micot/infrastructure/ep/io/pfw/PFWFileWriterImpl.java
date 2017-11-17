@@ -934,8 +934,8 @@ public abstract class PFWFileWriterImpl implements PFWFileWriter {
 		// problems if you later look for that load and its not in the model anymore.  This
 		// forces 0 loads to be very very small and thus stay in the model.  A hack, but oh well. 
 		// what can you do?
-		double realLoad = data.getDesiredRealLoad().doubleValue();
-		if (realLoad == 0 && data.getDesiredReactiveLoad().doubleValue() == 0) {
+		double realLoad = data.getRealLoad().doubleValue();
+		if (realLoad == 0 && data.getReactiveLoad().doubleValue() == 0) {
 			realLoad = .001;
 		}
 		
@@ -948,7 +948,7 @@ public abstract class PFWFileWriterImpl implements PFWFileWriter {
 
 		sb = new StringBuilder();
 		formatter = new Formatter(sb, Locale.US);
-		formatter.format(NumberFormat.createSignificantDigitFormat(data.getDesiredReactiveLoad().doubleValue(), 10, 5), data.getDesiredReactiveLoad().doubleValue());
+		formatter.format(NumberFormat.createSignificantDigitFormat(data.getReactiveLoad().doubleValue(), 10, 5), data.getReactiveLoad().doubleValue());
 		buffer.append(NumberFormat.resizeBefore(formatter.toString(), 10));
     formatter.close();
 		

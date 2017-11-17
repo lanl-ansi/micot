@@ -284,11 +284,11 @@ public abstract class MatPowerFileWriterImpl implements MatPowerFileWriter {
 		buffer.append(type + "\t");
 
 		// write the real load
-		double realLoad = load == null ? 0 : load.getDesiredRealLoad().doubleValue();
+		double realLoad = load == null ? 0 : load.getRealLoad().doubleValue();
 		buffer.append(realLoad + "\t\t");
 
 		// write the reactive load
-		double reactiveLoad = load == null ? 0 : load.getDesiredReactiveLoad().doubleValue();
+		double reactiveLoad = load == null ? 0 : load.getReactiveLoad().doubleValue();
 		buffer.append(reactiveLoad + "\t\t");
 
 		// write the real compensation

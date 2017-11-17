@@ -10,10 +10,19 @@ import gov.lanl.micot.infrastructure.model.Consumer;
  */
 public interface Load extends Consumer, Component {	
 
-  public static final String ACTUAL_REACTIVE_LOAD_KEY        = "ACTUAL_REACTIVE_LOAD";
-  public static final String ACTUAL_REAL_LOAD_KEY            = "ACTUAL_REAL_LOAD";
-  public static final String DESIRED_REACTIVE_LOAD_KEY       = "DESIRED_REACTIVE_LOAD";
-  public static final String DESIRED_REAL_LOAD_KEY           = "DESIRED_REAL_LOAD";
+//  public static final String ACTUAL_REACTIVE_LOAD_KEY        = "ACTUAL_REACTIVE_LOAD";
+ // public static final String ACTUAL_REAL_LOAD_KEY            = "ACTUAL_REAL_LOAD";
+  //public static final String DESIRED_REACTIVE_LOAD_KEY       = "DESIRED_REACTIVE_LOAD";
+  //public static final String DESIRED_REAL_LOAD_KEY           = "DESIRED_REAL_LOAD";
+  public static final String REACTIVE_LOAD_KEY                 = "REACTIVE_LOAD";
+  public static final String REAL_LOAD_KEY                     = "REAL_LOAD";
+
+  public static final String REACTIVE_LOAD_MAX_KEY             = "REACTIVE_LOAD_MAX";
+  public static final String REAL_LOAD_MAX_KEY                 = "REAL_LOAD_MAX";
+  
+  public static final String REAL_LOAD_MIN_KEY                 = "REAL_LOAD_MIN";
+  public static final String REACTIVE_LOAD_MIN_KEY             = "REACTIVE_LOAD_MIN";
+  
   public static final String LOAD_NAME_KEY                   = "NAME";
 
   public static final String NUM_PHASE_KEY                   = "NUMBER_OF_PHASES";
@@ -46,25 +55,25 @@ public interface Load extends Consumer, Component {
    * Get the real load
    * @return
    */
-  public Number getDesiredRealLoad();
+  public Number getRealLoad();
   
   /**
    * Set the real load
    * @param load
    */
-  public void setDesiredRealLoad(Number load);
+  public void setRealLoad(Number load);
   
   /**
    * Get the reactive load
    * @return
    */
-  public Number getDesiredReactiveLoad();
+  public Number getReactiveLoad();
   
   /**
    * Set the reactive load
    * @param load
    */
-  public void setDesiredReactiveLoad(Number load);
+  public void setReactiveLoad(Number load);
   
   /**
    * Add a listener for data changes
@@ -77,42 +86,65 @@ public interface Load extends Consumer, Component {
    * @param listener
    */
   public void removeLoadChangeListener(LoadChangeListener listener);
-
-  /**
-   * Get the real load
-   * @return
-   */
-  public Number getActualRealLoad();
-  
-  /**
-   * Set the real load
-   * @param load
-   */
-  public void setActualRealLoad(Number load);
-  
-  /**
-   * Get the reactive load
-   * @return
-   */
-  public Number getActualReactiveLoad();
-  
-  /**
-   * Set the reactive load
-   * @param load
-   */
-  public void setActualReactiveLoad(Number load);
   
   /**
    * Get the norm of the load
    * @return
    */
-  public Number getDesiredLoadNorm();
+  public Number getLoadNorm();
   
   /**
    * Clone a load
    * @return
    */
   public Load clone();
-
+  
+  /**
+   * Get the maximum reactive load
+   * @return
+   */
+  public double getReactiveLoadMax();
+  
+  /**
+   * Get the minimum reactive load
+   * @return
+   */
+  public double getReactiveLoadMin();
+  
+  /**
+   * Get the maximum real load
+   * @return
+   */
+  public double getRealLoadMax();
+  
+  /**
+   * Get the minimum real load
+   * @return
+   */
+  public double getRealLoadMin();
+  
+  /**
+   * Set the maximum reactive load
+   * @return
+   */
+  public void setReactiveLoadMax(double reactive);
+  
+  /**
+   * Set the minimum reactive load
+   * @return
+   */
+  public void setReactiveLoadMin(double reactive);
+  
+  /**
+   * Set the maximum real load
+   * @return
+   */
+  public void setRealLoadMax(double real);
+  
+  /**
+   * Set the minimum real load
+   * @return
+   */
+  public void setRealLoadMin(double real);
 
 }

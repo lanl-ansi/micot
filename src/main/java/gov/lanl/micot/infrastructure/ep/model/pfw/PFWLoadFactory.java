@@ -61,11 +61,13 @@ public class PFWLoadFactory extends LoadFactory {
   	// check to see if the area already exists
     Load load = registerLoad(legacyid);    
   	load.setAttribute(Load.LOAD_NAME_KEY, name);
-    load.setDesiredRealLoad(realLoad);
-    load.setDesiredReactiveLoad(reactiveLoad);
+    load.setRealLoad(realLoad);
+    load.setReactiveLoad(reactiveLoad);
+    load.setRealLoadMax(realLoad);
+    load.setReactiveLoadMax(reactiveLoad);
+    load.setRealLoadMin(0.0);
+    load.setReactiveLoadMin(0.0);
     load.setStatus(true);
-    load.setActualRealLoad(realLoad);
-    load.setActualReactiveLoad(reactiveLoad);
   	load.setCoordinate(point == null ? new PointImpl(0,0) : point);
   	return load;
 	}

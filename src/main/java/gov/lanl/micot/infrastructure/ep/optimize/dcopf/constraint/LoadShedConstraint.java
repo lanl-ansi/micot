@@ -56,12 +56,12 @@ public class LoadShedConstraint implements ConstraintFactory {
       for (Load load : loads) {
         if (load.getStatus()) {
           LinearConstraint constraint = new LinearConstraintGreaterEq(getLoadLowerBoundConstraintName(load));
-          constraint.setRightHandSide(Math.min(0.0,load.getDesiredRealLoad().doubleValue() / mva));
+          constraint.setRightHandSide(Math.min(0.0,load.getRealLoad().doubleValue() / mva));
           constraint.addVariable(loadVariableFactory.getVariable(problem,load), 1.0);
           problem.addLinearConstraint(constraint);
         
           constraint = new LinearConstraintLessEq(getLoadUpperBoundConstraintName(load));
-          constraint.setRightHandSide(load.getDesiredRealLoad().doubleValue() / mva);
+          constraint.setRightHandSide(load.getRealLoadMax() / mva);
           constraint.addVariable(loadVariableFactory.getVariable(problem,load), 1.0);
           problem.addLinearConstraint(constraint);
         }

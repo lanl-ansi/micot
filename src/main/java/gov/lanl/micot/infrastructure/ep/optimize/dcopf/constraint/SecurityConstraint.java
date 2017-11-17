@@ -18,8 +18,6 @@ import gov.lanl.micot.util.math.solver.exception.VariableExistsException;
 import gov.lanl.micot.util.math.solver.mathprogram.MathematicalProgram;
 import gov.lanl.micot.util.math.solver.mathprogram.MathematicalProgramObjective;
 
-import java.util.Collection;
-
 /**
  * This constraint adds n-1 security constraints to the opf
  * @author Russell Bent
@@ -72,7 +70,7 @@ public class SecurityConstraint implements ConstraintFactory {
    */
   protected void addLoadToConstraint(MathematicalProgram program, LinearConstraint constraint, ElectricPowerNode node, double mva) throws NoVariableException {
     for (Load load : node.getComponents(Load.class)) {
-      constraint.setRightHandSide(constraint.getRightHandSide() - load.getDesiredRealLoad().doubleValue() / mva);
+      constraint.setRightHandSide(constraint.getRightHandSide() - load.getRealLoad().doubleValue() / mva);
     }
   }
 

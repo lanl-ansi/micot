@@ -64,11 +64,9 @@ public class MatPowerLoadFactory extends LoadFactory {
   	// check to see if the area already exists
     Load load = registerLoad(legacyid, bus);    
   	load.setAttribute(Load.LOAD_NAME_KEY, name);
-    load.setDesiredRealLoad(realLoad);
-    load.setDesiredReactiveLoad(reactiveLoad);
+    load.setRealLoad(realLoad);
+    load.setReactiveLoad(reactiveLoad);
     load.setStatus(true);
-    load.setActualRealLoad(realLoad);
-    load.setActualReactiveLoad(reactiveLoad);
   	load.setCoordinate(point == null ? new PointImpl(0,0) : point);
   	load.setAttribute(Load.HAS_PHASE_A_KEY, true);
     load.setAttribute(Load.HAS_PHASE_B_KEY, false);

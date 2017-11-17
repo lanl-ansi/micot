@@ -59,12 +59,12 @@ public abstract class ElectricPowerProducerImpl extends ProducerImpl implements 
 
   @Override
   public double getReactiveGenerationMax() {
-    return getAttribute(REACTIVE_MAX_KEY, Double.class);
+    return getAttribute(REACTIVE_GENERATION_MAX_KEY, Double.class);
   }
 
   @Override
   public void setReactiveGenerationMax(double reactiveMaxRatio) {
-    setAttribute(REACTIVE_MAX_KEY, reactiveMaxRatio);
+    setAttribute(REACTIVE_GENERATION_MAX_KEY, reactiveMaxRatio);
   }
 
   @Override
@@ -182,7 +182,7 @@ public abstract class ElectricPowerProducerImpl extends ProducerImpl implements 
     }
     if (key.equals("REACTIVE_MAX")) {
       System.err.println("Warning: REACTIVE_MAX is a deprecated attribute.  Using REACTIVE_GENERATION_MAX instead");
-      key = REACTIVE_MAX_KEY;
+      key = REACTIVE_GENERATION_MAX_KEY;
     }
     if (key.equals("REACTIVE_MIN")) {
       System.err.println("Warning: REACTIVE_MIN is a deprecated attribute.  Using REACTIVE_GENERATION_MIN instead");
@@ -213,7 +213,7 @@ public abstract class ElectricPowerProducerImpl extends ProducerImpl implements 
     }
     if (key.equals("REACTIVE_MAX")) {
       System.err.println("Warning: REACTIVE_MAX is a deprecated attribute.  Using REACTIVE_GENERATION_MAX instead");
-      key = REACTIVE_MAX_KEY;
+      key = REACTIVE_GENERATION_MAX_KEY;
     }
     if (key.equals("REACTIVE_MIN")) {
       System.err.println("Warning: REACTIVE_MIN is a deprecated attribute.  Using REACTIVE_GENERATION_MIN instead");

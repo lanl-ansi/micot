@@ -56,7 +56,7 @@ public class FlowBalanceScenarioConstraint implements ConstraintFactory {
    */
   protected void addLoadToConstraint(MathematicalProgram program, LinearConstraint constraint, ElectricPowerNode node, double mva) throws NoVariableException {
     for (Load load : node.getComponents(Load.class)) {
-      constraint.setRightHandSide(constraint.getRightHandSide() + load.getDesiredRealLoad().doubleValue() / mva);
+      constraint.setRightHandSide(constraint.getRightHandSide() + load.getRealLoad().doubleValue() / mva);
     }
   }
   

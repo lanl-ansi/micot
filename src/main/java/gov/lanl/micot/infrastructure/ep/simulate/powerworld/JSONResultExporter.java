@@ -124,12 +124,12 @@ public class JSONResultExporter {
 
       JSONObjectBuilder loadBuilder = json.createObjectBuilder();
       loadBuilder = loadBuilder.add("load_i", load.toString());
-      loadBuilder = loadBuilder.add("mw", load.getActualRealLoad().doubleValue());
+      loadBuilder = loadBuilder.add("mw", load.getRealLoad().doubleValue());
       loadBuilder = loadBuilder.add("mw_min", 0.0);
-      loadBuilder = loadBuilder.add("mw_max", load.getDesiredRealLoad().doubleValue());
-      loadBuilder = loadBuilder.add("mvar", load.getActualReactiveLoad().doubleValue());
+      loadBuilder = loadBuilder.add("mw_max", load.getRealLoadMax());
+      loadBuilder = loadBuilder.add("mvar", load.getReactiveLoad().doubleValue());
       loadBuilder = loadBuilder.add("mvar_min", 0.0);
-      loadBuilder = loadBuilder.add("mvar_max", load.getDesiredReactiveLoad().doubleValue());      
+      loadBuilder = loadBuilder.add("mvar_max", load.getReactiveLoadMax());      
       loadBuilder = loadBuilder.add("status", load.getStatus());
       loadBuilder = loadBuilder.add("bus", bus.toString());            
       loadsBuilder = loadsBuilder.add(loadBuilder);

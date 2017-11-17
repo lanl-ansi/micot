@@ -129,11 +129,9 @@ public class DewLoadFactory extends LoadFactory {
     // check to see if the area already exists
     Load load = registerLoad(legacyid);    
     load.setAttribute(Load.LOAD_NAME_KEY, name);
-    load.setDesiredRealLoad(realLoad);
-    load.setDesiredReactiveLoad(reactiveLoad);
+    load.setRealLoad(realLoad);
+    load.setReactiveLoad(reactiveLoad);
     load.setStatus(status);
-    load.setActualRealLoad(realLoad);
-    load.setActualReactiveLoad(reactiveLoad);
     load.setCoordinate(new PointImpl(x,y));
     load.setAttribute(Load.IS_FAILED_KEY, isFailed);
     load.setAttribute(DewVariables.DEW_COMPONENT_TYPE_KEY, dewType);
@@ -222,11 +220,9 @@ public class DewLoadFactory extends LoadFactory {
     // check to see if the area already exists
     Load load = registerLoad(legacyid);    
     load.setAttribute(Load.LOAD_NAME_KEY, name);
-    load.setDesiredRealLoad(realLoad);
-    load.setDesiredReactiveLoad(reactiveLoad);
+    load.setRealLoad(realLoad);
+    load.setReactiveLoad(reactiveLoad);
     load.setStatus(status);
-    load.setActualRealLoad(realLoad);
-    load.setActualReactiveLoad(reactiveLoad);
     load.setCoordinate(new PointImpl(x,y));
     load.setAttribute(Load.IS_FAILED_KEY, isFailed);
     load.setAttribute(DewVariables.DEW_COMPONENT_TYPE_KEY, dewType);

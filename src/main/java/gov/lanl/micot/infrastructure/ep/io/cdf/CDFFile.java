@@ -546,7 +546,7 @@ public class CDFFile extends FileParser implements ElectricPowerModelFile {
     System.out.println(netload);
     
     for (Load load : model.getLoads()) {
-    	netload -= load.getDesiredRealLoad().doubleValue();
+    	netload -= load.getRealLoad().doubleValue();
     }
     
     System.out.println(netload);

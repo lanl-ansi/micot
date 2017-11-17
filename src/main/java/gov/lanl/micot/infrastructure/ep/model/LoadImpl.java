@@ -25,53 +25,33 @@ public class LoadImpl extends ConsumerImpl implements Load {
 
   @Override
   public Number getConsumption() {
-    return getDesiredLoadNorm();
+    return getLoadNorm();
   }
 
   @Override
   public void setConsumption(Number consumption) {
-    setDesiredRealLoad(consumption.doubleValue());
-    setDesiredReactiveLoad(0.0);    
+    setRealLoad(consumption.doubleValue());
+    setReactiveLoad(0.0);    
   }
     
   @Override
-  public Number getDesiredRealLoad() {
-    return getAttribute(DESIRED_REAL_LOAD_KEY,Number.class);
+  public Number getRealLoad() {
+    return getAttribute(REAL_LOAD_KEY,Number.class);
   }
 
   @Override
-  public void setDesiredRealLoad(Number realLoad) {
-    setAttribute(DESIRED_REAL_LOAD_KEY,realLoad);
+  public void setRealLoad(Number realLoad) {
+    setAttribute(REAL_LOAD_KEY,realLoad);
   }
 
   @Override
-  public Number getDesiredReactiveLoad() {
-    return getAttribute(DESIRED_REACTIVE_LOAD_KEY,Number.class);
+  public Number getReactiveLoad() {
+    return getAttribute(REACTIVE_LOAD_KEY,Number.class);
   }
 
   @Override
-  public void setDesiredReactiveLoad(Number reactiveLoad) {
-    setAttribute(DESIRED_REACTIVE_LOAD_KEY,reactiveLoad);
-  }
-
-  @Override
-  public Number getActualRealLoad() {
-    return getAttribute(ACTUAL_REAL_LOAD_KEY,Number.class);
-  }
-
-  @Override
-  public void setActualRealLoad(Number realLoad) {
-    setAttribute(ACTUAL_REAL_LOAD_KEY,realLoad);
-  }
-
-  @Override
-  public Number getActualReactiveLoad() {
-    return getAttribute(ACTUAL_REACTIVE_LOAD_KEY,Number.class);
-  }
-
-  @Override
-  public void setActualReactiveLoad(Number reactiveLoad) {
-    setAttribute(ACTUAL_REACTIVE_LOAD_KEY,reactiveLoad);
+  public void setReactiveLoad(Number reactiveLoad) {
+    setAttribute(REACTIVE_LOAD_KEY,reactiveLoad);
   }
   
   @Override
@@ -94,20 +74,29 @@ public class LoadImpl extends ConsumerImpl implements Load {
   }
 
   @Override
-  public Number getDesiredLoadNorm() {
-    return MathUtils.SIGNED_NORM(getDesiredRealLoad(), getDesiredReactiveLoad());
+  public Number getLoadNorm() {
+    return MathUtils.SIGNED_NORM(getRealLoad(), getReactiveLoad());
   }
 
-  /**
-   * Get the actual load norm
-   * @return
-   */
-  public Number getActualLoadNorm() {
-    return MathUtils.SIGNED_NORM(getActualRealLoad(), getActualReactiveLoad());
-  }
-  
   @Override
   public void setAttribute(Object key, Object object) {
+    if (key.equals("ACTUAL_REACTIVE_LOAD")) {
+      System.err.println("Warning: ACTUAL_REACTIVE_LOAD is a deprecated attribute.  Using REACTIVE_LOAD instead");
+      key = REACTIVE_LOAD_KEY;
+    }
+    if (key.equals("ACTUAL_REAL_LOAD")) {
+      System.err.println("Warning: ACTUAL_REAL_LOAD is a deprecated attribute.  Using REAL_LOAD instead");
+      key = REAL_LOAD_KEY;
+    }
+    if (key.equals("DESIRED_REACTIVE_LOAD")) {
+      System.err.println("Warning: DESIRED_REACTIVE_LOAD is a deprecated attribute.  Using REACTIVE_LOAD instead");
+      key = REACTIVE_LOAD_KEY;
+    }
+    if (key.equals("DESIRED_REAL_LOAD")) {
+      System.err.println("Warning: DESIRED_REAL_LOAD is a deprecated attribute.  Using REAL_LOAD instead");
+      key = REAL_LOAD_KEY;
+    }
+    
     super.setAttribute(key,object);
     fireDataChangeEvent(key);
   }
@@ -123,5 +112,67 @@ public class LoadImpl extends ConsumerImpl implements Load {
       e.printStackTrace();
     }
     return newLoad;
+  }
+    
+  
+  @Override
+  public Object getAttribute(Object key) {
+    if (key.equals("ACTUAL_REACTIVE_LOAD")) {
+      System.err.println("Warning: ACTUAL_REACTIVE_LOAD is a deprecated attribute.  Using REACTIVE_LOAD instead");
+      key = REACTIVE_LOAD_KEY;
+    }
+    if (key.equals("ACTUAL_REAL_LOAD")) {
+      System.err.println("Warning: ACTUAL_REAL_LOAD is a deprecated attribute.  Using REAL_LOAD instead");
+      key = REAL_LOAD_KEY;
+    }
+    if (key.equals("DESIRED_REACTIVE_LOAD")) {
+      System.err.println("Warning: DESIRED_REACTIVE_LOAD is a deprecated attribute.  Using REACTIVE_LOAD instead");
+      key = REACTIVE_LOAD_KEY;
+    }
+    if (key.equals("DESIRED_REAL_LOAD")) {
+      System.err.println("Warning: DESIRED_REAL_LOAD is a deprecated attribute.  Using REAL_LOAD instead");
+      key = REAL_LOAD_KEY;
+    }
+    return super.getAttribute(key);
+  }
+   
+  @Override
+  public double getReactiveLoadMax() {
+    return getAttribute(REACTIVE_LOAD_MAX_KEY, Double.class);
+  }
+  
+  @Override
+  public double getReactiveLoadMin() {
+    return getAttribute(REACTIVE_LOAD_MIN_KEY, Double.class);    
+  }
+  
+  @Override
+  public double getRealLoadMax() {
+    return getAttribute(REAL_LOAD_MAX_KEY, Double.class);
+  }
+  
+  @Override
+  public double getRealLoadMin() {
+    return getAttribute(REAL_LOAD_MIN_KEY, Double.class);
+  }
+    
+  @Override
+  public void setReactiveLoadMax(double reactive) {
+    setAttribute(REACTIVE_LOAD_MAX_KEY, reactive);
+  }
+  
+  @Override
+  public void setReactiveLoadMin(double reactive) {
+    setAttribute(REACTIVE_LOAD_MIN_KEY, reactive);
+  }
+  
+  @Override
+  public void setRealLoadMax(double real) {
+    setAttribute(REAL_LOAD_MAX_KEY, real);
+  }
+  
+  @Override
+  public void setRealLoadMin(double real) {
+    setAttribute(REAL_LOAD_MAX_KEY, real);
   }
 }

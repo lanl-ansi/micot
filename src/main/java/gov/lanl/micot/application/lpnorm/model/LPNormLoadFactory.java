@@ -71,10 +71,10 @@ public class LPNormLoadFactory extends LoadFactory {
     load.setAttribute(Load.HAS_PHASE_C_KEY, hasPhase.getBoolean(2));
     
     load.setStatus(status);
-    load.setDesiredReactiveLoad(reactive.getDouble(0) + reactive.getDouble(1) + reactive.getDouble(2));
-    load.setDesiredRealLoad(real.getDouble(0) + real.getDouble(1) + real.getDouble(2));
-    load.setActualReactiveLoad(load.getDesiredReactiveLoad());
-    load.setActualRealLoad(load.getDesiredRealLoad());    
+    load.setReactiveLoadMax(reactive.getDouble(0) + reactive.getDouble(1) + reactive.getDouble(2));
+    load.setRealLoadMax(real.getDouble(0) + real.getDouble(1) + real.getDouble(2));
+    load.setReactiveLoad(load.getReactiveLoadMax());
+    load.setRealLoad(load.getRealLoadMax());    
     load.setCoordinate(bus.getCoordinate());  
 
     load.setAttribute(AlgorithmConstants.IS_CRITICAL_LOAD_KEY, isCritical);

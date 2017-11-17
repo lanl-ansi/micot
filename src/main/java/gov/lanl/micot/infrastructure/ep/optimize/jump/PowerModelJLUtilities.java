@@ -197,8 +197,8 @@ public class PowerModelJLUtilities {
       double reactiveLoad = 0;
       for (Load load : model.getNode(bus).getComponents(Load.class)) {
         if (OptimizationConstants.allActive(null,bus, load)) {
-          realLoad += load.getDesiredRealLoad().doubleValue();
-          reactiveLoad += load.getDesiredReactiveLoad().doubleValue();
+          realLoad += load.getRealLoad().doubleValue();
+          reactiveLoad += load.getReactiveLoad().doubleValue();
         }
       }
 

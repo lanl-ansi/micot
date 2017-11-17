@@ -67,7 +67,7 @@ public class LoadTimeConstraint implements ConstraintFactory {
       for (int i = 0; i < numberOfIncrements; ++i) {
         double time = i * incrementSize;
         for (Load load : loads) {
-          double totalDesiredLoad = load.getStatus() == true ? MathUtils.TO_FUNCTION(load.getDesiredRealLoad()).getValue(time).doubleValue() / mva : 0;
+          double totalDesiredLoad = load.getStatus() == true ? MathUtils.TO_FUNCTION(load.getRealLoadMax()).getValue(time).doubleValue() / mva : 0;
         
           if (totalDesiredLoad <= 0) {
             LinearConstraint constraint = new LinearConstraintEquals(getLoadUpperBoundConstraintName(load,time));

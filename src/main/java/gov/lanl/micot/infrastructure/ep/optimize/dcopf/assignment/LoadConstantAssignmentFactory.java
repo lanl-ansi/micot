@@ -15,20 +15,20 @@ import gov.lanl.micot.util.math.solver.exception.VariableExistsException;
 import gov.lanl.micot.util.math.solver.mathprogram.MathematicalProgram;
 
 /**
- * General class for creating phase angle variable assignments
+ * General class for constant load variable assignments
  * @author Russell Bent
  */
 public class LoadConstantAssignmentFactory implements AssignmentFactory {
 
   @Override
-  public void performAssignment(ElectricPowerModel model, MathematicalProgram problem, Solution solution/*, Collection<ElectricPowerNode> nodes*/) throws VariableExistsException, NoVariableException {
+  public void performAssignment(ElectricPowerModel model, MathematicalProgram problem, Solution solution) throws VariableExistsException, NoVariableException {
 
     FlowBalanceConstraint flowConstraint = new FlowBalanceConstraint();
     double mva = model.getMVABase();
     
     for (ElectricPowerNode node : model.getNodes()) {
       for (Load load : node.getComponents(Load.class)) {        
-        load.setActualRealLoad(load.getDesiredRealLoad().doubleValue());
+       // load.setRealLoad(load.getRealLoadMax());
 
         // save the shadow prices of the load constraints (upper bound)
         SummationConstraint constraint = flowConstraint.getFlowBalanceConstraint(problem, node);

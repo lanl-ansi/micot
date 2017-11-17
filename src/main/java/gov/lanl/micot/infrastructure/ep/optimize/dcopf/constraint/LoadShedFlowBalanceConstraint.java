@@ -16,8 +16,6 @@ import gov.lanl.micot.util.math.solver.exception.NoVariableException;
 import gov.lanl.micot.util.math.solver.exception.VariableExistsException;
 import gov.lanl.micot.util.math.solver.mathprogram.MathematicalProgram;
 
-import java.util.Collection;
-
 /**
  * The flow shed flow balance constraint for interdictions ... 
  * 
@@ -58,7 +56,7 @@ public class LoadShedFlowBalanceConstraint implements ConstraintFactory {
       }
       for (Load load : node.getComponents(Load.class)) {
         constraint.addVariable(loadShedVariableFactory.getVariable(problem, load), 1.0);
-        constraint.setRightHandSide(constraint.getRightHandSide() + load.getDesiredRealLoad().doubleValue() / mva);
+        constraint.setRightHandSide(constraint.getRightHandSide() + load.getRealLoadMax() / mva);
       }      
       problem.addLinearConstraint(constraint);
       

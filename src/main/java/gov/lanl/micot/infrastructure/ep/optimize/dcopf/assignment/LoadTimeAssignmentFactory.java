@@ -40,13 +40,13 @@ public class LoadTimeAssignmentFactory implements AssignmentFactory {
     
     for (ElectricPowerNode node : model.getNodes()) {
       for (Load load : node.getComponents(Load.class)) {
-        load.setActualRealLoad(new LookupTableTimeDependentFunction());
+        load.setRealLoad(new LookupTableTimeDependentFunction());
       }      
       for (int i = 0; i < numberOfIncrements; ++i) {
         double time = i * incrementSize;      
         for (Load load : node.getComponents(Load.class)) {
           Variable variable = loadVariableFactory.getVariable(problem, load, time);
-          ((LookupTableTimeDependentFunction)load.getActualRealLoad()).addEntry(time, solution.getValueDouble(variable) * mva);         
+          ((LookupTableTimeDependentFunction)load.getRealLoad()).addEntry(time, solution.getValueDouble(variable) * mva);         
         }
       }
     }
