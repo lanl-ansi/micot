@@ -32,7 +32,7 @@ import java.util.HashMap;
  */
 public class LPNormFile implements ElectricPowerModelFile {
 
-  private static final double DEFAULT_MVA_BASE = 100.0;
+//  private static final double DEFAULT_MVA_BASE = 100.0;
   
  /**
 	 * Constructor
@@ -77,7 +77,7 @@ public class LPNormFile implements ElectricPowerModelFile {
     JSONArray edgeArray = object.getArray(LPNormIOConstants.LINES_TAG);
     JSONArray lineCodeArray = object.getArray(LPNormIOConstants.LINE_CODES_TAG);
     
-    double mvaBase = object.containsKey(LPNormIOConstants.MVA_BASE_TAG) ? object.getDouble(LPNormIOConstants.MVA_BASE_TAG) : DEFAULT_MVA_BASE;
+    double mvaBase = 1.0; //object.containsKey(LPNormIOConstants.MVA_BASE_TAG) ? object.getDouble(LPNormIOConstants.MVA_BASE_TAG) : DEFAULT_MVA_BASE;
     model.setMVABase(mvaBase);
     
 		// create the buses

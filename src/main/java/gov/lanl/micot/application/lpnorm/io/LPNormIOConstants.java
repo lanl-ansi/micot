@@ -72,7 +72,7 @@ public class LPNormIOConstants {
   public static final String SCENARIO_HARDENED_DISABLED_TAG = "hardened_disabled_lines";
   public static final String SCENARIO_DISABLED_TAG = "disable_lines";
 
-  public static final String MVA_BASE_TAG = "mva_base";
+//  public static final String MVA_BASE_TAG = "mva_base";
   
   public static final String ALGORITHM_TAG = "algorithm";
   public static final String MIQP_TAG = "miqp";
