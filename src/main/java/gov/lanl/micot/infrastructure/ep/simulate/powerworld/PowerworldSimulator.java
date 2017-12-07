@@ -13,6 +13,8 @@ import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerNode;
 import gov.lanl.micot.infrastructure.ep.model.Generator;
+import gov.lanl.micot.infrastructure.ep.model.ShuntCapacitor;
+import gov.lanl.micot.infrastructure.ep.model.ShuntCapacitorSwitch;
 import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldModel;
 import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldModelConstants;
 import gov.lanl.micot.infrastructure.ep.model.powerworld.PowerworldModelFactory;
@@ -254,6 +256,55 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       }
     }
     
+    // get the shunt data
+    fields = new String[]{PowerworldIOConstants.BUS_NUM, PowerworldIOConstants.SHUNT_ID, PowerworldIOConstants.SHUNT_MVAR, PowerworldIOConstants.SHUNT_MW}; 
+    for (ShuntCapacitor capacitor : model.getShuntCapacitors()) {
+      Pair<Integer,String> id = powerWorldModel.getCapacitorId(capacitor);
+      values = new String[] {id.getOne()+"",id.getTwo(), "","",""};
+      
+      ComDataObject dataObject = powerworld.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.SHUNT, fields, values);
+      ArrayList<ComDataObject> shuntData = dataObject.getArrayValue();
+      errorString = shuntData.get(0).getStringValue();
+      if (!errorString.equals("")) {
+        System.err.println("Error getting powerworld shunt data: " + errorString);                
+      }
+
+      ArrayList<ComDataObject> lData = shuntData.get(1).getArrayValue();                       
+      String mvarString = lData.get(2).getStringValue();
+      String mwString = lData.get(3).getStringValue();
+      
+      double reactive = mvarString == null ? 0 : Double.parseDouble(mvarString);
+      double real = mwString == null ? 0 : Double.parseDouble(mwString);                
+      capacitor.setReactiveCompensation(reactive);    
+      capacitor.setRealCompensation(real);      
+    }
+    
+
+    // get the switched shunt values
+    fields = new String[]{PowerworldIOConstants.BUS_NUM, PowerworldIOConstants.SHUNT_ID, 
+        PowerworldIOConstants.SHUNT_MVAR, 
+        PowerworldIOConstants.SHUNT_MW}; 
+    for (ShuntCapacitorSwitch capacitor : model.getShuntCapacitorSwitches()) {
+      Pair<Integer,String> id = powerWorldModel.getCapacitorId(capacitor);
+      values = new String[] {id.getOne()+"",id.getTwo(), "","",""};
+      
+      ComDataObject dataObject = powerworld.callData(PowerworldIOConstants.GET_PARAMETERS_SINGLE_ELEMENT, PowerworldIOConstants.SHUNT, fields, values);
+      ArrayList<ComDataObject> shuntData = dataObject.getArrayValue();
+      errorString = shuntData.get(0).getStringValue();
+      if (!errorString.equals("")) {
+        System.err.println("Error getting powerworld shunt data: " + errorString);                
+      }
+
+      ArrayList<ComDataObject> lData = shuntData.get(1).getArrayValue();                       
+      String mvarString = lData.get(2).getStringValue();
+      String mwString = lData.get(3).getStringValue();
+      
+      double mw = mwString == null ? 0 : Double.parseDouble(mwString);
+      double mvar = mvarString == null ? 0 : Double.parseDouble(mvarString);
+      capacitor.setRealCompensation(mw);
+      capacitor.setReactiveCompensation(mvar);
+    }
+        
     // get the generator data
     fields = new String[]{PowerworldIOConstants.BUS_NUM, 
     		PowerworldIOConstants.GEN_NUM, 

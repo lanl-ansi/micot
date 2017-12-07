@@ -53,7 +53,11 @@ public class PowerworldLoadFactory extends LoadFactory {
     initializeLoad(load, bus, realLoad, reactiveLoad);
     
     load.setStatus(status);
-        
+    load.setRealLoadMin(0.0);
+    load.setReactiveLoadMin(0.0);
+    load.setRealLoadMax(realLoad);
+    load.setReactiveLoadMax(reactiveLoad);
+    
     return load;    
   }
   

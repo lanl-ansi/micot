@@ -1298,7 +1298,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
   	enterEditMode();
   	String fields[] = getCapacitorSwitchFields();
     String values[] = convertToStringArray(getCapacitorSwitchValues(shunt));
-    updateData(fields, values, PowerworldIOConstants.BUS);   
+    updateData(fields, values, PowerworldIOConstants.SHUNT);   
   }
 
   /**
@@ -1664,7 +1664,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    * @return/
    */
 	@SuppressWarnings("unchecked")
-  private Pair<Integer,String> getCapacitorId(ShuntCapacitor capacitor) {
+  public Pair<Integer,String> getCapacitorId(ShuntCapacitor capacitor) {
     return capacitor.getAttribute(PowerworldModelConstants.POWERWORLD_LEGACY_ID_KEY, Pair.class);
   }
 
@@ -1674,7 +1674,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
    * @return
    */
 	@SuppressWarnings("unchecked")
-  private Pair<Integer,String> getCapacitorId(ShuntCapacitorSwitch capacitor) {
+  public Pair<Integer,String> getCapacitorId(ShuntCapacitorSwitch capacitor) {
     return capacitor.getAttribute(PowerworldModelConstants.POWERWORLD_LEGACY_ID_KEY, Pair.class);
   }
 
