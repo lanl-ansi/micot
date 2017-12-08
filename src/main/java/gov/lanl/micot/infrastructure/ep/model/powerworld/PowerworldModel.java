@@ -343,8 +343,8 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
         String remote = bData.get(5).getStringValue();
 
         int remoteId = Integer.parseInt(remote.trim());
-
-        regulated.put(bus, busMap.get(remoteId));
+        regulated.put(generator,busMap.get(remoteId));
+                
         areas.put(generator, area);
         zones.put(generator, zone);
       }
@@ -1124,7 +1124,7 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
   	enterEditMode();
     String fields[] = getGeneratorFields();
     String values[] = convertToStringArray(getGeneratorValues(generator));  	
-    updateData(fields, values, PowerworldIOConstants.GENERATOR);   
+    updateData(fields, values, PowerworldIOConstants.GENERATOR); 
   }
   
   /**
@@ -1139,7 +1139,9 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     		PowerworldIOConstants.GEN_MVAR, PowerworldIOConstants.GEN_MW, 
     		PowerworldIOConstants.GEN_MVAR_MAX, PowerworldIOConstants.GEN_MW_MAX, 
     		PowerworldIOConstants.GEN_MVAR_MIN, PowerworldIOConstants.GEN_MW_MIN, 
-    		PowerworldIOConstants.GEN_STATUS, PowerworldIOConstants.GEN_VOLTAGE}; 
+    		PowerworldIOConstants.GEN_STATUS, 
+    		PowerworldIOConstants.GEN_VOLTAGE
+    		}; 
   }
  
   /**
@@ -1157,14 +1159,19 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
     double cubeConstant = datapoints.length >= 4 ? datapoints[3] : 0;
     String status = generator.getStatus() ? PowerworldIOConstants.GEN_CLOSED : PowerworldIOConstants.GEN_OPEN;
     
-    Bus bus = getNode(generator).getBus();
+    Bus bus = getNode(generator).getBus(); 
+    if (getControlBus(generator) != null) {
+      bus = getControlBus(generator);
+    }
     double remoteVoltage = bus.getVoltagePU().doubleValue(); 
-    
+      
     return new Object[] {id.getLeft(), id.getRight(), 
       ft, costConstant, linearConstant, quadConstant, cubeConstant, generator.getAttribute(Generator.MVA_BASE_KEY), 
       generator.getReactiveGeneration(), generator.getRealGeneration(), 
       generator.getReactiveGenerationMax(), generator.getRealGenerationMax(), 
-      generator.getReactiveGenerationMin(), generator.getRealGenerationMin(), status, remoteVoltage};  		
+      generator.getReactiveGenerationMin(), generator.getRealGenerationMin(), status, 
+      remoteVoltage
+      };  		
   }
 
   @Override

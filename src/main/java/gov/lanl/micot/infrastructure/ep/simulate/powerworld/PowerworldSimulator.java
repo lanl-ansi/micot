@@ -72,9 +72,13 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
   		}  		
   	}
 
+//  	for (ShuntCapacitorSwitch capacitor : model.getShuntCapacitorSwitches()) {
+  //	   capacitor.setScheduleHighVoltage(scheduleHighVoltage);
+  //	}
+  	
   	// make sure we are in a power world regime
   	PowerworldModelFactory factory = PowerworldModelFactory.getInstance();
-  	PowerworldModel powerWorldModel = factory.constructPowerworldModel(model);
+  	PowerworldModel powerWorldModel = factory.constructPowerworldModel(model);  	
   	ComObject powerworld = powerWorldModel.getPowerworld();
 	  	 
   	// turn off simulator control logic
@@ -327,9 +331,9 @@ public class PowerworldSimulator extends ElectricPowerSimulatorImpl {
       ArrayList<ComDataObject> gData = genData.get(1).getArrayValue();                       
       String mvarString = gData.get(2).getStringValue();
       String mwString = gData.get(3).getStringValue();
-      String voltageString = gData.get(4).getStringValue();
+  //    String voltageString = gData.get(4).getStringValue();
 
-      double voltage = Double.parseDouble(voltageString.trim());
+//      double voltage = Double.parseDouble(voltageString.trim());
       double mvar = Double.parseDouble(mvarString.trim());
       double mw = Double.parseDouble(mwString.trim());
       generator.setRealGeneration(mw);
