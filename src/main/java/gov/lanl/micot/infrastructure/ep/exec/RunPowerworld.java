@@ -88,7 +88,7 @@ public class RunPowerworld {
    * @return
    * @throws FileNotFoundException 
    */
-  private static ProjectConfiguration buildConfiguration(String powerModelFile, String modificationsFile) throws FileNotFoundException {
+  public static ProjectConfiguration buildConfiguration(String powerModelFile, String modificationsFile) throws FileNotFoundException {
     ProjectConfiguration configuration = new ProjectConfiguration();
     
     // simulator configuration

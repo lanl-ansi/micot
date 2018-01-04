@@ -168,6 +168,7 @@ public class PowerworldIOConstants {
   public static final String BRANCH_TAP_RATIO_STEPS    = "pwXFStep";
   public static final String BRANCH_CHARGING           = "pwLineC";
   public static final String BRANCH_TRANSFORMER        = "Transformer";
+  public static final String BRANCH_TRANSFORMER_WINDING  = "TransformerWinding";
   public static final String BRANCH_CLOSED             = "closed";  
   public static final String BRANCH_OPEN               = "open";  
   public static final String BRANCH_TRANSFORMER_FIXED  = "fixed";

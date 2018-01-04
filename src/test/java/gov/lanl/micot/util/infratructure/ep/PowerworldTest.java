@@ -8,14 +8,20 @@ import gov.lanl.micot.infrastructure.ep.io.powerworld.PowerworldModelFile;
 import gov.lanl.micot.infrastructure.ep.model.Bus;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
+import gov.lanl.micot.infrastructure.ep.model.ElectricPowerNode;
+import gov.lanl.micot.infrastructure.ep.model.ThreeWindingTransformer;
+import gov.lanl.micot.infrastructure.ep.model.Transformer;
 import gov.lanl.micot.infrastructure.project.JsonProjectConfigurationReader;
 import gov.lanl.micot.infrastructure.project.ProjectConfiguration;
 import gov.lanl.micot.infrastructure.project.ProjectConfigurationUtility;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 
 import junit.framework.TestCase;
+import gov.lanl.micot.infrastructure.ep.model.Line;
+
 
 /**
  * Test cases for power world models
@@ -116,6 +122,48 @@ public class PowerworldTest extends TestCase {
     
     PowerworldModelFile modelFile = new PowerworldModelFile();
     ElectricPowerModel model = modelFile.readModel("test_data" + File.separatorChar + "ep" + File.separatorChar + "powerworld" + File.separatorChar + "frankenstein.raw");
+    
+    Collection<? extends Transformer> transformers = model.getTransformers();    
+    Collection<? extends ThreeWindingTransformer> threeWinding = model.getThreeWindingTransformers();
+    Collection<? extends Line> lines = model.getLines();    
+    
+    
+    assertEquals(transformers.size(), 5);
+    assertEquals(threeWinding.size(), 1);
+    assertEquals(lines.size(), 3);
+    
+    ThreeWindingTransformer three = threeWinding.iterator().next();
+    
+    
+    for (Transformer transformer : transformers) {
+      ElectricPowerNode node1 = model.getFirstNode(transformer);
+      ElectricPowerNode node2 = model.getSecondNode(transformer);
+      
+      if (node1.toString().equals("1001") && node2.toString().equals("1004")) {
+        assertEquals(model.getThreeWindingTransformer(transformer), null);
+      }
+      
+      else if (node1.toString().equals("1005") && node2.toString().equals("1002")) {
+        assertEquals(model.getThreeWindingTransformer(transformer), null);
+      }
+      
+      else if (node1.toString().equals("1003") && node2.toString().equals("1010")) {
+        assertEquals(model.getThreeWindingTransformer(transformer), three);
+      }
+      
+      else if (node1.toString().equals("1006") && node2.toString().equals("1010")) {
+        assertEquals(model.getThreeWindingTransformer(transformer), three);
+      }
+      
+      else if (node1.toString().equals("1007") && node2.toString().equals("1010")) {
+        assertEquals(model.getThreeWindingTransformer(transformer), three);
+      }
+      
+      else {
+        assertEquals(model.getThreeWindingTransformer(transformer), null);
+      }
+    }
+
   }
 
   /**
@@ -146,10 +194,7 @@ public class PowerworldTest extends TestCase {
     
   }
 
-  
-  
-  
-  
+ 
   @Override
   protected void tearDown() throws Exception {
     super.tearDown();

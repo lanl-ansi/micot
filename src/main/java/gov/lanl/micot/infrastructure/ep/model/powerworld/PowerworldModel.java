@@ -492,13 +492,13 @@ public class PowerworldModel extends ElectricPowerModelImpl implements ElectricP
         Bus tBus = busMap.get(toid);
 
         ElectricPowerFlowConnection connection = null;        
-        if (type.equalsIgnoreCase(PowerworldIOConstants.BRANCH_TRANSFORMER)) {
+        if (type.equalsIgnoreCase(PowerworldIOConstants.BRANCH_TRANSFORMER) || type.equalsIgnoreCase(PowerworldIOConstants.BRANCH_TRANSFORMER_WINDING)) {
           connection = transformerFactory.createTransformer(powerWorldModel, fBus, tBus, new Triple<Integer,Integer,String>(fromid,toid,id));
         }
         else {
           connection = lineFactory.createLine(powerWorldModel, fBus, tBus, new Triple<Integer,Integer,String>(fromid,toid,id));
-        }
-
+       }
+       
         addEdge(connection,getNode(fBus),getNode(tBus));
         String area = bData.get(3).getStringValue();
         String zone = bData.get(4).getStringValue();
