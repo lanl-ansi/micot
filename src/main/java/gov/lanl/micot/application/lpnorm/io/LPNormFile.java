@@ -114,10 +114,10 @@ public class LPNormFile implements ElectricPowerModelFile {
                           + l.getAttribute(Load.REAL_LOAD_C_MAX_KEY, Number.class).doubleValue();
     }
       
-    HashMap<Integer, JSONObject> lineCodes = new HashMap<Integer,JSONObject>();
+    HashMap<String, JSONObject> lineCodes = new HashMap<String,JSONObject>();
     for (int i = 0; i < lineCodeArray.size(); ++i) {
       JSONObject lineCode = lineCodeArray.getObject(i);
-      lineCodes.put(lineCode.getInt(LPNormIOConstants.LINE_CODE_ID_TAG), lineCode);
+      lineCodes.put(lineCode.getString(LPNormIOConstants.LINE_CODE_ID_TAG), lineCode);
     }
         
     // create the lines and transformers
@@ -126,7 +126,7 @@ public class LPNormFile implements ElectricPowerModelFile {
       String id1 = line.getString(LPNormIOConstants.LINE_BUS1_ID_TAG);
       String id2 = line.getString(LPNormIOConstants.LINE_BUS2_ID_TAG);
       boolean isTransformer = line.containsKey(LPNormIOConstants.LINE_IS_TRANSFORMER_TAG) ? line.getBoolean(LPNormIOConstants.LINE_IS_TRANSFORMER_TAG) : false;
-      int codeId = line.getInt(LPNormIOConstants.LINE_LINE_CODE_TAG);
+      String codeId = line.getString(LPNormIOConstants.LINE_LINE_CODE_TAG);
       JSONObject lineCode = lineCodes.get(codeId);
       
       if (!isTransformer) {
