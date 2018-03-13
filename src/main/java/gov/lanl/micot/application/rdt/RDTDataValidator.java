@@ -10,6 +10,7 @@ import gov.lanl.micot.application.lpnorm.io.LPNormIOConstants;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.application.rdt.algorithm.ep.mip.variable.scenario.ScenarioVariableFactoryUtility;
 import gov.lanl.micot.infrastructure.ep.model.Bus;
+import gov.lanl.micot.infrastructure.ep.model.ElectricPowerConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.Generator;
@@ -49,6 +50,7 @@ public class RDTDataValidator {
     checkCycles(model);
     checkIslands(model);
     checkLoadBalance(model);
+    checkEdgeConnectivity(model);
     
     System.out.println("Data Validation Checks on RDT completed.");
     
@@ -86,6 +88,32 @@ public class RDTDataValidator {
       System.out.println();      
     }
      return set.size() == 0;
+  }
+  
+  private boolean checkEdgeConnectivity(ElectricPowerModel model) {
+    HashSet<ElectricPowerFlowConnection> lines = new HashSet<ElectricPowerFlowConnection>();
+     
+    for (ElectricPowerFlowConnection connection : model.getFlowConnections()) {
+      if (model.getFirstNode(connection) == null || model.getSecondNode(connection) == null) {
+        lines.add(connection);
+      }
+    }
+        
+    if (lines.size() == 0) {
+      System.out.println("Data Validation Checks on Line Connectivity... success");
+    }
+    else {
+      System.out.println("Data Validation Checks on Line Hardening options completed... fail");
+      System.out.println("\tSome lines are connected to buses (nodes) that are not defined.");
+      System.out.println("\tThe following lines have undefined noes");
+      System.out.print("\t\t");
+      for (ElectricPowerFlowConnection line : lines) {
+        System.out.print(" " +line);
+      }
+      System.out.println();
+    }
+
+    return lines.size() == 0;
   }
   
   /**

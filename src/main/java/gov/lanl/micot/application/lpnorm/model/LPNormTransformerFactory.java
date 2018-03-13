@@ -8,6 +8,7 @@ import gov.lanl.micot.application.lpnorm.io.LPNormIOConstants;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.util.geometry.LineImpl;
 import gov.lanl.micot.util.geometry.Point;
+import gov.lanl.micot.util.geometry.PointImpl;
 import gov.lanl.micot.util.io.json.JSONArray;
 import gov.lanl.micot.util.io.json.JSONObject;
 
@@ -21,7 +22,6 @@ public class LPNormTransformerFactory extends TransformerFactory {
 
 	private static final String LEGACY_TAG = "LPNORM";
 	
-//  private static final double DEFAULT_CAPACITY = 1e2;
 	private static final double DEFAULT_LENGTH = 1.0;
   private static final int DEFAULT_NUM_PHASES = 3;
 
@@ -123,8 +123,8 @@ public class LPNormTransformerFactory extends TransformerFactory {
 
     
     Vector<Point> points = new Vector<Point>();
-    points.add(fromBus.getCoordinate());
-    points.add(toBus.getCoordinate());
+    points.add(fromBus != null ? fromBus.getCoordinate() : new PointImpl(0,0));
+    points.add(toBus != null ? toBus.getCoordinate() : new PointImpl(0,0));
     transformer.setCoordinates(new LineImpl(points));    
     return transformer;    
 	}

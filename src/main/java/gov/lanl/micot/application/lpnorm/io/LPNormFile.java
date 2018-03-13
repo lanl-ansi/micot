@@ -130,10 +130,30 @@ public class LPNormFile implements ElectricPowerModelFile {
       JSONObject lineCode = lineCodes.get(codeId);
       
       if (!isTransformer) {
+        if (buses.get(id1) == null) {
+          System.out.println("Attempting to connect line " + line + " to bus " + id1 + ". This bus is not defined. Program will terminate abnormally");
+          System.exit(-1);
+        }
+        
+        if (buses.get(id2) == null) {
+          System.out.println("Attempting to connect line " + line + " to bus " + id2 + ". This bus is not defined. Program will terminate abnormally");
+          System.exit(-1);
+        }
+        
         Line l  = lineFactory.createLine(line, lineCode, buses.get(id1), buses.get(id2), defaultLineCapacity);
         model.addEdge(l, model.getNode(buses.get(id1)), model.getNode(buses.get(id2)));    
       }        
       else {
+        if (buses.get(id1) == null) {
+          System.out.println("Attempting to connect transformer " + line + " to bus " + id1 + ". This bus is not defined. Program will terminate abnormally");
+          System.exit(-1);
+        }
+        
+        if (buses.get(id2) == null) {
+          System.out.println("Attempting to connect transformer " + line + " to bus " + id2 + ". This bus is not defined. Program will terminate abnormally");
+          System.exit(-1);
+        }
+
         Transformer l  = transformerFactory.createTransformer(line, lineCode, buses.get(id1), buses.get(id2), defaultLineCapacity);
         model.addEdge(l, model.getNode(buses.get(id1)), model.getNode(buses.get(id2)));
       }
@@ -154,6 +174,6 @@ public class LPNormFile implements ElectricPowerModelFile {
   public static void main(String[] args) throws IOException {
     String initialFile = "lpnorm" + File.separatorChar + "Ice_Harden_Rural_1.json";
     LPNormFile file = new LPNormFile(); 
-    ElectricPowerModel model = file.readModel(initialFile);     
+   file.readModel(initialFile);     
   }
 }

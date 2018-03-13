@@ -8,6 +8,7 @@ import gov.lanl.micot.application.lpnorm.io.LPNormIOConstants;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.util.geometry.LineImpl;
 import gov.lanl.micot.util.geometry.Point;
+import gov.lanl.micot.util.geometry.PointImpl;
 import gov.lanl.micot.util.io.json.JSONArray;
 import gov.lanl.micot.util.io.json.JSONObject;
 
@@ -121,8 +122,8 @@ public class LPNormLineFactory extends LineFactory {
     line.setAttribute(AlgorithmConstants.CAN_ADD_SWITCH_KEY, canAddSwitch);
 
     Vector<Point> points = new Vector<Point>();
-    points.add(fromBus.getCoordinate());
-    points.add(toBus.getCoordinate());
+    points.add(fromBus != null ? fromBus.getCoordinate() : new PointImpl(0, 0));
+    points.add(toBus.getCoordinate() != null ? toBus.getCoordinate() : new PointImpl(0,0));
     line.setCoordinates(new LineImpl(points));    
     return line;  	
 	}
