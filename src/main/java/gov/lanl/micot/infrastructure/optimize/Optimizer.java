@@ -23,18 +23,6 @@ public interface Optimizer<N extends Node, M extends Model> {
   public boolean solve(M model);
 
   /**
-   * Get the best model file
-   * @return
-   */
-//  public String getBestModelFile();
-  
-  /**
-   * Set the est mode model file
-   * @param bestModelFile
-   */
- // public void setBestModelFile(String bestModelFile);
-  
-  /**
    * Adds an algorithm listener
    * @param listener
    */

@@ -21,7 +21,7 @@ import java.util.Collection;
 
 /**
  * The link capacity constraint for all phases. Constraint goes inactive when
- * the line is not built or available. This is the convex quadratic constrant
+ * the line is not built or available. This is the convex quadratic constraint
  *  
  * @author Russell Bent
  */

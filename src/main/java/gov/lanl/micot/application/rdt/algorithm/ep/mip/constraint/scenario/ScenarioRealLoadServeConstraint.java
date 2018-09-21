@@ -47,7 +47,6 @@ public class ScenarioRealLoadServeConstraint extends ScenarioConstraintFactory<E
     ScenarioLoadServeVariableFactory loadServeVariableFactory = new ScenarioLoadServeVariableFactory(getScenarios());
     ScenarioRealLoadPhaseVariableFactory loadVariableFactory = new ScenarioRealLoadPhaseVariableFactory(getScenarios());
     double mvaBase = model.getMVABase();
-
     for (Scenario scenario : getScenarios()) {
       for (ElectricPowerNode node : model.getNodes()) {
         for (Load load : node.getComponents(Load.class)) {

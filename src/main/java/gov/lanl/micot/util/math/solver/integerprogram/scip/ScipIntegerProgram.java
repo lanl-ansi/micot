@@ -29,6 +29,8 @@ public class ScipIntegerProgram extends IntegerProgram {
   private Map<LinearConstraint, ScipConstraint> constraintLookup = null;
   
   private double optimalityGap = -1;
+  private double timeout = 0;
+
 
   
   /**
@@ -47,6 +49,7 @@ public class ScipIntegerProgram extends IntegerProgram {
   protected ScipIntegerProgram(ScipIntegerProgramFlags flags) {
     super();
     optimalityGap = flags.getDouble(MathematicalProgramFlags.MIP_GAP_TOLERANCE_FLAG);   
+    timeout = flags.getDouble(MathematicalProgramFlags.TIMEOUT_FLAG);
   }
 
   @Override
@@ -92,6 +95,7 @@ public class ScipIntegerProgram extends IntegerProgram {
     setupScip();
     
     scip.setDoubleParam(Scip.SCIP_GAP_LIMIT_FLAG, optimalityGap);
+    scip.setDoubleParam(Scip.SCIP_TIME_OUT_FLAG, timeout);
 
     scip.preSolve();
     scip.solve();

@@ -339,34 +339,32 @@ public class ResilienceExpansionFlags extends MIPInfrastructureExpansionAlgorith
     ArrayList<Class<? extends ConstraintFactory>> defaults = new ArrayList<Class<? extends ConstraintFactory>>();
     defaults.add(LineConstructionBoundConstraint.class);
     defaults.add(LineHardenBoundConstraint.class);
-    defaults.add(LineSwitchBoundConstraint.class);
-    
+    defaults.add(LineSwitchBoundConstraint.class);    
     defaults.add(ScenarioLineUseBoundConstraint.class);    
     defaults.add(ScenarioLineSwitchBoundConstraint.class);
     defaults.add(ScenarioLineExistBoundConstraint.class);
-    
-    
+        
     defaults.add(ScenarioMicrogridBoundConstraint.class);
     defaults.add(ScenarioLoadServeBoundConstraint.class);
     defaults.add(ScenarioVoltageBoundConstraint.class); 
     defaults.add(ScenarioLineUseLinkingConstraint.class);    
     defaults.add(ScenarioSwitchLinkingConstraint.class);  
-    defaults.add(ScenarioLineExistLinkingConstraint.class);
-        
+    defaults.add(ScenarioLineExistLinkingConstraint.class);    
     defaults.add(ScenarioMicrogridLinkingConstraint.class);
+    
     // including these help with numerical stability when turning off the lines
     defaults.add(ScenarioLineRealPhaseCapacityConstraint.class);
     defaults.add(ScenarioLineReactivePhaseCapacityConstraint.class);            
     defaults.add(ScenarioLinePhaseCapacityConstraint.class);    
-    defaults.add(ScenarioRealLoadServeConstraint.class);
-    defaults.add(ScenarioReactiveLoadServeConstraint.class);
-    defaults.add(ScenarioRealPhaseBalanceConstraint.class);
-    defaults.add(ScenarioReactivePhaseBalanceConstraint.class);
+    defaults.add(ScenarioRealLoadServeConstraint.class); // bounds on load
+    defaults.add(ScenarioReactiveLoadServeConstraint.class); // bounds on load
+    defaults.add(ScenarioRealPhaseBalanceConstraint.class); // nodal flow balance
+    defaults.add(ScenarioReactivePhaseBalanceConstraint.class); // nodal flow balance
 
     defaults.add(ScenarioMicrogridCapacityConstraint.class);    
         
     getMicrogridConstraints(defaults);   
-    getCycleConstraints(defaults);
+    getCycleConstraints(defaults); // force a radial configuration
     getVoltageConstraints(defaults);
         
     return defaults;
@@ -453,7 +451,6 @@ public class ResilienceExpansionFlags extends MIPInfrastructureExpansionAlgorith
       double chanceConstraintEpsilon = getDouble(AlgorithmConstants.CHANCE_CONSTRAINT_EPSILON_KEY);  
       double loadPercentage = getDouble(AlgorithmConstants.LOAD_MET_KEY);
       double criticalLoadPercentage = getDouble(AlgorithmConstants.CRITICAL_LOAD_MET_KEY);
-
       
       Collection<Scenario> scenarios = getCollection(SCENARIOS_KEY, Scenario.class);
       

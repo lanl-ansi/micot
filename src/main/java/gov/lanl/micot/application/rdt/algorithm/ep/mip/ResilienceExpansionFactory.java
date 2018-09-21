@@ -23,6 +23,9 @@ public class ResilienceExpansionFactory extends MIPInfrastructureExpansionAlgori
 	  ElectricPowerMathProgramOptimizer algorithm = super.createOptimizer(new ResilienceExpansionFlags(flags));
 	  algorithm.addMathProgramFlag(MathematicalProgramFlags.DEBUG_ON_FLAG, false);
     algorithm.addMathProgramFlag(MathematicalProgramFlags.MIP_GAP_TOLERANCE_FLAG, 1e-3);
+    if (flags.containsKey(MathematicalProgramFlags.TIMEOUT_FLAG)) {
+      algorithm.addMathProgramFlag(MathematicalProgramFlags.MIP_GAP_TOLERANCE_FLAG, flags.getDouble(MathematicalProgramFlags.TIMEOUT_FLAG));
+    }
 	  return algorithm;
 	}
  

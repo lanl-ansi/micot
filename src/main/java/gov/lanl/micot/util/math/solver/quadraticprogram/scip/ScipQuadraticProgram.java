@@ -35,6 +35,7 @@ public class ScipQuadraticProgram extends QuadraticProgram {
 	private double feasGap = 1e-4;
 	private int    verboseLevel = 4;
 	private int    nlpVerboseLevel = 0;
+	private double timeout = 0;
 	
 	/**
 	 * Cleans up scip
@@ -51,6 +52,7 @@ public class ScipQuadraticProgram extends QuadraticProgram {
 		super();
 		optimalityGap = flags.getDouble(MathematicalProgramFlags.MIP_GAP_TOLERANCE_FLAG);   
 		feasGap = flags.getDouble(MathematicalProgramFlags.FEASABILITY_GAP_TOLERANCE_FLAG);
+		timeout = flags.getDouble(MathematicalProgramFlags.TIMEOUT_FLAG);
 	}
 
 	@Override
@@ -59,7 +61,7 @@ public class ScipQuadraticProgram extends QuadraticProgram {
 		cleanScip();
 	}
   
-	/** The default way of creating a ILOCplex object
+	/** The default way of creating a scip object
 	 * @throws SolverExceptionGeneric
 	 * @throws IloException
 	 */
@@ -102,6 +104,7 @@ public class ScipQuadraticProgram extends QuadraticProgram {
 		scip.setDoubleParam(Scip.SCIP_FEASBILITY_GAP_LIMIT_FLAG, feasGap); 
 		scip.setIntParam(Scip.SCIP_VERBOSE_FLAG, verboseLevel);
 		scip.setIntParam(Scip.SCIP_NLP_VERBOSE_FLAG, nlpVerboseLevel);
+    scip.setDoubleParam(Scip.SCIP_TIME_OUT_FLAG, timeout);
 		
 		scip.preSolve();
 		scip.solve();
@@ -113,11 +116,21 @@ public class ScipQuadraticProgram extends QuadraticProgram {
 		else if (status.equals(ScipStatus.SCIP_STATUS_INFEASIBLE)) {
 			throw new SolverExceptionNoSolution();
 		}
-		else if (!status.equals(ScipStatus.SCIP_STATUS_OPTIMAL) && !status.equals(ScipStatus.SCIP_STATUS_GAPLIMIT)) {
+		else if (!status.equals(ScipStatus.SCIP_STATUS_OPTIMAL) && !status.equals(ScipStatus.SCIP_STATUS_GAPLIMIT) && !status.equals(ScipStatus.SCIP_STATUS_TIMELIMIT)) {
 			throw new SolverExceptionGeneric(status + "");      
 		}
     
-		solution = new Solution(scip.getObjValue(), status.equals(ScipStatus.SCIP_STATUS_OPTIMAL));
+		solution = null;
+		try {		
+		  solution = new Solution(scip.getObjValue(), status.equals(ScipStatus.SCIP_STATUS_OPTIMAL));
+		}
+		catch (Exception e) {
+		  throw new SolverExceptionNoSolution(); 
+		}
+		catch (java.lang.Error e) {
+		  throw new SolverExceptionNoSolution();
+		}
+		
 		for (Variable var : getVariables()) {
 			solution.addValue(var, scip.getValue(varLookup.get(var)));
 		}
@@ -152,5 +165,5 @@ public class ScipQuadraticProgram extends QuadraticProgram {
     profile.setNumberOfNonZeroElements(0);
     profile.setNumberOfSemiContiniousVariables(0);
     profile.setNumberOfQuadraticConstraints(0);
-  }
+  }  
 }

@@ -1,14 +1,6 @@
 package gov.lanl.micot.infrastructure.ep.model.opendss;
 
-import gov.lanl.micot.infrastructure.ep.model.Battery;
-import gov.lanl.micot.infrastructure.ep.model.Bus;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
-import gov.lanl.micot.infrastructure.ep.model.ElectricPowerNode;
-import gov.lanl.micot.infrastructure.ep.model.Generator;
-import gov.lanl.micot.infrastructure.ep.model.Line;
-import gov.lanl.micot.infrastructure.ep.model.Load;
-import gov.lanl.micot.infrastructure.ep.model.ShuntCapacitor;
-import gov.lanl.micot.infrastructure.ep.model.Transformer;
 import gov.lanl.micot.infrastructure.model.Model;
 import gov.lanl.micot.infrastructure.model.ModelFactory;
 
@@ -26,7 +18,9 @@ public class OpenDSSModelFactory implements ModelFactory<ElectricPowerModel> {
 		}
 		return INSTANCE;
 	}
-		
+	
+	public static final boolean HACK_8500_NODE_SYSTEM = false; // the 8500 node system has some special features that need to be addressed during the import.  This should be refactored somehow
+	
 	/**
 	 * Constructor
 	 */

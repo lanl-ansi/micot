@@ -89,7 +89,6 @@ public class ScenarioChanceConstrainedRealLoadMetConstraint extends ScenarioCons
       }
 
       totalLoad /= mvaBase;
-      
       constraint.setRightHandSide(totalLoad * percentage);
       constraint.addVariable(chanceVariable, percentage * totalLoad);
       problem.addLinearConstraint(constraint);

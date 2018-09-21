@@ -92,6 +92,15 @@ public class OpenDSSIOConstants {
   public static final String TRANSFORMER_RESISTANCE = "R";
   public static final String TRANSFORMER_STATUS = "Enabled";
 
+  // reaactor commands
+  public static final String REACTORS = "PDElements";
+  public static final String NUMBER_OF_REACTORS = "Count";
+  public static final String FIRST_REACTOR = "First";
+  public static final String NEXT_REACTOR = "Next";
+  public static final String REACTOR_BUSES = "buses";
+
+  
+  
   // file related constants
   public static final String REDIRECT = "Redirect";
   public static final String BUSCOORDS = "Buscoords";

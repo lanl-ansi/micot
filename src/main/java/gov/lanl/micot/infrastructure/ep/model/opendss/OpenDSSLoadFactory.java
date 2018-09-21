@@ -114,7 +114,16 @@ public class OpenDSSLoadFactory extends LoadFactory {
       hasPhaseA = hasPhaseB = hasPhaseC = true;
     }
     else if (phases == 1) {
-      char phase = legacyid.charAt(legacyid.length() - 1);
+      
+      char phase = ' ';
+      if (!OpenDSSModelFactory.HACK_8500_NODE_SYSTEM) {
+        phase = legacyid.charAt(legacyid.length() - 1);
+      }
+      else {
+        phase = bus.toString().charAt(bus.toString().length() - 1);
+      }
+ 
+      
       if (phase == 'a') {
         reactivePhaseA = reactiveLoad;
         realPhaseA = realLoad;
@@ -133,12 +142,14 @@ public class OpenDSSLoadFactory extends LoadFactory {
       else {
         throw new RuntimeException("Don't have code for phase " + phase);
       }
-
     }
     else {
-      throw new RuntimeException("Don't have code for phases " + phases);
+      throw new RuntimeException("Don't have code for phases " + phases + " on load " + load);
     }
 
+//    System.out.println(bus);
+    
+    
     load.setAttribute(Load.NUM_PHASE_KEY, phases);
     load.setAttribute(Load.REACTIVE_LOAD_A_KEY, reactivePhaseA);
     load.setAttribute(Load.REAL_LOAD_A_KEY, realPhaseA);

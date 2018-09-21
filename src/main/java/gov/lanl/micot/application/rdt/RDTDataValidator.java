@@ -152,8 +152,8 @@ public class RDTDataValidator {
   private boolean checkLineHardenState(ElectricPowerModel model) {       
     HashSet<ElectricPowerFlowConnection> lines = new HashSet<ElectricPowerFlowConnection>();
     for (ElectricPowerFlowConnection connection : model.getFlowConnections()) {
-      boolean canHarden = connection.getAttribute(AlgorithmConstants.CAN_HARDEN_KEY, Boolean.class);
-      boolean isNewLine = connection.getAttribute(AlgorithmConstants.IS_NEW_LINE_KEY, Boolean.class);
+      boolean isNewLine = connection.getAttribute(AlgorithmConstants.IS_NEW_LINE_KEY) != null ? connection.getAttribute(AlgorithmConstants.IS_NEW_LINE_KEY, Boolean.class) : false;
+      boolean canHarden = connection.getAttribute(AlgorithmConstants.CAN_HARDEN_KEY) != null ? connection.getAttribute(AlgorithmConstants.CAN_HARDEN_KEY, Boolean.class) : false;
       if (canHarden == false && isNewLine == false) {
         lines.add(connection);
       }
@@ -184,8 +184,8 @@ public class RDTDataValidator {
   private boolean checkLineHardenAndNewState(ElectricPowerModel model) {       
     HashSet<ElectricPowerFlowConnection> lines = new HashSet<ElectricPowerFlowConnection>();
     for (ElectricPowerFlowConnection connection : model.getFlowConnections()) {
-      boolean canHarden = connection.getAttribute(AlgorithmConstants.CAN_HARDEN_KEY, Boolean.class);
-      boolean isNewLine = connection.getAttribute(AlgorithmConstants.IS_NEW_LINE_KEY, Boolean.class);
+      boolean isNewLine = connection.getAttribute(AlgorithmConstants.IS_NEW_LINE_KEY) != null ? connection.getAttribute(AlgorithmConstants.IS_NEW_LINE_KEY, Boolean.class) : false;
+      boolean canHarden = connection.getAttribute(AlgorithmConstants.CAN_HARDEN_KEY) != null ? connection.getAttribute(AlgorithmConstants.CAN_HARDEN_KEY, Boolean.class) : false;
       if (canHarden && isNewLine) {
         lines.add(connection);
       }

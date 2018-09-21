@@ -38,8 +38,15 @@ public class OpenDSSBusFactory extends BusFactory {
     
     openDSSBus.setCoordinate(new PointImpl(x,y));
     openDSSBus.setAttribute(Bus.NAME_KEY, name);
-    openDSSBus.setMaximumVoltagePU(1.2); // some defaults.... loads will set their own limits
-    openDSSBus.setMinimumVoltagePU(0.8);
+    
+    if (!OpenDSSModelFactory.HACK_8500_NODE_SYSTEM) {
+      openDSSBus.setMaximumVoltagePU(1.2); // some defaults.... loads will set their own limits
+      openDSSBus.setMinimumVoltagePU(0.8);
+    }
+    else {
+      openDSSBus.setMaximumVoltagePU(1.12); 
+      openDSSBus.setMinimumVoltagePU(0.88);
+    }
     openDSSBus.setAttribute(Bus.VOLTAGE_PU_A_KEY, 1.0);
     openDSSBus.setAttribute(Bus.VOLTAGE_PU_B_KEY, 1.0);
     openDSSBus.setAttribute(Bus.VOLTAGE_PU_C_KEY, 1.0);

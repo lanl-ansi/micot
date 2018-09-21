@@ -83,6 +83,7 @@ public class LPNormIOConstants {
   public static final String CPLEX_TAG = "cplex";
   public static final String SCIP_TAG = "scip";
   public static final String BONMIN_TAG = "bonmin";
-
+  
+  public static final String SOLVER_TIMEOUT_TAG = "solver_iteration_timeout";
   
 }

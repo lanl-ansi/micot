@@ -22,6 +22,7 @@ import gov.lanl.micot.util.io.json.JSON;
 import gov.lanl.micot.util.io.json.JSONArray;
 import gov.lanl.micot.util.io.json.JSONObject;
 import gov.lanl.micot.util.io.json.JSONReader;
+import gov.lanl.micot.util.math.solver.mathprogram.MathematicalProgramFlags;
 import gov.lanl.micot.util.math.solver.quadraticprogram.bonmin.BonminQuadraticProgramFactory;
 import gov.lanl.micot.util.math.solver.quadraticprogram.scip.ScipQuadraticProgramFactory;
 
@@ -49,6 +50,7 @@ public class LPNormJsonProjectConfigurationReader {
   private static final String DEFAULT_ALGORITHM = LPNormIOConstants.SBD_TAG;
   private static final String DEFAULT_SOLVER = LPNormIOConstants.SCIP_TAG;
   private static final String DEFAULT_POWER_FLOW = AlgorithmConstants.LINDIST_FLOW_POWER_FLOW_MODEL;
+  private static final double DEFAULT_TIMEOUT = Double.POSITIVE_INFINITY;
   
   /**
    * Constructor
@@ -169,6 +171,7 @@ public class LPNormJsonProjectConfigurationReader {
     String algorithmChoice = algorithm.containsKey(LPNormIOConstants.ALGORITHM_TAG) ? algorithm.getString(LPNormIOConstants.ALGORITHM_TAG) : DEFAULT_ALGORITHM;
     String solverChoice = algorithm.containsKey(LPNormIOConstants.SOLVER_TAG) ? algorithm.getString(LPNormIOConstants.SOLVER_TAG) : DEFAULT_SOLVER;
     String powerFlowChoice = algorithm.containsKey(LPNormIOConstants.POWER_FLOW_TAG) ? algorithm.getString(LPNormIOConstants.POWER_FLOW_TAG) : DEFAULT_POWER_FLOW;
+    double timeout = algorithm.containsKey(LPNormIOConstants.SOLVER_TIMEOUT_TAG) ? algorithm.getDouble(LPNormIOConstants.SOLVER_TIMEOUT_TAG) : DEFAULT_TIMEOUT;
     
     if (algorithmChoice.equals(LPNormIOConstants.SBD_TAG)) {
       configuration.setAlgorithmFactoryClass(SBDResilienceFactory.class.getCanonicalName());
@@ -194,6 +197,7 @@ public class LPNormJsonProjectConfigurationReader {
     flags.put(AlgorithmConstants.CHANCE_CONSTRAINT_EPSILON_KEY, chanceEpsilon);
     flags.put(AlgorithmConstants.PHASE_VARIATION_KEY, phaseVariation);
     flags.put(AlgorithmConstants.POWER_FLOW_MODEL_KEY, powerFlowChoice);
+    flags.put(MathematicalProgramFlags.TIMEOUT_FLAG, timeout);
         
     if (solverChoice.equals(LPNormIOConstants.SCIP_TAG)) {
       flags.put(MIPInfrastructureExpansionAlgorithmFlags.MATH_PROGRAM_FACTORY_KEY, ScipQuadraticProgramFactory.class.getCanonicalName());

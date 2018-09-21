@@ -35,9 +35,9 @@ public abstract class QuadraticProgram extends MathematicalProgramImpl  {
   private LinearConstraintStore _linearConstraints                         = null;
   private QuadraticConstraintStore _quadraticConstraints                   = null;
   
-  private QuadraticObjective _quadraticObjective                 = null;
+  private QuadraticObjective _quadraticObjective                           = null;
 
-	private Map<ContinuousVariable, Integer>   continuousVariables             = null;
+	private Map<ContinuousVariable, Integer>   continuousVariables            = null;
 	private Map<DiscreteVariable, Integer>     integerVariables               = null;
 	
 	/**

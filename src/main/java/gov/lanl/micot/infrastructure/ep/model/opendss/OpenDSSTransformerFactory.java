@@ -68,13 +68,19 @@ public class OpenDSSTransformerFactory extends TransformerFactory {
     Transformer transformer = registerTransformer(legacyid);   
     
     boolean status = activeTransformer.getBoolean(OpenDSSIOConstants.TRANSFORMER_STATUS);
-    double rating = objTransformer.getDouble(OpenDSSIOConstants.TRANSFORMER_CAPACITY) / 1000.0;    
+    double rating = 0;
+    if (OpenDSSModelFactory.HACK_8500_NODE_SYSTEM) {
+      rating = objTransformer.getDouble(OpenDSSIOConstants.TRANSFORMER_CAPACITY);    
+    }
+    else {
+      rating = objTransformer.getDouble(OpenDSSIOConstants.TRANSFORMER_CAPACITY) / 1000.0 ;          
+    }
     
     // Resistance = R * (MVA*10^6) / (V_LL * 10^3)^2
     double ohmsConversion = (100000.0) / (230.0 * 230.0 * 1000.0);    
     double resistance = objTransformer.getDouble(OpenDSSIOConstants.TRANSFORMER_RESISTANCE) * ohmsConversion;
     double reactance = 0.0; 
-        
+
     // TODO get extra fields in, and add the missing fields, also like off diagnol resistance terms
     transformer.setCapacityRating(rating);
     transformer.setLongTermEmergencyCapacityRating(rating);    
@@ -112,6 +118,7 @@ public class OpenDSSTransformerFactory extends TransformerFactory {
         ++numberOfPhases;
       }
     }
+    
     transformer.setAttribute(Transformer.HAS_PHASE_A_KEY,carriesPhaseA);
     transformer.setAttribute(Transformer.HAS_PHASE_B_KEY,carriesPhaseB);
     transformer.setAttribute(Transformer.HAS_PHASE_C_KEY,carriesPhaseC);

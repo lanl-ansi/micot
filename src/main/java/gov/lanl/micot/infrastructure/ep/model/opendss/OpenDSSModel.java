@@ -164,7 +164,10 @@ public class OpenDSSModel extends ElectricPowerModelImpl implements ElectricPowe
       Bus fromBus = busMap.get(fromBusName);
       Bus toBus = busMap.get(toBusName);
       Line line = getLineFactory().createLine(lines, fromBus, toBus, activeElement);
-      addEdge(line, getNode(fromBus), getNode(toBus));
+      
+      if (getAsset(line) == null) {
+        addEdge(line, getNode(fromBus), getNode(toBus));        
+      }      
       lines.getInteger(OpenDSSIOConstants.NEXT_LINE);          
     }    
 		
@@ -194,7 +197,45 @@ public class OpenDSSModel extends ElectricPowerModelImpl implements ElectricPowe
       Transformer transformer = getTransformerFactory().createTransformer(transformers, fromBus, toBus, activeElement);
       addEdge(transformer, getNode(fromBus), getNode(toBus));
       transformers.getInteger(OpenDSSIOConstants.NEXT_TRANSFORMER);          
+      
+//      System.out.println(transformer + " " + fromBus + " " + toBus);
     }    		
+    
+    // get the reactors/capacitors
+/*    ComObject reactors = circuit.call(OpenDSSIOConstants.REACTORS);
+    int numReactors = reactors.getInteger(OpenDSSIOConstants.NUMBER_OF_REACTORS);
+    reactors.getInteger(OpenDSSIOConstants.FIRST_REACTOR); 
+    System.out.println(numReactors);
+    
+    for (int i = 0; i < numReactors; ++i) {
+      ComObject activeElement = circuit.call(OpenDSSIOConstants.ELEMENT);    
+      ComObject property = activeElement.call(OpenDSSIOConstants.PROPERTIES, "name");     
+      String busNames = property.getString(OpenDSSIOConstants.PROPERTY_VALUE);
+      System.out.println(busNames);
+      
+      busNames = busNames.substring(1,busNames.length()-2);
+      
+      StringTokenizer tokenizer = new StringTokenizer(busNames, ",");
+      String fromBusName = tokenizer.nextToken().trim();
+      String toBusName = tokenizer.nextToken().trim();
+   
+      if (fromBusName.contains(".")) {
+        fromBusName = fromBusName.substring(0, fromBusName.indexOf("."));
+      }
+      if (toBusName.contains(".")) {
+        toBusName = toBusName.substring(0, toBusName.indexOf("."));
+      }
+
+      Bus fromBus = busMap.get(fromBusName);
+      Bus toBus = busMap.get(toBusName);
+      
+      System.out.println(fromBus + " " + toBus);
+      
+//      Transformer transformer = getTransformerFactory().createTransformer(transformers, fromBus, toBus, activeElement);
+  //    addEdge(transformer, getNode(fromBus), getNode(toBus));
+      transformers.getInteger(OpenDSSIOConstants.NEXT_REACTOR);          
+    }       */
+    
     
 
 	}

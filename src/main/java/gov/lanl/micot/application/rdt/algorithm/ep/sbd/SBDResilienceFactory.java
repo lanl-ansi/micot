@@ -36,10 +36,15 @@ public class SBDResilienceFactory extends ScenarioBasedDecompositionFactoryImpl<
     
 	  SBDResilienceAlgorithm algorithm = new SBDResilienceAlgorithm(scenarios);
 	  
+	  double innerTimeout = oFlags.containsKey(MathematicalProgramFlags.TIMEOUT_FLAG) ? oFlags.getDouble(MathematicalProgramFlags.TIMEOUT_FLAG) : Double.POSITIVE_INFINITY;
+    double outerTimeout = oFlags.containsKey(MathematicalProgramFlags.TIMEOUT_FLAG) ? oFlags.getDouble(MathematicalProgramFlags.TIMEOUT_FLAG) : Double.POSITIVE_INFINITY;
+	  
 	  algorithm.addInnerMathProgramFlag(MathematicalProgramFlags.DEBUG_ON_FLAG, false);
 	  algorithm.addInnerMathProgramFlag(MathematicalProgramFlags.MIP_GAP_TOLERANCE_FLAG, 1e-3);
+    algorithm.addInnerMathProgramFlag(MathematicalProgramFlags.TIMEOUT_FLAG, innerTimeout);
 	  algorithm.addOuterMathProgramFlag(MathematicalProgramFlags.DEBUG_ON_FLAG, false);
 	  algorithm.addOuterMathProgramFlag(MathematicalProgramFlags.MIP_GAP_TOLERANCE_FLAG, 1e-3);
+	  algorithm.addOuterMathProgramFlag(MathematicalProgramFlags.TIMEOUT_FLAG, outerTimeout);
 
 	  // pull out and overwrite parameters
 	  for (String key : flags.keySet()) {

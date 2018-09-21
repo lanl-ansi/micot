@@ -30,13 +30,12 @@ public class ExportLPNorm {
   public static void main(String[] args) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
     
     // create the example for running the lpnorm code
-    int scenarios = 100;
+    int scenarios = 1;
     
-    String dir = "application_data" + File.separatorChar + "rdt" + File.separatorChar + "config" 
-    + File.separatorChar + "123_Network" + File.separatorChar;
-    String out = "network123";
-    String directories[] = { "0.5 Damage Rate" };
-    String output_postfix[] = { "_50" };
+    String dir = "application_data" + File.separatorChar + "rdt" + File.separatorChar + "config" + File.separatorChar + "8500_Network" + File.separatorChar;
+    String out = "network8500";
+    String directories[] = { "" };
+    String output_postfix[] = { "" };
     String master_fn = "config.json";    
  
     

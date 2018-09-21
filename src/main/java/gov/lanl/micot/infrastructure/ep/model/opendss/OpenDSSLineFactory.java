@@ -61,12 +61,13 @@ public class OpenDSSLineFactory extends LineFactory {
     Line line = registerLine(legacyid);   
 
     // TODO ... get the capacity calculations correct... some dicrepancies about what baseKV means in a 3 phase system., e.e. a 24.9 kv
-    // system somehow is 14.4 in a 3 phase system.... we need to get the 3 phase terms of the resistance/reactance as well
+    // system somehow is 14.4 in a 3 phase system.... 
     
     double baseKV = fromBus.getSystemVoltageKV();
     double ampsRating = objLine.getDouble(OpenDSSIOConstants.LINE_CAPACITY);
     double emergAmpsRating = objLine.getDouble(OpenDSSIOConstants.LINE_CAPACITY);
-    double capacity = ampsRating * 14.4 / 1000.0; // HACK!!! baseKV; TODO Fix this... need to figure out where to get the data
+    double capacity = ampsRating * 14.4 / 1000.0; // HACK!!! baseKV; TODO Fix this... need to figure out where to get the data  
+    
     double emergencyCapacity = emergAmpsRating * baseKV;
     boolean status = activeLine.getBoolean(OpenDSSIOConstants.LINE_STATUS);
     double length = objLine.getDouble(OpenDSSIOConstants.LINE_LENGTH);
@@ -74,31 +75,84 @@ public class OpenDSSLineFactory extends LineFactory {
     ArrayList<Double> rmatrix = objLine.getDoubleArray(OpenDSSIOConstants.LINE_RMATRIX);
     ArrayList<Double> xmatrix = objLine.getDoubleArray(OpenDSSIOConstants.LINE_XMATRIX);
     
+    for (int i = 0; i < rmatrix.size(); ++i) {
+      if (rmatrix.get(i) <= 1e-20) {
+        rmatrix.set(i, 0.0);
+      }
+    }
+    
+    for (int i = 0; i < xmatrix.size(); ++i) {
+      if (xmatrix.get(i) <= 1e-20) {
+        xmatrix.set(i, 0.0);
+      }
+    }
+    
+    
     int numberOfPhases = 3;
-    String bus1PhaseName = objLine.getString(OpenDSSIOConstants.LINE_FROM_BUS);
+    String bus1PhaseName = objLine.getString(OpenDSSIOConstants.LINE_FROM_BUS);    
+    
     boolean carriesPhaseA = false;
     boolean carriesPhaseB = false;
     boolean carriesPhaseC = false;
     int idx = bus1PhaseName.indexOf(".");
-    if (idx == -1) {
-      carriesPhaseA = carriesPhaseB = carriesPhaseC = true;
+    
+
+    if (OpenDSSModelFactory.HACK_8500_NODE_SYSTEM) {
+      if (idx == -1) {
+        carriesPhaseA = carriesPhaseB = carriesPhaseC = true;
+      }
+      else if (!bus1PhaseName.startsWith("x")){
+        String tmp = bus1PhaseName.substring(idx,bus1PhaseName.length());      
+        if (tmp.contains("1")) {
+          carriesPhaseA = true;
+          ++numberOfPhases;
+        }
+        if (tmp.contains("2")) {
+          carriesPhaseB = true;
+          ++numberOfPhases;
+        }
+        if (tmp.contains("3")) {
+          carriesPhaseC = true;
+          ++numberOfPhases;
+        }
+      }
+      else {
+        String tmp = bus1PhaseName.substring(idx-1,bus1PhaseName.length());
+        if (tmp.contains("a")) {
+          carriesPhaseA = true;
+          ++numberOfPhases;
+        }
+        if (tmp.contains("b")) {
+          carriesPhaseB = true;
+          ++numberOfPhases;
+        }
+        if (tmp.contains("c")) {
+          carriesPhaseC = true;
+          ++numberOfPhases;
+        }        
+      }            
     }
     else {
-      String tmp = bus1PhaseName.substring(idx,bus1PhaseName.length());
-      if (tmp.contains("1")) {
-        carriesPhaseA = true;
-        ++numberOfPhases;
+      if (idx == -1) {
+        carriesPhaseA = carriesPhaseB = carriesPhaseC = true;
       }
-      if (tmp.contains("2")) {
-        carriesPhaseB = true;
-        ++numberOfPhases;
-      }
-      if (tmp.contains("3")) {
-        carriesPhaseC = true;
-        ++numberOfPhases;
-      }
+      else {
+        String tmp = bus1PhaseName.substring(idx,bus1PhaseName.length());      
+        if (tmp.contains("1")) {
+          carriesPhaseA = true;
+          ++numberOfPhases;
+        }
+        if (tmp.contains("2")) {
+          carriesPhaseB = true;
+          ++numberOfPhases;
+        }
+        if (tmp.contains("3")) {
+          carriesPhaseC = true;
+          ++numberOfPhases;
+        }
+      }            
     }
-    
+        
    // Resistance = R * (MVA*10^6) / (V_LL * 10^3)^2
     double ohmsConversion = (100000.0) / (230.0 * 230.0 * 1000.0);    
     
@@ -137,11 +191,12 @@ public class OpenDSSLineFactory extends LineFactory {
     points.add(fromBus.getCoordinate());
     points.add(toBus.getCoordinate());
     line.setCoordinates(new LineImpl(points));    
+    
     return line;
   }
   
   /**
-   * Creates an ieiss line from another line
+   * Creates an opendss line from another line
    * @param line
    * @param id
    * @param id2
@@ -191,9 +246,9 @@ public class OpenDSSLineFactory extends LineFactory {
    * @return
    */
   public Line createLine(String lineData, Bus fromBus, Bus toBus, String linecode) {
-	lineData = lineData.replace("\"", "");
-	String legacyid = OpenDSSIOConstants.getData(lineData,"Line", ".");
-	Line line = registerLine(legacyid); 
+    lineData = lineData.replace("\"", "");
+    String legacyid = OpenDSSIOConstants.getData(lineData,"Line", ".");
+    Line line = registerLine(legacyid); 
 	
     double baseKV = fromBus.getSystemVoltageKV();
     double ampsRating = 0.0;

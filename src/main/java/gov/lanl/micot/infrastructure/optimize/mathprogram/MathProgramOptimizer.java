@@ -149,7 +149,7 @@ public class MathProgramOptimizer<N extends Node, M extends Model> extends Optim
     for (InitialSolutionFactory<M> factory : getInitialSolutionFactories()) {
       factory.updateInitialSolution(model, problem);
     }
-        
+    
 	  Solution solution = null;
     try {
       Timer timer = new Timer();
