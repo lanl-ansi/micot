@@ -1,0 +1,12 @@
+
+{
+    "scenarios":[
+        {
+            "probability":0.01,
+            "index":1,
+            "scenario_builder_factory":"gov.lanl.micot.application.scenariobuilder.UniformEdgeDamageScenarioConfigurationBuilder",
+            "modifications":[
+            ]
+        }
+    ]
+}

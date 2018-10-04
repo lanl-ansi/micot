@@ -11,9 +11,6 @@ public class ScenarioBasedDecompositionOptimizerFlags extends OptimizerFlags {
 
 	private static final long serialVersionUID = 1L;
 
-//	public static final String OUTER_OPTIMIZER_FACTORY_KEY = "OuterOptimizerFactory";
-	//public static final String INNER_OPTIMIZER_FACTORY_KEY = "InnerOptimizerFactory";
-
 	public static final String OUTER_OPTIMIZER_FLAGS_KEY = "OuterOptimizerFlags";
 	public static final String INNER_OPTIMIZER_FLAGS_KEY = "InnerOptimizerFlags";
 

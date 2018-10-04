@@ -186,7 +186,7 @@ public class CPLEXQuadraticProgram extends QuadraticProgram {
     cplex.setParam(IloCplex.IntParam.RepeatPresolve, doRepeatedPresolve ? -1 : 0);
     cplex.setParam(IloCplex.IntParam.Threads, maxThreads);
     cplex.setParam(IloCplex.BooleanParam.PreInd, doPresolve ? true : false);
-    cplex.setParam(IloCplex.IntParam.SolutionTarget, 0); // makes this a parameter. 0 is the default
+  //  cplex.setParam(IloCplex.IntParam.SolutionTarget, 0); // makes this a parameter. 0 is the default
 
     cplex.setParam(IloCplex.DoubleParam.Barrier.QCPConvergeTol, qcpConvergeTol);
     cplex.setParam(IloCplex.DoubleParam.Barrier.ConvergeTol, convergeTol);
@@ -219,7 +219,7 @@ public class CPLEXQuadraticProgram extends QuadraticProgram {
       }
 
       if (!debug) {
-        cplex.setOut(null);
+//        cplex.setOut(null);
       }
 
       if (cplex.solve()) {
@@ -230,7 +230,8 @@ public class CPLEXQuadraticProgram extends QuadraticProgram {
           System.out.println("Solution value = " + cplex.getObjValue());
         }
 
-        if (!status.equals(Status.Optimal)) {
+        if (!status.equals(Status.Optimal) && !status.equals(Status.Feasible)) {
+          System.out.println(status);
           throw new SolverExceptionTimeout();
         }
 

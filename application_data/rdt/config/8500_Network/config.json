@@ -1,0 +1,23 @@
+
+{
+    "version":1.0,
+    "application":{
+        "application_factory":"gov.lanl.micot.application.rdt.RDTApplicationFactory"
+    },
+    "models":[
+        {
+            "model_file":"application_data\\rdt\\data\\8500_Network\\Master-unbal.DSS",
+            "model_file_factory":"gov.lanl.micot.infrastructure.ep.io.ElectricPowerModelFileFactory"
+        }
+    ],
+    "algorithms":[
+        {
+            "algorithm_factory":"gov.lanl.micot.application.rdt.algorithm.ep.mip.ResilienceExpansionFactory",
+            "CriticalLoadMet":0.98,
+            "LoadMet":1.0,
+            "PhaseVariation":1.0
+        }
+    ],
+    "simulators":[
+    ]
+}
