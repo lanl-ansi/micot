@@ -130,7 +130,7 @@ public class ResilienceExpansionFlags extends MIPInfrastructureExpansionAlgorith
 		put(AlgorithmConstants.CRITICAL_LOAD_MET_KEY, AlgorithmConstants.DEFAULT_CRITICAL_LOAD_MET);
 		put(AlgorithmConstants.IS_DISCRETE_GENERATION_KEY, AlgorithmConstants.DEFAULT_IS_DISCRETE_GENERATION);
     put(AlgorithmConstants.IS_CHANCE_CONSTRAINT_KEY, AlgorithmConstants.DEFAULT_IS_CHANCE_CONSTRAINT);
-    put(AlgorithmConstants.USE_CYCLE_ENUMERATION_CONSTRAINT_KEY, AlgorithmConstants.DEFAULT_USE_CYCLE_ENUMERATION_CONSTRAINT);
+    put(AlgorithmConstants.CYCLE_MODEL_CONSTRAINT_KEY, AlgorithmConstants.DEFAULT_CYCLE_CONSTRAINT);
     put(AlgorithmConstants.POWER_FLOW_MODEL_KEY, AlgorithmConstants.DEFAULT_POWER_FLOW_MODEL);
 	}
 
@@ -161,8 +161,8 @@ public class ResilienceExpansionFlags extends MIPInfrastructureExpansionAlgorith
     if (get(AlgorithmConstants.IS_CHANCE_CONSTRAINT_KEY) == null) {
       put(AlgorithmConstants.IS_CHANCE_CONSTRAINT_KEY, AlgorithmConstants.DEFAULT_IS_CHANCE_CONSTRAINT);
     }
-    if (get(AlgorithmConstants.USE_CYCLE_ENUMERATION_CONSTRAINT_KEY) == null) {
-      put(AlgorithmConstants.USE_CYCLE_ENUMERATION_CONSTRAINT_KEY, AlgorithmConstants.DEFAULT_USE_CYCLE_ENUMERATION_CONSTRAINT);
+    if (get(AlgorithmConstants.CYCLE_MODEL_CONSTRAINT_KEY) == null) {
+      put(AlgorithmConstants.CYCLE_MODEL_CONSTRAINT_KEY, AlgorithmConstants.DEFAULT_CYCLE_CONSTRAINT);
     }
     if (get(AlgorithmConstants.POWER_FLOW_MODEL_KEY) == null) {
       put(AlgorithmConstants.POWER_FLOW_MODEL_KEY, AlgorithmConstants.DEFAULT_POWER_FLOW_MODEL);
@@ -216,15 +216,15 @@ public class ResilienceExpansionFlags extends MIPInfrastructureExpansionAlgorith
    */
   @SuppressWarnings("rawtypes")
   private void getCycleConstraintVariables(ArrayList<Class<? extends VariableFactory>> defaults) {
-    if (get(AlgorithmConstants.USE_CYCLE_ENUMERATION_CONSTRAINT_KEY) == null) {
-      put(AlgorithmConstants.USE_CYCLE_ENUMERATION_CONSTRAINT_KEY, AlgorithmConstants.DEFAULT_USE_CYCLE_ENUMERATION_CONSTRAINT);
+    if (get(AlgorithmConstants.CYCLE_MODEL_CONSTRAINT_KEY) == null) {
+      put(AlgorithmConstants.CYCLE_MODEL_CONSTRAINT_KEY, AlgorithmConstants.DEFAULT_CYCLE_CONSTRAINT);
     }
     
-    boolean isEnumerationConstraint = getBoolean(AlgorithmConstants.USE_CYCLE_ENUMERATION_CONSTRAINT_KEY);
-    if (isEnumerationConstraint) {
+    AlgorithmConstants.CycleModel cycleConstraint = get(AlgorithmConstants.CYCLE_MODEL_CONSTRAINT_KEY, AlgorithmConstants.CycleModel.class);
+    if (cycleConstraint == AlgorithmConstants.CycleModel.ENUMERATION) {
       defaults.add(ScenarioLineCycleVariableFactory.class);
     }
-    else {
+    else if (cycleConstraint == AlgorithmConstants.CycleModel.TREE) {
       defaults.add(ScenarioTreeFlowChoiceVariableFactory.class);
       defaults.add(ScenarioTreeFlowVariableFactory.class);
       defaults.add(ScenarioVirtualFlowChoiceVariableFactory.class);
@@ -303,13 +303,13 @@ public class ResilienceExpansionFlags extends MIPInfrastructureExpansionAlgorith
    */
   @SuppressWarnings("rawtypes")
   private void getCycleConstraints(ArrayList<Class<? extends ConstraintFactory>> defaults) {
-    boolean isCycleEnumeration = getBoolean(AlgorithmConstants.USE_CYCLE_ENUMERATION_CONSTRAINT_KEY);    
-    if (isCycleEnumeration) {
+    AlgorithmConstants.CycleModel cycle = get(AlgorithmConstants.CYCLE_MODEL_CONSTRAINT_KEY, AlgorithmConstants.CycleModel.class);    
+    if (cycle == AlgorithmConstants.CycleModel.ENUMERATION) {
       defaults.add(ScenarioLineCycleBoundConstraint.class);
       defaults.add(ScenarioNoCycleConstraint.class);
       defaults.add(ScenarioIncludeEdgeConstraint.class);
     }
-    else {
+    else if (cycle == AlgorithmConstants.CycleModel.TREE) {
       defaults.add(ScenarioTreeLinkingConstraint.class);
       defaults.add(ScenarioNodeFlowConstraint.class);
       defaults.add(ScenarioTreeConstraint.class);

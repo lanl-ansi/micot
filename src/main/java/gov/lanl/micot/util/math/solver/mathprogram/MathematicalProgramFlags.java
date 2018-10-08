@@ -19,12 +19,14 @@ public class MathematicalProgramFlags extends FlagsImpl {
 	public static final String DYNAMIC_OBJECTIVES_FLAG = "DYNAMIC_OBJECTIVES_FLAG";
 	public static final String MIP_GAP_TOLERANCE_FLAG = "MIP_GAP_TOLERANCE";
 	public static final String FEASABILITY_GAP_TOLERANCE_FLAG = "FEASABILITY_GAP_TOLERANCE";
+	public static final String PRESOLVE_FLAG = "PRESOLVE";
 
 	private static final String DEFAULT_MATHEMATICAL_PROGRAM_FACTORY = "gov.lanl.util.math.solver.linearprogram.drasys.DrasysLinearProgramFactory";
 	private static final boolean DEFAULT_DEBUG = false;
 	private static final boolean DEFAULT_DYNAMIC_CONSTRAINTS = false;
 	private static final boolean DEFAULT_DYNAMIC_OBJECTIVES = false;
-
+  private static final boolean DEFAULT_PRESOLVE = true;
+	
 	private static final Double DEFAULT_TIMEOUT = Double.POSITIVE_INFINITY;
 	private static final Double DEFAULT_OPTIMALITY_GAP = 1e-4;
 	private static final Double DEFAULT_FEASABILITY_GAP = 1e-4;
@@ -41,6 +43,7 @@ public class MathematicalProgramFlags extends FlagsImpl {
 		put(DYNAMIC_OBJECTIVES_FLAG, DEFAULT_DYNAMIC_OBJECTIVES);
 		put(MIP_GAP_TOLERANCE_FLAG, DEFAULT_OPTIMALITY_GAP);
 		put(FEASABILITY_GAP_TOLERANCE_FLAG, DEFAULT_FEASABILITY_GAP);
+		put(PRESOLVE_FLAG , DEFAULT_PRESOLVE);
 	}
 
 }

@@ -26,6 +26,7 @@ public class Scip {
   public static final String SCIP_VERBOSE_FLAG = "display/verblevel";
   public static final String SCIP_NLP_VERBOSE_FLAG = "heuristics/subnlp/nlpverblevel";
   public static final String SCIP_TIME_OUT_FLAG = "limits/time";
+  public static final String SCIP_PRESOLVE_ROUNDS = "presolving/maxrounds";
     
   /**
    * Constructor
