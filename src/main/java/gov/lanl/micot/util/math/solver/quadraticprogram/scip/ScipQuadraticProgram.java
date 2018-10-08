@@ -36,6 +36,8 @@ public class ScipQuadraticProgram extends QuadraticProgram {
 	private int    verboseLevel = 4;
 	private int    nlpVerboseLevel = 0;
 	private double timeout = 0;
+	private boolean presolve = true;
+	
 	
 	/**
 	 * Cleans up scip
@@ -53,6 +55,7 @@ public class ScipQuadraticProgram extends QuadraticProgram {
 		optimalityGap = flags.getDouble(MathematicalProgramFlags.MIP_GAP_TOLERANCE_FLAG);   
 		feasGap = flags.getDouble(MathematicalProgramFlags.FEASABILITY_GAP_TOLERANCE_FLAG);
 		timeout = flags.getDouble(MathematicalProgramFlags.TIMEOUT_FLAG);
+		presolve = flags.getBoolean(MathematicalProgramFlags.PRESOLVE_FLAG);
 	}
 
 	@Override
@@ -105,6 +108,7 @@ public class ScipQuadraticProgram extends QuadraticProgram {
 		scip.setIntParam(Scip.SCIP_VERBOSE_FLAG, verboseLevel);
 		scip.setIntParam(Scip.SCIP_NLP_VERBOSE_FLAG, nlpVerboseLevel);
     scip.setDoubleParam(Scip.SCIP_TIME_OUT_FLAG, timeout);
+    scip.setIntParam(Scip.SCIP_PRESOLVE_ROUNDS, presolve ? -1 : 0);
 		
 		scip.preSolve();
 		scip.solve();

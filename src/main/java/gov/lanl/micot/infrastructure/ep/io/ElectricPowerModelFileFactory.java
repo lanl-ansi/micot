@@ -111,6 +111,16 @@ public class ElectricPowerModelFileFactory implements ModelFileFactory<ElectricP
     catch (Exception e) {
       
     }
+    
+    try {
+      if (Class.forName("gov.lanl.micot.application.lpnorm.model.LPNormModel") != null) {
+        registerClass(Class.forName("gov.lanl.micot.application.lpnorm.model.LPNormModel"), Class.forName("gov.lanl.micot.application.lpnorm.io.LPNormFile"));
+        registerExtension("json",Class.forName("gov.lanl.micot.application.lpnorm.io.LPNormFile"));
+      }
+    }
+    catch (Exception e) {
+      
+    }
 
     
   }
