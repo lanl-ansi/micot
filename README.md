@@ -184,7 +184,7 @@ TODO
 
 TODO
 
-## Run Resilient Design Executable
+## Run Resilient Design Executable (RDT)
 
 The resilient design executable runs a program that optimally designs electric power distribution systems for resiliency applications. The details of the model are provided in this paper
 
