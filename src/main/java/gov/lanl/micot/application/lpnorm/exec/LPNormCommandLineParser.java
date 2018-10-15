@@ -18,14 +18,29 @@ public class LPNormCommandLineParser {
 
   private String rdtInputFile = null;
   private String outputFile = null;
+  
+  private String busShpFile = null;
+  private String genShpFile = null;
+  private String loadShpFile = null;
+  private String branchShpFile = null;
 
   private static final String INPUT_FLAG = "c";
   private static final String OUTPUT_FLAG = "e";
   private static final String HELP_FLAG = "h";
+  
+  private static final String BUS_SHP_FLAG = "bs";
+  private static final String GEN_SHP_FLAG = "gs";
+  private static final String LOAD_SHP_FLAG = "ls";
+  private static final String BRANCH_SHP_FLAG = "brs";
 
   private static final String INPUT_LONG_FLAG = "config";
   private static final String OUTPUT_LONG_FLAG = "export";
   private static final String HELP_LONG_FLAG = "help";
+
+  private static final String BUS_SHP_LONG_FLAG = "bus_shapefile";
+  private static final String GEN_SHP_LONG_FLAG = "generator_shapefile";
+  private static final String LOAD_SHP_LONG_FLAG = "load_shapefile";
+  private static final String BRANCH_SHP_LONG_FLAG = "branch_shapefile";
 
   /**
    * Constructor
@@ -46,7 +61,12 @@ public class LPNormCommandLineParser {
     options = new Options();
     options.addOption(new Option(HELP_FLAG, HELP_LONG_FLAG, false, "print lpnorm rdt help"));
     options.addOption(new Option(INPUT_FLAG, INPUT_LONG_FLAG, true, "RDTJson input file"));
-    options.addOption(new Option(OUTPUT_FLAG, OUTPUT_LONG_FLAG, true, "results file"));
+    options.addOption(new Option(OUTPUT_FLAG, OUTPUT_LONG_FLAG, true, "export results file"));
+    options.addOption(new Option(BUS_SHP_FLAG, BUS_SHP_LONG_FLAG, true, "[optional] export bus results as shapefile"));
+    options.addOption(new Option(GEN_SHP_FLAG, GEN_SHP_LONG_FLAG, true, "[optional] export generator results as shapefile"));
+    options.addOption(new Option(LOAD_SHP_FLAG, LOAD_SHP_LONG_FLAG, true, "[optional] export load results as shapefile"));
+    options.addOption(new Option(BRANCH_SHP_FLAG, BRANCH_SHP_LONG_FLAG, true, "[optional] export branch results as shapefile"));
+
     return options;
   }
 
@@ -82,6 +102,11 @@ public class LPNormCommandLineParser {
 
       rdtInputFile = commandLine.getOptionValue(INPUT_LONG_FLAG);
       outputFile = commandLine.getOptionValue(OUTPUT_LONG_FLAG);
+      busShpFile = commandLine.getOptionValue(BUS_SHP_LONG_FLAG);
+      genShpFile = commandLine.getOptionValue(GEN_SHP_LONG_FLAG);
+      loadShpFile = commandLine.getOptionValue(LOAD_SHP_LONG_FLAG);
+      branchShpFile = commandLine.getOptionValue(BRANCH_SHP_LONG_FLAG);
+
     }
     catch (ParseException exp) {
       printUsage();
@@ -136,4 +161,39 @@ public class LPNormCommandLineParser {
     return outputFile;
   }
 
+  /**
+   * Get the bus output shape file
+   * 
+   * @return
+   */
+  public String getBusShpFile() {
+    return busShpFile;
+  }
+  
+  /**
+   * Get the load output shape file
+   * 
+   * @return
+   */
+  public String getLoadShpFile() {
+    return loadShpFile;
+  }
+  
+  /**
+   * Get the generator output shape file
+   * 
+   * @return
+   */
+  public String getGenShpFile() {
+    return genShpFile;
+  }
+  
+  /**
+   * Get the branch output shape file
+   * 
+   * @return
+   */
+  public String getBranchShpFile() {
+    return branchShpFile;
+  }
 }

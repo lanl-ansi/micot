@@ -32,8 +32,6 @@ import java.util.HashMap;
  */
 public class LPNormFile implements ElectricPowerModelFile {
 
-//  private static final double DEFAULT_MVA_BASE = 100.0;
-  
  /**
 	 * Constructor
 	 */
