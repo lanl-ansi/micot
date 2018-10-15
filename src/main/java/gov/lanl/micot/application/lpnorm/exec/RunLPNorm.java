@@ -17,11 +17,6 @@ import java.io.IOException;
  */
 public class RunLPNorm  {
    
-  private static final String CONFIG_FLAG = "-c";
-  private static final String EXPORT_FLAG = "-e";
-    
-  private static final String DEFAULT_EXPORT_FILE = "out.json";
-  
   /**
    * @param args
    * @throws ClassNotFoundException
@@ -30,9 +25,15 @@ public class RunLPNorm  {
    * @throws IOException
    */
   public static void main(String[] args) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-    String filename = ParameterReader.getRequiredStringParameter(args, CONFIG_FLAG, "Missing the input file");
-    String exportFile = ParameterReader.getDefaultStringParameter(args, EXPORT_FLAG, DEFAULT_EXPORT_FILE);    
-
+    LPNormCommandLineParser parser = new LPNormCommandLineParser(args);
+    boolean valid = parser.checkOptions();
+    if (!valid) {
+      System.exit(-1);
+    }
+        
+    String filename = parser.getRDTInputFile();
+    String exportFile = parser.getOutputFile();
+    
     long start = System.currentTimeMillis();
 
     System.out.println("Using configuration file: " + filename);
