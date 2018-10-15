@@ -48,7 +48,7 @@ public class LPNormBPTest  extends TestCase {
 
     ElectricPowerModel model = output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class);
     double cost = output.get(RDTApplication.OBJECTIVE_FLAG, Number.class).doubleValue();
-//    assertEquals(cost, -5000.0);
+    assertEquals(cost, -5000.0);
     
     Scenario scenario = configuration.getFirstScenario();
     
@@ -59,21 +59,21 @@ public class LPNormBPTest  extends TestCase {
       boolean isOpen = isScenarioOpen.getValue(scenario).intValue() == 1;
       boolean isHardened = connection.getAttribute(AlgorithmConstants.IS_HARDENED_KEY) == null ? false : connection.getAttribute(AlgorithmConstants.IS_HARDENED_KEY, Boolean.class);
       
-  //    assertEquals(isConstructed, false);
-   //   assertEquals(isSwitchConstructed, false);      
-    //  assertEquals(isOpen, false);
+      assertEquals(isConstructed, false);
+      assertEquals(isSwitchConstructed, false);      
+      assertEquals(isOpen, false);
       
       if (connection.toString().equals("l1")) {
-     //   assertEquals(isHardened, true);
+        assertEquals(isHardened, true);
       }
       else {
-      //  assertEquals(isHardened, false);        
+        assertEquals(isHardened, false);        
       }      
     }
     
     for (Generator generator : model.getGenerators()) {
       boolean isConstructed = generator.getAttribute(AlgorithmConstants.IS_CONSTRUCTED_KEY) == null ? false : generator.getAttribute(AlgorithmConstants.IS_CONSTRUCTED_KEY, Boolean.class);
- //     assertEquals(isConstructed, false);              
+      assertEquals(isConstructed, false);              
     }
 
   }
