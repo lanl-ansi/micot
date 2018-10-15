@@ -90,9 +90,6 @@ public class LPNormLoadFactory extends LoadFactory {
 		
   @Override
   protected Load createEmptyLoad(Bus bus) {
-//    int legacyId = bus.getAttribute(MatPowerModelConstants.MATPOWER_LEGACY_ID_KEY, Integer.class);
-  //  Load load = registerLoad(legacyId, bus);    
-   // return load;       
     return null;
   }    
   

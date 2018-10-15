@@ -19,16 +19,10 @@ public interface Generator extends ElectricPowerProducer, Component {
   public static final String SHUTDOWN_COST_KEY                     = "SHUTDOWN_COST";
   
   public static final String NUM_PHASE_KEY                         = "NUMBER_OF_PHASES";
-  //public static final String ACTUAL_REACTIVE_GENERATION_A_KEY      = "ACTUAL_REACTIVE_GENERATION_A";
-  //public static final String ACTUAL_REAL_GENERATION_A_KEY          = "ACTUAL_REAL_GENERATION_A";
   public static final String REACTIVE_GENERATION_A_KEY     = "REACTIVE_GENERATION_A";
   public static final String REAL_GENERATION_A_KEY         = "REAL_GENERATION_A";
-  //public static final String ACTUAL_REACTIVE_GENERATION_B_KEY      = "ACTUAL_REACTIVE_GENERATION_B";
-  //public static final String ACTUAL_REAL_GENERATION_B_KEY          = "ACTUAL_REAL_GENERATION_B";
   public static final String REACTIVE_GENERATION_B_KEY     = "REACTIVE_GENERATION_B";
   public static final String REAL_GENERATION_B_KEY         = "REAL_GENERATION_B";
-  //public static final String ACTUAL_REACTIVE_GENERATION_C_KEY      = "ACTUAL_REACTIVE_GENERATION_C";
-  //public static final String ACTUAL_REAL_GENERATION_C_KEY          = "ACTUAL_REAL_GENERATION_C";
   public static final String REACTIVE_GENERATION_C_KEY     = "REACTIVE_GENERATION_C";
   public static final String REAL_GENERATION_C_KEY         = "REAL_GENERATION_C";
   
