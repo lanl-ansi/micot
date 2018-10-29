@@ -1,13 +1,10 @@
 package gov.lanl.micot.infrastructure.project;
 
-import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.infrastructure.application.Application;
 import gov.lanl.micot.infrastructure.application.ApplicationFactory;
 import gov.lanl.micot.infrastructure.config.AssetModification;
-import gov.lanl.micot.infrastructure.coupled.model.CoupledModel;
 import gov.lanl.micot.infrastructure.io.ModelFile;
 import gov.lanl.micot.infrastructure.io.ModelFileFactory;
-//import gov.lanl.micot.infrastructure.io.log.SystemLogger;
 import gov.lanl.micot.infrastructure.model.Asset;
 import gov.lanl.micot.infrastructure.model.AssetModifierImpl;
 import gov.lanl.micot.infrastructure.model.Model;
@@ -16,14 +13,11 @@ import gov.lanl.micot.infrastructure.optimize.Optimizer;
 import gov.lanl.micot.infrastructure.optimize.OptimizerFactory;
 import gov.lanl.micot.infrastructure.project.AlgorithmConfiguration;
 import gov.lanl.micot.infrastructure.project.ModelConfiguration;
-import gov.lanl.micot.infrastructure.project.OutputConfiguration;
 import gov.lanl.micot.infrastructure.project.ProjectConfiguration;
 import gov.lanl.micot.infrastructure.project.ScenarioConfiguration;
 import gov.lanl.micot.infrastructure.simulate.Simulator;
 import gov.lanl.micot.infrastructure.simulate.SimulatorFactory;
-//import gov.lanl.micot.util.io.StreamLogger;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Set;
 
@@ -56,11 +50,6 @@ public class ProjectConfigurationUtility {
       String componentClass = config.getComponentClass();
       Class cls = Class.forName(componentClass);
       Set<Asset> assets = model.getAssets(cls);
-      if (model instanceof CoupledModel) {
-        for (Model m : ((CoupledModel)model).getModels()) {
-          assets.addAll(m.getAssets());
-        }
-      }
       
       boolean found = false;
       for (Asset asset : assets) {
@@ -92,11 +81,6 @@ public class ProjectConfigurationUtility {
         String componentClass = config.getComponentClass();       
         Class cls = Class.forName(componentClass);
         Set<Asset> assets = model.getAssets(cls);
-        if (model instanceof CoupledModel) {
-          for (Model m : ((CoupledModel)model).getModels()) {
-            assets.addAll(m.getAssets());
-          }
-        }
         
         boolean found = false;
         for (Asset asset : assets) {
