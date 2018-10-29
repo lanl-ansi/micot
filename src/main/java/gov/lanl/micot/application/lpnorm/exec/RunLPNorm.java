@@ -8,7 +8,10 @@ import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.Generator;
 import gov.lanl.micot.infrastructure.ep.model.Load;
 import gov.lanl.micot.infrastructure.io.shapefile.ShapefileModelExporter;
+import gov.lanl.micot.infrastructure.model.Asset;
+import gov.lanl.micot.infrastructure.model.Scenario;
 import gov.lanl.micot.infrastructure.project.ProjectConfiguration;
+import gov.lanl.micot.infrastructure.project.ScenarioConfiguration;
 import gov.lanl.micot.application.lpnorm.LPNormApplicationFactory;
 import gov.lanl.micot.application.lpnorm.io.LPNormFile;
 import gov.lanl.micot.application.lpnorm.io.LPNormJsonProjectConfigurationReader;
@@ -21,6 +24,7 @@ import gov.lanl.micot.util.io.geometry.shapefile.ShapefileWriter;
 import gov.lanl.micot.util.io.geometry.shapefile.ShapefileWriterFactory;
 
 import java.io.IOException;
+import java.util.Collection;
 
 /**
  * Code for running the RDT for an LPNorm application
@@ -59,6 +63,23 @@ public class RunLPNorm  {
     // export the results
     JsonResultExporter exporter = new JsonResultExporter();
     exporter.exportResults(output, configuration, exportFile);
+    
+    // add scenario damage fields
+    ElectricPowerModel model = output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class);
+    Collection<ScenarioConfiguration> scenarios = configuration.getScenarioConfigurations();
+    for (ScenarioConfiguration config : scenarios) {
+      Scenario scenario = config.getScenario();
+      int idx = scenario.getIndex();
+      for (ElectricPowerFlowConnection c : model.getFlowConnections()) {
+        Boolean isDamaged = scenario.getModification(c, Asset.IS_FAILED_KEY, Boolean.class);
+        if (isDamaged == null) {
+          isDamaged = false;
+        }
+        String key = "sc " + idx + " damaged";        
+        c.setAttribute(key, isDamaged);        
+      }
+    }
+
     
     // export optional results
     if (parser.getBusShpFile() != null) {
@@ -245,8 +266,7 @@ public class RunLPNorm  {
     export.changeFieldName(AlgorithmConstants.LINE_SWITCH_COST_KEY, "switch cost");
     export.changeFieldName(AlgorithmConstants.IS_SWITCH_OPEN_KEY, "open switch");
 
-    export.changeFieldName(AlgorithmConstants.IS_USED_KEY, "is _used");
-
+    export.changeFieldName(AlgorithmConstants.IS_USED_KEY, "is_used");
     
     export.changeFieldName(ElectricPowerFlowConnection.CAPACITY_RATING_A_KEY, "rate a");
     export.changeFieldName(ElectricPowerFlowConnection.CAPACITY_RATING_B_KEY, "rate b");
