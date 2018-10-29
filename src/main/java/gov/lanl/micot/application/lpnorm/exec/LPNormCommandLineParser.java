@@ -23,6 +23,11 @@ public class LPNormCommandLineParser {
   private String genShpFile = null;
   private String loadShpFile = null;
   private String branchShpFile = null;
+  
+  private String busJSONFile = null;
+  private String genJSONFile = null;
+  private String loadJSONFile = null;
+  private String branchJSONFile = null;
 
   private static final String INPUT_FLAG = "c";
   private static final String OUTPUT_FLAG = "e";
@@ -33,6 +38,11 @@ public class LPNormCommandLineParser {
   private static final String LOAD_SHP_FLAG = "ls";
   private static final String BRANCH_SHP_FLAG = "brs";
 
+  private static final String BUS_JSON_FLAG = "bj";
+  private static final String GEN_JSON_FLAG = "gj";
+  private static final String LOAD_JSON_FLAG = "lj";
+  private static final String BRANCH_JSON_FLAG = "brj";
+  
   private static final String INPUT_LONG_FLAG = "config";
   private static final String OUTPUT_LONG_FLAG = "export";
   private static final String HELP_LONG_FLAG = "help";
@@ -41,6 +51,11 @@ public class LPNormCommandLineParser {
   private static final String GEN_SHP_LONG_FLAG = "generator_shapefile";
   private static final String LOAD_SHP_LONG_FLAG = "load_shapefile";
   private static final String BRANCH_SHP_LONG_FLAG = "branch_shapefile";
+  
+  private static final String BUS_JSON_LONG_FLAG = "bus_geojsonfile";
+  private static final String GEN_JSON_LONG_FLAG = "generator_geojsonfile";
+  private static final String LOAD_JSON_LONG_FLAG = "load_geojsonfile";
+  private static final String BRANCH_JSON_LONG_FLAG = "branch_geojsonfile";
 
   /**
    * Constructor
@@ -66,6 +81,10 @@ public class LPNormCommandLineParser {
     options.addOption(new Option(GEN_SHP_FLAG, GEN_SHP_LONG_FLAG, true, "[optional] export generator results as shapefile"));
     options.addOption(new Option(LOAD_SHP_FLAG, LOAD_SHP_LONG_FLAG, true, "[optional] export load results as shapefile"));
     options.addOption(new Option(BRANCH_SHP_FLAG, BRANCH_SHP_LONG_FLAG, true, "[optional] export branch results as shapefile"));
+    options.addOption(new Option(BUS_JSON_FLAG, BUS_JSON_LONG_FLAG, true, "[optional] export bus results as geojson"));
+    options.addOption(new Option(GEN_JSON_FLAG, GEN_JSON_LONG_FLAG, true, "[optional] export generator results as geojson"));
+    options.addOption(new Option(LOAD_JSON_FLAG, LOAD_JSON_LONG_FLAG, true, "[optional] export load results as geojson"));
+    options.addOption(new Option(BRANCH_JSON_FLAG, BRANCH_JSON_LONG_FLAG, true, "[optional] export branch results as geojson"));
 
     return options;
   }
@@ -106,7 +125,11 @@ public class LPNormCommandLineParser {
       genShpFile = commandLine.getOptionValue(GEN_SHP_LONG_FLAG);
       loadShpFile = commandLine.getOptionValue(LOAD_SHP_LONG_FLAG);
       branchShpFile = commandLine.getOptionValue(BRANCH_SHP_LONG_FLAG);
-
+      
+      busJSONFile = commandLine.getOptionValue(BUS_JSON_LONG_FLAG);
+      genJSONFile = commandLine.getOptionValue(GEN_JSON_LONG_FLAG);
+      loadJSONFile = commandLine.getOptionValue(LOAD_JSON_LONG_FLAG);
+      branchJSONFile = commandLine.getOptionValue(BRANCH_JSON_LONG_FLAG);
     }
     catch (ParseException exp) {
       printUsage();
@@ -196,4 +219,42 @@ public class LPNormCommandLineParser {
   public String getBranchShpFile() {
     return branchShpFile;
   }
+  
+  /**
+   * Get the bus output geojson file
+   * 
+   * @return
+   */
+  public String getBusJSONFile() {
+    return busJSONFile;
+  }
+  
+  /**
+   * Get the load output geojson file
+   * 
+   * @return
+   */
+  public String getLoadJSONFile() {
+    return loadJSONFile;
+  }
+  
+  /**
+   * Get the generator output geojson file
+   * 
+   * @return
+   */
+  public String getGenJSONFile() {
+    return genJSONFile;
+  }
+  
+  /**
+   * Get the branch output geojson file
+   * 
+   * @return
+   */
+  public String getBranchJSONFile() {
+    return branchJSONFile;
+  }
+  
+  
 }

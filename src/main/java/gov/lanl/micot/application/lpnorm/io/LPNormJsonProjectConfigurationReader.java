@@ -12,7 +12,6 @@ import gov.lanl.micot.infrastructure.project.ScenarioConfiguration;
 import gov.lanl.micot.infrastructure.project.SimulatorConfiguration;
 import gov.lanl.micot.application.lpnorm.model.LPNormModelConstants;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
-import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants.CycleModel;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.BPResilienceFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.mip.MIPInfrastructureExpansionAlgorithmFlags;
 import gov.lanl.micot.application.rdt.algorithm.ep.mip.ResilienceExpansionFactory;

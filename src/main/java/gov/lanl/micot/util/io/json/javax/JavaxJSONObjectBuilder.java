@@ -2,6 +2,7 @@ package gov.lanl.micot.util.io.json.javax;
 
 import javax.json.JsonObjectBuilder;
 
+import gov.lanl.micot.infrastructure.model.ScenarioAttribute;
 import gov.lanl.micot.util.io.json.JSONArrayBuilder;
 import gov.lanl.micot.util.io.json.JSONObject;
 import gov.lanl.micot.util.io.json.JSONObjectBuilder;
@@ -67,6 +68,9 @@ public class JavaxJSONObjectBuilder implements JSONObjectBuilder {
 
   @Override
   public JSONObjectBuilder add(String key, Object object) {
+    if (object instanceof ScenarioAttribute) {
+      return add(key, object.toString());
+    }
     if (object instanceof Integer || object instanceof Long) {
       return add(key, ((Number)object).intValue());
     }
