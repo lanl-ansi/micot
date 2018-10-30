@@ -57,8 +57,11 @@ public class JsonResultExporter {
  
   private static final String LOADS_TAG = "loads";
   private static final String LOAD_ID_TAG = "id";
-  private static final String REAL_LOAD_TAG = "real_phase";
-  private static final String REACTIVE_LOAD_TAG = "reactive_phase";
+  private static final String REAL_LOAD_TAG = "real_served";
+  private static final String REACTIVE_LOAD_TAG = "reactive_served";
+  private static final String REAL_UNSERVE_LOAD_TAG = "real_unserved";
+  private static final String REACTIVE_UNSERVE_LOAD_TAG = "reactive_unserved";
+
   
   // a hack for the exporting
   private String tag = Asset.ASSET_ID_KEY;
@@ -431,31 +434,37 @@ public class JsonResultExporter {
        loadBuilder = loadBuilder.add(LOAD_ID_TAG, load.getAttribute(tag).toString());
 
        double realA = 0.0;
+       double desiredRealA = load.getAttribute(Load.REAL_LOAD_A_MAX_KEY) != null ? load.getAttribute(Load.REAL_LOAD_A_MAX_KEY,Double.class) : 0; 
        if (load.getAttribute(Load.REAL_LOAD_A_KEY) != null && load.getAttribute(Load.REAL_LOAD_A_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.REAL_LOAD_A_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
          realA = load.getAttribute(Load.REAL_LOAD_A_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
 
        double realB = 0.0;
+       double desiredRealB = load.getAttribute(Load.REAL_LOAD_B_MAX_KEY) != null ? load.getAttribute(Load.REAL_LOAD_B_MAX_KEY,Double.class) : 0; 
        if (load.getAttribute(Load.REAL_LOAD_B_KEY) != null && load.getAttribute(Load.REAL_LOAD_B_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.REAL_LOAD_B_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
          realB = load.getAttribute(Load.REAL_LOAD_B_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
        
        double realC = 0.0;
+       double desiredRealC = load.getAttribute(Load.REAL_LOAD_C_MAX_KEY) != null ? load.getAttribute(Load.REAL_LOAD_C_MAX_KEY,Double.class) : 0; 
        if (load.getAttribute(Load.REAL_LOAD_C_KEY) != null && load.getAttribute(Load.REAL_LOAD_C_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.REAL_LOAD_C_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
          realC = load.getAttribute(Load.REAL_LOAD_C_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
 
        double reactiveA = 0.0;
+       double desiredReactiveA = load.getAttribute(Load.REACTIVE_LOAD_A_MAX_KEY) != null ? load.getAttribute(Load.REACTIVE_LOAD_A_MAX_KEY,Double.class) : 0; 
        if (load.getAttribute(Load.REACTIVE_LOAD_A_KEY) != null && load.getAttribute(Load.REACTIVE_LOAD_A_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.REACTIVE_LOAD_A_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
          reactiveA = load.getAttribute(Load.REACTIVE_LOAD_A_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
 
        double reactiveB = 0.0;
+       double desiredReactiveB = load.getAttribute(Load.REACTIVE_LOAD_B_MAX_KEY) != null ? load.getAttribute(Load.REACTIVE_LOAD_B_MAX_KEY,Double.class) : 0; 
        if (load.getAttribute(Load.REACTIVE_LOAD_B_KEY) != null && load.getAttribute(Load.REACTIVE_LOAD_B_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.REACTIVE_LOAD_B_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
          reactiveB = load.getAttribute(Load.REACTIVE_LOAD_B_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
        
        double reactiveC = 0.0;
+       double desiredReactiveC = load.getAttribute(Load.REACTIVE_LOAD_C_MAX_KEY) != null ? load.getAttribute(Load.REACTIVE_LOAD_C_MAX_KEY,Double.class) : 0; 
        if (load.getAttribute(Load.REACTIVE_LOAD_C_KEY) != null && load.getAttribute(Load.REACTIVE_LOAD_C_KEY) instanceof ScenarioAttribute && load.getAttribute(Load.REACTIVE_LOAD_C_KEY,ScenarioAttribute.class).getValue(scenario) != null) {
          reactiveC = load.getAttribute(Load.REACTIVE_LOAD_C_KEY, ScenarioAttribute.class).getValue(scenario).doubleValue(); 
        }
@@ -469,9 +478,22 @@ public class JsonResultExporter {
        reactiveBuilder.add(reactiveA);
        reactiveBuilder.add(reactiveB);
        reactiveBuilder.add(reactiveC);
+              
+       JSONArrayBuilder realUnserveBuilder = JSON.getDefaultJSON().createArrayBuilder();
+       realUnserveBuilder.add(desiredRealA - realA);
+       realUnserveBuilder.add(desiredRealB - realB);
+       realUnserveBuilder.add(desiredRealC - realC);
+       
+       JSONArrayBuilder reactiveUnserveBuilder = JSON.getDefaultJSON().createArrayBuilder();
+       reactiveUnserveBuilder.add(desiredReactiveA - reactiveA);
+       reactiveUnserveBuilder.add(desiredReactiveB - reactiveB);
+       reactiveUnserveBuilder.add(desiredReactiveC - reactiveC);
        
        loadBuilder = loadBuilder.add(REAL_LOAD_TAG, realBuilder);
        loadBuilder = loadBuilder.add(REACTIVE_LOAD_TAG, reactiveBuilder);
+       loadBuilder = loadBuilder.add(REAL_UNSERVE_LOAD_TAG, realUnserveBuilder);
+       loadBuilder = loadBuilder.add(REACTIVE_UNSERVE_LOAD_TAG, reactiveUnserveBuilder);
+
        arrayBuilder = arrayBuilder.add(loadBuilder);
      }
      return builder.add(LOADS_TAG,arrayBuilder);
