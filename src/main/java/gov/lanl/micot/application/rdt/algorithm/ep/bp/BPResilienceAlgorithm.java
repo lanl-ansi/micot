@@ -290,19 +290,9 @@ public class BPResilienceAlgorithm extends ResilienceAlgorithm {
     // create the bounds for the inner problem
     addInnerVariableBounds(model, innerProblem, scenario);
     
-    // create the constraints
-/*    LambdaConstraint lambdaConstraint = new LambdaConstraint(scenarios, columns);
-    GeneratorColumnConstraint generatorColumn = new GeneratorColumnConstraint(scenarios, columns);
-    LineConstructionColumnConstraint lineColumn = new LineConstructionColumnConstraint(scenarios, columns);
-    LineSwitchColumnConstraint switchColumn = new LineSwitchColumnConstraint(scenarios, columns);
-    LineHardenColumnConstraint hardenColumn = new LineHardenColumnConstraint(scenarios, columns);
-      
-    lambdaConstraint.constructConstraint(outerProblem, model);
-    generatorColumn.constructConstraint(outerProblem, model);
-    lineColumn.constructConstraint(outerProblem, model);
-    switchColumn.constructConstraint(outerProblem, model);
-    hardenColumn.constructConstraint(outerProblem, model);*/
-    
+    // create the constraints for the inner problem
+    addInnerConstraints(model, innerProblem, scenario);
+        
   }
 
   

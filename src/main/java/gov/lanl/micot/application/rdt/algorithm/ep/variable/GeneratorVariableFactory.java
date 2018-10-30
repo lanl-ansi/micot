@@ -37,7 +37,7 @@ public class GeneratorVariableFactory implements VariableFactory {
     ArrayList<Variable> variables = new ArrayList<Variable>();
     for (Generator producer : model.getGenerators()) {
       if (hasVariable(producer)) {
-          variables.add(program.makeContinuousVariable(getGeneratorVariableName(producer)));
+        variables.add(program.makeContinuousVariable(getGeneratorVariableName(producer)));
       }
     }     
     return variables;
@@ -50,7 +50,7 @@ public class GeneratorVariableFactory implements VariableFactory {
    */
   public boolean hasVariable(Generator producer) {
     boolean isNew = producer.getAttribute(AlgorithmConstants.IS_NEW_MICROGRID_KEY) != null && producer.getAttribute(AlgorithmConstants.IS_NEW_MICROGRID_KEY, Boolean.class);                 
-    return !producer.getStatus() || !isNew;
+    return producer.getStatus() && isNew;
   }
   
   @Override

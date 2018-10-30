@@ -1,6 +1,10 @@
 package gov.lanl.micot.application.rdt.algorithm.ep.mip2;
 
 import gov.lanl.micot.application.rdt.algorithm.ResilienceAlgorithm;
+import gov.lanl.micot.application.rdt.algorithm.ep.mip2.constraint.GeneratorTieConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.mip2.constraint.LineConstructionTieConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.mip2.constraint.LineHardenTieConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.mip2.constraint.LineSwitchTieConstraint;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.model.Scenario;
 import gov.lanl.micot.util.math.solver.Solution;
@@ -102,7 +106,18 @@ public class MIPResilienceAlgorithm extends ResilienceAlgorithm {
    
   @Override
   protected void addInnerConstraints(ElectricPowerModel model, MathematicalProgram problem, Scenario scenario) throws VariableExistsException, NoVariableException, InvalidConstraintException {
+    super.addInnerConstraints(model, problem, scenario);
     
+    LineConstructionTieConstraint constructTie = new LineConstructionTieConstraint(scenario);
+    LineHardenTieConstraint hardenTie = new LineHardenTieConstraint(scenario);
+    LineSwitchTieConstraint switchTie = new LineSwitchTieConstraint(scenario);
+    GeneratorTieConstraint genTie = new GeneratorTieConstraint(scenario);
+    
+    constructTie.constructConstraint(problem, model);
+    hardenTie.constructConstraint(problem, model);
+    switchTie.constructConstraint(problem, model);
+    genTie.constructConstraint(problem, model);
+
   }
   
   

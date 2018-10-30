@@ -4,6 +4,7 @@ import gov.lanl.micot.application.rdt.algorithm.ep.bound.GeneratorBoundConstrain
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.LineConstructionBoundConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.LineHardenBoundConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.LineSwitchBoundConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.constraint.LineSwitchExistTieConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.objective.GeneratorObjectiveFunctionFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.objective.LineConstructionObjectiveFunctionFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.objective.LineHardenObjectiveFunctionFactory;
@@ -178,7 +179,9 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
    * @throws InvalidConstraintException
    */
   protected void addInnerConstraints(ElectricPowerModel model, MathematicalProgram problem, Scenario scenario) throws VariableExistsException, NoVariableException, InvalidConstraintException {
+    LineSwitchExistTieConstraint switchExistTie = new LineSwitchExistTieConstraint(scenario);
     
+    switchExistTie.constructConstraint(problem, model);
   }
 }
 
