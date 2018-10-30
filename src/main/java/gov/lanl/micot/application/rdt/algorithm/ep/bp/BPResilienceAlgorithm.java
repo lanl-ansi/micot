@@ -1,12 +1,10 @@
 package gov.lanl.micot.application.rdt.algorithm.ep.bp;
 
-import gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.GeneratorBoundConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ResilienceAlgorithm;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.GeneratorColumnConstraint;
-import gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.LambdaBoundConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.bp.bound.LambdaBoundConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.LambdaConstraint;
-import gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.LineConstructionBoundConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.LineConstructionColumnConstraint;
-import gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.LineHardenBoundConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.LineHardenColumnConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.LineSwitchColumnConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.dual.ColumnConstraint;
@@ -19,26 +17,15 @@ import gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.dual.YGenerator
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.dual.YLineConstructionBoundConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.dual.YLineHardenBoundConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.dual.YLineSwitchBoundConstraint;
-import gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.GeneratorObjectiveFunctionFactory;
-import gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.LineConstructionObjectiveFunctionFactory;
-import gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.LineHardenObjectiveFunctionFactory;
-import gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.LineSwitchObjectiveFunctionFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.dual.SigmaObjectiveFunctionFactory;
-import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.GeneratorVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.LambdaVariableFactory;
-import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.LineConstructionVariableFactory;
-import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.LineHardenVariableFactory;
-import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.LineSwitchVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.dual.SigmaVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.dual.YGeneratorVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.dual.YLineConstructionVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.dual.YLineHardenVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.dual.YLineSwitchVariableFactory;
-import gov.lanl.micot.application.rdt.algorithm.ep.mip.constraint.LineSwitchBoundConstraint;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
-import gov.lanl.micot.infrastructure.ep.model.ElectricPowerNode;
 import gov.lanl.micot.infrastructure.model.Scenario;
-import gov.lanl.micot.infrastructure.optimize.OptimizerImpl;
 import gov.lanl.micot.util.math.solver.Solution;
 import gov.lanl.micot.util.math.solver.exception.InvalidConstraintException;
 import gov.lanl.micot.util.math.solver.exception.InvalidObjectiveException;
@@ -62,9 +49,9 @@ import java.util.HashMap;
  * Branch and Price algorithm for solving the reslient design problem
  * @author Russell Bent
  */
-public class BPResilienceAlgorithm extends OptimizerImpl<ElectricPowerNode, ElectricPowerModel> {
+public class BPResilienceAlgorithm extends ResilienceAlgorithm {
   
-  private Collection<Scenario> scenarios = null;
+  private HashMap<Scenario, ArrayList<Solution>> columns = null;
   
   private MathematicalProgramFlags innerFlags = null;
   private MathematicalProgramFlags outerFlags = null;
@@ -73,13 +60,14 @@ public class BPResilienceAlgorithm extends OptimizerImpl<ElectricPowerNode, Elec
   private MathematicalProgram outerDualProblem = null;
   private MathematicalProgram innerProblem = null;
 
+  private Solution primalSolution = null;
+  private Solution dualSolution   = null;
   
   /**
    * Constructor
    */
   public BPResilienceAlgorithm(Collection<Scenario> scenarios) {
-    super();
-    setScenarios(scenarios);    
+    super(scenarios);
     innerFlags = new MathematicalProgramFlags();
     outerFlags = new MathematicalProgramFlags();
   }
@@ -89,8 +77,8 @@ public class BPResilienceAlgorithm extends OptimizerImpl<ElectricPowerNode, Elec
   public boolean solve(ElectricPowerModel model) {
     try {
       
-      HashMap<Scenario, ArrayList<Solution>> columns = new HashMap<Scenario, ArrayList<Solution>>();
-      for (Scenario scenario : scenarios) {
+      columns = new HashMap<Scenario, ArrayList<Solution>>();
+      for (Scenario scenario : getScenarios()) {
         columns.put(scenario, new ArrayList<Solution>());
       }
       
@@ -100,14 +88,14 @@ public class BPResilienceAlgorithm extends OptimizerImpl<ElectricPowerNode, Elec
       Timer timer = new Timer();
       timer.startTimer();
       
-      Solution primalSolution = outerProblem.solve();
-      Solution dualSolution = outerDualProblem.solve();
+      primalSolution = outerProblem.solve();
+      dualSolution = outerDualProblem.solve();
       
       if (primalSolution.getObjectiveValue() != dualSolution.getObjectiveValue()) {
         System.err.println("Primal and Dual Solutions are not equal " + primalSolution.getObjectiveValue() + " " + dualSolution.getObjectiveValue());
       }
       
-      for (Scenario scenario : scenarios) {
+      for (Scenario scenario : getScenarios()) {
         createInnerMathematicalProgram(model, scenario, dualSolution);
         Solution innerSolution = innerProblem.solve();
       }
@@ -121,14 +109,6 @@ public class BPResilienceAlgorithm extends OptimizerImpl<ElectricPowerNode, Elec
     
     
     return true;    
-  }
-
-  /**
-   * Set the available scenarios that we have
-   * @param scenarios
-   */
-  private void setScenarios(Collection<Scenario> scenarios) {
-    this.scenarios = scenarios;
   }
   
   /**
@@ -149,6 +129,35 @@ public class BPResilienceAlgorithm extends OptimizerImpl<ElectricPowerNode, Elec
     outerFlags.put(key, object);
   }
 
+  @Override
+  protected void addOuterVariables(ElectricPowerModel model, MathematicalProgram problem) throws VariableExistsException, InvalidVariableException {
+    super.addOuterVariables(model, problem);
+    LambdaVariableFactory    lambdaVariableFactory    = new LambdaVariableFactory(getScenarios(), columns);
+    lambdaVariableFactory.createVariables(outerProblem, model);
+  }
+  
+  @Override
+  protected void addOuterVariableBounds(ElectricPowerModel model, MathematicalProgram problem, double upperBound) throws VariableExistsException, NoVariableException {
+    super.addOuterVariableBounds(model, problem, upperBound);
+    LambdaBoundConstraint lambdaBound = new LambdaBoundConstraint(getScenarios(), columns);
+    lambdaBound.constructConstraint(outerProblem, model);
+  }
+  
+  @Override
+  protected void addOuterConstraints(ElectricPowerModel model, MathematicalProgram problem) throws VariableExistsException, NoVariableException, InvalidConstraintException {
+    super.addOuterConstraints(model, problem);
+    LambdaConstraint lambdaConstraint = new LambdaConstraint(getScenarios(), columns);
+    GeneratorColumnConstraint generatorColumn = new GeneratorColumnConstraint(getScenarios(), columns);
+    LineConstructionColumnConstraint lineColumn = new LineConstructionColumnConstraint(getScenarios(), columns);
+    LineSwitchColumnConstraint switchColumn = new LineSwitchColumnConstraint(getScenarios(), columns);
+    LineHardenColumnConstraint hardenColumn = new LineHardenColumnConstraint(getScenarios(), columns);
+      
+    lambdaConstraint.constructConstraint(problem, model);
+    generatorColumn.constructConstraint(problem, model);
+    lineColumn.constructConstraint(problem, model);
+    switchColumn.constructConstraint(problem, model);
+    hardenColumn.constructConstraint(problem, model);
+  }
 
   /**
    * Create the outer mathematical program
@@ -167,55 +176,16 @@ public class BPResilienceAlgorithm extends OptimizerImpl<ElectricPowerNode, Elec
     outerProblem.setLinearObjective(objective);
 
     // variables of the outer problem
-    GeneratorVariableFactory generatorVariableFactory = new GeneratorVariableFactory();
-    LambdaVariableFactory    lambdaVariableFactory    = new LambdaVariableFactory(scenarios, columns);
-    LineConstructionVariableFactory    lineConstructionVariableFactory    = new LineConstructionVariableFactory();
-    LineHardenVariableFactory    lineHardenVariableFactory    = new LineHardenVariableFactory();
-    LineSwitchVariableFactory    lineSwitchVariableFactory    = new LineSwitchVariableFactory();
-    
-    generatorVariableFactory.createVariables(outerProblem, model);
-    lambdaVariableFactory.createVariables(outerProblem, model);
-    lineConstructionVariableFactory.createVariables(outerProblem, model);
-    lineHardenVariableFactory.createVariables(outerProblem, model);
-    lineSwitchVariableFactory.createVariables(outerProblem, model);
+    addOuterVariables(model, outerProblem);
            
-    // objective function for the outer problem 
-    GeneratorObjectiveFunctionFactory generatorObjective = new GeneratorObjectiveFunctionFactory();
-    LineConstructionObjectiveFunctionFactory lineObjective = new LineConstructionObjectiveFunctionFactory();
-    LineHardenObjectiveFunctionFactory hardenObjective = new LineHardenObjectiveFunctionFactory();
-    LineSwitchObjectiveFunctionFactory switchObjective = new LineSwitchObjectiveFunctionFactory();
-    
-    generatorObjective.addCoefficients(outerProblem, model);   
-    lineObjective.addCoefficients(outerProblem, model);   
-    hardenObjective.addCoefficients(outerProblem, model);   
-    switchObjective.addCoefficients(outerProblem, model);   
-     
+    // objective function for the outer problem
+    addOuterObjectiveFunction(model, outerProblem);
+         
     // create the bounds
-    GeneratorBoundConstraint generatorBound = new GeneratorBoundConstraint();
-    LineConstructionBoundConstraint lineBound = new LineConstructionBoundConstraint();
-    LineHardenBoundConstraint hardenBound = new LineHardenBoundConstraint();
-    LineSwitchBoundConstraint switchBound = new LineSwitchBoundConstraint();
-    LambdaBoundConstraint lambdaBound = new LambdaBoundConstraint(scenarios, columns);
-    
-    generatorBound.constructConstraint(outerProblem, model);
-    lineBound.constructConstraint(outerProblem, model);
-    hardenBound.constructConstraint(outerProblem, model);
-    switchBound.constructConstraint(outerProblem, model);
-    lambdaBound.constructConstraint(outerProblem, model);
-    
+    addOuterVariableBounds(model, outerProblem, Double.MAX_VALUE); 
+            
     // create the constraints
-    LambdaConstraint lambdaConstraint = new LambdaConstraint(scenarios, columns);
-    GeneratorColumnConstraint generatorColumn = new GeneratorColumnConstraint(scenarios, columns);
-    LineConstructionColumnConstraint lineColumn = new LineConstructionColumnConstraint(scenarios, columns);
-    LineSwitchColumnConstraint switchColumn = new LineSwitchColumnConstraint(scenarios, columns);
-    LineHardenColumnConstraint hardenColumn = new LineHardenColumnConstraint(scenarios, columns);
-      
-    lambdaConstraint.constructConstraint(outerProblem, model);
-    generatorColumn.constructConstraint(outerProblem, model);
-    lineColumn.constructConstraint(outerProblem, model);
-    switchColumn.constructConstraint(outerProblem, model);
-    hardenColumn.constructConstraint(outerProblem, model);
-    
+    addOuterConstraints(model, outerProblem);    
   }
   
   
@@ -237,11 +207,11 @@ public class BPResilienceAlgorithm extends OptimizerImpl<ElectricPowerNode, Elec
     outerDualProblem.setLinearObjective(objective);
 
     // variables of the outer problem
-    YGeneratorVariableFactory generatorVariableFactory = new YGeneratorVariableFactory(scenarios);
-    SigmaVariableFactory    sigmaVariableFactory    = new SigmaVariableFactory(scenarios, columns);
-    YLineConstructionVariableFactory    lineConstructionVariableFactory    = new YLineConstructionVariableFactory(scenarios);
-    YLineHardenVariableFactory    lineHardenVariableFactory    = new YLineHardenVariableFactory(scenarios);
-    YLineSwitchVariableFactory    lineSwitchVariableFactory    = new YLineSwitchVariableFactory(scenarios);
+    YGeneratorVariableFactory generatorVariableFactory = new YGeneratorVariableFactory(getScenarios());
+    SigmaVariableFactory    sigmaVariableFactory    = new SigmaVariableFactory(getScenarios(), columns);
+    YLineConstructionVariableFactory    lineConstructionVariableFactory    = new YLineConstructionVariableFactory(getScenarios());
+    YLineHardenVariableFactory    lineHardenVariableFactory    = new YLineHardenVariableFactory(getScenarios());
+    YLineSwitchVariableFactory    lineSwitchVariableFactory    = new YLineSwitchVariableFactory(getScenarios());
     
     generatorVariableFactory.createVariables(outerDualProblem, model);
     sigmaVariableFactory.createVariables(outerDualProblem, model);
@@ -250,16 +220,16 @@ public class BPResilienceAlgorithm extends OptimizerImpl<ElectricPowerNode, Elec
     lineSwitchVariableFactory.createVariables(outerDualProblem, model);
            
     // objective function for the outer problem 
-    SigmaObjectiveFunctionFactory sigmaObjective = new SigmaObjectiveFunctionFactory(scenarios, columns);
+    SigmaObjectiveFunctionFactory sigmaObjective = new SigmaObjectiveFunctionFactory(getScenarios(), columns);
     
     sigmaObjective.addCoefficients(outerDualProblem, model);   
      
     // create the bounds
-    YGeneratorBoundConstraint generatorBound = new YGeneratorBoundConstraint(scenarios);
-    YLineConstructionBoundConstraint lineBound = new YLineConstructionBoundConstraint(scenarios);
-    YLineHardenBoundConstraint hardenBound = new YLineHardenBoundConstraint(scenarios);
-    YLineSwitchBoundConstraint switchBound = new YLineSwitchBoundConstraint(scenarios);
-    SigmaBoundConstraint sigmaBound = new SigmaBoundConstraint(scenarios, columns);
+    YGeneratorBoundConstraint generatorBound = new YGeneratorBoundConstraint(getScenarios());
+    YLineConstructionBoundConstraint lineBound = new YLineConstructionBoundConstraint(getScenarios());
+    YLineHardenBoundConstraint hardenBound = new YLineHardenBoundConstraint(getScenarios());
+    YLineSwitchBoundConstraint switchBound = new YLineSwitchBoundConstraint(getScenarios());
+    SigmaBoundConstraint sigmaBound = new SigmaBoundConstraint(getScenarios(), columns);
     
     generatorBound.constructConstraint(outerDualProblem, model);
     lineBound.constructConstraint(outerDualProblem, model);
@@ -268,11 +238,11 @@ public class BPResilienceAlgorithm extends OptimizerImpl<ElectricPowerNode, Elec
     sigmaBound.constructConstraint(outerDualProblem, model);
     
     // create the constraints
-    ColumnConstraint columnConstraint = new ColumnConstraint(scenarios, columns);
-    GeneratorConstraint generatorConstraint = new GeneratorConstraint(scenarios);
-    LineConstructionConstraint lineConstraint = new LineConstructionConstraint(scenarios);
-    LineSwitchConstraint switchConstraint = new LineSwitchConstraint(scenarios);
-    LineHardenConstraint hardenConstraint = new LineHardenConstraint(scenarios);
+    ColumnConstraint columnConstraint = new ColumnConstraint(getScenarios(), columns);
+    GeneratorConstraint generatorConstraint = new GeneratorConstraint(getScenarios());
+    LineConstructionConstraint lineConstraint = new LineConstructionConstraint(getScenarios());
+    LineSwitchConstraint switchConstraint = new LineSwitchConstraint(getScenarios());
+    LineHardenConstraint hardenConstraint = new LineHardenConstraint(getScenarios());
       
     columnConstraint.constructConstraint(outerDualProblem, model);
     generatorConstraint.constructConstraint(outerDualProblem, model);
@@ -282,6 +252,18 @@ public class BPResilienceAlgorithm extends OptimizerImpl<ElectricPowerNode, Elec
     
   }
   
+  @Override
+  protected void addInnerObjectiveFunction(ElectricPowerModel model, MathematicalProgram problem, Scenario scenario) throws NoVariableException {
+    gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.scenario.GeneratorObjectiveFunctionFactory generatorObjective = new gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.scenario.GeneratorObjectiveFunctionFactory(scenario, dualSolution, outerDualProblem);
+    gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.scenario.LineConstructionObjectiveFunctionFactory lineObjective = new gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.scenario.LineConstructionObjectiveFunctionFactory(scenario, dualSolution, outerDualProblem);
+    gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.scenario.LineHardenObjectiveFunctionFactory hardenObjective = new gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.scenario.LineHardenObjectiveFunctionFactory(scenario, dualSolution, outerDualProblem);
+    gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.scenario.LineSwitchObjectiveFunctionFactory switchObjective = new gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.scenario.LineSwitchObjectiveFunctionFactory(scenario, dualSolution, outerDualProblem);
+    
+    generatorObjective.addCoefficients(problem, model);   
+    lineObjective.addCoefficients(problem, model);   
+    hardenObjective.addCoefficients(problem, model);   
+    switchObjective.addCoefficients(problem, model);   
+  }
   
   /**
    * Create the inner mathematical program
@@ -299,38 +281,14 @@ public class BPResilienceAlgorithm extends OptimizerImpl<ElectricPowerNode, Elec
     LinearObjective objective = new LinearObjectiveMinimize();
     innerProblem.setLinearObjective(objective);
 
-    // variables of the outer problem
-    gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.scenario.GeneratorVariableFactory generatorVariableFactory = new gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.scenario.GeneratorVariableFactory(scenario);
-    gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.scenario.LineExistVariableFactory    lineConstructionVariableFactory    = new gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.scenario.LineExistVariableFactory(scenario);
-    gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.scenario.LineHardenVariableFactory    lineHardenVariableFactory    = new gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.scenario.LineHardenVariableFactory(scenario);
-    gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.scenario.LineSwitchVariableFactory    lineSwitchVariableFactory    = new gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.scenario.LineSwitchVariableFactory(scenario);
-    
-    generatorVariableFactory.createVariables(innerProblem, model);
-    lineConstructionVariableFactory.createVariables(innerProblem, model);
-    lineHardenVariableFactory.createVariables(innerProblem, model);
-    lineSwitchVariableFactory.createVariables(innerProblem, model);
+    // variables of the inner problem
+    addInnerVariables(model, innerProblem, scenario);
            
-    // objective function for the outer problem 
-    gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.scenario.GeneratorObjectiveFunctionFactory generatorObjective = new gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.scenario.GeneratorObjectiveFunctionFactory(scenario, dualSolution, outerDualProblem);
-    gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.scenario.LineConstructionObjectiveFunctionFactory lineObjective = new gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.scenario.LineConstructionObjectiveFunctionFactory(scenario, dualSolution, outerDualProblem);
-    gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.scenario.LineHardenObjectiveFunctionFactory hardenObjective = new gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.scenario.LineHardenObjectiveFunctionFactory(scenario, dualSolution, outerDualProblem);
-    gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.scenario.LineSwitchObjectiveFunctionFactory switchObjective = new gov.lanl.micot.application.rdt.algorithm.ep.bp.objective.scenario.LineSwitchObjectiveFunctionFactory(scenario, dualSolution, outerDualProblem);
-    
-    generatorObjective.addCoefficients(innerProblem, model);   
-    lineObjective.addCoefficients(innerProblem, model);   
-    hardenObjective.addCoefficients(innerProblem, model);   
-    switchObjective.addCoefficients(innerProblem, model);   
+    // objective function for the inner problem
+    addInnerObjectiveFunction(model, innerProblem, scenario);
      
-    // create the bounds
-    gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.scenario.GeneratorBoundConstraint generatorBound = new gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.scenario.GeneratorBoundConstraint(scenario);
-    gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.scenario.LineConstructionBoundConstraint lineBound = new gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.scenario.LineConstructionBoundConstraint(scenario);
-    gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.scenario.LineHardenBoundConstraint hardenBound = new  gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.scenario.LineHardenBoundConstraint(scenario);
-    gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.scenario.LineSwitchBoundConstraint switchBound = new  gov.lanl.micot.application.rdt.algorithm.ep.bp.constraint.scenario.LineSwitchBoundConstraint(scenario);
-    
-    generatorBound.constructConstraint(innerProblem, model);
-    lineBound.constructConstraint(innerProblem, model);
-    hardenBound.constructConstraint(innerProblem, model);
-    switchBound.constructConstraint(innerProblem, model);
+    // create the bounds for the inner problem
+    addInnerVariableBounds(model, innerProblem, scenario);
     
     // create the constraints
 /*    LambdaConstraint lambdaConstraint = new LambdaConstraint(scenarios, columns);

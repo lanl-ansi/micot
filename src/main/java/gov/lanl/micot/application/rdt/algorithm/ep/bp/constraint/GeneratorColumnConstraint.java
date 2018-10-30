@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
-import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.GeneratorVariableFactory;
+import gov.lanl.micot.application.rdt.algorithm.ep.variable.GeneratorVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.LambdaVariableFactory;
 import gov.lanl.micot.util.math.solver.LinearConstraint;
 import gov.lanl.micot.util.math.solver.LinearConstraintGreaterEq;
