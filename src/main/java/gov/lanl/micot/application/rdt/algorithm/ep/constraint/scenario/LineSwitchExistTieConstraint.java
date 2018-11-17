@@ -1,4 +1,4 @@
-package gov.lanl.micot.application.rdt.algorithm.ep.constraint;
+package gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario;
 
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LineExistVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LineSwitchVariableFactory;
@@ -44,7 +44,7 @@ public class LineSwitchExistTieConstraint implements ConstraintFactory {
         
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (switchFactory.hasVariable(edge)) {
-        Variable t_s = switchFactory.getVariable(problem, edge);
+        Variable t_s = switchFactory.getVariable(problem, edge, scenario);
         Variable x_s = existFactory.getVariable(problem, edge, scenario);        
         
         LinearConstraint constraint = new LinearConstraintLessEq(getConstraintName(edge, scenario));

@@ -4,7 +4,7 @@ import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.Generator;
 import gov.lanl.micot.infrastructure.ep.optimize.ObjectiveFunctionFactory;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
-import gov.lanl.micot.application.rdt.algorithm.ep.variable.GeneratorVariableFactory;
+import gov.lanl.micot.application.rdt.algorithm.ep.variable.GeneratorConstructionVariableFactory;
 import gov.lanl.micot.util.math.solver.Variable;
 import gov.lanl.micot.util.math.solver.exception.NoVariableException;
 import gov.lanl.micot.util.math.solver.mathprogram.MathematicalProgram;
@@ -18,7 +18,7 @@ public class GeneratorObjectiveFunctionFactory implements ObjectiveFunctionFacto
 
   @Override
   public void addCoefficients(MathematicalProgram program, ElectricPowerModel model) throws NoVariableException {
-    GeneratorVariableFactory generatorVariableFactory = new GeneratorVariableFactory();
+    GeneratorConstructionVariableFactory generatorVariableFactory = new GeneratorConstructionVariableFactory();
     MathematicalProgramObjective objective = program.getLinearObjective();
 
     for (Generator generator : model.getGenerators()) {

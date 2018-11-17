@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import gov.lanl.micot.application.rdt.algorithm.ep.variable.GeneratorVariableFactory;
+import gov.lanl.micot.application.rdt.algorithm.ep.variable.GeneratorConstructionVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.LambdaVariableFactory;
 import gov.lanl.micot.util.math.solver.LinearConstraint;
 import gov.lanl.micot.util.math.solver.LinearConstraintGreaterEq;
@@ -41,7 +41,7 @@ public class GeneratorColumnConstraint implements ConstraintFactory {
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException, InvalidConstraintException {
     LambdaVariableFactory lambdaFactory = new LambdaVariableFactory(scenarios, columns);
-    GeneratorVariableFactory generatorFactory = new GeneratorVariableFactory();
+    GeneratorConstructionVariableFactory generatorFactory = new GeneratorConstructionVariableFactory();
     
     // generator columns
     for (Generator producer : model.getGenerators()) {

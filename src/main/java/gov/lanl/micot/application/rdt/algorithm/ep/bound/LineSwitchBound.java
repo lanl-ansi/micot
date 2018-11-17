@@ -3,7 +3,7 @@ package gov.lanl.micot.application.rdt.algorithm.ep.bound;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.optimize.ConstraintFactory;
-import gov.lanl.micot.application.rdt.algorithm.ep.variable.LineHardenVariableFactory;
+import gov.lanl.micot.application.rdt.algorithm.ep.variable.LineSwitchVariableFactory;
 import gov.lanl.micot.util.math.solver.Variable;
 import gov.lanl.micot.util.math.solver.exception.NoVariableException;
 import gov.lanl.micot.util.math.solver.exception.VariableExistsException;
@@ -11,33 +11,32 @@ import gov.lanl.micot.util.math.solver.mathprogram.MathematicalProgram;
 
 
 /**
- * Bounds on the line hardening variables are 0,1
- * 
- * This is part of constraint 26 in the AAAI 2015 paper
- * 
+ * Switches can only be built if the line is built
  * @author Russell Bent
  */
-public class LineHardenBoundConstraint implements ConstraintFactory {
-
+public class LineSwitchBound implements ConstraintFactory {
+  
   private double upperBound = 0;
   
   /**
    * Constraint
    */
-  public LineHardenBoundConstraint(double upperBound) {    
-    this.upperBound = 0;
+  public LineSwitchBound(double upperBound) {    
+    this.upperBound = upperBound;
   }
-    
+ 
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException {
-    LineHardenVariableFactory lineVariableFactory = new LineHardenVariableFactory();
-        
+    LineSwitchVariableFactory lineSwitchVariableFactory = new LineSwitchVariableFactory();
+    
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
-      if (lineVariableFactory.hasVariable(edge)) {
-        Variable variable = lineVariableFactory.getVariable(problem, edge);
-        problem.addBounds(variable, 0.0, upperBound);
-      }      
+      if (lineSwitchVariableFactory.hasVariable(edge)) {      
+      	Variable switchVar = lineSwitchVariableFactory.getVariable(problem, edge);  
+    	  problem.addBounds(switchVar, 0.0, upperBound);
+      }    	
     }
   }
+
+  
   
 }

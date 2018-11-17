@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerNode;
 import gov.lanl.micot.infrastructure.model.Scenario;
@@ -55,7 +56,13 @@ public class BPResilienceFactory extends OptimizerFactoryImpl<ElectricPowerNode,
 	      algorithm.addInnerMathProgramFlag(key.substring(BPResilienceFlags.INNER_PREFIX.length(), key.length()), flags.get(key));
 	    }
 	  }
-        
+    
+	  double criticalLoadMet = oFlags.getDouble(AlgorithmConstants.CRITICAL_LOAD_MET_KEY);
+	  double nonCriticalLoadMet = oFlags.getDouble(AlgorithmConstants.LOAD_MET_KEY);
+     
+	  algorithm.setCriticalLoadMet(criticalLoadMet);
+    algorithm.setNonCriticalLoadMet(nonCriticalLoadMet);
+	  
 	  return algorithm;
 	}
  

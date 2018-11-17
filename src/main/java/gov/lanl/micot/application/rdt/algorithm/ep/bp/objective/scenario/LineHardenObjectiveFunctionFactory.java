@@ -46,7 +46,6 @@ public class LineHardenObjectiveFunctionFactory implements ObjectiveFunctionFact
       if (yVariableFactory.hasVariable(edge)) {
         Variable variable = lineVariableFactory.getVariable(program, edge, scenario);
         Variable y = yVariableFactory.getVariable(dualProgram, edge, scenario);
-        System.out.println(edge);
         double cost = dualSolution.getValueDouble(y);
         objective.addVariable(variable, cost);        
       }      

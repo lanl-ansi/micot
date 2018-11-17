@@ -20,7 +20,7 @@ import java.util.Collection;
  * 
  * @author Russell Bent
  */
-public class GeneratorVariableFactory implements VariableFactory {
+public class GeneratorConstructionVariableFactory implements VariableFactory {
 
   /**
    * Function for create the variable name associated with microgrid size

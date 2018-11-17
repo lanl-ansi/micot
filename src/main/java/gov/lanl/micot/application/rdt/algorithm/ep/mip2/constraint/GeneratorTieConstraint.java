@@ -4,7 +4,7 @@ import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.Generator;
 import gov.lanl.micot.infrastructure.ep.optimize.ConstraintFactory;
 import gov.lanl.micot.infrastructure.model.Scenario;
-import gov.lanl.micot.application.rdt.algorithm.ep.variable.GeneratorVariableFactory;
+import gov.lanl.micot.application.rdt.algorithm.ep.variable.GeneratorConstructionVariableFactory;
 import gov.lanl.micot.util.math.solver.LinearConstraint;
 import gov.lanl.micot.util.math.solver.LinearConstraintEquals;
 import gov.lanl.micot.util.math.solver.Variable;
@@ -44,8 +44,8 @@ public class GeneratorTieConstraint implements ConstraintFactory {
   
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException, InvalidConstraintException {
-    gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.GeneratorVariableFactory scenarioFactory = new gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.GeneratorVariableFactory(scenario);
-    GeneratorVariableFactory genFactory = new GeneratorVariableFactory();
+    gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.GeneratorConstructionVariableFactory scenarioFactory = new gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.GeneratorConstructionVariableFactory(scenario);
+    GeneratorConstructionVariableFactory genFactory = new GeneratorConstructionVariableFactory();
         
     for (Generator generator : model.getGenerators()) {
       if (genFactory.hasVariable(generator)) {

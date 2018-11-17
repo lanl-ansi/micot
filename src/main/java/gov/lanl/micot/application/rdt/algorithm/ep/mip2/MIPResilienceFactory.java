@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.application.rdt.algorithm.ep.mip.MIPInfrastructureExpansionAlgorithmFlags;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerNode;
@@ -33,17 +34,21 @@ public class MIPResilienceFactory extends OptimizerFactoryImpl<ElectricPowerNode
 	public MIPResilienceAlgorithm createOptimizer(OptimizerFlags oFlags) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 	  MIPResilienceFlags flags = new MIPResilienceFlags(oFlags);
 	  
-	  Collection<Scenario> scenarios = flags.getCollection(MIPResilienceFlags.SCENARIOS_KEY, Scenario.class);
-    
+	  Collection<Scenario> scenarios = flags.getCollection(MIPResilienceFlags.SCENARIOS_KEY, Scenario.class);        
 	  MIPResilienceAlgorithm algorithm = new MIPResilienceAlgorithm(scenarios);
 	  
 	  double timeout = oFlags.containsKey(MathematicalProgramFlags.TIMEOUT_FLAG) ? oFlags.getDouble(MathematicalProgramFlags.TIMEOUT_FLAG) : Double.POSITIVE_INFINITY;
-	  
+    double criticalLoadMet = oFlags.getDouble(AlgorithmConstants.CRITICAL_LOAD_MET_KEY);
+    double nonCriticalLoadMet = oFlags.getDouble(AlgorithmConstants.LOAD_MET_KEY);
+
 	  algorithm.addMathProgramFlag(MathematicalProgramFlags.DEBUG_ON_FLAG, false);
 	  algorithm.addMathProgramFlag(MathematicalProgramFlags.MIP_GAP_TOLERANCE_FLAG, 1e-3);
     algorithm.addMathProgramFlag(MathematicalProgramFlags.TIMEOUT_FLAG, timeout);
     algorithm.addMathProgramFlag(MathematicalProgramFlags.MATHEMATICAL_PROGRAM_FACTORY_FLAG, flags.getString(MIPInfrastructureExpansionAlgorithmFlags.MATH_PROGRAM_FACTORY_KEY));
-            
+
+    algorithm.setCriticalLoadMet(criticalLoadMet);
+    algorithm.setNonCriticalLoadMet(nonCriticalLoadMet);
+    
 	  return algorithm;
 	}
  

@@ -1,42 +1,42 @@
-package gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario;
+package gov.lanl.micot.application.rdt.algorithm.ep.bound;
 
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.Generator;
 import gov.lanl.micot.infrastructure.ep.optimize.ConstraintFactory;
-import gov.lanl.micot.infrastructure.model.Scenario;
-import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.GeneratorVariableFactory;
+import gov.lanl.micot.application.rdt.algorithm.ep.variable.GeneratorConstructionVariableFactory;
 import gov.lanl.micot.util.math.solver.Variable;
 import gov.lanl.micot.util.math.solver.exception.NoVariableException;
 import gov.lanl.micot.util.math.solver.exception.VariableExistsException;
 import gov.lanl.micot.util.math.solver.mathprogram.MathematicalProgram;
 
-
 /**
- * Bounds on the generator scenario variables
+ * Bounds on the generator variables
+ * 
+ * This is constraint 26 in the AAAI 2015 paper
  * 
  * @author Russell Bent
  */
-public class GeneratorBoundConstraint implements ConstraintFactory {
+public class GeneratorConstructionBound implements ConstraintFactory {
 
-  private Scenario scenario = null;
+  double upperBound = 0;
 
   /**
    * Constraint
    */
-  public GeneratorBoundConstraint(Scenario scenario) {    
-    this.scenario = scenario;
+  public GeneratorConstructionBound(double upperBound) {    
+    this.upperBound = upperBound;
   }
     
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException {
-    GeneratorVariableFactory generatorVariableFactory = new GeneratorVariableFactory(scenario);
+    GeneratorConstructionVariableFactory generatorVariableFactory = new GeneratorConstructionVariableFactory();
    
     for (Generator generator : model.getGenerators()) {
       if (generatorVariableFactory.hasVariable(generator)) {
-        Variable variable = generatorVariableFactory.getVariable(problem, generator, scenario);
-        problem.addBounds(variable, 0.0, 1.0);        
+        Variable variable = generatorVariableFactory.getVariable(problem, generator);
+        problem.addBounds(variable, 0.0, upperBound);        
       }
-    }    
+    }
   }
-
+  
 }
