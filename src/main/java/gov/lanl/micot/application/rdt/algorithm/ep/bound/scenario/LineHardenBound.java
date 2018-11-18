@@ -35,8 +35,8 @@ public class LineHardenBound implements ConstraintFactory {
         
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (lineVariableFactory.hasVariable(edge)) {
-        Variable variable = lineVariableFactory.getVariable(problem, edge, scenario);
-        problem.addBounds(variable, 0.0, 1.0);
+        Variable h_s = lineVariableFactory.getVariable(problem, edge);
+        problem.addBounds(h_s, 0.0, 1.0);
       }      
     }
   }

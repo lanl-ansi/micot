@@ -44,7 +44,7 @@ public class LineHardenObjectiveFunctionFactory implements ObjectiveFunctionFact
   
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (yVariableFactory.hasVariable(edge)) {
-        Variable variable = lineVariableFactory.getVariable(program, edge, scenario);
+        Variable variable = lineVariableFactory.getVariable(program, edge);
         Variable y = yVariableFactory.getVariable(dualProgram, edge, scenario);
         double cost = dualSolution.getValueDouble(y);
         objective.addVariable(variable, cost);        

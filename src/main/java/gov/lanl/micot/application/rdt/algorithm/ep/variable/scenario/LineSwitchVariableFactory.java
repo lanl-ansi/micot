@@ -94,7 +94,7 @@ public class LineSwitchVariableFactory implements VariableFactory {
     return null;
   }
 
-  public Variable getVariable(MathematicalProgram program, ElectricPowerFlowConnection edge, Scenario scenario) throws NoVariableException {
+  public Variable getVariable(MathematicalProgram program, ElectricPowerFlowConnection edge) throws NoVariableException {
     return program.getVariable(getFlowVariableName(edge, scenario));
   }
   

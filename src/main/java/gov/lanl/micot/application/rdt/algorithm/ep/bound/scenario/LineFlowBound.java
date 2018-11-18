@@ -5,6 +5,7 @@ import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.optimize.ConstraintFactory;
 import gov.lanl.micot.infrastructure.model.Scenario;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LineFlowVariableFactory;
+import gov.lanl.micot.util.math.solver.Variable;
 import gov.lanl.micot.util.math.solver.exception.NoVariableException;
 import gov.lanl.micot.util.math.solver.mathprogram.MathematicalProgram;
 
@@ -30,21 +31,28 @@ public class LineFlowBound implements ConstraintFactory {
     double mvaBase = model.getMVABase();
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       boolean hasVariable = variableFactory.hasVariable(edge);
-     
+      double capacity = edge.getCapacityRating() / mvaBase;
+           
       if (hasVariable) {            
-        if (edge.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_A_KEY, Boolean.class)) {        
-          problem.addBounds(variableFactory.getRealVariable(problem, edge, LineFlowVariableFactory.PHASE_A), -edge.getCapacityRating() / mvaBase, edge.getCapacityRating() / mvaBase);
-          problem.addBounds(variableFactory.getReactiveVariable(problem, edge, LineFlowVariableFactory.PHASE_A), -edge.getCapacityRating() / mvaBase, edge.getCapacityRating() / mvaBase);
+        if (edge.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_A_KEY, Boolean.class)) {
+          Variable fp_a = variableFactory.getRealVariable(problem, edge, LineFlowVariableFactory.PHASE_A);
+          Variable fq_a = variableFactory.getReactiveVariable(problem, edge, LineFlowVariableFactory.PHASE_A);          
+          problem.addBounds(fp_a, -capacity, capacity);
+          problem.addBounds(fq_a, -capacity, capacity);
         }
         
         if (edge.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_B_KEY, Boolean.class)) {        
-          problem.addBounds(variableFactory.getRealVariable(problem, edge, LineFlowVariableFactory.PHASE_B), -edge.getCapacityRating() / mvaBase, edge.getCapacityRating() / mvaBase);
-          problem.addBounds(variableFactory.getReactiveVariable(problem, edge, LineFlowVariableFactory.PHASE_B), -edge.getCapacityRating() / mvaBase, edge.getCapacityRating() / mvaBase);
+          Variable fp_b = variableFactory.getRealVariable(problem, edge, LineFlowVariableFactory.PHASE_B);
+          Variable fq_b = variableFactory.getReactiveVariable(problem, edge, LineFlowVariableFactory.PHASE_B);                    
+          problem.addBounds(fp_b, -capacity, capacity);
+          problem.addBounds(fq_b, -capacity, capacity);
         }
    
         if (edge.getAttribute(ElectricPowerFlowConnection.HAS_PHASE_C_KEY, Boolean.class)) {        
-          problem.addBounds(variableFactory.getRealVariable(problem, edge, LineFlowVariableFactory.PHASE_C), -edge.getCapacityRating() / mvaBase, edge.getCapacityRating() / mvaBase);
-          problem.addBounds(variableFactory.getReactiveVariable(problem, edge, LineFlowVariableFactory.PHASE_C), -edge.getCapacityRating() / mvaBase, edge.getCapacityRating() / mvaBase);
+          Variable fp_c = variableFactory.getRealVariable(problem, edge, LineFlowVariableFactory.PHASE_C);
+          Variable fq_c = variableFactory.getReactiveVariable(problem, edge, LineFlowVariableFactory.PHASE_C);                     
+          problem.addBounds(fp_c, -capacity, capacity);
+          problem.addBounds(fq_c, -capacity, capacity);
         }
       }
     }

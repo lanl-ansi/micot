@@ -31,8 +31,8 @@ public class LineSwitchBound implements ConstraintFactory {
     
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (lineSwitchVariableFactory.hasVariable(edge)) {      
-      	Variable switchVar = lineSwitchVariableFactory.getVariable(problem, edge);  
-    	  problem.addBounds(switchVar, 0.0, upperBound);
+      	Variable t = lineSwitchVariableFactory.getVariable(problem, edge);  
+    	  problem.addBounds(t, 0.0, upperBound);
       }    	
     }
   }

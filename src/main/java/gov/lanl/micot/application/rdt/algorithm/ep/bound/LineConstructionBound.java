@@ -31,8 +31,8 @@ public class LineConstructionBound implements ConstraintFactory {
         
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (lineVariableFactory.hasVariable(edge)) {      
-        Variable variable = lineVariableFactory.getVariable(problem, edge);
-        problem.addBounds(variable, 0.0, upperBound);
+        Variable x = lineVariableFactory.getVariable(problem, edge);
+        problem.addBounds(x, 0.0, upperBound);
       }      
     }
   }

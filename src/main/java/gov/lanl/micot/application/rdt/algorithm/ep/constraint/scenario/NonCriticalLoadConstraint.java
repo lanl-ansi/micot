@@ -79,30 +79,30 @@ public class NonCriticalLoadConstraint implements ConstraintFactory {
     for (Load load : model.getLoads()) {
       boolean isCritical = load.getAttribute(AlgorithmConstants.IS_CRITICAL_LOAD_KEY) == null || !load.getAttribute(AlgorithmConstants.IS_CRITICAL_LOAD_KEY, Boolean.class) ? false : true;
       if (!isCritical) {
-        Variable realAVariable = factory.getRealVariable(problem, load, LoadVariableFactory.PHASE_A);
-        Variable reactiveAVariable = factory.getReactiveVariable(problem, load, LoadVariableFactory.PHASE_A);
-        Variable realBVariable = factory.getRealVariable(problem, load, LoadVariableFactory.PHASE_B);
-        Variable reactiveBVariable = factory.getReactiveVariable(problem, load, LoadVariableFactory.PHASE_B);
-        Variable realCVariable = factory.getRealVariable(problem, load, LoadVariableFactory.PHASE_C);
-        Variable reactiveCVariable = factory.getReactiveVariable(problem, load, LoadVariableFactory.PHASE_C);
+        Variable dp_a = factory.getRealVariable(problem, load, LoadVariableFactory.PHASE_A);
+        Variable dq_a = factory.getReactiveVariable(problem, load, LoadVariableFactory.PHASE_A);
+        Variable dp_b = factory.getRealVariable(problem, load, LoadVariableFactory.PHASE_B);
+        Variable dq_b = factory.getReactiveVariable(problem, load, LoadVariableFactory.PHASE_B);
+        Variable dp_c = factory.getRealVariable(problem, load, LoadVariableFactory.PHASE_C);
+        Variable dq_c = factory.getReactiveVariable(problem, load, LoadVariableFactory.PHASE_C);
         
-        if (realAVariable != null) {
-          realA.addVariable(realAVariable, 1.0);
-          reactiveA.addVariable(reactiveAVariable, 1.0);
+        if (dp_a != null) {
+          realA.addVariable(dp_a, 1.0);
+          reactiveA.addVariable(dq_a, 1.0);
           totalRealLoadA += load.getAttribute(Load.REAL_LOAD_A_MAX_KEY, Number.class).doubleValue();
           totalReactiveLoadA += load.getAttribute(Load.REACTIVE_LOAD_A_MAX_KEY, Number.class).doubleValue();
         }
 
-        if (realBVariable != null) {
-          realB.addVariable(realBVariable, 1.0);
-          reactiveB.addVariable(reactiveBVariable, 1.0);
+        if (dp_b != null) {
+          realB.addVariable(dp_b, 1.0);
+          reactiveB.addVariable(dq_b, 1.0);
           totalRealLoadB += load.getAttribute(Load.REAL_LOAD_B_MAX_KEY, Number.class).doubleValue();
           totalReactiveLoadB += load.getAttribute(Load.REACTIVE_LOAD_B_MAX_KEY, Number.class).doubleValue();
         }
         
-        if (realCVariable != null) {
-          realC.addVariable(realCVariable, 1.0);
-          reactiveC.addVariable(reactiveCVariable, 1.0);
+        if (dp_c != null) {
+          realC.addVariable(dp_c, 1.0);
+          reactiveC.addVariable(dq_c, 1.0);
           totalRealLoadC += load.getAttribute(Load.REAL_LOAD_C_MAX_KEY, Number.class).doubleValue();
           totalReactiveLoadC += load.getAttribute(Load.REACTIVE_LOAD_C_MAX_KEY, Number.class).doubleValue();
         }        

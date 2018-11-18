@@ -5,12 +5,17 @@ import gov.lanl.micot.application.rdt.algorithm.ep.bound.LineConstructionBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.LineHardenBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.LineSwitchBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.LineActiveBound;
+import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.LineDirectionBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.LineFlowBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.LoadBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.GeneratorBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.VoltageBound;
+import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.BusBalanceConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.CriticalLoadConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.GeneratorConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineActiveTieConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineCapacityConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineDirectionConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineHardenExistTieConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineSwitchExistTieConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.NonCriticalLoadConstraint;
@@ -24,6 +29,7 @@ import gov.lanl.micot.application.rdt.algorithm.ep.variable.LineHardenVariableFa
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.LineSwitchVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.GeneratorVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LineActiveVariableFactory;
+import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LineDirectionVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LineFlowVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LoadVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.VoltageVariableFactory;
@@ -154,6 +160,7 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
     LoadVariableFactory loadVariable = new LoadVariableFactory(scenario);
     GeneratorVariableFactory genVariable = new GeneratorVariableFactory(scenario);
     LineFlowVariableFactory flowVariable = new LineFlowVariableFactory(scenario);
+    LineDirectionVariableFactory directionVariable = new LineDirectionVariableFactory(scenario);
     
     generatorVariableFactory.createVariables(problem, model);
     lineConstructionVariableFactory.createVariables(problem, model);
@@ -164,6 +171,7 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
     loadVariable.createVariables(problem, model);
     genVariable.createVariables(problem, model);
     flowVariable.createVariables(problem, model);
+    directionVariable.createVariables(problem, model);
   }
   
   
@@ -194,6 +202,7 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
     LoadBound loadBound = new LoadBound(scenario);
     GeneratorBound genBound = new GeneratorBound(scenario);
     LineFlowBound flowBound = new LineFlowBound(scenario);
+    LineDirectionBound directionBound = new LineDirectionBound(scenario);
     
     generatorBound.constructConstraint(problem, model);
     lineBound.constructConstraint(problem, model);
@@ -204,6 +213,7 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
     loadBound.constructConstraint(problem, model);
     genBound.constructConstraint(problem, model);
     flowBound.constructConstraint(problem, model);    
+    directionBound.constructConstraint(problem, model);
   }
 
   /**
@@ -220,12 +230,20 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
     LineHardenExistTieConstraint hardenTie = new LineHardenExistTieConstraint(scenario);
     CriticalLoadConstraint critical = new CriticalLoadConstraint(criticalLoadMet, scenario);
     NonCriticalLoadConstraint nonCritical = new NonCriticalLoadConstraint(nonCriticalLoadMet, scenario);
+    GeneratorConstraint generator = new GeneratorConstraint(scenario);
+    BusBalanceConstraint balance = new BusBalanceConstraint(scenario);
+    LineCapacityConstraint capacity = new LineCapacityConstraint(scenario);
+    LineDirectionConstraint direction = new LineDirectionConstraint(scenario); 
     
     switchExistTie.constructConstraint(problem, model);
     activeTie.constructConstraint(problem, model);
     hardenTie.constructConstraint(problem, model);
     critical.constructConstraint(problem, model);
     nonCritical.constructConstraint(problem, model);
+    generator.constructConstraint(problem, model);
+    balance.constructConstraint(problem, model);
+    capacity.constructConstraint(problem, model);
+    direction.constructConstraint(problem, model);
   }
 
   /**

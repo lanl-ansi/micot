@@ -44,7 +44,7 @@ public class LineHardenTieConstraint implements ConstraintFactory {
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (hardenFactory.hasVariable(edge)) {
         Variable h = hardenFactory.getVariable(problem, edge);
-        Variable h_s = scenarioFactory.getVariable(problem, edge, scenario);        
+        Variable h_s = scenarioFactory.getVariable(problem, edge);        
         
         LinearConstraint constraint = new LinearConstraintEquals(getConstraintName(edge, scenario));
         constraint.addVariable(h, 1.0);

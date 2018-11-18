@@ -44,7 +44,7 @@ public class LineSwitchTieConstraint implements ConstraintFactory {
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (switchFactory.hasVariable(edge)) {
         Variable t = switchFactory.getVariable(problem, edge);
-        Variable t_s = scenarioFactory.getVariable(problem, edge, scenario);        
+        Variable t_s = scenarioFactory.getVariable(problem, edge);        
         
         LinearConstraint constraint = new LinearConstraintLessEq(getConstraintName(edge, scenario));
         constraint.addVariable(t, -1.0);

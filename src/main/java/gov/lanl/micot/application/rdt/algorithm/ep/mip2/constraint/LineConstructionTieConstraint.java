@@ -45,7 +45,7 @@ public class LineConstructionTieConstraint implements ConstraintFactory {
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (lineVariableFactory.hasVariable(edge)) {
         Variable x = lineVariableFactory.getVariable(problem, edge);
-        Variable x_s = existVariableFactory.getVariable(problem, edge, scenario);        
+        Variable x_s = existVariableFactory.getVariable(problem, edge);        
         
         LinearConstraint constraint = new LinearConstraintEquals(getConstraintName(edge, scenario));
         constraint.addVariable(x, 1.0);

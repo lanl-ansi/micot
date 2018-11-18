@@ -33,8 +33,8 @@ public class GeneratorConstructionBound implements ConstraintFactory {
    
     for (Generator generator : model.getGenerators()) {
       if (generatorVariableFactory.hasVariable(generator)) {
-        Variable variable = generatorVariableFactory.getVariable(problem, generator, scenario);
-        problem.addBounds(variable, 0.0, 1.0);        
+        Variable u_s = generatorVariableFactory.getVariable(problem, generator, scenario);
+        problem.addBounds(u_s, 0.0, 1.0);        
       }
     }    
   }

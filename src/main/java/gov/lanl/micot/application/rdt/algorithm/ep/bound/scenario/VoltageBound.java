@@ -33,18 +33,18 @@ public class VoltageBound implements ConstraintFactory {
     VoltageVariableFactory variableFactory = new VoltageVariableFactory(scenario);
     
     for (Bus bus : model.getBuses()) {        
-      Variable variableA = variableFactory.getVariable(problem, bus, ScenarioVoltageVariableFactory.PHASE_A);
-      Variable variableB = variableFactory.getVariable(problem, bus, ScenarioVoltageVariableFactory.PHASE_B);
-      Variable variableC = variableFactory.getVariable(problem, bus, ScenarioVoltageVariableFactory.PHASE_C);
+      Variable v_a = variableFactory.getVariable(problem, bus, ScenarioVoltageVariableFactory.PHASE_A);
+      Variable v_b = variableFactory.getVariable(problem, bus, ScenarioVoltageVariableFactory.PHASE_B);
+      Variable v_c = variableFactory.getVariable(problem, bus, ScenarioVoltageVariableFactory.PHASE_C);
 
-      if (variableA != null) {
-        problem.addBounds(variableA, bus.getMinimumVoltagePU() * bus.getMinimumVoltagePU(), bus.getMaximumVoltagePU() * bus.getMaximumVoltagePU());
+      if (v_a != null) {
+        problem.addBounds(v_a, bus.getMinimumVoltagePU() * bus.getMinimumVoltagePU(), bus.getMaximumVoltagePU() * bus.getMaximumVoltagePU());
       }
-      if (variableB != null) {
-        problem.addBounds(variableB, bus.getMinimumVoltagePU() * bus.getMinimumVoltagePU(), bus.getMaximumVoltagePU() * bus.getMaximumVoltagePU());
+      if (v_b != null) {
+        problem.addBounds(v_b, bus.getMinimumVoltagePU() * bus.getMinimumVoltagePU(), bus.getMaximumVoltagePU() * bus.getMaximumVoltagePU());
       }
-      if (variableC != null) {
-        problem.addBounds(variableC, bus.getMinimumVoltagePU() * bus.getMinimumVoltagePU(), bus.getMaximumVoltagePU() * bus.getMaximumVoltagePU());
+      if (v_c != null) {
+        problem.addBounds(v_c, bus.getMinimumVoltagePU() * bus.getMinimumVoltagePU(), bus.getMaximumVoltagePU() * bus.getMaximumVoltagePU());
       }    
     }
   }

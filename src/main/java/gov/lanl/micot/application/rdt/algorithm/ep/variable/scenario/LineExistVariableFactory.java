@@ -77,7 +77,7 @@ public class LineExistVariableFactory implements VariableFactory {
     return null;
   }
 
-  public Variable getVariable(MathematicalProgram program, ElectricPowerFlowConnection connection, Scenario scenario) throws NoVariableException {
+  public Variable getVariable(MathematicalProgram program, ElectricPowerFlowConnection connection) throws NoVariableException {
     return program.getVariable(getFlowVariableName(connection, scenario));
   }
   

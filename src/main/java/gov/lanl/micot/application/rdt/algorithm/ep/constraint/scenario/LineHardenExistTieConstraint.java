@@ -53,8 +53,8 @@ public class LineHardenExistTieConstraint implements ConstraintFactory {
       boolean isDamaged = scenario.getModification(edge, Asset.IS_FAILED_KEY, Boolean.class) != null ? scenario.getModification(edge, Asset.IS_FAILED_KEY, Boolean.class) : false;
             
       if (isDamaged) {      
-        Variable x_s = existFactory.getVariable(problem, edge, scenario); 
-        Variable h_s  = harden.getVariable(problem, edge, scenario);            
+        Variable x_s = existFactory.getVariable(problem, edge); 
+        Variable h_s  = harden.getVariable(problem, edge);            
         LinearConstraint constraint = new LinearConstraintEquals(getConstraintName(edge, scenario));
         constraint.addVariable(h_s, -1.0);
         constraint.addVariable(x_s, 1.0);

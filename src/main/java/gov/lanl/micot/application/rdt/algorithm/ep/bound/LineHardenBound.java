@@ -25,7 +25,7 @@ public class LineHardenBound implements ConstraintFactory {
    * Constraint
    */
   public LineHardenBound(double upperBound) {    
-    this.upperBound = 0;
+    this.upperBound = upperBound;
   }
     
   @Override
@@ -34,8 +34,8 @@ public class LineHardenBound implements ConstraintFactory {
         
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (lineVariableFactory.hasVariable(edge)) {
-        Variable variable = lineVariableFactory.getVariable(problem, edge);
-        problem.addBounds(variable, 0.0, upperBound);
+        Variable h = lineVariableFactory.getVariable(problem, edge);
+        problem.addBounds(h, 0.0, upperBound);
       }      
     }
   }

@@ -14,19 +14,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Creates a variable for whether or not a line is active or not
- * These are the z_{ij} variables in the paper
+ * Creates a variable for line direction
+ * b_s variables
  * 
  * @author Russell Bent
  */
-public class LineActiveVariableFactory implements VariableFactory {
+public class LineDirectionVariableFactory implements VariableFactory {
 
   private Scenario scenario = null;
   
   /**
    * Constructor
    */
-  public LineActiveVariableFactory(Scenario scenario) {
+  public LineDirectionVariableFactory(Scenario scenario) {
     this.scenario = scenario;
   }
   
@@ -37,7 +37,7 @@ public class LineActiveVariableFactory implements VariableFactory {
    * @return
    */
   private String getVariableName(ElectricPowerFlowConnection edge, Scenario scenario) {
-    return "z-" + edge.toString() +"-" + scenario.getIndex();
+    return "b-" + edge.toString() +"-" + scenario.getIndex();
   }
 
   @Override

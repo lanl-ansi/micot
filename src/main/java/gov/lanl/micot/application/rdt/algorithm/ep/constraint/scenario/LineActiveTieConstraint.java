@@ -51,9 +51,9 @@ public class LineActiveTieConstraint implements ConstraintFactory {
     LineActiveVariableFactory active = new LineActiveVariableFactory(scenario);
         
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
-        Variable t_s = switchFactory.getVariable(problem, edge, scenario);
-        Variable x_s = existFactory.getVariable(problem, edge, scenario); 
-        Variable z_s  = active.getVariable(problem, edge, scenario);
+        Variable t_s = switchFactory.getVariable(problem, edge);
+        Variable x_s = existFactory.getVariable(problem, edge); 
+        Variable z_s  = active.getVariable(problem, edge);
         double rightHandSide = 0;
             
         LinearConstraint constraint = new LinearConstraintEquals(getConstraintName(edge, scenario));
