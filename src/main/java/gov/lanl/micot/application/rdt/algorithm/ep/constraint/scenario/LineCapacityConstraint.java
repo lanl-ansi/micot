@@ -48,7 +48,7 @@ public class LineCapacityConstraint implements ConstraintFactory {
     double mvaBase = model.getMVABase();
     
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
-      boolean hasVariable = activeFactory.hasVariable(edge, scenario);
+      boolean hasVariable = activeFactory.hasVariable(edge);
       if (hasVariable) {
         Variable z_s = activeFactory.getVariable(problem, edge);
         Variable fp_a = flowFactory.getRealVariable(problem, edge, LineFlowVariableFactory.PHASE_A);

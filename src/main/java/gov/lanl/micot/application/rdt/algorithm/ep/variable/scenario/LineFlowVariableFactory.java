@@ -59,7 +59,7 @@ public class LineFlowVariableFactory implements VariableFactory {
    */
   public boolean hasVariable(ElectricPowerFlowConnection edge) {
     LineActiveVariableFactory activeFactory = new LineActiveVariableFactory(scenario);
-    return activeFactory.hasVariable(edge, scenario);
+    return activeFactory.hasVariable(edge);
   }
   
   @Override

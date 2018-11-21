@@ -1,5 +1,14 @@
 package gov.lanl.micot.application.rdt.algorithm;
 
+import gov.lanl.micot.application.rdt.algorithm.ep.assignment.GeneratorConstructionAssignment;
+import gov.lanl.micot.application.rdt.algorithm.ep.assignment.LineConstructionAssignment;
+import gov.lanl.micot.application.rdt.algorithm.ep.assignment.LineHardenAssignment;
+import gov.lanl.micot.application.rdt.algorithm.ep.assignment.LineSwitchAssignment;
+import gov.lanl.micot.application.rdt.algorithm.ep.assignment.scenario.GeneratorAssignment;
+import gov.lanl.micot.application.rdt.algorithm.ep.assignment.scenario.LineActiveAssignment;
+import gov.lanl.micot.application.rdt.algorithm.ep.assignment.scenario.LineFlowAssignment;
+import gov.lanl.micot.application.rdt.algorithm.ep.assignment.scenario.LineSwitchStatusAssignment;
+import gov.lanl.micot.application.rdt.algorithm.ep.assignment.scenario.LoadAssignment;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.GeneratorConstructionBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.LineConstructionBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.LineHardenBound;
@@ -9,10 +18,17 @@ import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.LineDirectionB
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.LineFlowBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.LoadBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.GeneratorBound;
+import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.LinDistSlackBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.VoltageBound;
+import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.cycle.flow.EdgeActiveBound;
+import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.cycle.flow.FlowBound;
+import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.cycle.flow.VirtualEdgeActiveBound;
+import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.cycle.flow.VirtualFlowBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.BusBalanceConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.CriticalLoadConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.GeneratorConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LinDistFlowConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LinDistSlackOnOffConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineActiveTieConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineCapacityConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineDirectionConstraint;
@@ -28,15 +44,21 @@ import gov.lanl.micot.application.rdt.algorithm.ep.variable.LineConstructionVari
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.LineHardenVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.LineSwitchVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.GeneratorVariableFactory;
+import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LinDistSlackVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LineActiveVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LineDirectionVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LineFlowVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LoadVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.VoltageVariableFactory;
+import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.cycle.flow.EdgeActiveVariable;
+import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.cycle.flow.FlowVariable;
+import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.cycle.flow.VirtualEdgeActiveVariable;
+import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.cycle.flow.VirtualFlowVariable;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerNode;
 import gov.lanl.micot.infrastructure.model.Scenario;
 import gov.lanl.micot.infrastructure.optimize.OptimizerImpl;
+import gov.lanl.micot.util.math.solver.Solution;
 import gov.lanl.micot.util.math.solver.exception.InvalidConstraintException;
 import gov.lanl.micot.util.math.solver.exception.InvalidVariableException;
 import gov.lanl.micot.util.math.solver.exception.NoVariableException;
@@ -161,7 +183,8 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
     GeneratorVariableFactory genVariable = new GeneratorVariableFactory(scenario);
     LineFlowVariableFactory flowVariable = new LineFlowVariableFactory(scenario);
     LineDirectionVariableFactory directionVariable = new LineDirectionVariableFactory(scenario);
-    
+    LinDistSlackVariableFactory slackVariable = new LinDistSlackVariableFactory(scenario);
+        
     generatorVariableFactory.createVariables(problem, model);
     lineConstructionVariableFactory.createVariables(problem, model);
     lineHardenVariableFactory.createVariables(problem, model);
@@ -172,9 +195,9 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
     genVariable.createVariables(problem, model);
     flowVariable.createVariables(problem, model);
     directionVariable.createVariables(problem, model);
+    slackVariable.createVariables(problem, model);
   }
-  
-  
+    
   /**
    * Add the objective coefficients associated with an inner problem
    * @param model
@@ -203,6 +226,7 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
     GeneratorBound genBound = new GeneratorBound(scenario);
     LineFlowBound flowBound = new LineFlowBound(scenario);
     LineDirectionBound directionBound = new LineDirectionBound(scenario);
+    LinDistSlackBound slackBound = new LinDistSlackBound(scenario);
     
     generatorBound.constructConstraint(problem, model);
     lineBound.constructConstraint(problem, model);
@@ -214,6 +238,7 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
     genBound.constructConstraint(problem, model);
     flowBound.constructConstraint(problem, model);    
     directionBound.constructConstraint(problem, model);
+    slackBound.constructConstraint(problem, model);
   }
 
   /**
@@ -234,6 +259,8 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
     BusBalanceConstraint balance = new BusBalanceConstraint(scenario);
     LineCapacityConstraint capacity = new LineCapacityConstraint(scenario);
     LineDirectionConstraint direction = new LineDirectionConstraint(scenario); 
+    LinDistSlackOnOffConstraint slack = new LinDistSlackOnOffConstraint(scenario);
+    LinDistFlowConstraint distflow = new LinDistFlowConstraint(scenario);
     
     switchExistTie.constructConstraint(problem, model);
     activeTie.constructConstraint(problem, model);
@@ -244,8 +271,60 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
     balance.constructConstraint(problem, model);
     capacity.constructConstraint(problem, model);
     direction.constructConstraint(problem, model);
+    slack.constructConstraint(problem, model);
+    distflow.constructConstraint(problem, model);
+    
+    try {
+      addFlowCycleConstraints(model,problem,scenario);
+    }
+    catch (InvalidVariableException e) {
+      e.printStackTrace();
+    }
   }
 
+  /**
+   * Perform the solutions on the outer problem
+   * @param model
+   * @param problem
+   * @param solution
+   * @throws NoVariableException 
+   * @throws VariableExistsException 
+   */
+  public void performOuterAssignments(ElectricPowerModel model, MathematicalProgram problem, Solution solution) throws VariableExistsException, NoVariableException {
+    GeneratorConstructionAssignment generator = new GeneratorConstructionAssignment();
+    LineConstructionAssignment line = new LineConstructionAssignment();
+    LineHardenAssignment harden = new LineHardenAssignment();
+    LineSwitchAssignment switchA = new LineSwitchAssignment();
+    
+    generator.performAssignment(model, problem, solution);
+    line.performAssignment(model, problem, solution);
+    harden.performAssignment(model, problem, solution);
+    switchA.performAssignment(model, problem, solution);
+  }
+
+  /**
+   * Perform assignments on the inner problem
+   * @param model
+   * @param problem
+   * @param solution
+   * @param scenario
+   * @throws VariableExistsException
+   * @throws NoVariableException
+   */
+  public void performInnerAssignments(ElectricPowerModel model, MathematicalProgram problem, Solution solution, Scenario scenario ) throws VariableExistsException, NoVariableException {
+    GeneratorAssignment generator = new GeneratorAssignment(scenario);
+    LineActiveAssignment active = new LineActiveAssignment(scenario);
+    LineSwitchStatusAssignment status = new LineSwitchStatusAssignment(scenario);
+    LineFlowAssignment flow = new LineFlowAssignment(scenario);
+    LoadAssignment load = new LoadAssignment(scenario);
+    
+    generator.performAssignment(model, problem, solution);
+    active.performAssignment(model, problem, solution);
+    status.performAssignment(model, problem, solution);
+    flow.performAssignment(model, problem, solution);
+    load.performAssignment(model, problem, solution);
+  }
+  
   /**
    * Set the critical load met parameter
    * @param criticalLoadMet
@@ -261,5 +340,38 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
   public void setNonCriticalLoadMet(double nonCriticalLoadMet) {
     this.nonCriticalLoadMet = nonCriticalLoadMet;
   }
+
+  /**
+   * Add all the constraints associated with modeling cycles with a flow model
+   * @param model
+   * @param problem
+   * @param scenario
+   * @throws VariableExistsException
+   * @throws NoVariableException
+   * @throws InvalidConstraintException
+   * @throws InvalidVariableException 
+   */
+  protected void addFlowCycleConstraints(ElectricPowerModel model, MathematicalProgram problem, Scenario scenario) throws VariableExistsException, NoVariableException, InvalidConstraintException, InvalidVariableException {
+    EdgeActiveVariable edgeActiveVariable = new EdgeActiveVariable(scenario);
+    FlowVariable flowVariable = new FlowVariable(scenario);
+    VirtualEdgeActiveVariable virtualEdgeActiveVariable = new VirtualEdgeActiveVariable(scenario);
+    VirtualFlowVariable virtualFlowVariable = new VirtualFlowVariable(scenario);
+
+    edgeActiveVariable.createVariables(problem, model);
+    flowVariable.createVariables(problem, model);
+    virtualEdgeActiveVariable.createVariables(problem, model);
+    virtualFlowVariable.createVariables(problem, model);
+    
+    EdgeActiveBound activeBound = new EdgeActiveBound(scenario);
+    VirtualEdgeActiveBound virtualActiveBound = new VirtualEdgeActiveBound(scenario);
+    VirtualFlowBound virtualFlowBound = new VirtualFlowBound(scenario);
+    FlowBound flowBound = new FlowBound(scenario);
+    
+    activeBound.constructConstraint(problem, model);
+    virtualActiveBound.constructConstraint(problem, model);
+    virtualFlowBound.constructConstraint(problem, model);
+    flowBound.constructConstraint(problem, model);
+  }
+
 }
 

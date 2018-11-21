@@ -52,7 +52,12 @@ public class MIPResilienceAlgorithm extends ResilienceAlgorithm {
       Solution solution = problem.solve();
       
       setIsFeasible(solution.isFeasible());
-      this.setLastObjectiveValue(solution.getObjectiveValue());
+      setLastObjectiveValue(solution.getObjectiveValue());
+      
+      performOuterAssignments(model, problem, solution);
+      for (Scenario scenario : getScenarios()) {
+        performInnerAssignments(model,problem,solution,scenario);
+      }
     }
     catch (Exception e) {
       e.printStackTrace();

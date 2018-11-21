@@ -100,6 +100,15 @@ public class BPResilienceAlgorithm extends ResilienceAlgorithm {
         Solution innerSolution = innerProblem.solve();
       }
       
+      
+      performOuterAssignments(model, outerProblem, primalSolution);
+   
+      System.err.println("NEED TO CREATE INNER SOLUTION");
+      for (Scenario scenario : getScenarios()) {
+ //       performInnerAssignments(model,problem,solution,scenario);
+      }
+ 
+
     }
     catch (Exception e) {
       e.printStackTrace();
