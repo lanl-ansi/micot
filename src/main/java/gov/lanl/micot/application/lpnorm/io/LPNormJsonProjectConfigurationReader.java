@@ -15,6 +15,7 @@ import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.BPResilienceFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.mip.MIPInfrastructureExpansionAlgorithmFlags;
 import gov.lanl.micot.application.rdt.algorithm.ep.mip.ResilienceExpansionFactory;
+import gov.lanl.micot.application.rdt.algorithm.ep.mip2.MIPResilienceFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.sbd.SBDResilienceFactory;
 import gov.lanl.micot.application.rdt.RDTApplicationFactory;
 import gov.lanl.micot.util.io.Flags;
@@ -183,6 +184,9 @@ public class LPNormJsonProjectConfigurationReader {
     else if (algorithmChoice.equals(LPNormIOConstants.BP_TAG)) { 
       configuration.setAlgorithmFactoryClass(BPResilienceFactory.class.getCanonicalName());
     }
+    else if (algorithmChoice.equals(LPNormIOConstants.MIP_TAG)) { 
+      configuration.setAlgorithmFactoryClass(MIPResilienceFactory.class.getCanonicalName());
+    }    
     else if (algorithmChoice.equals(LPNormIOConstants.VNS_TAG)) { 
       throw new RuntimeException("Error: VNS algorithm not yet active");
     }

@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.LambdaVariableFactory;
-import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.LineSwitchVariableFactory;
+import gov.lanl.micot.application.rdt.algorithm.ep.variable.LineSwitchVariableFactory;
 import gov.lanl.micot.util.math.solver.LinearConstraint;
 import gov.lanl.micot.util.math.solver.LinearConstraintGreaterEq;
 import gov.lanl.micot.util.math.solver.Solution;

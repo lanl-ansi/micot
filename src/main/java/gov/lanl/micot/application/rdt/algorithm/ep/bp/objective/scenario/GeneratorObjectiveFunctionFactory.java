@@ -8,7 +8,7 @@ import gov.lanl.micot.infrastructure.model.Scenario;
 import java.util.ArrayList;
 
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.dual.YGeneratorVariableFactory;
-import gov.lanl.micot.application.rdt.algorithm.ep.bp.variable.scenario.GeneratorVariableFactory;
+import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.GeneratorConstructionVariableFactory;
 import gov.lanl.micot.util.math.solver.Solution;
 import gov.lanl.micot.util.math.solver.Variable;
 import gov.lanl.micot.util.math.solver.exception.NoVariableException;
@@ -37,7 +37,7 @@ public class GeneratorObjectiveFunctionFactory implements ObjectiveFunctionFacto
     scenarios.add(scenario);    
 
     YGeneratorVariableFactory yVariableFactory = new YGeneratorVariableFactory(scenarios);
-    GeneratorVariableFactory generatorVariableFactory = new GeneratorVariableFactory(scenario);
+    GeneratorConstructionVariableFactory generatorVariableFactory = new GeneratorConstructionVariableFactory(scenario);
 
     MathematicalProgramObjective objective = program.getLinearObjective();
     for (Generator generator : model.getGenerators()) {
