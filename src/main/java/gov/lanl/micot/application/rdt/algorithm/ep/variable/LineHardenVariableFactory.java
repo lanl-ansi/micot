@@ -35,7 +35,7 @@ public class LineHardenVariableFactory implements VariableFactory {
    * @return
    */
   private String getFlowVariableName(ElectricPowerFlowConnection edge) {
-    return "t-" + edge.toString();
+    return "h-" + edge.toString();
   }
 
   @Override

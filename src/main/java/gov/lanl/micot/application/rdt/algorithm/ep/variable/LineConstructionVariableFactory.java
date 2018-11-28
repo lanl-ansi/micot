@@ -34,7 +34,7 @@ public class LineConstructionVariableFactory implements VariableFactory {
    * @return
    */
   private String getFlowVariableName(ElectricPowerFlowConnection edge) {
-    return "X-" + edge.toString();
+    return "x-" + edge.toString();
   }
 
   @Override

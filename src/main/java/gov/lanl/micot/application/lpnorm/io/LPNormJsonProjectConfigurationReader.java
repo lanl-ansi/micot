@@ -186,7 +186,10 @@ public class LPNormJsonProjectConfigurationReader {
     }
     else if (algorithmChoice.equals(LPNormIOConstants.MIP_TAG)) { 
       configuration.setAlgorithmFactoryClass(MIPResilienceFactory.class.getCanonicalName());
-    }    
+    }
+    else if (algorithmChoice.equals(LPNormIOConstants.SBD2_TAG)) { 
+      configuration.setAlgorithmFactoryClass(gov.lanl.micot.application.rdt.algorithm.ep.sbd2.SBDResilienceFactory.class.getCanonicalName());
+    }
     else if (algorithmChoice.equals(LPNormIOConstants.VNS_TAG)) { 
       throw new RuntimeException("Error: VNS algorithm not yet active");
     }

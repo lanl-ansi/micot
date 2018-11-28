@@ -1,10 +1,11 @@
-package gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario;
+package gov.lanl.micot.application.rdt.algorithm.ep.sbd2.constraint;
 
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.Load;
 import gov.lanl.micot.infrastructure.ep.optimize.ConstraintFactory;
 import gov.lanl.micot.infrastructure.model.Scenario;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
+import gov.lanl.micot.application.rdt.algorithm.ep.sbd2.variable.LoadSlackVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LoadVariableFactory;
 import gov.lanl.micot.util.math.solver.LinearConstraint;
 import gov.lanl.micot.util.math.solver.LinearConstraintGreaterEq;
@@ -21,16 +22,15 @@ import gov.lanl.micot.util.math.solver.mathprogram.MathematicalProgram;
  * 
  * @author Russell Bent
  */
-public class NonCriticalLoadConstraint implements ConstraintFactory {
+public class NonCriticalLoadSlackConstraint implements ConstraintFactory {
 
   private double percentage = 0;
   private Scenario scenario = null;
-  
-  
+   
   /**
    * Constraint
    */
-  public NonCriticalLoadConstraint(double percentage, Scenario scenario) {
+  public NonCriticalLoadSlackConstraint(double percentage, Scenario scenario) {
     this.scenario = scenario;
     this.percentage = percentage;
   }
@@ -59,7 +59,9 @@ public class NonCriticalLoadConstraint implements ConstraintFactory {
   
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws NoVariableException, InvalidConstraintException  {
-    LoadVariableFactory factory = new LoadVariableFactory(scenario);
+    LoadVariableFactory loadVariable = new LoadVariableFactory(scenario);
+    LoadSlackVariableFactory slackVariable = new LoadSlackVariableFactory(scenario);
+
     double mvaBase = model.getMVABase();
 
     LinearConstraint real = new LinearConstraintGreaterEq(getRealName(scenario));
@@ -71,12 +73,12 @@ public class NonCriticalLoadConstraint implements ConstraintFactory {
     for (Load load : model.getLoads()) {
       boolean isCritical = load.getAttribute(AlgorithmConstants.IS_CRITICAL_LOAD_KEY) == null || !load.getAttribute(AlgorithmConstants.IS_CRITICAL_LOAD_KEY, Boolean.class) ? false : true;
       if (!isCritical) {
-        Variable dp_a = factory.getRealVariable(problem, load, LoadVariableFactory.PHASE_A);
-        Variable dq_a = factory.getReactiveVariable(problem, load, LoadVariableFactory.PHASE_A);
-        Variable dp_b = factory.getRealVariable(problem, load, LoadVariableFactory.PHASE_B);
-        Variable dq_b = factory.getReactiveVariable(problem, load, LoadVariableFactory.PHASE_B);
-        Variable dp_c = factory.getRealVariable(problem, load, LoadVariableFactory.PHASE_C);
-        Variable dq_c = factory.getReactiveVariable(problem, load, LoadVariableFactory.PHASE_C);
+        Variable dp_a = loadVariable.getRealVariable(problem, load, LoadVariableFactory.PHASE_A);
+        Variable dq_a = loadVariable.getReactiveVariable(problem, load, LoadVariableFactory.PHASE_A);
+        Variable dp_b = loadVariable.getRealVariable(problem, load, LoadVariableFactory.PHASE_B);
+        Variable dq_b = loadVariable.getReactiveVariable(problem, load, LoadVariableFactory.PHASE_B);
+        Variable dp_c = loadVariable.getRealVariable(problem, load, LoadVariableFactory.PHASE_C);
+        Variable dq_c = loadVariable.getReactiveVariable(problem, load, LoadVariableFactory.PHASE_C);
         
         if (dp_a != null) {
           real.addVariable(dp_a, 1.0);
@@ -107,12 +109,15 @@ public class NonCriticalLoadConstraint implements ConstraintFactory {
     real.setRightHandSide(totalRealLoad * percentage);
     reactive.setRightHandSide(totalReactiveLoad * percentage);
 
-    if (real.getNumberOfVariables() > 0) {
-      problem.addLinearConstraint(real);
-    }      
-    if (reactive.getNumberOfVariables() > 0) {
-      problem.addLinearConstraint(reactive);
-    }    
+    real.addVariable(slackVariable.getVariable(problem), 1.0);
+    real.addVariable(slackVariable.getVariable(problem), 1.0);
+    real.addVariable(slackVariable.getVariable(problem), 1.0);
+    reactive.addVariable(slackVariable.getVariable(problem), 1.0);
+    reactive.addVariable(slackVariable.getVariable(problem), 1.0);
+    reactive.addVariable(slackVariable.getVariable(problem), 1.0);
+    
+    problem.addLinearConstraint(real);
+    problem.addLinearConstraint(reactive);    
   }
   
 }

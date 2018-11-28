@@ -39,7 +39,7 @@ public class LineExistVariableFactory implements VariableFactory {
    * @return
    */
   private String getFlowVariableName(ElectricPowerFlowConnection edge, Scenario scenario) {
-    return "X-" + edge.toString() +"-" + scenario.getIndex();
+    return "x-" + edge.toString() +"-" + scenario.getIndex();
   }
 
   @Override

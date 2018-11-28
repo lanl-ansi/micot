@@ -36,7 +36,7 @@ public class LineSwitchVariableFactory implements VariableFactory {
    * @return
    */
   private String getFlowVariableName(ElectricPowerFlowConnection edge) {
-    return "tau-" + edge.toString();
+    return "t-" + edge.toString();
   }
 
   @Override

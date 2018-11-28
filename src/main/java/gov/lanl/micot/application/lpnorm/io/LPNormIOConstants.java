@@ -80,6 +80,8 @@ public class LPNormIOConstants {
   public static final String VNS_TAG = "vns";
   public static final String BP_TAG = "bp";
   public static final String MIP_TAG = "mip";
+  public static final String SBD2_TAG = "sbd2";
+
   
   public static final String SOLVER_TAG = "solver";
   public static final String CPLEX_TAG = "cplex";
