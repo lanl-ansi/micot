@@ -20,7 +20,7 @@ import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.LoadBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.GeneratorBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.LinDistSlackBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.VoltageBound;
-import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.cycle.flow.EdgeActiveBound;
+import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.cycle.EdgeActiveBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.cycle.flow.FlowBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.cycle.flow.VirtualEdgeActiveBound;
 import gov.lanl.micot.application.rdt.algorithm.ep.bound.scenario.cycle.flow.VirtualFlowBound;
@@ -35,6 +35,14 @@ import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineDirec
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineHardenExistTieConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineSwitchExistTieConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.NonCriticalLoadConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.PhaseVariationConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.cycle.flow.FlowCapacityConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.cycle.LinkingConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.cycle.cutset.CycleConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.cycle.flow.NodeFlowConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.cycle.flow.TotalFlowConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.cycle.flow.TreeConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.cycle.flow.VirtualFlowCapacityConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.objective.GeneratorObjectiveFunctionFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.objective.LineConstructionObjectiveFunctionFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.objective.LineHardenObjectiveFunctionFactory;
@@ -50,7 +58,7 @@ import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LineDirecti
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LineFlowVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LoadVariableFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.VoltageVariableFactory;
-import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.cycle.flow.EdgeActiveVariable;
+import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.cycle.EdgeActiveVariable;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.cycle.flow.FlowVariable;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.cycle.flow.VirtualEdgeActiveVariable;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.cycle.flow.VirtualFlowVariable;
@@ -75,6 +83,9 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
   private Collection<Scenario> scenarios = null;
   private double criticalLoadMet = -1;
   private double nonCriticalLoadMet = -1;
+  private double phaseVariationThreshold;
+  
+  private String flowModel = AlgorithmConstants.LINDIST_FLOW_POWER_FLOW_MODEL; // consider making an enum
   
   /**
    * Constructor
@@ -190,12 +201,16 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
     lineHardenVariableFactory.createVariables(problem, model);
     lineSwitchVariableFactory.createVariables(problem, model); 
     lineActiveVariable.createVariables(problem, model);
-    voltageVariable.createVariables(problem, model);
     loadVariable.createVariables(problem, model);
     genVariable.createVariables(problem, model);
     flowVariable.createVariables(problem, model);
     directionVariable.createVariables(problem, model);
-    slackVariable.createVariables(problem, model);
+    
+    // add the lindist flow constraints
+    if (flowModel == AlgorithmConstants.LINDIST_FLOW_POWER_FLOW_MODEL) {
+      voltageVariable.createVariables(problem, model);
+      slackVariable.createVariables(problem, model);
+    }
   }
     
   /**
@@ -233,12 +248,16 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
     hardenBound.constructConstraint(problem, model);
     switchBound.constructConstraint(problem, model);
     activeBound.constructConstraint(problem, model);
-    voltageBound.constructConstraint(problem, model);
     loadBound.constructConstraint(problem, model);
     genBound.constructConstraint(problem, model);
     flowBound.constructConstraint(problem, model);    
     directionBound.constructConstraint(problem, model);
-    slackBound.constructConstraint(problem, model);
+    
+    // add the lindist flow constraints
+    if (flowModel == AlgorithmConstants.LINDIST_FLOW_POWER_FLOW_MODEL) {
+      voltageBound.constructConstraint(problem, model);
+      slackBound.constructConstraint(problem, model);
+    }
   }
 
   /**
@@ -261,6 +280,7 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
     LineDirectionConstraint direction = new LineDirectionConstraint(scenario); 
     LinDistSlackOnOffConstraint slack = new LinDistSlackOnOffConstraint(scenario);
     LinDistFlowConstraint distflow = new LinDistFlowConstraint(scenario);
+    PhaseVariationConstraint variation = new PhaseVariationConstraint(phaseVariationThreshold, scenario);
     
     switchExistTie.constructConstraint(problem, model);
     activeTie.constructConstraint(problem, model);
@@ -271,11 +291,16 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
     balance.constructConstraint(problem, model);
     capacity.constructConstraint(problem, model);
     direction.constructConstraint(problem, model);
-    slack.constructConstraint(problem, model);
-    distflow.constructConstraint(problem, model);
+    variation.constructConstraint(problem, model);
+    
+    // add the lindist flow constraints
+    if (flowModel == AlgorithmConstants.LINDIST_FLOW_POWER_FLOW_MODEL) {
+      slack.constructConstraint(problem, model);
+      distflow.constructConstraint(problem, model);
+    }
     
     try {
-      addFlowCycleConstraints(model,problem,scenario);
+      addCutsetCycleConstraints(model,problem,scenario);
     }
     catch (InvalidVariableException e) {
       e.printStackTrace();
@@ -342,6 +367,22 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
   }
 
   /**
+   * Set the flow model
+   * @param flowModel
+   */
+  public void setFlowModel(String flowModel) {
+    this.flowModel = flowModel;
+  }
+  
+  /**
+   * Set the phase variation threshold
+   * @param phaseVariationThreshold
+   */
+  public void setPhaseVariationThreshold(double phaseVariationThreshold) {
+    this.phaseVariationThreshold = phaseVariationThreshold;
+  }
+  
+  /**
    * Add all the constraints associated with modeling cycles with a flow model
    * @param model
    * @param problem
@@ -371,7 +412,76 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
     virtualActiveBound.constructConstraint(problem, model);
     virtualFlowBound.constructConstraint(problem, model);
     flowBound.constructConstraint(problem, model);
+    
+    NodeFlowConstraint nodeFlowConstraint = new NodeFlowConstraint(scenario);
+    TreeConstraint treeConstraint = new TreeConstraint(scenario);
+    FlowCapacityConstraint capacityConstraint = new FlowCapacityConstraint(scenario);
+    LinkingConstraint linkingConstraint = new LinkingConstraint(scenario);
+    VirtualFlowCapacityConstraint virtualCapacityConstraint = new VirtualFlowCapacityConstraint(scenario);
+    TotalFlowConstraint totalConstraint = new TotalFlowConstraint(scenario);
+    
+    nodeFlowConstraint.constructConstraint(problem, model);
+    treeConstraint.constructConstraint(problem, model);
+    capacityConstraint.constructConstraint(problem, model);
+    linkingConstraint.constructConstraint(problem, model);
+    virtualCapacityConstraint.constructConstraint(problem, model);
+    totalConstraint.constructConstraint(problem, model);
   }
 
+ /** 
+  * Add all the constraints associated with modeling cycles with a cut set model
+  * @param model
+  * @param problem
+  * @param scenario
+  * @throws VariableExistsException
+  * @throws NoVariableException
+  * @throws InvalidConstraintException
+  * @throws InvalidVariableException 
+  */
+ protected void addCutsetCycleConstraints(ElectricPowerModel model, MathematicalProgram problem, Scenario scenario) throws VariableExistsException, NoVariableException, InvalidConstraintException, InvalidVariableException {
+   EdgeActiveVariable edgeActiveVariable = new EdgeActiveVariable(scenario);
+   edgeActiveVariable.createVariables(problem, model);
+   
+   EdgeActiveBound activeBound = new EdgeActiveBound(scenario);   
+   activeBound.constructConstraint(problem, model);
+   
+   LinkingConstraint linkingConstraint = new LinkingConstraint(scenario);
+   CycleConstraint cycleConstraint = new CycleConstraint(scenario);
+   
+   linkingConstraint.constructConstraint(problem, model);
+   cycleConstraint.constructConstraint(problem, model);
+ }
+
+ /**
+  * Get the critical load met criteria 
+  * @return
+  */
+ protected double getCriticalLoadMet() {
+   return criticalLoadMet;
+ }
+ 
+ /**
+  * Get the non critical load met criteria
+  * @return
+  */
+ protected double getNonCriticalLoadMet() {
+   return nonCriticalLoadMet;
+ }
+ 
+ /**
+  * Get the flow model
+  * @return
+  */
+ protected String getFlowModel() {
+   return flowModel;
+ }
+ 
+ /**
+  * Get the flow model
+  * @return
+  */
+ protected double getPhaseVariationThreshold() {
+   return phaseVariationThreshold;
+ }
 }
 

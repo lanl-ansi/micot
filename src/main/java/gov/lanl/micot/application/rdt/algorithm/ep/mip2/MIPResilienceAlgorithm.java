@@ -30,7 +30,6 @@ import java.util.Collection;
 public class MIPResilienceAlgorithm extends ResilienceAlgorithm {
   
   private MathematicalProgramFlags flags = null;
-
   private MathematicalProgram problem = null;
   
   /**

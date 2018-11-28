@@ -1,4 +1,4 @@
-package gov.lanl.micot.application.rdt.algorithm.ep.bp;
+package gov.lanl.micot.application.rdt.algorithm.ep.sbd2;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,24 +18,24 @@ import gov.lanl.micot.infrastructure.project.ScenarioConfiguration;
 import gov.lanl.micot.util.math.solver.mathprogram.MathematicalProgramFlags;
 
 /**
- * A factory for creating a a branch and price decomposition algorithm
+ * A factory for creating a scenario based decomposition algorithm
  * @author Russell Bent
  */
-public class BPResilienceFactory extends OptimizerFactoryImpl<ElectricPowerNode, ElectricPowerModel> {
+public class SBDResilienceFactory extends OptimizerFactoryImpl<ElectricPowerNode, ElectricPowerModel> {
 	
 	/**
 	 *  Constructor
 	 */
-	public BPResilienceFactory() {		
+	public SBDResilienceFactory() {		
 	}
 	
 	@Override
-	public BPResilienceAlgorithm createOptimizer(OptimizerFlags oFlags) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-	  BPResilienceFlags flags = new BPResilienceFlags(oFlags);
+	public SBDResilienceAlgorithm createOptimizer(OptimizerFlags oFlags) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	  SBDResilienceFlags flags = new SBDResilienceFlags(oFlags);
 	  
-	  Collection<Scenario> scenarios = flags.getCollection(BPResilienceFlags.SCENARIOS_KEY, Scenario.class);
+	  Collection<Scenario> scenarios = flags.getCollection(SBDResilienceFlags.SCENARIOS_KEY, Scenario.class);
     
-	  BPResilienceAlgorithm algorithm = new BPResilienceAlgorithm(scenarios);
+	  SBDResilienceAlgorithm algorithm = new SBDResilienceAlgorithm(scenarios);
 	  
 	  double innerTimeout = oFlags.containsKey(MathematicalProgramFlags.TIMEOUT_FLAG) ? oFlags.getDouble(MathematicalProgramFlags.TIMEOUT_FLAG) : Double.POSITIVE_INFINITY;
     double outerTimeout = oFlags.containsKey(MathematicalProgramFlags.TIMEOUT_FLAG) ? oFlags.getDouble(MathematicalProgramFlags.TIMEOUT_FLAG) : Double.POSITIVE_INFINITY;
@@ -49,11 +49,11 @@ public class BPResilienceFactory extends OptimizerFactoryImpl<ElectricPowerNode,
 
 	  // pull out and overwrite parameters
 	  for (String key : flags.keySet()) {
-	    if (key.startsWith(BPResilienceFlags.OUTER_PREFIX)) {
-	      algorithm.addOuterMathProgramFlag(key.substring(BPResilienceFlags.OUTER_PREFIX.length(), key.length()), flags.get(key));
+	    if (key.startsWith(SBDResilienceFlags.OUTER_PREFIX)) {
+	      algorithm.addOuterMathProgramFlag(key.substring(SBDResilienceFlags.OUTER_PREFIX.length(), key.length()), flags.get(key));
 	    }
-	    if (key.startsWith(BPResilienceFlags.INNER_PREFIX)) {
-	      algorithm.addInnerMathProgramFlag(key.substring(BPResilienceFlags.INNER_PREFIX.length(), key.length()), flags.get(key));
+	    if (key.startsWith(SBDResilienceFlags.INNER_PREFIX)) {
+	      algorithm.addInnerMathProgramFlag(key.substring(SBDResilienceFlags.INNER_PREFIX.length(), key.length()), flags.get(key));
 	    }
 	  }
     
@@ -62,11 +62,12 @@ public class BPResilienceFactory extends OptimizerFactoryImpl<ElectricPowerNode,
     String powerflow = oFlags.getString(AlgorithmConstants.POWER_FLOW_MODEL_KEY);    
     double threshold = oFlags.getDouble(AlgorithmConstants.PHASE_VARIATION_KEY);
 
+    
 	  algorithm.setCriticalLoadMet(criticalLoadMet);
     algorithm.setNonCriticalLoadMet(nonCriticalLoadMet);
     algorithm.setFlowModel(powerflow);
     algorithm.setPhaseVariationThreshold(threshold);
-	  
+    
 	  return algorithm;
 	}
  

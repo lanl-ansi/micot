@@ -39,7 +39,7 @@ public class LineHardenVariableFactory implements VariableFactory {
    * @return
    */
   private String getFlowVariableName(ElectricPowerFlowConnection edge, Scenario sceanario) {
-    return "t-" + edge.toString() + "-" + scenario.getIndex();
+    return "h-" + edge.toString() + "-" + scenario.getIndex();
   }
 
   @Override

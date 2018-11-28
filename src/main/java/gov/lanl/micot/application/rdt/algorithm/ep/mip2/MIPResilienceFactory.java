@@ -40,7 +40,9 @@ public class MIPResilienceFactory extends OptimizerFactoryImpl<ElectricPowerNode
 	  double timeout = oFlags.containsKey(MathematicalProgramFlags.TIMEOUT_FLAG) ? oFlags.getDouble(MathematicalProgramFlags.TIMEOUT_FLAG) : Double.POSITIVE_INFINITY;
     double criticalLoadMet = oFlags.getDouble(AlgorithmConstants.CRITICAL_LOAD_MET_KEY);
     double nonCriticalLoadMet = oFlags.getDouble(AlgorithmConstants.LOAD_MET_KEY);
-
+    String powerflow = oFlags.getString(AlgorithmConstants.POWER_FLOW_MODEL_KEY);    
+    double threshold = oFlags.getDouble(AlgorithmConstants.PHASE_VARIATION_KEY);
+    
 	  algorithm.addMathProgramFlag(MathematicalProgramFlags.DEBUG_ON_FLAG, false);
 	  algorithm.addMathProgramFlag(MathematicalProgramFlags.MIP_GAP_TOLERANCE_FLAG, 1e-3);
     algorithm.addMathProgramFlag(MathematicalProgramFlags.TIMEOUT_FLAG, timeout);
@@ -48,6 +50,8 @@ public class MIPResilienceFactory extends OptimizerFactoryImpl<ElectricPowerNode
 
     algorithm.setCriticalLoadMet(criticalLoadMet);
     algorithm.setNonCriticalLoadMet(nonCriticalLoadMet);
+    algorithm.setFlowModel(powerflow);
+    algorithm.setPhaseVariationThreshold(threshold);
     
 	  return algorithm;
 	}
