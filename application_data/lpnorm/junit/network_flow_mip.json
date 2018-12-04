@@ -1,7 +1,7 @@
 
 
 {
-  "algorithm": "mip",
+  "algorithm": "miqp",
   "lines": [
     {
       "line_code": 0,

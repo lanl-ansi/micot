@@ -4,13 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerNode;
 import gov.lanl.micot.infrastructure.model.Scenario;
 import gov.lanl.micot.infrastructure.optimize.Optimizer;
+import gov.lanl.micot.infrastructure.optimize.OptimizerFactoryImpl;
 import gov.lanl.micot.infrastructure.optimize.OptimizerFlags;
 import gov.lanl.micot.infrastructure.optimize.mathprogram.MathProgramOptimizerFlags;
-import gov.lanl.micot.infrastructure.optimize.sbd.ScenarioBasedDecompositionFactoryImpl;
 import gov.lanl.micot.infrastructure.project.AlgorithmConfiguration;
 import gov.lanl.micot.infrastructure.project.ProjectConfiguration;
 import gov.lanl.micot.infrastructure.project.ScenarioConfiguration;
@@ -20,7 +21,7 @@ import gov.lanl.micot.util.math.solver.mathprogram.MathematicalProgramFlags;
  * A factory for creating a scenario based decomposition algorithm
  * @author Russell Bent
  */
-public class SBDResilienceFactory extends ScenarioBasedDecompositionFactoryImpl<ElectricPowerNode, ElectricPowerModel> {
+public class SBDResilienceFactory extends OptimizerFactoryImpl<ElectricPowerNode, ElectricPowerModel> {
 	
 	/**
 	 *  Constructor
@@ -55,18 +56,18 @@ public class SBDResilienceFactory extends ScenarioBasedDecompositionFactoryImpl<
 	      algorithm.addInnerMathProgramFlag(key.substring(SBDResilienceFlags.INNER_PREFIX.length(), key.length()), flags.get(key));
 	    }
 	  }
+    
+	  double criticalLoadMet = oFlags.getDouble(AlgorithmConstants.CRITICAL_LOAD_MET_KEY);
+	  double nonCriticalLoadMet = oFlags.getDouble(AlgorithmConstants.LOAD_MET_KEY);
+    String powerflow = oFlags.getString(AlgorithmConstants.POWER_FLOW_MODEL_KEY);    
+    double threshold = oFlags.getDouble(AlgorithmConstants.PHASE_VARIATION_KEY);
 
     
-    addInnerVariableFactories(flags, algorithm);
-    addInnerConstraints(flags,algorithm);
-    addInnerVariableAssignments(flags,algorithm);        
-    addInnerObjectiveFunctions(flags,algorithm);
-
-    addOuterVariableFactories(flags, algorithm);
-    addOuterConstraints(flags,algorithm);
-    addOuterVariableAssignments(flags,algorithm);        
-    addOuterObjectiveFunctions(flags,algorithm);
-        
+	  algorithm.setCriticalLoadMet(criticalLoadMet);
+    algorithm.setNonCriticalLoadMet(nonCriticalLoadMet);
+    algorithm.setFlowModel(powerflow);
+    algorithm.setPhaseVariationThreshold(threshold);
+    
 	  return algorithm;
 	}
  
@@ -88,6 +89,8 @@ public class SBDResilienceFactory extends ScenarioBasedDecompositionFactoryImpl<
       return null;
     } 
   }
+
+  
 
 	
 }
