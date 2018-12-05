@@ -1,7 +1,7 @@
 package gov.lanl.micot.application.rdt.algorithm.ep.bp;
 
+import gov.lanl.micot.application.rdt.algorithm.ep.ResilienceExpansionFlags;
 import gov.lanl.micot.infrastructure.optimize.OptimizerFlags;
-import gov.lanl.micot.application.rdt.algorithm.ep.mip.ResilienceExpansionFlags;
 import gov.lanl.micot.util.math.solver.mathprogram.MathematicalProgramFlags;
 
 /**

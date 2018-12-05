@@ -2,7 +2,7 @@ package gov.lanl.micot.application.rdt.exec;
 
 import gov.lanl.micot.application.rdt.RDTApplicationFactory;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
-import gov.lanl.micot.application.rdt.algorithm.ep.mip.ResilienceExpansionFactory;
+import gov.lanl.micot.application.rdt.algorithm.ep.mip.MIPResilienceFactory;
 import gov.lanl.micot.application.scenariobuilder.ScenarioConfigurationBuilder;
 import gov.lanl.micot.application.scenariobuilder.UniformEdgeDamageScenarioConfigurationBuilder;
 import gov.lanl.micot.infrastructure.config.AssetModification;
@@ -206,7 +206,7 @@ public class GenerateUniformDamageScenarios {
       
       modelConfiguration.setModelFile(inputFile);
       modelConfiguration.setModelFileFactoryClass(ElectricPowerModelFileFactory.class.getCanonicalName());
-      algorithmConfiguration.setAlgorithmFactoryClass(ResilienceExpansionFactory.class.getCanonicalName());
+      algorithmConfiguration.setAlgorithmFactoryClass( MIPResilienceFactory.class.getCanonicalName());
       algorithmConfiguration.addAlgorithmFlag(AlgorithmConstants.LOAD_MET_KEY, 0.5);
       algorithmConfiguration.addAlgorithmFlag(AlgorithmConstants.CRITICAL_LOAD_MET_KEY, 0.98);
       algorithmConfiguration.addAlgorithmFlag(AlgorithmConstants.PHASE_VARIATION_KEY, 0.15);

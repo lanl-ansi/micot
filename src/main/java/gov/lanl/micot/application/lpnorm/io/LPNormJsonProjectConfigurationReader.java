@@ -3,6 +3,7 @@ package gov.lanl.micot.application.lpnorm.io;
 import gov.lanl.micot.infrastructure.config.AssetModification;
 import gov.lanl.micot.infrastructure.ep.io.ElectricPowerModelFileFactory;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
+import gov.lanl.micot.infrastructure.ep.optimize.ElectricPowerMathProgramOptimizerFlags;
 import gov.lanl.micot.infrastructure.model.Asset;
 import gov.lanl.micot.infrastructure.project.AlgorithmConfiguration;
 import gov.lanl.micot.infrastructure.project.ApplicationConfiguration;
@@ -13,10 +14,7 @@ import gov.lanl.micot.infrastructure.project.SimulatorConfiguration;
 import gov.lanl.micot.application.lpnorm.model.LPNormModelConstants;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.BPResilienceFactory;
-import gov.lanl.micot.application.rdt.algorithm.ep.mip.MIPInfrastructureExpansionAlgorithmFlags;
-import gov.lanl.micot.application.rdt.algorithm.ep.mip.ResilienceExpansionFactory;
-import gov.lanl.micot.application.rdt.algorithm.ep.mip2.MIPResilienceFactory;
-import gov.lanl.micot.application.rdt.algorithm.ep.sbd.SBDResilienceFactory;
+import gov.lanl.micot.application.rdt.algorithm.ep.mip.MIPResilienceFactory;
 import gov.lanl.micot.application.rdt.RDTApplicationFactory;
 import gov.lanl.micot.util.io.Flags;
 import gov.lanl.micot.util.io.FlagsImpl;
@@ -176,19 +174,13 @@ public class LPNormJsonProjectConfigurationReader {
     double timeout = algorithm.containsKey(LPNormIOConstants.SOLVER_TIMEOUT_TAG) ? algorithm.getDouble(LPNormIOConstants.SOLVER_TIMEOUT_TAG) : DEFAULT_TIMEOUT;
     
     if (algorithmChoice.equals(LPNormIOConstants.SBD_TAG)) {
-      configuration.setAlgorithmFactoryClass(SBDResilienceFactory.class.getCanonicalName());
+      configuration.setAlgorithmFactoryClass(gov.lanl.micot.application.rdt.algorithm.ep.sbd.SBDResilienceFactory.class.getCanonicalName());
     }
     else if (algorithmChoice.equals(LPNormIOConstants.MIQP_TAG)) { 
-      configuration.setAlgorithmFactoryClass(ResilienceExpansionFactory.class.getCanonicalName());
+      configuration.setAlgorithmFactoryClass(MIPResilienceFactory.class.getCanonicalName());
     }
     else if (algorithmChoice.equals(LPNormIOConstants.BP_TAG)) { 
       configuration.setAlgorithmFactoryClass(BPResilienceFactory.class.getCanonicalName());
-    }
-    else if (algorithmChoice.equals(LPNormIOConstants.MIP_TAG)) { 
-      configuration.setAlgorithmFactoryClass(MIPResilienceFactory.class.getCanonicalName());
-    }
-    else if (algorithmChoice.equals(LPNormIOConstants.SBD2_TAG)) { 
-      configuration.setAlgorithmFactoryClass(gov.lanl.micot.application.rdt.algorithm.ep.sbd2.SBDResilienceFactory.class.getCanonicalName());
     }
     else if (algorithmChoice.equals(LPNormIOConstants.VNS_TAG)) { 
       throw new RuntimeException("Error: VNS algorithm not yet active");
@@ -213,13 +205,13 @@ public class LPNormJsonProjectConfigurationReader {
     flags.put(MathematicalProgramFlags.TIMEOUT_FLAG, timeout);
             
     if (solverChoice.equals(LPNormIOConstants.SCIP_TAG)) {
-      flags.put(MIPInfrastructureExpansionAlgorithmFlags.MATH_PROGRAM_FACTORY_KEY, ScipQuadraticProgramFactory.class.getCanonicalName());
+      flags.put(ElectricPowerMathProgramOptimizerFlags.MATH_PROGRAM_FACTORY_KEY, ScipQuadraticProgramFactory.class.getCanonicalName());
     }
     else if (solverChoice.equals(LPNormIOConstants.CPLEX_TAG)) {
-      flags.put(MIPInfrastructureExpansionAlgorithmFlags.MATH_PROGRAM_FACTORY_KEY, "gov.lanl.micot.util.math.solver.quadraticprogram.cplex.CPLEXQuadraticProgramFactory");
+      flags.put(ElectricPowerMathProgramOptimizerFlags.MATH_PROGRAM_FACTORY_KEY, "gov.lanl.micot.util.math.solver.quadraticprogram.cplex.CPLEXQuadraticProgramFactory");
     }
     else if (solverChoice.equals(LPNormIOConstants.BONMIN_TAG)) {
-      flags.put(MIPInfrastructureExpansionAlgorithmFlags.MATH_PROGRAM_FACTORY_KEY, BonminQuadraticProgramFactory.class.getCanonicalName());
+      flags.put(ElectricPowerMathProgramOptimizerFlags.MATH_PROGRAM_FACTORY_KEY, BonminQuadraticProgramFactory.class.getCanonicalName());
     }
     else {
       throw new RuntimeException("Error: " + solverChoice + " is not a valid solver choice");

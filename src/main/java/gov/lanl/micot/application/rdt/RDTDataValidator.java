@@ -8,13 +8,11 @@ import java.util.Stack;
 
 import gov.lanl.micot.application.lpnorm.io.LPNormIOConstants;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
-import gov.lanl.micot.application.rdt.algorithm.ep.mip.variable.scenario.ScenarioVariableFactoryUtility;
-import gov.lanl.micot.infrastructure.ep.model.Bus;
-import gov.lanl.micot.infrastructure.ep.model.ElectricPowerConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.Generator;
 import gov.lanl.micot.infrastructure.ep.model.Load;
+import gov.lanl.micot.infrastructure.model.Asset;
 import gov.lanl.micot.infrastructure.model.FlowConnection;
 import gov.lanl.micot.infrastructure.model.Node;
 import gov.lanl.micot.infrastructure.model.Scenario;
@@ -66,8 +64,8 @@ public class RDTDataValidator {
     
     for (ScenarioConfiguration config : scenarios) {
       for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
-        boolean isHardenedDamaged = ScenarioVariableFactoryUtility.isHardenedDamaged(edge, config.getScenario());         
-        boolean isDamaged = ScenarioVariableFactoryUtility.isDamaged(edge, config.getScenario());                 
+        boolean isHardenedDamaged = isHardenedDamaged(edge, config.getScenario());         
+        boolean isDamaged = isDamaged(edge, config.getScenario());                 
         if (!isDamaged && isHardenedDamaged) {
           set.add(new Pair<Scenario,ElectricPowerFlowConnection>(config.getScenario(),edge));          
         }
@@ -377,6 +375,37 @@ public class RDTDataValidator {
     }
     
     return false;
+  }
+
+  
+  /**
+   * Is an edge damaged in a scenario
+   * @param edge
+   * @param scenario
+   * @return
+   */
+  private boolean isDamaged(ElectricPowerFlowConnection edge, Scenario scenario) {
+    boolean isDamaged = false;        
+    Boolean b = scenario.getModification(edge, Asset.IS_FAILED_KEY, Boolean.class);
+    if (b != null) {
+      isDamaged = b;
+    }
+    return isDamaged;
+  }
+  
+  /**
+   * Is an edge hardened damaged
+   * @param edge
+   * @param scenario
+   * @return
+   */
+  private boolean isHardenedDamaged(ElectricPowerFlowConnection edge, Scenario scenario) {
+    boolean isHardenedDamaged = false;        
+    Boolean b = scenario.getModification(edge, AlgorithmConstants.HARDENED_DISABLED_KEY, Boolean.class);
+    if (b != null) {
+      isHardenedDamaged = b;      
+    }
+    return isHardenedDamaged;
   }
 
   
