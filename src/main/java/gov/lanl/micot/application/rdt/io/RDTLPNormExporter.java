@@ -61,12 +61,12 @@ public class RDTLPNormExporter {
     builder = writeLineCodeData(connections, builder);
     builder = writeLineData(connections, model, builder);
 
-    double epsilon = configuration.getAlgorithmFlags().get(AlgorithmConstants.CHANCE_CONSTRAINT_EPSILON_KEY) == null ? 1.0 : configuration.getAlgorithmFlags().getDouble(AlgorithmConstants.CHANCE_CONSTRAINT_EPSILON_KEY);
+//    double epsilon = configuration.getAlgorithmFlags().get(AlgorithmConstants.CHANCE_CONSTRAINT_EPSILON_KEY) == null ? 1.0 : configuration.getAlgorithmFlags().getDouble(AlgorithmConstants.CHANCE_CONSTRAINT_EPSILON_KEY);
     
     // write parameters
     builder = builder.add(LPNormIOConstants.CRITICAL_LOAD_MET_TAG, configuration.getAlgorithmFlags().getDouble(AlgorithmConstants.CRITICAL_LOAD_MET_KEY));
     builder = builder.add(LPNormIOConstants.TOTAL_LOAD_MET_TAG, configuration.getAlgorithmFlags().getDouble(AlgorithmConstants.LOAD_MET_KEY));
-    builder = builder.add(LPNormIOConstants.CHANCE_CONSTRAINT_TAG, epsilon);
+  //  builder = builder.add(LPNormIOConstants.CHANCE_CONSTRAINT_TAG, epsilon);
     builder = builder.add(LPNormIOConstants.PHASE_VARIATION_TAG, configuration.getAlgorithmFlags().getDouble(AlgorithmConstants.PHASE_VARIATION_KEY));
 
     // write the scenarios

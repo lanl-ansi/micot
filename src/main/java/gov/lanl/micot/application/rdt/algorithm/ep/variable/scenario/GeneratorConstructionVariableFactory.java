@@ -24,13 +24,15 @@ import java.util.Collection;
 public class GeneratorConstructionVariableFactory implements VariableFactory {
 
   private Scenario scenario = null;
+  private Boolean isDiscrete = true;
   
   /**
    * Constructor
    * @param scenario
    */
-  public GeneratorConstructionVariableFactory(Scenario scenario) {
+  public GeneratorConstructionVariableFactory(Scenario scenario, Boolean isDiscrete) {
     this.scenario = scenario;
+    this.isDiscrete = isDiscrete;
   }
   
   /**
@@ -48,7 +50,12 @@ public class GeneratorConstructionVariableFactory implements VariableFactory {
     ArrayList<Variable> variables = new ArrayList<Variable>();    
     for (Generator producer : model.getGenerators()) {
       if (hasVariable(producer)) {
-        variables.add(program.makeDiscreteVariable(getGeneratorVariableName(producer, scenario)));
+        if (isDiscrete) {
+          variables.add(program.makeDiscreteVariable(getGeneratorVariableName(producer, scenario)));
+        }
+        else {
+          variables.add(program.makeContinuousVariable(getGeneratorVariableName(producer, scenario)));          
+        }
       }
     }     
     return variables;

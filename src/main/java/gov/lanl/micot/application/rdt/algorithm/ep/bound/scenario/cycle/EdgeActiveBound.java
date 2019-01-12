@@ -29,7 +29,7 @@ public class EdgeActiveBound implements ConstraintFactory {
 
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException {
-    EdgeActiveVariable vFactory = new EdgeActiveVariable(scenario);
+    EdgeActiveVariable vFactory = new EdgeActiveVariable(scenario,null);
 
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       ElectricPowerNode node1 = model.getFirstNode(edge);

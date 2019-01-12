@@ -22,12 +22,14 @@ import java.util.Collection;
 public class LineActiveVariableFactory implements VariableFactory {
 
   private Scenario scenario = null;
+  private Boolean isDiscrete = true;
   
   /**
    * Constructor
    */
-  public LineActiveVariableFactory(Scenario scenario) {
+  public LineActiveVariableFactory(Scenario scenario, Boolean isDiscrete) {
     this.scenario = scenario;
+    this.isDiscrete = isDiscrete;
   }
   
   /**
@@ -45,7 +47,12 @@ public class LineActiveVariableFactory implements VariableFactory {
     ArrayList<Variable> variables = new ArrayList<Variable>();
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (hasVariable(edge)) {
-        variables.add(program.makeDiscreteVariable(getVariableName(edge, scenario)));
+        if (isDiscrete) {
+          variables.add(program.makeDiscreteVariable(getVariableName(edge, scenario)));
+        }
+        else {
+          variables.add(program.makeContinuousVariable(getVariableName(edge, scenario)));          
+        }
       }
     }
     return variables;

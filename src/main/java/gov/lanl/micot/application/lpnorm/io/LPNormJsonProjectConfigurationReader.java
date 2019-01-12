@@ -14,6 +14,7 @@ import gov.lanl.micot.infrastructure.project.SimulatorConfiguration;
 import gov.lanl.micot.application.lpnorm.model.LPNormModelConstants;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.application.rdt.algorithm.ep.bp.BPResilienceFactory;
+import gov.lanl.micot.application.rdt.algorithm.ep.heuristic.HeuristicResilienceFactory;
 import gov.lanl.micot.application.rdt.algorithm.ep.mip.MIPResilienceFactory;
 import gov.lanl.micot.application.rdt.RDTApplicationFactory;
 import gov.lanl.micot.util.io.Flags;
@@ -26,12 +27,12 @@ import gov.lanl.micot.util.math.solver.mathprogram.MathematicalProgramFlags;
 import gov.lanl.micot.util.math.solver.quadraticprogram.bonmin.BonminQuadraticProgramFactory;
 import gov.lanl.micot.util.math.solver.quadraticprogram.scip.ScipQuadraticProgramFactory;
 
-import java.io.ByteArrayInputStream;
+//import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+//import java.io.InputStream;
+//import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -44,13 +45,14 @@ public class LPNormJsonProjectConfigurationReader {
 
   private static final double DEFAULT_CRITICAL_LOAD_MET = 0.98;
   private static final double DEFAULT_TOTAL_LOAD_MET = 0.5;
-  private static final double DEFAULT_CHANCE_EPSILON = 1.0;
   private static final double DEFAULT_PHASE_VARIATION = 0.15;
-  
-  private static final String DEFAULT_ALGORITHM = LPNormIOConstants.SBD_TAG;
+
+  private static final LPNormFidelity DEFAULT_FIDELITY = LPNormFidelity.LOW;
+//  private static final String DEFAULT_ALGORITHM = LPNormIOConstants.SBD_TAG;
   private static final String DEFAULT_SOLVER = LPNormIOConstants.SCIP_TAG;
-  private static final String DEFAULT_POWER_FLOW = AlgorithmConstants.LINDIST_FLOW_POWER_FLOW_MODEL;
+ // private static final String DEFAULT_POWER_FLOW = AlgorithmConstants.LINDIST_FLOW_POWER_FLOW_MODEL;
   private static final double DEFAULT_TIMEOUT = Double.POSITIVE_INFINITY;
+//  private static final boolean DEFAULT_IS_DISCRETE = true;
   
   /**
    * Constructor
@@ -58,7 +60,6 @@ public class LPNormJsonProjectConfigurationReader {
   public LPNormJsonProjectConfigurationReader() {    
   }
   
- 
   /**
    * Read in the configuration files
    * @param applicationFilename
@@ -88,7 +89,9 @@ public class LPNormJsonProjectConfigurationReader {
       configuration = createConfigurationFrom(filename, application, algorithm, model, scenarios, simulator);
     }
     catch (FileNotFoundException e) {
-      throw new RuntimeException(e.getMessage());
+      System.out.println("Error: The file " + filename + " does not exist. Program will exit abnormally.");
+      System.exit(-1);     
+//      throw new RuntimeException(e.getMessage());
     }
     return configuration;
   }
@@ -157,22 +160,27 @@ public class LPNormJsonProjectConfigurationReader {
     scenarioConfiguration.setComponentModifications(modifications);
     configuration.addScenarioConfiguration(scenarioConfiguration);    
   }
-  
+
   /**
-   * Read the algorithm
+   * Read out the algorithm choices and fill in defaults if necessary
+   * @param fidelity
    * @param configuration
-   * @param log
-   * @param path
-   * @throws ConfigXMLIOException
+   * @param algorithm
    */
-  private void readAlgorithm(ProjectConfiguration projectConfiguration, JSONObject algorithm)  {    
-    AlgorithmConfiguration configuration = new AlgorithmConfiguration();
+  private void readAlgorithmChoice(LPNormFidelity fidelity, AlgorithmConfiguration configuration, JSONObject algorithm) {
+    String algorithmChoice = null;
     
-    String algorithmChoice = algorithm.containsKey(LPNormIOConstants.ALGORITHM_TAG) ? algorithm.getString(LPNormIOConstants.ALGORITHM_TAG) : DEFAULT_ALGORITHM;
-    String solverChoice = algorithm.containsKey(LPNormIOConstants.SOLVER_TAG) ? algorithm.getString(LPNormIOConstants.SOLVER_TAG) : DEFAULT_SOLVER;
-    String powerFlowChoice = algorithm.containsKey(LPNormIOConstants.POWER_FLOW_TAG) ? algorithm.getString(LPNormIOConstants.POWER_FLOW_TAG) : DEFAULT_POWER_FLOW;
-    double timeout = algorithm.containsKey(LPNormIOConstants.SOLVER_TIMEOUT_TAG) ? algorithm.getDouble(LPNormIOConstants.SOLVER_TIMEOUT_TAG) : DEFAULT_TIMEOUT;
+    if (fidelity == LPNormFidelity.LOW || fidelity == LPNormFidelity.MEDIUM_LOW || fidelity == LPNormFidelity.MEDIUM) {
+      algorithmChoice = LPNormIOConstants.HEURISTIC_TAG;
+    }
+    else if (fidelity == LPNormFidelity.MEDIUM_HIGH || fidelity == LPNormFidelity.HIGH) {
+      algorithmChoice = LPNormIOConstants.SBD_TAG;      
+    }
     
+    if (algorithm.containsKey(LPNormIOConstants.ALGORITHM_TAG)) {
+      algorithmChoice = algorithm.getString(LPNormIOConstants.ALGORITHM_TAG);
+    }
+  
     if (algorithmChoice.equals(LPNormIOConstants.SBD_TAG)) {
       configuration.setAlgorithmFactoryClass(gov.lanl.micot.application.rdt.algorithm.ep.sbd.SBDResilienceFactory.class.getCanonicalName());
     }
@@ -182,28 +190,81 @@ public class LPNormJsonProjectConfigurationReader {
     else if (algorithmChoice.equals(LPNormIOConstants.BP_TAG)) { 
       configuration.setAlgorithmFactoryClass(BPResilienceFactory.class.getCanonicalName());
     }
-    else if (algorithmChoice.equals(LPNormIOConstants.VNS_TAG)) { 
-      throw new RuntimeException("Error: VNS algorithm not yet active");
+    else if (algorithmChoice.equals(LPNormIOConstants.HEURISTIC_TAG)) { 
+      configuration.setAlgorithmFactoryClass(HeuristicResilienceFactory.class.getCanonicalName());
     }
     else {
       throw new RuntimeException("Error: " + algorithmChoice + " is not a valid algorithm choice");
     }
+  }
+
+  /**
+   * Read the power flow choices into the configuration
+   * @param fidelity
+   * @param flags
+   * @param algorithm
+   */
+  private void readPowerFlowChoice(LPNormFidelity fidelity, Flags flags, JSONObject algorithm) {
+    String powerFlowChoice = null;
+    if (fidelity == LPNormFidelity.LOW || fidelity == LPNormFidelity.MEDIUM_LOW) {
+      powerFlowChoice = AlgorithmConstants.TRANSPORTATION_POWER_FLOW_MODEL;
+    }
+    else if (fidelity == LPNormFidelity.MEDIUM || fidelity == LPNormFidelity.MEDIUM_HIGH || fidelity == LPNormFidelity.HIGH) {
+      powerFlowChoice = AlgorithmConstants.LINDIST_FLOW_POWER_FLOW_MODEL;
+    }
+
+    if (algorithm.containsKey(LPNormIOConstants.POWER_FLOW_TAG)) {
+      powerFlowChoice = algorithm.getString(LPNormIOConstants.POWER_FLOW_TAG);
+    }
+ 
+    flags.put(AlgorithmConstants.POWER_FLOW_MODEL_KEY, powerFlowChoice);    
+  }
+
+  /**
+   * Read tje discrete choices into algorithm configuration
+   * @param fidelity
+   * @param flags
+   * @param algorithm
+   */
+  private void readDiscreteChoice(LPNormFidelity fidelity, Flags flags, JSONObject algorithm) {
+    boolean isDiscrete = true;
     
-    double criticalLoadMet = algorithm.containsKey(LPNormIOConstants.CRITICAL_LOAD_MET_TAG) ? algorithm.getDouble(LPNormIOConstants.CRITICAL_LOAD_MET_TAG) : DEFAULT_CRITICAL_LOAD_MET;
-    double totalMet = algorithm.containsKey(LPNormIOConstants.TOTAL_LOAD_MET_TAG) ? algorithm.getDouble(LPNormIOConstants.TOTAL_LOAD_MET_TAG) : DEFAULT_TOTAL_LOAD_MET;
-    double chanceEpsilon = algorithm.containsKey(LPNormIOConstants.CHANCE_CONSTRAINT_TAG) ? algorithm.getDouble(LPNormIOConstants.CHANCE_CONSTRAINT_TAG) : DEFAULT_CHANCE_EPSILON;
-    double phaseVariation = algorithm.containsKey(LPNormIOConstants.PHASE_VARIATION_TAG) ? algorithm.getDouble(LPNormIOConstants.PHASE_VARIATION_TAG) : DEFAULT_PHASE_VARIATION;
-        
-    Flags flags = new FlagsImpl();
-    flags.put(AlgorithmConstants.CRITICAL_LOAD_MET_KEY, criticalLoadMet);
-    flags.put(AlgorithmConstants.LOAD_MET_KEY, totalMet);
-    flags.put(AlgorithmConstants.CHANCE_CONSTRAINT_EPSILON_KEY, chanceEpsilon);
-    flags.put(AlgorithmConstants.PHASE_VARIATION_KEY, phaseVariation);
-    flags.put(AlgorithmConstants.POWER_FLOW_MODEL_KEY, powerFlowChoice);
-//    flags.put(AlgorithmConstants.CYCLE_MODEL_CONSTRAINT_KEY, AlgorithmConstants.CycleModel.NONE);
+    if (fidelity == LPNormFidelity.LOW) {
+      isDiscrete = false;
+    }
+    else if (fidelity == LPNormFidelity.MEDIUM_LOW || fidelity == LPNormFidelity.MEDIUM || fidelity == LPNormFidelity.MEDIUM_HIGH || fidelity == LPNormFidelity.HIGH) {
+      isDiscrete = true;
+    }
+
+    if (algorithm.containsKey(LPNormIOConstants.IS_DISCRETE_TAG)) {
+      isDiscrete = algorithm.getBoolean(LPNormIOConstants.IS_DISCRETE_TAG);
+    }
+      
+    flags.put(AlgorithmConstants.IS_DISCRETE_MODEL_KEY, isDiscrete);
+  }
+  
+  /**
+   * Read the cycle choices into algorithm configuration
+   * @param fidelity
+   * @param flags
+   * @param algorithm
+   */
+  private void readCycleChoice(LPNormFidelity fidelity, Flags flags, JSONObject algorithm) {
+    AlgorithmConstants.CycleModel cycleModel = null;
     
-    flags.put(MathematicalProgramFlags.TIMEOUT_FLAG, timeout);
-            
+    if (fidelity == LPNormFidelity.LOW || fidelity == LPNormFidelity.MEDIUM_LOW || fidelity == LPNormFidelity.MEDIUM || fidelity == LPNormFidelity.MEDIUM_HIGH) {
+      cycleModel = AlgorithmConstants.CycleModel.NONE;
+    }
+    else if (fidelity == LPNormFidelity.HIGH) {
+      cycleModel = AlgorithmConstants.CycleModel.FLOW;
+    }
+
+    flags.put(AlgorithmConstants.CYCLE_MODEL_CONSTRAINT_KEY, cycleModel);        
+  }
+  
+  private void readSolverChoice(LPNormFidelity fidelity, Flags flags, JSONObject algorithm) {
+    String solverChoice = algorithm.containsKey(LPNormIOConstants.SOLVER_TAG) ? algorithm.getString(LPNormIOConstants.SOLVER_TAG) : DEFAULT_SOLVER;
+    
     if (solverChoice.equals(LPNormIOConstants.SCIP_TAG)) {
       flags.put(ElectricPowerMathProgramOptimizerFlags.MATH_PROGRAM_FACTORY_KEY, ScipQuadraticProgramFactory.class.getCanonicalName());
     }
@@ -216,6 +277,77 @@ public class LPNormJsonProjectConfigurationReader {
     else {
       throw new RuntimeException("Error: " + solverChoice + " is not a valid solver choice");
     }
+
+  }  
+  
+  /**
+   * Read the algorithm
+   * @param configuration
+   * @param log
+   * @param path
+   * @throws ConfigXMLIOException
+   */
+  private void readAlgorithm(ProjectConfiguration projectConfiguration, JSONObject algorithm)  {    
+    AlgorithmConfiguration configuration = new AlgorithmConfiguration();
+    Flags flags = new FlagsImpl();
+  
+    LPNormFidelity fidelity = algorithm.containsKey(LPNormIOConstants.FIDELITY_TAG) ? LPNormFidelity.get(algorithm.getInt(LPNormIOConstants.FIDELITY_TAG)) : DEFAULT_FIDELITY;
+    readAlgorithmChoice(fidelity, configuration, algorithm);
+    readPowerFlowChoice(fidelity, flags, algorithm);
+    readDiscreteChoice(fidelity, flags, algorithm);
+    readCycleChoice(fidelity, flags, algorithm);  
+    readSolverChoice(fidelity, flags, algorithm);
+    
+//    String algorithmChoice = algorithm.containsKey(LPNormIOConstants.ALGORITHM_TAG) ? algorithm.getString(LPNormIOConstants.ALGORITHM_TAG) : DEFAULT_ALGORITHM;
+//    String solverChoice = algorithm.containsKey(LPNormIOConstants.SOLVER_TAG) ? algorithm.getString(LPNormIOConstants.SOLVER_TAG) : DEFAULT_SOLVER;
+//    String powerFlowChoice = algorithm.containsKey(LPNormIOConstants.POWER_FLOW_TAG) ? algorithm.getString(LPNormIOConstants.POWER_FLOW_TAG) : DEFAULT_POWER_FLOW;
+    double timeout = algorithm.containsKey(LPNormIOConstants.SOLVER_TIMEOUT_TAG) ? algorithm.getDouble(LPNormIOConstants.SOLVER_TIMEOUT_TAG) : DEFAULT_TIMEOUT;
+//    boolean isDiscrete = algorithm.containsKey(LPNormIOConstants.IS_DISCRETE_TAG) ? algorithm.getBoolean(LPNormIOConstants.IS_DISCRETE_TAG) : DEFAULT_IS_DISCRETE;
+        
+    /*if (algorithmChoice.equals(LPNormIOConstants.SBD_TAG)) {
+      configuration.setAlgorithmFactoryClass(gov.lanl.micot.application.rdt.algorithm.ep.sbd.SBDResilienceFactory.class.getCanonicalName());
+    }
+    else if (algorithmChoice.equals(LPNormIOConstants.MIQP_TAG)) { 
+      configuration.setAlgorithmFactoryClass(MIPResilienceFactory.class.getCanonicalName());
+    }
+    else if (algorithmChoice.equals(LPNormIOConstants.BP_TAG)) { 
+      configuration.setAlgorithmFactoryClass(BPResilienceFactory.class.getCanonicalName());
+    }
+    else if (algorithmChoice.equals(LPNormIOConstants.HEURISTIC_TAG)) { 
+      configuration.setAlgorithmFactoryClass(HeuristicResilienceFactory.class.getCanonicalName());
+    }
+    else {
+      throw new RuntimeException("Error: " + algorithmChoice + " is not a valid algorithm choice");
+    }*/
+    
+    double criticalLoadMet = algorithm.containsKey(LPNormIOConstants.CRITICAL_LOAD_MET_TAG) ? algorithm.getDouble(LPNormIOConstants.CRITICAL_LOAD_MET_TAG) : DEFAULT_CRITICAL_LOAD_MET;
+    double totalMet = algorithm.containsKey(LPNormIOConstants.TOTAL_LOAD_MET_TAG) ? algorithm.getDouble(LPNormIOConstants.TOTAL_LOAD_MET_TAG) : DEFAULT_TOTAL_LOAD_MET;
+//    double chanceEpsilon = algorithm.containsKey(LPNormIOConstants.CHANCE_CONSTRAINT_TAG) ? algorithm.getDouble(LPNormIOConstants.CHANCE_CONSTRAINT_TAG) : DEFAULT_CHANCE_EPSILON;
+    double phaseVariation = algorithm.containsKey(LPNormIOConstants.PHASE_VARIATION_TAG) ? algorithm.getDouble(LPNormIOConstants.PHASE_VARIATION_TAG) : DEFAULT_PHASE_VARIATION;
+        
+    flags.put(AlgorithmConstants.CRITICAL_LOAD_MET_KEY, criticalLoadMet);
+    flags.put(AlgorithmConstants.LOAD_MET_KEY, totalMet);
+  //  flags.put(AlgorithmConstants.CHANCE_CONSTRAINT_EPSILON_KEY, chanceEpsilon);
+    flags.put(AlgorithmConstants.PHASE_VARIATION_KEY, phaseVariation);
+//    flags.put(AlgorithmConstants.POWER_FLOW_MODEL_KEY, powerFlowChoice);
+//    flags.put(AlgorithmConstants.IS_DISCRETE_MODEL_KEY, isDiscrete);
+    
+ //   flags.put(AlgorithmConstants.CYCLE_MODEL_CONSTRAINT_KEY, AlgorithmConstants.CycleModel.NONE);
+    
+    flags.put(MathematicalProgramFlags.TIMEOUT_FLAG, timeout);
+            
+/*    if (solverChoice.equals(LPNormIOConstants.SCIP_TAG)) {
+      flags.put(ElectricPowerMathProgramOptimizerFlags.MATH_PROGRAM_FACTORY_KEY, ScipQuadraticProgramFactory.class.getCanonicalName());
+    }
+    else if (solverChoice.equals(LPNormIOConstants.CPLEX_TAG)) {
+      flags.put(ElectricPowerMathProgramOptimizerFlags.MATH_PROGRAM_FACTORY_KEY, "gov.lanl.micot.util.math.solver.quadraticprogram.cplex.CPLEXQuadraticProgramFactory");
+    }
+    else if (solverChoice.equals(LPNormIOConstants.BONMIN_TAG)) {
+      flags.put(ElectricPowerMathProgramOptimizerFlags.MATH_PROGRAM_FACTORY_KEY, BonminQuadraticProgramFactory.class.getCanonicalName());
+    }
+    else {
+      throw new RuntimeException("Error: " + solverChoice + " is not a valid solver choice");
+    }*/
 
     
     configuration.setAlgorithmFlags(flags);    
@@ -321,12 +453,12 @@ public class LPNormJsonProjectConfigurationReader {
    * Parse the provided string content into a JsonObject.
    * @return.
    */
-  private JSONObject parse(String content) {
+  /*private JSONObject parse(String content) {
     InputStream stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));    
     JSONReader reader = JSON.getDefaultJSON().createReader(stream);
     JSONObject object = reader.readObject();
     return object;
-  }
+  }*/
   
 
 }

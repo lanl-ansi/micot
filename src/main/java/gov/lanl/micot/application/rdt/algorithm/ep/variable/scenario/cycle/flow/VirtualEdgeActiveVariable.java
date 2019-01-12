@@ -21,13 +21,15 @@ import java.util.Collection;
 public class VirtualEdgeActiveVariable implements VariableFactory {
 
   private Scenario scenario = null;
+  private Boolean isDiscrete = true;
   
   /**
    * Constructor
    * @param scenarios
    */
-  public VirtualEdgeActiveVariable(Scenario scenario) {
-    this.scenario = scenario;
+  public VirtualEdgeActiveVariable(Scenario scenario, Boolean isDiscrete) {
+    this.scenario   = scenario;
+    this.isDiscrete = isDiscrete;
   }
   
   /**
@@ -45,7 +47,12 @@ public class VirtualEdgeActiveVariable implements VariableFactory {
     ArrayList<Variable> variables = new ArrayList<Variable>();
     
     for (ElectricPowerNode node : model.getNodes()) {
-      variables.add(program.makeDiscreteVariable(getVariableName(node)));        
+      if (isDiscrete) {
+        variables.add(program.makeDiscreteVariable(getVariableName(node)));        
+      }
+      else {
+        variables.add(program.makeContinuousVariable(getVariableName(node)));      
+      }
     }
     
     return variables;

@@ -31,7 +31,7 @@ public class LineHardenBound implements ConstraintFactory {
     
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException {
-    LineHardenVariableFactory lineVariableFactory = new LineHardenVariableFactory(scenario);
+    LineHardenVariableFactory lineVariableFactory = new LineHardenVariableFactory(scenario,null);
         
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (lineVariableFactory.hasVariable(edge)) {

@@ -37,7 +37,7 @@ public class GeneratorObjectiveFunctionFactory implements ObjectiveFunctionFacto
     scenarios.add(scenario);    
 
     YGeneratorVariableFactory yVariableFactory = new YGeneratorVariableFactory(scenarios);
-    GeneratorConstructionVariableFactory generatorVariableFactory = new GeneratorConstructionVariableFactory(scenario);
+    GeneratorConstructionVariableFactory generatorVariableFactory = new GeneratorConstructionVariableFactory(scenario,null);
 
     MathematicalProgramObjective objective = program.getLinearObjective();
     for (Generator generator : model.getGenerators()) {

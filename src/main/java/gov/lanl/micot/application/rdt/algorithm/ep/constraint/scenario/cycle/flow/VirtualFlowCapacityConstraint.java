@@ -44,7 +44,7 @@ public class VirtualFlowCapacityConstraint implements ConstraintFactory {
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException, InvalidConstraintException {
     VirtualFlowVariable vFactory = new VirtualFlowVariable(scenario);
-    VirtualEdgeActiveVariable f = new VirtualEdgeActiveVariable(scenario);
+    VirtualEdgeActiveVariable f = new VirtualEdgeActiveVariable(scenario,null);
 
     for (ElectricPowerNode node : model.getNodes()) {
       Variable variable = vFactory.getVariable(problem, node);

@@ -36,7 +36,7 @@ public class LineSwitchObjectiveFunctionFactory implements ObjectiveFunctionFact
     ArrayList<Scenario> scenarios = new ArrayList<Scenario>();
     scenarios.add(scenario);    
    
-    LineSwitchVariableFactory lineVariableFactory = new LineSwitchVariableFactory(scenario);
+    LineSwitchVariableFactory lineVariableFactory = new LineSwitchVariableFactory(scenario,null);
     YLineSwitchVariableFactory yVariableFactory = new YLineSwitchVariableFactory(scenarios);
     
     MathematicalProgramObjective objective = program.getLinearObjective();

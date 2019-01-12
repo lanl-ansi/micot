@@ -37,7 +37,7 @@ public class LineHardenObjectiveFunctionFactory implements ObjectiveFunctionFact
     ArrayList<Scenario> scenarios = new ArrayList<Scenario>();
     scenarios.add(scenario);    
     
-    LineHardenVariableFactory lineVariableFactory = new LineHardenVariableFactory(scenario);
+    LineHardenVariableFactory lineVariableFactory = new LineHardenVariableFactory(scenario,null);
     YLineHardenVariableFactory yVariableFactory = new YLineHardenVariableFactory(scenarios);
     
     MathematicalProgramObjective objective = program.getLinearObjective();

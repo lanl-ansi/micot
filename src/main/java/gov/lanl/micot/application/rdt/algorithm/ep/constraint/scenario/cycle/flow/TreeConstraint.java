@@ -43,8 +43,8 @@ public class TreeConstraint implements ConstraintFactory {
 
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException, InvalidConstraintException {
-    EdgeActiveVariable vaFactory = new EdgeActiveVariable(scenario);
-    VirtualEdgeActiveVariable viFactory = new VirtualEdgeActiveVariable(scenario);
+    EdgeActiveVariable vaFactory = new EdgeActiveVariable(scenario,null);
+    VirtualEdgeActiveVariable viFactory = new VirtualEdgeActiveVariable(scenario,null);
 
     LinearConstraint constraint = new LinearConstraintEquals(getConstraintName());
 

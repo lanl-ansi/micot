@@ -24,12 +24,14 @@ import java.util.Collection;
 public class LineHardenVariableFactory implements VariableFactory {
 
   private Scenario scenario = null;
+  private Boolean isDiscrete = true;
   
   /**
    * Constructor
    */
-  public LineHardenVariableFactory(Scenario scenario) {
+  public LineHardenVariableFactory(Scenario scenario, Boolean isDiscrete) {
     this.scenario = scenario;
+    this.isDiscrete = isDiscrete;
   }
 
   /**
@@ -47,7 +49,12 @@ public class LineHardenVariableFactory implements VariableFactory {
     ArrayList<Variable> variables = new ArrayList<Variable>();
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (hasVariable(edge)) {
-        variables.add(program.makeDiscreteVariable(getFlowVariableName(edge, scenario)));
+        if (isDiscrete) {
+          variables.add(program.makeDiscreteVariable(getFlowVariableName(edge, scenario)));
+        }
+        else {
+          variables.add(program.makeContinuousVariable(getFlowVariableName(edge, scenario)));          
+        }
       }
     }    
     return variables;

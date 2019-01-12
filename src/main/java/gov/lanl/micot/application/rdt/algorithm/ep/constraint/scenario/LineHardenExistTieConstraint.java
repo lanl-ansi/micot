@@ -46,8 +46,8 @@ public class LineHardenExistTieConstraint implements ConstraintFactory {
   
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException, InvalidConstraintException {
-    LineExistVariableFactory existFactory = new LineExistVariableFactory(scenario);
-    LineHardenVariableFactory harden = new LineHardenVariableFactory(scenario);
+    LineExistVariableFactory existFactory = new LineExistVariableFactory(scenario,null);
+    LineHardenVariableFactory harden = new LineHardenVariableFactory(scenario,null);
         
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       boolean isDamaged = scenario.getModification(edge, Asset.IS_FAILED_KEY, Boolean.class) != null ? scenario.getModification(edge, Asset.IS_FAILED_KEY, Boolean.class) : false;

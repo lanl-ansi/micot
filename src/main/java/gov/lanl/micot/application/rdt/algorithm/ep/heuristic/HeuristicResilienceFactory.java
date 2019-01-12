@@ -1,4 +1,4 @@
-package gov.lanl.micot.application.rdt.algorithm.ep.bp;
+package gov.lanl.micot.application.rdt.algorithm.ep.heuristic;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,24 +18,24 @@ import gov.lanl.micot.infrastructure.project.ScenarioConfiguration;
 import gov.lanl.micot.util.math.solver.mathprogram.MathematicalProgramFlags;
 
 /**
- * A factory for creating a a branch and price decomposition algorithm
+ * A factory for creating a heuristic algorithm
  * @author Russell Bent
  */
-public class BPResilienceFactory extends OptimizerFactoryImpl<ElectricPowerNode, ElectricPowerModel> {
+public class HeuristicResilienceFactory extends OptimizerFactoryImpl<ElectricPowerNode, ElectricPowerModel> {
 	
 	/**
 	 *  Constructor
 	 */
-	public BPResilienceFactory() {		
+	public HeuristicResilienceFactory() {		
 	}
 	
 	@Override
-	public BPResilienceAlgorithm createOptimizer(OptimizerFlags oFlags) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-	  BPResilienceFlags flags = new BPResilienceFlags(oFlags);
+	public HeuristicResilienceAlgorithm createOptimizer(OptimizerFlags oFlags) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	  HeuristicResilienceFlags flags = new HeuristicResilienceFlags(oFlags);
 	  
-	  Collection<Scenario> scenarios = flags.getCollection(BPResilienceFlags.SCENARIOS_KEY, Scenario.class);
+	  Collection<Scenario> scenarios = flags.getCollection(HeuristicResilienceFlags.SCENARIOS_KEY, Scenario.class);
     
-	  BPResilienceAlgorithm algorithm = new BPResilienceAlgorithm(scenarios);
+	  HeuristicResilienceAlgorithm algorithm = new HeuristicResilienceAlgorithm(scenarios);
 	  
 	  double innerTimeout = oFlags.containsKey(MathematicalProgramFlags.TIMEOUT_FLAG) ? oFlags.getDouble(MathematicalProgramFlags.TIMEOUT_FLAG) : Double.POSITIVE_INFINITY;
     double outerTimeout = oFlags.containsKey(MathematicalProgramFlags.TIMEOUT_FLAG) ? oFlags.getDouble(MathematicalProgramFlags.TIMEOUT_FLAG) : Double.POSITIVE_INFINITY;
@@ -49,11 +49,11 @@ public class BPResilienceFactory extends OptimizerFactoryImpl<ElectricPowerNode,
 
 	  // pull out and overwrite parameters
 	  for (String key : flags.keySet()) {
-	    if (key.startsWith(BPResilienceFlags.OUTER_PREFIX)) {
-	      algorithm.addOuterMathProgramFlag(key.substring(BPResilienceFlags.OUTER_PREFIX.length(), key.length()), flags.get(key));
+	    if (key.startsWith(HeuristicResilienceFlags.OUTER_PREFIX)) {
+	      algorithm.addOuterMathProgramFlag(key.substring(HeuristicResilienceFlags.OUTER_PREFIX.length(), key.length()), flags.get(key));
 	    }
-	    if (key.startsWith(BPResilienceFlags.INNER_PREFIX)) {
-	      algorithm.addInnerMathProgramFlag(key.substring(BPResilienceFlags.INNER_PREFIX.length(), key.length()), flags.get(key));
+	    if (key.startsWith(HeuristicResilienceFlags.INNER_PREFIX)) {
+	      algorithm.addInnerMathProgramFlag(key.substring(HeuristicResilienceFlags.INNER_PREFIX.length(), key.length()), flags.get(key));
 	    }
 	  }
     
@@ -62,13 +62,13 @@ public class BPResilienceFactory extends OptimizerFactoryImpl<ElectricPowerNode,
     String powerflow = oFlags.getString(AlgorithmConstants.POWER_FLOW_MODEL_KEY);    
     double threshold = oFlags.getDouble(AlgorithmConstants.PHASE_VARIATION_KEY);
     boolean isDiscrete = oFlags.getBoolean(AlgorithmConstants.IS_DISCRETE_MODEL_KEY);
-
+   
 	  algorithm.setCriticalLoadMet(criticalLoadMet);
     algorithm.setNonCriticalLoadMet(nonCriticalLoadMet);
     algorithm.setFlowModel(powerflow);
     algorithm.setPhaseVariationThreshold(threshold);
-	  algorithm.setIsDiscrete(isDiscrete);
-	  
+    algorithm.setIsDiscrete(isDiscrete);
+    
 	  return algorithm;
 	}
  
