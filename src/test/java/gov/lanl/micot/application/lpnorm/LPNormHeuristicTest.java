@@ -48,7 +48,7 @@ public class LPNormHeuristicTest  extends TestCase {
 
     ElectricPowerModel model = output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class);
     double cost = output.get(RDTApplication.OBJECTIVE_FLAG, Number.class).doubleValue();
-    assertEquals(cost, -5000.0);
+    assertEquals(cost, 5000.0);
     
     Scenario scenario = configuration.getFirstScenario();
     

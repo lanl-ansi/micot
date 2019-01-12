@@ -64,8 +64,10 @@ import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.cycle.EdgeA
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.cycle.flow.FlowVariable;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.cycle.flow.VirtualEdgeActiveVariable;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.cycle.flow.VirtualFlowVariable;
+import gov.lanl.micot.infrastructure.ep.model.ElectricPowerFlowConnection;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerModel;
 import gov.lanl.micot.infrastructure.ep.model.ElectricPowerNode;
+import gov.lanl.micot.infrastructure.ep.model.Generator;
 import gov.lanl.micot.infrastructure.model.Scenario;
 import gov.lanl.micot.infrastructure.optimize.OptimizerImpl;
 import gov.lanl.micot.util.math.solver.Solution;
@@ -74,6 +76,7 @@ import gov.lanl.micot.util.math.solver.exception.InvalidVariableException;
 import gov.lanl.micot.util.math.solver.exception.NoVariableException;
 import gov.lanl.micot.util.math.solver.exception.VariableExistsException;
 import gov.lanl.micot.util.math.solver.mathprogram.MathematicalProgram;
+
 import java.util.Collection;
 
 /**
@@ -546,5 +549,50 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
  protected boolean getIsDiscrete() {
    return isDiscreteModel;
  }
+ 
+ /**
+  * Compute the objective function
+  * @param solution
+  * @return
+ * @throws NoVariableException 
+  */
+ protected double computeObjective(ElectricPowerModel model, MathematicalProgram program)  {
+   double obj = 0;
+   GeneratorConstructionVariableFactory generatorVariableFactory = new GeneratorConstructionVariableFactory();
+   LineConstructionVariableFactory lineVariableFactory = new LineConstructionVariableFactory();
+   LineHardenVariableFactory lineHardenFactory = new LineHardenVariableFactory();
+   LineSwitchVariableFactory lineSwitchFactory = new LineSwitchVariableFactory();
+   
+   for (Generator generator : model.getGenerators()) {
+     if (generatorVariableFactory.hasVariable(generator)) {
+       if (generator.getAttribute(AlgorithmConstants.IS_CONSTRUCTED_KEY, Boolean.class)) {
+         obj += generator.getAttribute(AlgorithmConstants.MICROGRID_FIXED_COST_KEY, Number.class).doubleValue();
+       }
+     }      
+   }
+
+   for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
+     if (lineVariableFactory.hasVariable(edge)) {
+       if (edge.getAttribute(AlgorithmConstants.IS_CONSTRUCTED_KEY, Boolean.class)) {
+         obj += edge.getAttribute(AlgorithmConstants.LINE_CONSTRUCTION_COST_KEY, Number.class).doubleValue();
+       }
+     }
+     
+     if (lineHardenFactory.hasVariable(edge)) {
+       if (edge.getAttribute(AlgorithmConstants.IS_HARDENED_KEY, Boolean.class)) {
+         obj += edge.getAttribute(AlgorithmConstants.LINE_HARDEN_COST_KEY, Number.class).doubleValue();
+       }
+     }
+     
+     if (lineSwitchFactory.hasVariable(edge)) {
+       if (edge.getAttribute(AlgorithmConstants.IS_SWITCH_CONSTRUCTED_KEY, Boolean.class)) {
+         obj += edge.getAttribute(AlgorithmConstants.LINE_SWITCH_COST_KEY, Number.class).doubleValue();
+       }
+     }
+   }
+   
+   return obj;
+ }
+ 
 }
 

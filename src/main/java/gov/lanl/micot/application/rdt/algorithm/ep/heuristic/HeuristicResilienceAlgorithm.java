@@ -70,7 +70,8 @@ public class HeuristicResilienceAlgorithm extends ResilienceAlgorithm {
     }
 
     setIsFeasible(outerSolution.isFeasible());
-    setLastObjectiveValue(outerSolution.getObjectiveValue());
+//    setLastObjectiveValue(outerSolution.getObjectiveValue());
+    setLastObjectiveValue(computeObjective(model, outerProblem));
     
     return true;    
   }
