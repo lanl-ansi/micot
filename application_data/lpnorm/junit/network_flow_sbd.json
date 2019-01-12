@@ -2,6 +2,7 @@
 
 {
   "algorithm": "sbd",
+  "fidelity": 2,
   "lines": [
     {
       "line_code": 0,

@@ -2,6 +2,7 @@
 
 {
   "algorithm": "miqp",
+  "fidelity": 2,
   "lines": [
     {
       "line_code": 0,
@@ -1160,6 +1161,7 @@
       "is_new": false,
       "length": 0.21553752613608,
       "harden_cost": 5000,
+      "can_harden": true,
       "id": "l1",
       "has_switch": false,
       "num_phases": 3,
