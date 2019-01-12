@@ -48,11 +48,8 @@ public class LPNormJsonProjectConfigurationReader {
   private static final double DEFAULT_PHASE_VARIATION = 0.15;
 
   private static final LPNormFidelity DEFAULT_FIDELITY = LPNormFidelity.LOW;
-//  private static final String DEFAULT_ALGORITHM = LPNormIOConstants.SBD_TAG;
   private static final String DEFAULT_SOLVER = LPNormIOConstants.SCIP_TAG;
- // private static final String DEFAULT_POWER_FLOW = AlgorithmConstants.LINDIST_FLOW_POWER_FLOW_MODEL;
   private static final double DEFAULT_TIMEOUT = Double.POSITIVE_INFINITY;
-//  private static final boolean DEFAULT_IS_DISCRETE = true;
   
   /**
    * Constructor
@@ -298,58 +295,16 @@ public class LPNormJsonProjectConfigurationReader {
     readCycleChoice(fidelity, flags, algorithm);  
     readSolverChoice(fidelity, flags, algorithm);
     
-//    String algorithmChoice = algorithm.containsKey(LPNormIOConstants.ALGORITHM_TAG) ? algorithm.getString(LPNormIOConstants.ALGORITHM_TAG) : DEFAULT_ALGORITHM;
-//    String solverChoice = algorithm.containsKey(LPNormIOConstants.SOLVER_TAG) ? algorithm.getString(LPNormIOConstants.SOLVER_TAG) : DEFAULT_SOLVER;
-//    String powerFlowChoice = algorithm.containsKey(LPNormIOConstants.POWER_FLOW_TAG) ? algorithm.getString(LPNormIOConstants.POWER_FLOW_TAG) : DEFAULT_POWER_FLOW;
-    double timeout = algorithm.containsKey(LPNormIOConstants.SOLVER_TIMEOUT_TAG) ? algorithm.getDouble(LPNormIOConstants.SOLVER_TIMEOUT_TAG) : DEFAULT_TIMEOUT;
-//    boolean isDiscrete = algorithm.containsKey(LPNormIOConstants.IS_DISCRETE_TAG) ? algorithm.getBoolean(LPNormIOConstants.IS_DISCRETE_TAG) : DEFAULT_IS_DISCRETE;
-        
-    /*if (algorithmChoice.equals(LPNormIOConstants.SBD_TAG)) {
-      configuration.setAlgorithmFactoryClass(gov.lanl.micot.application.rdt.algorithm.ep.sbd.SBDResilienceFactory.class.getCanonicalName());
-    }
-    else if (algorithmChoice.equals(LPNormIOConstants.MIQP_TAG)) { 
-      configuration.setAlgorithmFactoryClass(MIPResilienceFactory.class.getCanonicalName());
-    }
-    else if (algorithmChoice.equals(LPNormIOConstants.BP_TAG)) { 
-      configuration.setAlgorithmFactoryClass(BPResilienceFactory.class.getCanonicalName());
-    }
-    else if (algorithmChoice.equals(LPNormIOConstants.HEURISTIC_TAG)) { 
-      configuration.setAlgorithmFactoryClass(HeuristicResilienceFactory.class.getCanonicalName());
-    }
-    else {
-      throw new RuntimeException("Error: " + algorithmChoice + " is not a valid algorithm choice");
-    }*/
-    
+    double timeout = algorithm.containsKey(LPNormIOConstants.SOLVER_TIMEOUT_TAG) ? algorithm.getDouble(LPNormIOConstants.SOLVER_TIMEOUT_TAG) : DEFAULT_TIMEOUT;    
     double criticalLoadMet = algorithm.containsKey(LPNormIOConstants.CRITICAL_LOAD_MET_TAG) ? algorithm.getDouble(LPNormIOConstants.CRITICAL_LOAD_MET_TAG) : DEFAULT_CRITICAL_LOAD_MET;
     double totalMet = algorithm.containsKey(LPNormIOConstants.TOTAL_LOAD_MET_TAG) ? algorithm.getDouble(LPNormIOConstants.TOTAL_LOAD_MET_TAG) : DEFAULT_TOTAL_LOAD_MET;
-//    double chanceEpsilon = algorithm.containsKey(LPNormIOConstants.CHANCE_CONSTRAINT_TAG) ? algorithm.getDouble(LPNormIOConstants.CHANCE_CONSTRAINT_TAG) : DEFAULT_CHANCE_EPSILON;
     double phaseVariation = algorithm.containsKey(LPNormIOConstants.PHASE_VARIATION_TAG) ? algorithm.getDouble(LPNormIOConstants.PHASE_VARIATION_TAG) : DEFAULT_PHASE_VARIATION;
         
     flags.put(AlgorithmConstants.CRITICAL_LOAD_MET_KEY, criticalLoadMet);
     flags.put(AlgorithmConstants.LOAD_MET_KEY, totalMet);
-  //  flags.put(AlgorithmConstants.CHANCE_CONSTRAINT_EPSILON_KEY, chanceEpsilon);
     flags.put(AlgorithmConstants.PHASE_VARIATION_KEY, phaseVariation);
-//    flags.put(AlgorithmConstants.POWER_FLOW_MODEL_KEY, powerFlowChoice);
-//    flags.put(AlgorithmConstants.IS_DISCRETE_MODEL_KEY, isDiscrete);
-    
- //   flags.put(AlgorithmConstants.CYCLE_MODEL_CONSTRAINT_KEY, AlgorithmConstants.CycleModel.NONE);
-    
     flags.put(MathematicalProgramFlags.TIMEOUT_FLAG, timeout);
             
-/*    if (solverChoice.equals(LPNormIOConstants.SCIP_TAG)) {
-      flags.put(ElectricPowerMathProgramOptimizerFlags.MATH_PROGRAM_FACTORY_KEY, ScipQuadraticProgramFactory.class.getCanonicalName());
-    }
-    else if (solverChoice.equals(LPNormIOConstants.CPLEX_TAG)) {
-      flags.put(ElectricPowerMathProgramOptimizerFlags.MATH_PROGRAM_FACTORY_KEY, "gov.lanl.micot.util.math.solver.quadraticprogram.cplex.CPLEXQuadraticProgramFactory");
-    }
-    else if (solverChoice.equals(LPNormIOConstants.BONMIN_TAG)) {
-      flags.put(ElectricPowerMathProgramOptimizerFlags.MATH_PROGRAM_FACTORY_KEY, BonminQuadraticProgramFactory.class.getCanonicalName());
-    }
-    else {
-      throw new RuntimeException("Error: " + solverChoice + " is not a valid solver choice");
-    }*/
-
-    
     configuration.setAlgorithmFlags(flags);    
     projectConfiguration.addAlgorithmConfiguration(configuration);
   }
