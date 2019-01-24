@@ -38,7 +38,7 @@ public class LineSwitchTieConstraint implements ConstraintFactory {
   
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException, InvalidConstraintException {
-    gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LineSwitchVariableFactory scenarioFactory = new gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LineSwitchVariableFactory(scenario);
+    gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LineSwitchVariableFactory scenarioFactory = new gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LineSwitchVariableFactory(scenario,null);
     LineSwitchVariableFactory switchFactory = new LineSwitchVariableFactory();
         
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {

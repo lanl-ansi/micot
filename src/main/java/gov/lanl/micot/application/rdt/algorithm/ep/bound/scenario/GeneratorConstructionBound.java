@@ -29,7 +29,7 @@ public class GeneratorConstructionBound implements ConstraintFactory {
     
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException {
-    GeneratorConstructionVariableFactory generatorVariableFactory = new GeneratorConstructionVariableFactory(scenario);
+    GeneratorConstructionVariableFactory generatorVariableFactory = new GeneratorConstructionVariableFactory(scenario,null);
    
     for (Generator generator : model.getGenerators()) {
       if (generatorVariableFactory.hasVariable(generator)) {

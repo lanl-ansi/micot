@@ -44,7 +44,7 @@ public class GeneratorTieConstraint implements ConstraintFactory {
   
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException, InvalidConstraintException {
-    gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.GeneratorConstructionVariableFactory scenarioFactory = new gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.GeneratorConstructionVariableFactory(scenario);
+    gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.GeneratorConstructionVariableFactory scenarioFactory = new gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.GeneratorConstructionVariableFactory(scenario,null);
     GeneratorConstructionVariableFactory genFactory = new GeneratorConstructionVariableFactory();
         
     for (Generator generator : model.getGenerators()) {

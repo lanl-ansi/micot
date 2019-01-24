@@ -25,12 +25,14 @@ import java.util.Collection;
 public class LineSwitchVariableFactory implements VariableFactory {
 
   private Scenario scenario = null;
+  private Boolean isDiscrete = true;
   
   /**
    * Constructor
    */
-  public LineSwitchVariableFactory(Scenario scenario) {
+  public LineSwitchVariableFactory(Scenario scenario, Boolean isDiscrete) {
     this.scenario = scenario;
+    this.isDiscrete = isDiscrete;
   }
 
   /**
@@ -48,7 +50,12 @@ public class LineSwitchVariableFactory implements VariableFactory {
     ArrayList<Variable> variables = new ArrayList<Variable>();
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (hasVariable(edge)) {
-        variables.add(program.makeDiscreteVariable(getFlowVariableName(edge, scenario)));
+        if (isDiscrete) {
+          variables.add(program.makeDiscreteVariable(getFlowVariableName(edge, scenario)));
+        }
+        else {
+          variables.add(program.makeContinuousVariable(getFlowVariableName(edge, scenario)));          
+        }
       }
     }
     return variables;

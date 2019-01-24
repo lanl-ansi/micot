@@ -36,7 +36,7 @@ public class LineHardenBound implements ConstraintFactory {
     
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException {
-    LineHardenVariableFactory lineVariableFactory = new LineHardenVariableFactory(scenario);
+    LineHardenVariableFactory lineVariableFactory = new LineHardenVariableFactory(scenario,null);
     gov.lanl.micot.application.rdt.algorithm.ep.variable.LineHardenVariableFactory outerFactory = new gov.lanl.micot.application.rdt.algorithm.ep.variable.LineHardenVariableFactory();
     
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {

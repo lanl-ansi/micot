@@ -1,14 +1,12 @@
 package gov.lanl.micot.application.rdt.algorithm.ep.sbd;
 
-import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.application.rdt.algorithm.ResilienceAlgorithm;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.BusBalanceConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.GeneratorConstraint;
-import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LinDistFlowConstraint;
-import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LinDistSlackOnOffConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineActiveTieConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineCapacityConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineDirectionConstraint;
+import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineFlowOnOffConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineHardenExistTieConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.LineSwitchExistTieConstraint;
 import gov.lanl.micot.application.rdt.algorithm.ep.constraint.scenario.PhaseVariationConstraint;
@@ -117,7 +115,9 @@ public class SBDResilienceAlgorithm extends ResilienceAlgorithm {
     }
 
     setIsFeasible(outerSolution.isFeasible());
-    setLastObjectiveValue(outerSolution.getObjectiveValue());
+//    setLastObjectiveValue(outerSolution.getObjectiveValue());
+    setLastObjectiveValue(computeObjective(model, outerProblem));
+
     
     return true;    
   }
@@ -298,9 +298,8 @@ public class SBDResilienceAlgorithm extends ResilienceAlgorithm {
     GeneratorConstraint generator = new GeneratorConstraint(scenario);
     BusBalanceConstraint balance = new BusBalanceConstraint(scenario);
     LineCapacityConstraint capacity = new LineCapacityConstraint(scenario);
+    LineFlowOnOffConstraint onoff = new LineFlowOnOffConstraint(scenario);    
     LineDirectionConstraint direction = new LineDirectionConstraint(scenario); 
-    LinDistSlackOnOffConstraint slack = new LinDistSlackOnOffConstraint(scenario);
-    LinDistFlowConstraint distflow = new LinDistFlowConstraint(scenario);
     PhaseVariationConstraint variation = new PhaseVariationConstraint(getPhaseVariationThreshold(), scenario);
     
     switchExistTie.constructConstraint(problem, model);
@@ -311,20 +310,12 @@ public class SBDResilienceAlgorithm extends ResilienceAlgorithm {
     generator.constructConstraint(problem, model);
     balance.constructConstraint(problem, model);
     capacity.constructConstraint(problem, model);
+    onoff.constructConstraint(problem, model);
     direction.constructConstraint(problem, model);
     variation.constructConstraint(problem, model);
     
-    if (getFlowModel() == AlgorithmConstants.LINDIST_FLOW_POWER_FLOW_MODEL) {
-      slack.constructConstraint(problem, model);
-      distflow.constructConstraint(problem, model);
-    }
-    
-    try {
-      addCutsetCycleConstraints(model,problem,scenario);
-    }
-    catch (InvalidVariableException e) {
-      e.printStackTrace();
-    }
+    addPhysicsConstraints(model, problem, scenario);        
+    addCycleConstraints(model, problem, scenario);    
   }
 
   

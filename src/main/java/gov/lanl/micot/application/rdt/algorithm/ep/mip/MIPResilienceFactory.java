@@ -42,6 +42,7 @@ public class MIPResilienceFactory extends OptimizerFactoryImpl<ElectricPowerNode
     double nonCriticalLoadMet = oFlags.getDouble(AlgorithmConstants.LOAD_MET_KEY);
     String powerflow = oFlags.getString(AlgorithmConstants.POWER_FLOW_MODEL_KEY);    
     double threshold = oFlags.getDouble(AlgorithmConstants.PHASE_VARIATION_KEY);
+    boolean isDiscrete = oFlags.getBoolean(AlgorithmConstants.IS_DISCRETE_MODEL_KEY);
     
 	  algorithm.addMathProgramFlag(MathematicalProgramFlags.DEBUG_ON_FLAG, false);
 	  algorithm.addMathProgramFlag(MathematicalProgramFlags.MIP_GAP_TOLERANCE_FLAG, 1e-3);
@@ -52,6 +53,7 @@ public class MIPResilienceFactory extends OptimizerFactoryImpl<ElectricPowerNode
     algorithm.setNonCriticalLoadMet(nonCriticalLoadMet);
     algorithm.setFlowModel(powerflow);
     algorithm.setPhaseVariationThreshold(threshold);
+    algorithm.setIsDiscrete(isDiscrete);
     
 	  return algorithm;
 	}

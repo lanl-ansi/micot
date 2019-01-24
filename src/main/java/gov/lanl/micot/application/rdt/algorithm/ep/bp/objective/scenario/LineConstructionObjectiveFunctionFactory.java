@@ -38,7 +38,7 @@ public class LineConstructionObjectiveFunctionFactory implements ObjectiveFuncti
     ArrayList<Scenario> scenarios = new ArrayList<Scenario>();
     scenarios.add(scenario);    
     
-    LineExistVariableFactory lineVariableFactory = new LineExistVariableFactory(scenario);
+    LineExistVariableFactory lineVariableFactory = new LineExistVariableFactory(scenario,null);
     YLineConstructionVariableFactory yVariableFactory = new YLineConstructionVariableFactory(scenarios);
         
     MathematicalProgramObjective objective = program.getLinearObjective();

@@ -74,7 +74,7 @@ public class LineDirectionConstraint implements ConstraintFactory {
   
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException, InvalidConstraintException {
-    LineDirectionVariableFactory directionFactory = new LineDirectionVariableFactory(scenario);
+    LineDirectionVariableFactory directionFactory = new LineDirectionVariableFactory(scenario,null);
     LineFlowVariableFactory flowFactory = new LineFlowVariableFactory(scenario);
     double mvaBase = model.getMVABase();
     

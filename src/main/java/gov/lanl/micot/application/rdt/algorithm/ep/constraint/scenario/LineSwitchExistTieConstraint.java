@@ -39,8 +39,8 @@ public class LineSwitchExistTieConstraint implements ConstraintFactory {
   
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException, InvalidConstraintException {
-    LineSwitchVariableFactory switchFactory = new LineSwitchVariableFactory(scenario);
-    LineExistVariableFactory existFactory = new LineExistVariableFactory(scenario);
+    LineSwitchVariableFactory switchFactory = new LineSwitchVariableFactory(scenario,null);
+    LineExistVariableFactory existFactory = new LineExistVariableFactory(scenario,null);
         
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (switchFactory.hasVariable(edge)) {

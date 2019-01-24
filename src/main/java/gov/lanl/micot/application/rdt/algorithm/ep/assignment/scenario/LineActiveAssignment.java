@@ -8,6 +8,7 @@ import gov.lanl.micot.infrastructure.model.Scenario;
 import gov.lanl.micot.infrastructure.model.ScenarioAttribute;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.scenario.LineActiveVariableFactory;
+import gov.lanl.micot.util.math.solver.ContinuousVariable;
 import gov.lanl.micot.util.math.solver.Solution;
 import gov.lanl.micot.util.math.solver.Variable;
 import gov.lanl.micot.util.math.solver.exception.NoVariableException;
@@ -35,7 +36,7 @@ public class LineActiveAssignment implements AssignmentFactory {
 
   @Override
   public void performAssignment(ElectricPowerModel model, MathematicalProgram problem, Solution solution) throws VariableExistsException, NoVariableException {
-    LineActiveVariableFactory variableFactory = new LineActiveVariableFactory(scenario);
+    LineActiveVariableFactory variableFactory = new LineActiveVariableFactory(scenario,null);
     
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (edge.getAttribute(AlgorithmConstants.IS_USED_KEY) == null || !(edge.getAttribute(AlgorithmConstants.IS_USED_KEY) instanceof ScenarioAttribute)) {
@@ -44,8 +45,14 @@ public class LineActiveAssignment implements AssignmentFactory {
       
       Variable z_s = variableFactory.getVariable(problem, edge);
       if (z_s != null) {
-        int isUsed = solution.getValueInt(z_s);
-        edge.getAttribute(AlgorithmConstants.IS_USED_KEY, ScenarioAttribute.class).addEntry(scenario, isUsed);
+        int is_used = 0;
+        if (z_s instanceof ContinuousVariable) {
+          is_used = solution.getValueDouble(z_s) >= 1e-4 ? 1 : 0;          
+        }
+        else {
+          is_used = solution.getValueInt(z_s);
+        }
+        edge.getAttribute(AlgorithmConstants.IS_USED_KEY, ScenarioAttribute.class).addEntry(scenario, is_used);
       }
       else {
         edge.getAttribute(AlgorithmConstants.IS_USED_KEY, ScenarioAttribute.class).addEntry(scenario, 0);          

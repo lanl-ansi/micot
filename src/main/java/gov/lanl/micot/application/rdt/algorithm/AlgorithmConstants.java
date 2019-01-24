@@ -43,11 +43,9 @@ public class AlgorithmConstants {
   public static final String LOAD_MET_KEY                          = "LoadMet";
   public static final String CRITICAL_LOAD_MET_KEY                 = "CriticalLoadMet";
   public static final String PHASE_VARIATION_KEY                   = "PhaseVariation";
-  public static final String CHANCE_CONSTRAINT_EPSILON_KEY         = "ChanceConstraintEpsilon";
-  public static final String IS_DISCRETE_GENERATION_KEY            = "IsDiscreteGeneration";
-  public static final String IS_CHANCE_CONSTRAINT_KEY              = "IsChanceConstraint";
   public static final String CYCLE_MODEL_CONSTRAINT_KEY            = "CycleModelConstraint";  
   public static final String POWER_FLOW_MODEL_KEY                  = "PowerFlowModel";
+  public static final String IS_DISCRETE_MODEL_KEY                 = "IsDiscreteModel";
 
   public static final String TRANSPORTATION_POWER_FLOW_MODEL       ="network_flow";
   public static final String LINDIST_FLOW_POWER_FLOW_MODEL         ="lindist_flow";
@@ -59,7 +57,9 @@ public class AlgorithmConstants {
   public static final boolean DEFAULT_IS_CHANCE_CONSTRAINT = false;
   public static final CycleModel DEFAULT_CYCLE_CONSTRAINT = CycleModel.ENUMERATION;
   public static final String  DEFAULT_POWER_FLOW_MODEL = LINDIST_FLOW_POWER_FLOW_MODEL;
-    
+
+  public static final boolean DEFAULT_IS_DISCRETE_MODEL = true;
+  
   /**
    * No constructor
    */
@@ -67,7 +67,7 @@ public class AlgorithmConstants {
   }
   
   public enum CycleModel {
-    NONE, ENUMERATION, TREE
+    NONE, ENUMERATION, FLOW
   }
   
 }

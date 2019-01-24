@@ -28,7 +28,7 @@ public class LineActiveBound implements ConstraintFactory {
     
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException {
-    LineActiveVariableFactory lineVariableFactory = new LineActiveVariableFactory(scenario);        
+    LineActiveVariableFactory lineVariableFactory = new LineActiveVariableFactory(scenario,null);        
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (lineVariableFactory.hasVariable(edge)) {
         Variable z_s = lineVariableFactory.getVariable(problem, edge);

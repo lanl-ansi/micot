@@ -28,7 +28,7 @@ public class VirtualEdgeActiveBound implements ConstraintFactory {
 
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException {
-    VirtualEdgeActiveVariable vFactory = new VirtualEdgeActiveVariable(scenario);
+    VirtualEdgeActiveVariable vFactory = new VirtualEdgeActiveVariable(scenario,null);
     for (ElectricPowerNode node : model.getNodes()) {
       Variable variable = vFactory.getVariable(problem, node);
       problem.addBounds(variable, 0.0, 1.0);

@@ -49,7 +49,7 @@ public class CycleConstraint implements ConstraintFactory {
  
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException, InvalidConstraintException {
-    EdgeActiveVariable lineFactory = new EdgeActiveVariable(scenario);
+    EdgeActiveVariable lineFactory = new EdgeActiveVariable(scenario,null);
 
     // grab the cycles
     if (cycles == null) {

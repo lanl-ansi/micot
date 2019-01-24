@@ -35,7 +35,7 @@ public class LineConstructionBound implements ConstraintFactory {
     
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException {
-    LineExistVariableFactory lineVariableFactory = new LineExistVariableFactory(scenario);
+    LineExistVariableFactory lineVariableFactory = new LineExistVariableFactory(scenario,null);
     gov.lanl.micot.application.rdt.algorithm.ep.variable.LineConstructionVariableFactory outerFactory = new gov.lanl.micot.application.rdt.algorithm.ep.variable.LineConstructionVariableFactory();
         
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {

@@ -5,6 +5,7 @@ import gov.lanl.micot.infrastructure.ep.model.Generator;
 import gov.lanl.micot.infrastructure.ep.optimize.AssignmentFactory;
 import gov.lanl.micot.application.rdt.algorithm.AlgorithmConstants;
 import gov.lanl.micot.application.rdt.algorithm.ep.variable.GeneratorConstructionVariableFactory;
+import gov.lanl.micot.util.math.solver.ContinuousVariable;
 import gov.lanl.micot.util.math.solver.Solution;
 import gov.lanl.micot.util.math.solver.Variable;
 import gov.lanl.micot.util.math.solver.exception.NoVariableException;
@@ -31,8 +32,15 @@ public class GeneratorConstructionAssignment implements AssignmentFactory {
     for (Generator generator : model.getGenerators()) {
       Variable u = variableFactory.getVariable(problem, generator);
       if (u != null) {
-        int built  = solution.getValueInt(u);
-        generator.setAttribute(AlgorithmConstants.IS_CONSTRUCTED_KEY, built == 1 ? true : false);
+        boolean built = false;
+        if (u instanceof ContinuousVariable) {
+          built = solution.getValueDouble(u) >= 1e-4 ? true : false;          
+        }
+        else {
+          built = solution.getValueInt(u) == 1 ? true : false;
+        }
+        
+        generator.setAttribute(AlgorithmConstants.IS_CONSTRUCTED_KEY, built);
       }      
     }
   }

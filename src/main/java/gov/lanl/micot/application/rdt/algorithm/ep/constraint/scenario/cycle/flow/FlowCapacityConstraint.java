@@ -54,7 +54,7 @@ public class FlowCapacityConstraint implements ConstraintFactory {
 
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException, InvalidConstraintException {
-    EdgeActiveVariable vFactory = new EdgeActiveVariable(scenario);
+    EdgeActiveVariable vFactory = new EdgeActiveVariable(scenario,null);
     FlowVariable fFactory = new FlowVariable(scenario);
 
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {

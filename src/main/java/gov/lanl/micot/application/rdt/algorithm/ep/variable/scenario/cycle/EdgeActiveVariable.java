@@ -23,12 +23,14 @@ import java.util.Collection;
 public class EdgeActiveVariable implements VariableFactory {
 
   private Scenario scenario = null;
+  Boolean isDiscrete = true;
   
   /**
    * Constructor
    */
-  public EdgeActiveVariable(Scenario scenario) {
+  public EdgeActiveVariable(Scenario scenario, Boolean isDiscrete) {
     this.scenario = scenario;
+    this.isDiscrete = isDiscrete;
   }
 
   /**
@@ -52,7 +54,12 @@ public class EdgeActiveVariable implements VariableFactory {
       ElectricPowerNode node2 = model.getSecondNode(edge);
       String name = getVariableName(node1, node2);
       if (program.getVariable(name) == null) {
-        variables.add(program.makeDiscreteVariable(name));
+        if (isDiscrete) {
+          variables.add(program.makeDiscreteVariable(name));
+        }
+        else {
+          variables.add(program.makeContinuousVariable(name));          
+        }
       }
     }
     return variables;

@@ -28,7 +28,7 @@ public class LineDirectionBound implements ConstraintFactory {
     
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException {
-    LineDirectionVariableFactory variableFactory = new LineDirectionVariableFactory(scenario);        
+    LineDirectionVariableFactory variableFactory = new LineDirectionVariableFactory(scenario,null);        
     for (ElectricPowerFlowConnection edge : model.getFlowConnections()) {
       if (variableFactory.hasVariable(edge, scenario)) {
         Variable b_s = variableFactory.getVariable(problem, edge);

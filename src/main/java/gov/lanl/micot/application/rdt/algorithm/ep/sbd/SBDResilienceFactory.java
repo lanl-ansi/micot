@@ -61,12 +61,13 @@ public class SBDResilienceFactory extends OptimizerFactoryImpl<ElectricPowerNode
 	  double nonCriticalLoadMet = oFlags.getDouble(AlgorithmConstants.LOAD_MET_KEY);
     String powerflow = oFlags.getString(AlgorithmConstants.POWER_FLOW_MODEL_KEY);    
     double threshold = oFlags.getDouble(AlgorithmConstants.PHASE_VARIATION_KEY);
-
+    boolean isDiscrete = oFlags.getBoolean(AlgorithmConstants.IS_DISCRETE_MODEL_KEY);
     
 	  algorithm.setCriticalLoadMet(criticalLoadMet);
     algorithm.setNonCriticalLoadMet(nonCriticalLoadMet);
     algorithm.setFlowModel(powerflow);
     algorithm.setPhaseVariationThreshold(threshold);
+    algorithm.setIsDiscrete(isDiscrete);
     
 	  return algorithm;
 	}

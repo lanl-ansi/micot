@@ -33,8 +33,8 @@ public class LinkingConstraint implements ConstraintFactory {
 
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException, InvalidConstraintException {
-    LineActiveVariableFactory activeFactory = new LineActiveVariableFactory(scenario);
-    EdgeActiveVariable edgeChoiceFactory = new EdgeActiveVariable(scenario);
+    LineActiveVariableFactory activeFactory = new LineActiveVariableFactory(scenario,null);
+    EdgeActiveVariable edgeChoiceFactory = new EdgeActiveVariable(scenario,null);
     
     for (ElectricPowerFlowConnection connection : model.getFlowConnections()) {                
       Variable z_s = activeFactory.getVariable(problem, connection);

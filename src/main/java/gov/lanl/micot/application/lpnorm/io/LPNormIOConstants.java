@@ -66,19 +66,20 @@ public class LPNormIOConstants {
   public static final String CHANCE_CONSTRAINT_TAG = "chance_constraint";
   public static final String PHASE_VARIATION_TAG   = "phase_variation";
   public static final String POWER_FLOW_TAG        = "power_flow";
+  public static final String IS_DISCRETE_TAG       = "is_discrete";
+  public static final String CYCLE_MODEL_TAG       = "cycle_model";
   
   public static final String SCENARIOS_TAG = "scenarios";
   public static final String SCENARIO_ID_TAG = "id";
   public static final String SCENARIO_HARDENED_DISABLED_TAG = "hardened_disabled_lines";
   public static final String SCENARIO_DISABLED_TAG = "disable_lines";
 
-//  public static final String MVA_BASE_TAG = "mva_base";
-  
+  public static final String FIDELITY_TAG = "fidelity";
   public static final String ALGORITHM_TAG = "algorithm";
   public static final String MIQP_TAG = "miqp";
   public static final String SBD_TAG = "sbd";
-  public static final String VNS_TAG = "vns";
   public static final String BP_TAG = "bp";
+  public static final String HEURISTIC_TAG = "heuristic";
   
   public static final String SOLVER_TAG = "solver";
   public static final String CPLEX_TAG = "cplex";
@@ -87,4 +88,7 @@ public class LPNormIOConstants {
   
   public static final String SOLVER_TIMEOUT_TAG = "solver_iteration_timeout";
   
+  public static final String CYCLE_NONE_TAG        = "cycle_none";
+  public static final String CYCLE_ENUMERATION_TAG = "cycle_enum";
+  public static final String CYCLE_FLOW_TAG        = "cycle_flow";   
 }

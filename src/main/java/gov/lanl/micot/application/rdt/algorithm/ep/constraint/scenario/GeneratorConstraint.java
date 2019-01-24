@@ -54,7 +54,7 @@ public class GeneratorConstraint implements ConstraintFactory {
   
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException, InvalidConstraintException {
-    GeneratorConstructionVariableFactory constructionFactory = new GeneratorConstructionVariableFactory(scenario);
+    GeneratorConstructionVariableFactory constructionFactory = new GeneratorConstructionVariableFactory(scenario,null);
     GeneratorVariableFactory genFactory = new GeneratorVariableFactory(scenario);
     double mvaBase = model.getMVABase();
     

@@ -36,7 +36,7 @@ public class GeneratorConstructionBound implements ConstraintFactory {
     
   @Override
   public void constructConstraint(MathematicalProgram problem, ElectricPowerModel model) throws VariableExistsException, NoVariableException {
-    GeneratorConstructionVariableFactory generatorVariableFactory = new GeneratorConstructionVariableFactory(scenario);
+    GeneratorConstructionVariableFactory generatorVariableFactory = new GeneratorConstructionVariableFactory(scenario,null);
     gov.lanl.micot.application.rdt.algorithm.ep.variable.GeneratorConstructionVariableFactory outerFactory = new gov.lanl.micot.application.rdt.algorithm.ep.variable.GeneratorConstructionVariableFactory();
         
     for (Generator generator : model.getGenerators()) {
