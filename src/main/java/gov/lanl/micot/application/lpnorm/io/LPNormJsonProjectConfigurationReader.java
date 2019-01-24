@@ -256,6 +256,19 @@ public class LPNormJsonProjectConfigurationReader {
       cycleModel = AlgorithmConstants.CycleModel.FLOW;
     }
 
+    if (algorithm.containsKey(LPNormIOConstants.CYCLE_MODEL_TAG)) {
+      String temp = algorithm.getString(LPNormIOConstants.CYCLE_MODEL_TAG);
+      if (temp.equals(LPNormIOConstants.CYCLE_FLOW_TAG)) {
+        cycleModel = AlgorithmConstants.CycleModel.FLOW;
+      }
+      else if (temp.equals(LPNormIOConstants.CYCLE_ENUMERATION_TAG)) {
+        cycleModel = AlgorithmConstants.CycleModel.ENUMERATION;        
+      }
+      else {
+        cycleModel = AlgorithmConstants.CycleModel.NONE;                
+      }      
+    }
+    
     flags.put(AlgorithmConstants.CYCLE_MODEL_CONSTRAINT_KEY, cycleModel);        
   }
   

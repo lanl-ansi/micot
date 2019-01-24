@@ -67,6 +67,7 @@ public class LPNormIOConstants {
   public static final String PHASE_VARIATION_TAG   = "phase_variation";
   public static final String POWER_FLOW_TAG        = "power_flow";
   public static final String IS_DISCRETE_TAG       = "is_discrete";
+  public static final String CYCLE_MODEL_TAG       = "cycle_model";
   
   public static final String SCENARIOS_TAG = "scenarios";
   public static final String SCENARIO_ID_TAG = "id";
@@ -87,4 +88,7 @@ public class LPNormIOConstants {
   
   public static final String SOLVER_TIMEOUT_TAG = "solver_iteration_timeout";
   
+  public static final String CYCLE_NONE_TAG        = "cycle_none";
+  public static final String CYCLE_ENUMERATION_TAG = "cycle_enum";
+  public static final String CYCLE_FLOW_TAG        = "cycle_flow";   
 }
