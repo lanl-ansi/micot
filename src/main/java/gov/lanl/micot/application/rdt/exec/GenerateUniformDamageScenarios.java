@@ -274,7 +274,7 @@ public class GenerateUniformDamageScenarios {
         AssetModification modification = new AssetModification();
         modification.setComponentClass(Generator.class.getCanonicalName());
         modification.addKey(OpenDSSModelConstants.OPENDSS_LEGACY_ID_KEY, newMicrogrids[j]);        
-        modification.addAttribute(AlgorithmConstants.MICROGRID_FIXED_COST_KEY, newMicrogridFixedCosts[j]);
+        modification.addAttribute(AlgorithmConstants.MICROGRID_COST_KEY, newMicrogridFixedCosts[j]);
         modelConfiguration.addComponentModification(modification);
       }
       
@@ -292,7 +292,8 @@ public class GenerateUniformDamageScenarios {
         AssetModification modification = new AssetModification();
         modification.setComponentClass(Generator.class.getCanonicalName());
         modification.addKey(OpenDSSModelConstants.OPENDSS_LEGACY_ID_KEY, newMicrogrids[j]);        
-        modification.addAttribute(AlgorithmConstants.MAX_MICROGRID_KEY, newMicrogridCapacities[j]);
+        modification.addAttribute(Generator.REAL_GENERATION_MAX_KEY, newMicrogridCapacities[j]);
+        modification.addAttribute(Generator.REACTIVE_GENERATION_MAX_KEY, newMicrogridCapacities[j]);
         modelConfiguration.addComponentModification(modification);
       }
       

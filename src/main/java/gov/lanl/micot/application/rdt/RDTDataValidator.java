@@ -334,15 +334,15 @@ public class RDTDataValidator {
     
     
     for (Generator generator : model.getGenerators()) {
-      double maxMicrogrid = generator.getAttribute(AlgorithmConstants.MAX_MICROGRID_KEY) == null ? 0.0 : generator.getAttribute(AlgorithmConstants.MAX_MICROGRID_KEY, Number.class).doubleValue();  
+     // double maxMicrogrid = generator.getAttribute(AlgorithmConstants.MAX_MICROGRID_KEY) == null ? 0.0 : generator.getAttribute(AlgorithmConstants.MAX_MICROGRID_KEY, Number.class).doubleValue();  
       
-      totalRealCapacityA += generator.getRealGenerationMax() + maxMicrogrid;
-      totalRealCapacityB += generator.getRealGenerationMax() + maxMicrogrid;
-      totalRealCapacityC += generator.getRealGenerationMax() + maxMicrogrid;
+      totalRealCapacityA += generator.getRealGenerationMax();// + maxMicrogrid;
+      totalRealCapacityB += generator.getRealGenerationMax();// + maxMicrogrid;
+      totalRealCapacityC += generator.getRealGenerationMax();// + maxMicrogrid;
 
-      totalReactiveCapacityA += generator.getReactiveGenerationMax() + maxMicrogrid;
-      totalReactiveCapacityB += generator.getReactiveGenerationMax() + maxMicrogrid;
-      totalReactiveCapacityC += generator.getReactiveGenerationMax() + maxMicrogrid;      
+      totalReactiveCapacityA += generator.getReactiveGenerationMax();// + maxMicrogrid;
+      totalReactiveCapacityB += generator.getReactiveGenerationMax();// + maxMicrogrid;
+      totalReactiveCapacityC += generator.getReactiveGenerationMax();// + maxMicrogrid;      
     }
     
     if (totalRealCapacityA >= totalRealLoadA && totalRealCapacityB >= totalRealLoadB && totalRealCapacityC >= totalRealLoadC 

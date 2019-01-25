@@ -24,7 +24,7 @@ public class GeneratorObjectiveFunctionFactory implements ObjectiveFunctionFacto
     for (Generator generator : model.getGenerators()) {
       if (generatorVariableFactory.hasVariable(generator)) {
         Variable variable = generatorVariableFactory.getVariable(program, generator);
-        double cost = -generator.getAttribute(AlgorithmConstants.MICROGRID_FIXED_COST_KEY, Number.class).doubleValue();       
+        double cost = -generator.getAttribute(AlgorithmConstants.MICROGRID_COST_KEY, Number.class).doubleValue();       
         objective.addVariable(variable, cost);                  
       }      
     }     

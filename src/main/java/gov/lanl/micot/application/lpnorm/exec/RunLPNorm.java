@@ -192,9 +192,9 @@ public class RunLPNorm  {
     export.changeFieldName(AlgorithmConstants.MICROGRID_CAPACITY_PHASE_C_KEY, "built c");
     export.changeFieldName(AlgorithmConstants.IS_NEW_MICROGRID_KEY, "is new");
     export.changeFieldName(AlgorithmConstants.IS_CONSTRUCTED_KEY, "built");
-    export.changeFieldName(AlgorithmConstants.MAX_MICROGRID_KEY, "max cap");
-    export.changeFieldName(AlgorithmConstants.MICROGRID_FIXED_COST_KEY, "cost");
-    export.changeFieldName(AlgorithmConstants.MICROGRID_COST_KEY, "mw cost");
+  //  export.changeFieldName(AlgorithmConstants.MAX_MICROGRID_KEY, "max cap");
+    export.changeFieldName(AlgorithmConstants.MICROGRID_COST_KEY, "cost");
+//    export.changeFieldName(AlgorithmConstants.MICROGRID_COST_KEY, "mw cost");
     
     export.changeFieldName(Generator.REACTIVE_GENERATION_MAX_KEY, "mvar max");
     export.changeFieldName(Generator.REACTIVE_GENERATION_MIN_KEY, "mvar min");
@@ -236,9 +236,9 @@ public class RunLPNorm  {
     export.changeFieldName(AlgorithmConstants.MICROGRID_CAPACITY_PHASE_C_KEY, "built capacity phase c");
     export.changeFieldName(AlgorithmConstants.IS_NEW_MICROGRID_KEY, "is new");
     export.changeFieldName(AlgorithmConstants.IS_CONSTRUCTED_KEY, "built");
-    export.changeFieldName(AlgorithmConstants.MAX_MICROGRID_KEY, "max capacity");
-    export.changeFieldName(AlgorithmConstants.MICROGRID_FIXED_COST_KEY, "cost");
-    export.changeFieldName(AlgorithmConstants.MICROGRID_COST_KEY, "mw cost");
+    //export.changeFieldName(AlgorithmConstants.MAX_MICROGRID_KEY, "max capacity");
+    //export.changeFieldName(AlgorithmConstants.MICROGRID_FIXED_COST_KEY, "cost");
+    export.changeFieldName(AlgorithmConstants.MICROGRID_COST_KEY, "cost");
     
     export.changeFieldName(Generator.REACTIVE_GENERATION_MAX_KEY, "mvar max");
     export.changeFieldName(Generator.REACTIVE_GENERATION_MIN_KEY, "mvar min");

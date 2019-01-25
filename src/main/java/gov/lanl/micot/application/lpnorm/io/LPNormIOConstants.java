@@ -32,8 +32,8 @@ public class LPNormIOConstants {
   public static final String GEN_REAL_TAG = "max_real_phase";
   public static final String GEN_REACTIVE_TAG = "max_reactive_phase";
   public static final String GEN_MICROGRID_COST_TAG = "microgrid_cost";
-  public static final String GEN_MICROGRID_FIXED_COST_TAG = "microgrid_fixed_cost";
-  public static final String GEN_MICROGRID_MAX_TAG = "max_microgrid";
+ // public static final String GEN_MICROGRID_FIXED_COST_TAG = "microgrid_fixed_cost";
+  //public static final String GEN_MICROGRID_MAX_TAG = "max_microgrid";
   public static final String GEN_MICROGRID_IS_NEW_TAG = "is_new";
 
   public static final String LINE_CODES_TAG = "line_codes";
