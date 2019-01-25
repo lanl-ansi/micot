@@ -49,8 +49,8 @@ public class LPNormGeneratorFactory extends GeneratorFactory {
     JSONArray reactive = object.getArray(LPNormIOConstants.GEN_REACTIVE_TAG);
     
     Double microgridCost = object.containsKey(LPNormIOConstants.GEN_MICROGRID_COST_TAG) ? object.getDouble(LPNormIOConstants.GEN_MICROGRID_COST_TAG) : null;
-    Double microgridFixedCost = object.containsKey(LPNormIOConstants.GEN_MICROGRID_FIXED_COST_TAG) ? object.getDouble(LPNormIOConstants.GEN_MICROGRID_FIXED_COST_TAG) : null;
-    Double maxMicrogrid = object.containsKey(LPNormIOConstants.GEN_MICROGRID_MAX_TAG) ? object.getDouble(LPNormIOConstants.GEN_MICROGRID_MAX_TAG) : null;
+   // Double microgridFixedCost = object.containsKey(LPNormIOConstants.GEN_MICROGRID_FIXED_COST_TAG) ? object.getDouble(LPNormIOConstants.GEN_MICROGRID_FIXED_COST_TAG) : null;
+  //  Double maxMicrogrid = object.containsKey(LPNormIOConstants.GEN_MICROGRID_MAX_TAG) ? object.getDouble(LPNormIOConstants.GEN_MICROGRID_MAX_TAG) : null;
     boolean newMicrogrid = object.containsKey(LPNormIOConstants.GEN_MICROGRID_IS_NEW_TAG) ? object.getBoolean(LPNormIOConstants.GEN_MICROGRID_IS_NEW_TAG) : false;
     
 		Generator generator = registerGenerator(id);
@@ -75,9 +75,9 @@ public class LPNormGeneratorFactory extends GeneratorFactory {
     // generator.setAttribute(Generator.DESIRED_REACTIVE_GENERATION_C_KEY, reactive.getDouble(2));
     //generator.setAttribute(Generator.DESIRED_REAL_GENERATION_C_KEY, real.getDouble(2));
 
-    generator.setAttribute(AlgorithmConstants.MICROGRID_FIXED_COST_KEY, microgridFixedCost);
+    //generator.setAttribute(AlgorithmConstants.MICROGRID_FIXED_COST_KEY, microgridFixedCost);
     generator.setAttribute(AlgorithmConstants.MICROGRID_COST_KEY, microgridCost);
-    generator.setAttribute(AlgorithmConstants.MAX_MICROGRID_KEY, maxMicrogrid);
+    //generator.setAttribute(AlgorithmConstants.MAX_MICROGRID_KEY, maxMicrogrid);
     generator.setAttribute(AlgorithmConstants.IS_NEW_MICROGRID_KEY, newMicrogrid);
 
 		return generator;

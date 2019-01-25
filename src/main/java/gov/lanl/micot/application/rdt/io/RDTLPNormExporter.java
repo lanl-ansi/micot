@@ -258,10 +258,10 @@ public class RDTLPNormExporter {
        reactiveBuilder = reactiveBuilder.add(gen.getAttribute(Generator.REACTIVE_GENERATION_C_KEY, Number.class).doubleValue());
        
        double microgridCost  = gen.getAttribute(AlgorithmConstants.MICROGRID_COST_KEY) == null ? 0.0 : gen.getAttribute(AlgorithmConstants.MICROGRID_COST_KEY,Number.class).doubleValue();
-       double microgridFixedCost  = gen.getAttribute(AlgorithmConstants.MICROGRID_FIXED_COST_KEY) == null ? 0.0 : gen.getAttribute(AlgorithmConstants.MICROGRID_FIXED_COST_KEY,Number.class).doubleValue();
-       double microgridMax  = gen.getAttribute(AlgorithmConstants.MAX_MICROGRID_KEY) == null ? 0.0 : gen.getAttribute(AlgorithmConstants.MAX_MICROGRID_KEY,Number.class).doubleValue();
+       //double microgridFixedCost  = gen.getAttribute(AlgorithmConstants.MICROGRID_FIXED_COST_KEY) == null ? 0.0 : gen.getAttribute(AlgorithmConstants.MICROGRID_FIXED_COST_KEY,Number.class).doubleValue();
+       //double microgridMax  = gen.getAttribute(AlgorithmConstants.MAX_MICROGRID_KEY) == null ? 0.0 : gen.getAttribute(AlgorithmConstants.MAX_MICROGRID_KEY,Number.class).doubleValue();
 
-       boolean isNew = microgridCost > 0 || microgridFixedCost > 0;       
+       boolean isNew = gen.getAttribute(AlgorithmConstants.IS_NEW_MICROGRID_KEY) == null ? false : gen.getAttribute(AlgorithmConstants.IS_NEW_MICROGRID_KEY, Boolean.class);       
               
        JSONObjectBuilder genBuilder = JSON.getDefaultJSON().createObjectBuilder();
        genBuilder = genBuilder.add(LPNormIOConstants.GEN_ID_TAG, gen.getAttribute(tag).toString());
@@ -270,8 +270,8 @@ public class RDTLPNormExporter {
        genBuilder = genBuilder.add(LPNormIOConstants.GEN_REAL_TAG, realBuilder);
        genBuilder = genBuilder.add(LPNormIOConstants.GEN_REACTIVE_TAG, reactiveBuilder);       
        genBuilder = genBuilder.add(LPNormIOConstants.GEN_MICROGRID_COST_TAG, microgridCost);       
-       genBuilder = genBuilder.add(LPNormIOConstants.GEN_MICROGRID_FIXED_COST_TAG, microgridFixedCost);       
-       genBuilder = genBuilder.add(LPNormIOConstants.GEN_MICROGRID_MAX_TAG, microgridMax);       
+     //  genBuilder = genBuilder.add(LPNormIOConstants.GEN_MICROGRID_FIXED_COST_TAG, microgridFixedCost);       
+      // genBuilder = genBuilder.add(LPNormIOConstants.GEN_MICROGRID_MAX_TAG, microgridMax);       
        genBuilder = genBuilder.add(LPNormIOConstants.GEN_MICROGRID_IS_NEW_TAG, isNew);       
                 
        arrayBuilder = arrayBuilder.add(genBuilder);

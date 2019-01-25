@@ -18,7 +18,7 @@ public class AlgorithmConstants {
   public static final String HARDENED_DISABLED_KEY                 = "HARDENED_DISABLED";
   public static final String LINE_SWITCH_COST_KEY                  = "LINE_SWITCH_COST";
   public static final String MICROGRID_COST_KEY                    = "MICROGRID_COST";
-  public static final String MICROGRID_FIXED_COST_KEY              = "MICROGRID_FIXED_COST";
+//  public static final String MICROGRID_FIXED_COST_KEY              = "MICROGRID_FIXED_COST";
   public static final String LINE_HARDEN_COST_KEY                  = "HARDEN_COST";
 
   public static final String IS_NEW_MICROGRID_KEY                  = "IS_NEW_MICROGRID";
@@ -28,7 +28,7 @@ public class AlgorithmConstants {
   public static final String CAN_ADD_SWITCH_KEY                    = "CAN_ADD_SWITCH";
     
   public static final String IS_CRITICAL_LOAD_KEY                  = "IS_CRITICAL_LOAD";
-  public static final String MAX_MICROGRID_KEY                     = "MAX_MICROGRID";
+  //public static final String MAX_MICROGRID_KEY                     = "MAX_MICROGRID";
 
   public static final String IS_SWITCH_OPEN_KEY                    = "IS_SWITCH_OPEN";
   public static final String IS_SWITCH_CONSTRUCTED_KEY             = "IS_SWITCH_CONSTRUCTED";

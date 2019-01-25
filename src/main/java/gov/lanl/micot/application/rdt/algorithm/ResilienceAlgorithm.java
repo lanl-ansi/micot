@@ -566,7 +566,7 @@ public abstract class ResilienceAlgorithm extends OptimizerImpl<ElectricPowerNod
    for (Generator generator : model.getGenerators()) {
      if (generatorVariableFactory.hasVariable(generator)) {
        if (generator.getAttribute(AlgorithmConstants.IS_CONSTRUCTED_KEY, Boolean.class)) {
-         obj += generator.getAttribute(AlgorithmConstants.MICROGRID_FIXED_COST_KEY, Number.class).doubleValue();
+         obj += generator.getAttribute(AlgorithmConstants.MICROGRID_COST_KEY, Number.class).doubleValue();
        }
      }      
    }

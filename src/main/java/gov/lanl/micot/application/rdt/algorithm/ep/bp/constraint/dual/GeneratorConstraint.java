@@ -39,7 +39,7 @@ public class GeneratorConstraint extends ScenarioConstraintFactory<ElectricPower
         
     for (Generator generator : model.getGenerators()) {
       LinearConstraint constraint = new LinearConstraintGreaterEq(getName(generator));  
-      double cost = -generator.getAttribute(AlgorithmConstants.MICROGRID_FIXED_COST_KEY, Number.class).doubleValue();       
+      double cost = -generator.getAttribute(AlgorithmConstants.MICROGRID_COST_KEY, Number.class).doubleValue();       
       constraint.setRightHandSide(cost);
           
       for (Scenario scenario : getScenarios()) {
