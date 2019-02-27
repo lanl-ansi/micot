@@ -144,7 +144,7 @@ If you wish to configure MICOT to work with CPLEX to perform optimization of MIL
     ```
     apt-get update
     apt-get -y upgrade
-    apt-get -y install gcc g++ gfortran libreadline-dev libgmp-dev zlib1g-dev libncurses-dev make cmake wget libreadline6 libreadline6-dev
+    apt-get -y install gcc g++ gfortran libreadline-dev libgmp-dev zlib1g-dev libncurses-dev make cmake wget
     ```
   * **Mac**
     1. Place the contents of scip/mac in /usr/local/lib/
