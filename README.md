@@ -140,7 +140,17 @@ If you wish to configure MICOT to work with CPLEX to perform optimization of MIL
     ```
     sudo cp scipLibrary.so /usr/local/bin/
     ```
-    2. Scip requires the following libraries  libz.so.1, libgmp.so.10, libreadline.so.6, libgfortran.so.3, libgcc_s.so,libc.so.6,ld-linux-x86-64.so.2. These codes are typically installed by default.  If not, use apt-get
+    2. Scip requires the following libraries  
+    
+    * libz.so.1
+    * libgmp.so.10
+    * libreadline.so.7 
+    * libgfortran.so.4
+    * libgcc_s.so.1
+    * libc.so.6
+    * ld-linux-x86-64.so.2. 
+    
+    Apt-get can be used to install these libraries with the following commands
     ```
     apt-get update
     apt-get -y upgrade
