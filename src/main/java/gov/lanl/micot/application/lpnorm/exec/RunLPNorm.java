@@ -12,6 +12,7 @@ import gov.lanl.micot.infrastructure.io.shapefile.ShapefileModelExporter;
 import gov.lanl.micot.infrastructure.model.Asset;
 import gov.lanl.micot.infrastructure.model.Scenario;
 import gov.lanl.micot.infrastructure.project.ProjectConfiguration;
+import gov.lanl.micot.infrastructure.project.ProjectConfigurationUtility;
 import gov.lanl.micot.infrastructure.project.ScenarioConfiguration;
 import gov.lanl.micot.application.lpnorm.LPNormApplicationFactory;
 import gov.lanl.micot.application.lpnorm.io.LPNormJsonProjectConfigurationReader;
@@ -56,7 +57,7 @@ public class RunLPNorm  {
     System.out.println("Using configuration file: " + filename);
     LPNormJsonProjectConfigurationReader reader = new LPNormJsonProjectConfigurationReader();
     ProjectConfiguration configuration = reader.readConfiguration(filename);
-    
+
     LPNormApplicationFactory factory = new LPNormApplicationFactory();
     Application application = factory.createApplication(configuration);
     ApplicationOutput output = application.execute();
@@ -66,6 +67,7 @@ public class RunLPNorm  {
     exporter.exportResults(output, configuration, exportFile);
     
     // add scenario damage fields
+    //ElectricPowerModel model = (ElectricPowerModel) ProjectConfigurationUtility.createModel(configuration.getFirstModel());    
     ElectricPowerModel model = output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class);
     Collection<ScenarioConfiguration> scenarios = configuration.getScenarioConfigurations();
     for (ScenarioConfiguration config : scenarios) {
@@ -86,35 +88,35 @@ public class RunLPNorm  {
     
     // export optional results
     if (parser.getBusShpFile() != null) {
-      exportBusShp(parser.getBusShpFile(), output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class));
+      exportBusShp(parser.getBusShpFile(), model);
     }
     
     if (parser.getGenShpFile() != null) {
-      exportGenShp(parser.getGenShpFile(), output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class));
+      exportGenShp(parser.getGenShpFile(), model);
     }
     
     if (parser.getLoadShpFile() != null) {
-      exportLoadShp(parser.getLoadShpFile(), output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class));
+      exportLoadShp(parser.getLoadShpFile(), model);
     }
     
     if (parser.getBranchShpFile() != null) {
-      exportBranchShp(parser.getBranchShpFile(), output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class));
+      exportBranchShp(parser.getBranchShpFile(), model);
     }
     
     if (parser.getBusJSONFile() != null) {
-      exportBusJSON(parser.getBusJSONFile(), output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class));
+      exportBusJSON(parser.getBusJSONFile(), model);
     }
     
     if (parser.getGenJSONFile() != null) {
-      exportGenJSON(parser.getGenJSONFile(), output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class));
+      exportGenJSON(parser.getGenJSONFile(), model);
     }
     
     if (parser.getLoadJSONFile() != null) {
-      exportLoadJSON(parser.getLoadJSONFile(), output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class));
+      exportLoadJSON(parser.getLoadJSONFile(), model);
     }
     
     if (parser.getBranchJSONFile() != null) {
-      exportBranchJSON(parser.getBranchJSONFile(), output.get(RDTApplication.MODEL_FLAG, ElectricPowerModel.class));
+      exportBranchJSON(parser.getBranchJSONFile(), model);
     }
         
   }

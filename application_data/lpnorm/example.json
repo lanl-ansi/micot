@@ -221,12 +221,7 @@
         "l2003",
         "l2005",
         "l2027",
-        "l103",
-        "oh1852_1822",
-        "oh1852_1822_1",
-        "oh1852_1822_3",
-        "oh1822_2816",
-        "oh2852_2816"
+        "l103"
       ]
     },
     {
@@ -236,15 +231,7 @@
       "id": "2",
       "disable_lines": [
         "l2005",
-        "l1010",
-        "oh1814_822",
-        "oh822_858",
-        "oh858_816",
-        "oh1852_1822",
-        "oh1852_1822_1",
-        "oh1822_2816",
-        "oh2852_2816",
-        "oh1816_2816_1"
+        "l1010"
       ]
     }
   ],
@@ -7773,6 +7760,7 @@
     },
     {
       "line_code": 2,
+	 "can_harden": true,
       "is_new": false,
       "length": 6.8508333355266,
       "harden_cost": 163.61554824076,
@@ -7816,6 +7804,7 @@
       "is_new": false,
       "length": 9.1860166598546,
       "harden_cost": 219.34179287377,
+	 "can_harden": true,
       "id": "l2005",
       "has_switch": false,
       "switch_cost": 15,
@@ -8074,6 +8063,7 @@
     {
       "line_code": 17,
       "is_new": false,
+	 "can_harden": true,
       "length": 8.9734214435147,
       "harden_cost": 186.59546253576,
       "id": "l2027",
@@ -8414,6 +8404,7 @@
     {
       "line_code": 34,
       "is_new": false,
+	 "can_harden": true,
       "length": 6.8111266330605,
       "harden_cost": 146.36481298902,
       "id": "l103",
@@ -8574,6 +8565,7 @@
     {
       "line_code": 42,
       "is_new": false,
+	 "can_harden": true,
       "length": 11.778069314917,
       "harden_cost": 54.498186302241,
       "id": "l1010",
@@ -10015,6 +10007,7 @@
       "line_code": 114,
       "is_new": true,
       "length": 10.11716815089,
+      "can_harden": true,
       "id": "oh1852_1822",
       "has_switch": false,
       "switch_cost": 15,

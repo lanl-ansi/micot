@@ -69,42 +69,54 @@ public class GeneratorConstraint implements ConstraintFactory {
         Variable gq_a = genFactory.getReactiveVariable(problem, generator, GeneratorVariableFactory.PHASE_A);
         Variable gq_b = genFactory.getReactiveVariable(problem, generator, GeneratorVariableFactory.PHASE_B);
         Variable gq_c = genFactory.getReactiveVariable(problem, generator, GeneratorVariableFactory.PHASE_C);
-            
-        LinearConstraintLessEq constraint = new LinearConstraintLessEq(getRealName(generator, GeneratorVariableFactory.PHASE_A));
-        constraint.addVariable(gp_a, 1.0);
-        constraint.addVariable(u_s,-generator.getRealGenerationMax() / mvaBase);
-        constraint.setRightHandSide(0.0);
-        problem.addLinearConstraint(constraint);
-        
-        constraint = new LinearConstraintLessEq(getRealName(generator, GeneratorVariableFactory.PHASE_B));
-        constraint.addVariable(gp_b, 1.0);
-        constraint.addVariable(u_s,-generator.getRealGenerationMax() / mvaBase);
-        constraint.setRightHandSide(0.0);
-        problem.addLinearConstraint(constraint);
-        
-        constraint = new LinearConstraintLessEq(getRealName(generator, GeneratorVariableFactory.PHASE_C));
-        constraint.addVariable(gp_c, 1.0);
-        constraint.addVariable(u_s,-generator.getRealGenerationMax() / mvaBase);
-        constraint.setRightHandSide(0.0);
-        problem.addLinearConstraint(constraint);
-        
-        constraint = new LinearConstraintLessEq(getReactiveName(generator, GeneratorVariableFactory.PHASE_A));
-        constraint.addVariable(gq_a, 1.0);
-        constraint.addVariable(u_s,-generator.getReactiveGenerationMax() / mvaBase);
-        constraint.setRightHandSide(0.0);
-        problem.addLinearConstraint(constraint);
 
-        constraint = new LinearConstraintLessEq(getReactiveName(generator, GeneratorVariableFactory.PHASE_B));
-        constraint.addVariable(gq_b, 1.0);
-        constraint.addVariable(u_s,-generator.getReactiveGenerationMax() / mvaBase);
-        constraint.setRightHandSide(0.0);
-        problem.addLinearConstraint(constraint);
+        if (gp_a != null) {
+        	LinearConstraintLessEq constraint = new LinearConstraintLessEq(getRealName(generator, GeneratorVariableFactory.PHASE_A));
+        	constraint.addVariable(gp_a, 1.0);
+        	constraint.addVariable(u_s,-generator.getRealGenerationMax() / mvaBase);
+        	constraint.setRightHandSide(0.0);
+        	problem.addLinearConstraint(constraint);
+        }
+        
+        if (gp_b != null) {
+        	LinearConstraintLessEq constraint = new LinearConstraintLessEq(getRealName(generator, GeneratorVariableFactory.PHASE_B));
+        	constraint.addVariable(gp_b, 1.0);
+        	constraint.addVariable(u_s,-generator.getRealGenerationMax() / mvaBase);
+        	constraint.setRightHandSide(0.0);
+        	problem.addLinearConstraint(constraint);
+        }
 
-        constraint = new LinearConstraintLessEq(getReactiveName(generator, GeneratorVariableFactory.PHASE_C));
-        constraint.addVariable(gq_c, 1.0);
-        constraint.addVariable(u_s,-generator.getReactiveGenerationMax() / mvaBase);
-        constraint.setRightHandSide(0.0);
-        problem.addLinearConstraint(constraint);
+        if (gp_c != null) {
+        	LinearConstraintLessEq constraint = new LinearConstraintLessEq(getRealName(generator, GeneratorVariableFactory.PHASE_C));
+        	constraint.addVariable(gp_c, 1.0);
+        	constraint.addVariable(u_s,-generator.getRealGenerationMax() / mvaBase);
+        	constraint.setRightHandSide(0.0);
+        	problem.addLinearConstraint(constraint);
+        }
+        
+        if (gq_a != null) {
+        	LinearConstraintLessEq constraint = new LinearConstraintLessEq(getReactiveName(generator, GeneratorVariableFactory.PHASE_A));
+        	constraint.addVariable(gq_a, 1.0);
+        	constraint.addVariable(u_s,-generator.getReactiveGenerationMax() / mvaBase);
+        	constraint.setRightHandSide(0.0);
+        	problem.addLinearConstraint(constraint);
+        }
+        
+        if (gq_b != null) {
+        	LinearConstraintLessEq constraint = new LinearConstraintLessEq(getReactiveName(generator, GeneratorVariableFactory.PHASE_B));
+        	constraint.addVariable(gq_b, 1.0);
+        	constraint.addVariable(u_s,-generator.getReactiveGenerationMax() / mvaBase);
+        	constraint.setRightHandSide(0.0);
+        	problem.addLinearConstraint(constraint);
+        }
+        
+        if (gq_c != null) {
+        	LinearConstraintLessEq constraint = new LinearConstraintLessEq(getReactiveName(generator, GeneratorVariableFactory.PHASE_C));
+        	constraint.addVariable(gq_c, 1.0);
+        	constraint.addVariable(u_s,-generator.getReactiveGenerationMax() / mvaBase);
+        	constraint.setRightHandSide(0.0);
+        	problem.addLinearConstraint(constraint);
+        }
       }
     }    
   }

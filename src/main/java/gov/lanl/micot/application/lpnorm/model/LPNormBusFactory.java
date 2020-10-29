@@ -74,6 +74,11 @@ public class LPNormBusFactory extends BusFactory {
     
     bus.setCoordinate(new PointImpl(x,y));
     
+	if (bus.getCoordinate().getY() == 0 && bus.getCoordinate().getX() == 0)
+		System.out.println(bus.getCoordinate());
+	
+
+    
   	return bus;
 	}
 	

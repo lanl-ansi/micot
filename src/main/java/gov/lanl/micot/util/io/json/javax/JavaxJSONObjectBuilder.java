@@ -75,7 +75,10 @@ public class JavaxJSONObjectBuilder implements JSONObjectBuilder {
       return add(key, ((Number)object).intValue());
     }
     if (object instanceof Number) {
-      return add(key, ((Number)object).doubleValue());
+      if (((Number)object).doubleValue() == Double.POSITIVE_INFINITY)
+      	return add(key, Double.MAX_VALUE);
+      else
+        return add(key, ((Number)object).doubleValue());
     }
     if (object instanceof Boolean) {
       return add(key, ((Boolean)object).booleanValue());
