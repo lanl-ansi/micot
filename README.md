@@ -21,7 +21,7 @@ MICOT is distributed as Maven project. To install MICOT as Maven project, follow
 4. [Update](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/) JAVA_HOME to point at directory of your Java installation.
 5. Install a git tool
 6. Download the repository using the following command ```git clone https://github.com/lanl-ansi/micot.git```
-7. Build and package the code using the command ```mvn -Dmaven.test.skip=true package``` from the top level directory of the git repository
+7. Build and package the code using the command ```mvn install -DskipTests``` from the top level directory of the git repository
 
 ### LANL Only
 If you are behind the LANL firewall, you need to tell Maven where the proxyserver is.  In ${user.home}/.m2/settings.xml add the following block (create settings.xml if it does not exist)
